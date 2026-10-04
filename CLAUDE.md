@@ -22,7 +22,7 @@ Target feeling on every surface: *"I found something here that makes me see myse
 | Primary CTA | Comment "RESET" (→ ManyChat) |
 | Free product | THE AWAKENING — one sitting, no forced email capture |
 | Paid product | THE IDENTITY RESET — $25, ~1-year path, monthly unlocks |
-| Learning path | WAKE → SEE → CLEANSE → BODY → IDENTITY → IMAGINE → VISUALIZE → EMBODY → EXPAND |
+| Learning path | WAKE → SEE → CLEANSE → BODY → IDENTITY → IMAGINE → VISUALIZE → EMBODY → EXPAND (months 1–9). Months 10–12 (CO-CREATE → INTEGRATE → BECOME) are proposed, pending Jac's sign-off |
 | App UX loop | NOW · WHY · REFLECT · NEXT |
 
 ## Voice (for any copy you write)
@@ -43,7 +43,19 @@ Target feeling on every surface: *"I found something here that makes me see myse
 
 ## Building the product
 
+- Content lives in `content/` (`library.ts` holds every resource). Verification status of each link: `docs/CONTENT-SOURCES.md`. Never add a YouTube ID you haven't confirmed; use `ytSearch()` instead.
+
 - Business spec, not tech spec: choose framework, DB, auth, payments, hosting freely — favor the simplest stack that ships a premium, mobile-first experience.
 - It is a *personal operating system for an identity reset*, not a course platform. The user always knows where they are, what to do now, why, what to reflect on, and what's next.
 - Design language: cinematic, minimal, dark, editorial. Black canvas, white type, blue as the single accent. Generous negative space.
 - Optimize for **Attention + Trust + Transformation**, and measure transformation (completion, monthly progression, testimonials) alongside revenue.
+
+<!-- BEGIN:nextjs-agent-rules -->
+
+# This is NOT the Next.js you know
+
+This version has breaking changes — APIs, conventions, and file structure may all differ from your training data. Read the relevant guide in `node_modules/next/dist/docs/` (resolved from this file's directory; in monorepos the `next` package may not be visible from the repo root) before writing any code. Heed deprecation notices.
+
+This block is written and re-added by `next dev` — verify at `node_modules/next/dist/server/lib/generate-agent-files.js`. Removing it from a diff only re-creates the uncommitted change; committing it with your work keeps the tree clean.
+
+<!-- END:nextjs-agent-rules -->
