@@ -75,7 +75,21 @@ def duration(path):
 
 def ytdlp():
     need("yt-dlp", "Install with: pip install yt-dlp")
-    return ["yt-dlp", "--no-warnings", "--no-playlist"]
+    cmd = ["yt-dlp", "--no-warnings", "--no-playlist"]
+    # Cloud sessions: YouTube bot-checks server IPs. A logged-in cookies.txt gets past it.
+    # YT_COOKIES = the file's contents (environment variable/secret); YT_COOKIES_FILE = a path.
+    cookie_file = os.environ.get("YT_COOKIES_FILE")
+    if not cookie_file and os.environ.get("YT_COOKIES"):
+        cookie_file = str(Path.home() / ".cache" / "yt-cookies.txt")
+        Path(cookie_file).parent.mkdir(parents=True, exist_ok=True)
+        text = os.environ["YT_COOKIES"].replace("\\t", "\t").replace("\\n", "\n")
+        if not text.startswith("# Netscape"):
+            text = "# Netscape HTTP Cookie File\n" + text
+        Path(cookie_file).write_text(text)
+        os.chmod(cookie_file, 0o600)
+    if cookie_file:
+        cmd += ["--cookies", cookie_file]
+    return cmd
 
 
 # ---------------------------------------------------------------- search
