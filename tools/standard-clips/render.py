@@ -5,7 +5,7 @@ Look (measured from @nextstandrd's top reels):
   canvas   1080x1920 black; 16:9 footage full-width, vertically centred (~32% of height)
   grade    black & white, contrast up, crushed blacks, film grain, soft vignette
   captions 1-3 words at a time, Inter Display Bold, UPPERCASE, white, centred on the speaker
-  ending   footage fades to black (1.6s) -> logo on black (1.4s) -> logo on white (0.4s)
+  ending   footage fades to black (1.6s) -> logo on black (0.4s) -> logo on white (0.4s)
            -> "TOO CREATIVE FOR NINE TO FIVE." white on black (0.4s) -> "LIVE NOW." black on white (3.2s, fades)
            with the end-card sound bed hitting on each switch.
 
@@ -31,7 +31,8 @@ FOOT_Y = (H - FOOT_H) // 2               # band top
 FONT = "Inter Display"                   # closest installed match to their caption face
 FONT_FILE = None                          # resolved lazily via fc-match
 FADE_TO_BLACK = 1.6
-CARD = [("logo", "black", 1.4), ("logo", "white", 0.4),
+SFX_TRIM = 1.0          # sound bed was timed to a 1.4s first card; trimmed so hits stay on the switches
+CARD = [("logo", "black", 0.4), ("logo", "white", 0.4),
         ("TOO CREATIVE FOR NINE TO FIVE.", "black", 0.4), ("LIVE NOW.", "white", 3.2)]
 
 
@@ -192,7 +193,7 @@ def cmd_endcard(a):
     total = sum(d for _, _, d in CARD)
     concat = "".join(f"[v{i}]" for i in range(len(CARD))) + f"concat=n={len(CARD)}:v=1:a=0[v]"
     if a.sfx:
-        inputs += ["-i", a.sfx]
+        inputs += ["-ss", str(SFX_TRIM), "-i", a.sfx]
         audio = [f"[{len(CARD)}:a]aresample=48000,apad,atrim=0:{total},afade=t=out:st={total - 0.3}:d=0.3[a]"]
     else:
         inputs += ["-f", "lavfi", "-t", str(total), "-i", "anullsrc=r=48000:cl=stereo"]
