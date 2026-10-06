@@ -23,7 +23,7 @@ import sys
 import tempfile
 from pathlib import Path
 
-from PIL import Image, ImageDraw, ImageFont
+from PIL import Image, ImageChops, ImageDraw, ImageFont
 
 W, H, FPS = 1080, 1920, 30
 FOOT_H = W * 9 // 16                     # 607px footage band
@@ -139,9 +139,13 @@ Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text
 def tint_logo(logo, color, width):
     """Logo as a solid-colour silhouette (white on black cards, black on white cards)."""
     im = Image.open(logo).convert("RGBA")
-    alpha = im.getchannel("A")
-    if alpha.getextrema() == (255, 255):  # no transparency: treat dark pixels as the mark
-        alpha = im.convert("L").point(lambda v: 255 - v)
+    alpha, luma = im.getchannel("A"), im.convert("L")
+    # The mark is whichever tone dominates the opaque pixels; the other tone is a knockout
+    # (e.g. the white "miami" inside AURA's A) and stays transparent on both card colours.
+    hist = luma.histogram(mask=alpha.point(lambda v: 255 if v > 128 else 0))
+    dark_mark = sum(hist[:128]) >= sum(hist[128:])
+    tone = luma.point(lambda v: 255 - v) if dark_mark else luma
+    alpha = ImageChops.multiply(alpha, tone)
     fill = Image.new("RGBA", im.size, (255, 255, 255, 255) if color == "white" else (0, 0, 0, 255))
     fill.putalpha(alpha)
     bbox = alpha.getbbox() or (0, 0, *im.size)
@@ -165,7 +169,7 @@ def card_frame(kind, bg, logo, path):
     im = Image.new("RGB", (W, H), bg)
     fg = "black" if bg == "white" else "white"
     if kind == "logo":
-        mark = tint_logo(logo, fg, 190)
+        mark = tint_logo(logo, fg, 560)
         im.paste(mark, ((W - mark.width) // 2, (H - mark.height) // 2), mark)
     else:
         d = ImageDraw.Draw(im)
@@ -217,7 +221,7 @@ def cmd_clip(a):
     logo = a.logo
     wm = []
     if logo:
-        mark = tint_logo(logo, "white", 70)
+        mark = tint_logo(logo, "white", 150)
         mark.putalpha(mark.getchannel("A").point(lambda v: int(v * 0.55)))
         canvas = Image.new("RGBA", (W, H), (0, 0, 0, 0))
         canvas.paste(mark, ((W - mark.width) // 2, FOOT_Y + FOOT_H - mark.height - 28), mark)

@@ -1,6 +1,6 @@
 {
   "endcard": "build/endcard.mp4",
-  "logo": null,
+  "logo": "logo.png",
   "out_dir": "out",
   "clips": [
     {"id": "01-denzel-put-god-first",   "youtube": "ROiNPUwg9bQ", "src": "sources/ROiNPUwg9bQ.mp4", "vtt": "sources/ROiNPUwg9bQ.en.vtt", "start": "7:04.6",  "end": "7:27.0",  "caption": "Everything I have is by the grace of God."},
