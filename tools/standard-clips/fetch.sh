@@ -10,7 +10,9 @@ args=(--no-warnings --compat-options no-certifi --sleep-requests 1 --extractor-a
 [ -n "${YT_COOKIES_FILE:-}" ] && args+=(--cookies "$YT_COOKIES_FILE")
 command -v node >/dev/null && ! command -v deno >/dev/null && args+=(--js-runtimes node --remote-components ejs:github)
 
-for id in $(python3 -c "import json;print(' '.join(sorted({c['youtube'] for c in json.load(open('clips.json'))['clips']})))"); do
+plans=("${@:-clips.json}")   # ./fetch.sh [clips.json clips2.json ...]
+ids=$(python3 -c "import json,sys;print(' '.join(sorted({c['youtube'] for p in sys.argv[1:] for c in json.load(open(p))['clips']})))" "${plans[@]}")
+for id in $ids; do
   if [ ! -f "sources/$id.mp4" ]; then
     yt-dlp "${args[@]}" -f "bv*[height<=1080]+ba/b" \
       --merge-output-format mp4 -o "sources/$id.%(ext)s" "https://www.youtube.com/watch?v=$id"

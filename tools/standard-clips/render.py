@@ -5,9 +5,8 @@ Look (measured from @nextstandrd's top reels):
   canvas   1080x1920 black; 16:9 footage full-width, vertically centred (~32% of height)
   grade    original colour, contrast up slightly, luma film grain, soft vignette
   captions 1-3 words at a time, Inter Display Bold, UPPERCASE, white, centred on the speaker
-  ending   hard cut -> logo on black (0.4s) -> logo on white (0.4s)
-           -> "TOO CREATIVE FOR NINE TO FIVE." white on black (0.4s) -> "LIVE NOW." black on white (3.2s, fades)
-           with the end-card sound bed hitting on each switch.
+  ending   footage + audio fade to black (0.6s) -> logo centred on black, fading in and out (2.4s),
+           with the end-card sound underneath.
 
 Usage:
   python3 render.py endcard --logo logo.png --sfx endcard_sfx.wav --out build/endcard.mp4
@@ -31,8 +30,8 @@ FOOT_Y = (H - FOOT_H) // 2               # band top
 FONT = "Inter Display"                   # closest installed match to their caption face
 FONT_FILE = None                          # resolved lazily via fc-match
 SFX_TRIM = 1.0          # sound bed was timed to a 1.4s first card; trimmed so hits stay on the switches
-CARD = [("logo", "black", 0.4), ("logo", "white", 0.4),
-        ("TOO CREATIVE FOR NINE TO FIVE.", "black", 0.4), ("LIVE NOW.", "white", 3.2)]
+CARD = [("logo", "black", 2.4)]   # simple ending: logo centred on black, fades in and out
+END_FADE = 0.6                    # footage fades to black over the last 0.6s
 
 
 def run(cmd):
@@ -223,8 +222,10 @@ def cmd_endcard(a):
         card_frame(kind, bg, logo, p)
         inputs += ["-loop", "1", "-t", str(dur), "-framerate", str(FPS), "-i", str(p)]
         vf = f"[{i}:v]format=yuv420p,setsar=1"
+        if i == 0:
+            vf += f",fade=t=in:d=0.3:color={bg}"
         if i == len(CARD) - 1:
-            vf += f",fade=t=out:st={dur - 0.6}:d=0.6:color=white"
+            vf += f",fade=t=out:st={dur - 0.6}:d=0.6:color={bg}"
         filters.append(vf + f"[v{i}]")
     total = sum(d for _, _, d in CARD)
     concat = "".join(f"[v{i}]" for i in range(len(CARD))) + f"concat=n={len(CARD)}:v=1:a=0[v]"
@@ -350,9 +351,9 @@ def cmd_clip(a):
     if wm:
         v += "[g];[g][2:v]overlay=0:0"
     v += (f",subtitles={ass}:fontsdir=/usr/share/fonts,fps={FPS},"
-          f"null[body]")  # hard cut into the end card
+          f"fade=t=out:st={max(0.0, dur - END_FADE)}:d={END_FADE}[body]")  # fade to black into the logo
     au = (f"[0:a]aselect='{sel}',asetpts=N/SR/TB,aresample=48000,loudnorm=I=-14:TP=-1.5:LRA=9,"
-          f"afade=t=in:d=0.05,afade=t=out:st={max(0.0, dur - 0.06)}:d=0.06[ba]")  # de-click only
+          f"afade=t=in:d=0.05,afade=t=out:st={max(0.0, dur - END_FADE)}:d={END_FADE}[ba]")
     inputs = ["-ss", f"{start - src_offset:.3f}", "-t", f"{raw:.3f}", "-i", a.src, "-i", a.endcard, *wm]
     graph = f"{v};{au};[1:v]setsar=1,fps={FPS}[ev];[1:a]aresample=48000[ea];[body][ba][ev][ea]concat=n=2:v=1:a=1[v][a]"
     Path(a.out).parent.mkdir(parents=True, exist_ok=True)

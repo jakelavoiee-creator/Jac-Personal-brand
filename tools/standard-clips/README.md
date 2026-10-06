@@ -12,7 +12,7 @@ Cinematic, stripped back, hard-hitting. One idea per clip, 20–45s, opening on 
 | Grade | Original colour, contrast +12%, crushed blacks, luma film grain, soft vignette |
 | Captions | 1–3 words at a time, Inter Display Bold 40px, UPPERCASE, white, on the speaker at 60% of the footage height. Timed word by word from YouTube captions |
 | Watermark | Logo, 150px wide, 55% opacity, bottom centre of the footage (only when a logo is set) |
-| Ending (4.4s) | Hard cut from the footage → logo on black 0.4s → logo on white 0.4s → "TOO CREATIVE FOR NINE TO FIVE." white on black 0.4s → "LIVE NOW." black on white 3.2s, fading out. An original synthesized impact on each switch and a bigger final hit with a tail on LIVE NOW (no music). Pass `--sfx` to use your own sound instead |
+| Ending | Footage + audio fade to black (0.6s) → AURA logo centred on black, fading in and out (2.4s), with the end-card sound underneath |
 | Audio | Original speech only, loudness-normalised to −14 LUFS |
 
 ## Run it

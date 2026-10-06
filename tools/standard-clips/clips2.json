@@ -1,0 +1,14 @@
+{
+  "endcard": "build/endcard.mp4",
+  "logo": "logo.png",
+  "out_dir": "out/batch2",
+  "clips": [
+    {"id": "b2-01-ghiyam-greater-the-light", "youtube": "pWVTmPO8IUY", "src": "sources/pWVTmPO8IUY.mp4", "vtt": "sources/pWVTmPO8IUY.en.vtt", "start": "318.9", "end": "344.9", "caption": "The more difficult your situation, the greater the light."},
+    {"id": "b2-02-ghiyam-pray-for-certainty", "youtube": "pWVTmPO8IUY", "src": "sources/pWVTmPO8IUY.mp4", "vtt": "sources/pWVTmPO8IUY.en.vtt", "start": "414.25", "end": "442.2", "caption": "Don't pray for the problem to go away. Pray for certainty."},
+    {"id": "b2-03-ghiyam-never-going-backwards", "youtube": "yOwhoHC1WPw", "src": "sources/yOwhoHC1WPw.mp4", "vtt": "sources/yOwhoHC1WPw.en.vtt", "start": "517.7", "end": "546.35", "caption": "You are never going backwards."},
+    {"id": "b2-04-ghiyam-meant-for-greater", "youtube": "7U3Ex3uCmO0", "src": "sources/7U3Ex3uCmO0.mp4", "vtt": "sources/7U3Ex3uCmO0.en.vtt", "start": "333.7", "end": "347.5", "caption": "You're meant to have something greater."},
+    {"id": "b2-05-will-smith-other-side-of-fear", "youtube": "VsTBCQ2MnRM", "src": "sources/VsTBCQ2MnRM.mp4", "vtt": "sources/VsTBCQ2MnRM.en.vtt", "start": "340.0", "end": "357.4", "caption": "The best things in life are on the other side of fear."},
+    {"id": "b2-06-carrey-10-million-check", "youtube": "pFq9z3PlRL4", "src": "sources/pFq9z3PlRL4.mp4", "vtt": "sources/pFq9z3PlRL4.en.vtt", "start": "111.45", "end": "155.8", "caption": "Visualization works if you work hard."},
+    {"id": "b2-07-denzel-put-here-for-a-reason", "youtube": "aWrFppphs6w", "src": "sources/aWrFppphs6w.mp4", "vtt": "sources/aWrFppphs6w.en.vtt", "start": "133.45", "end": "168.7", "caption": "We were put here for a reason."}
+  ]
+}
