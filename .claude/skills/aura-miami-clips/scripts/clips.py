@@ -3,7 +3,8 @@
 
   hunt    find source videos (interviews, speeches, podcasts) per theme
   scan    read captions only (no video download) and rank quotable moments
-  render  cut a moment into a post-ready 1080x1920 Aura Miami reel
+  extract cut a moment: speaker framed 9:16, captions only (the default deliverable)
+  render  branded variant (grade, hook, credit, watermark, end card) - only when asked
   themes  list themes and their seed searches
 
 Builds on the youtube-watch skill (yt.py) for downloading/transcription.
@@ -405,6 +406,42 @@ AURA_MONO = "hue=s=0,eq=contrast=1.28:brightness=-0.03:gamma=0.94,vignette=angle
 AURA_MUTED = "eq=contrast=1.15:brightness=-0.03:saturation=0.55:gamma=0.95,vignette=angle=PI/5"
 
 
+def cut_segment(src, start, end, work, name):
+    """Return a local mp4 of exactly [start, end]. URLs download only that section."""
+    dur = end - start
+    raw = work / f".{name}.src.mp4"
+    if yt.is_url(src):
+        subprocess.run(yt.ytdlp() + ["-f", "bv*[height<=1080]+ba/b[height<=1080]/b", "--merge-output-format", "mp4",
+                                     "--download-sections", f"*{start:.2f}-{end:.2f}", "--force-keyframes-at-cuts",
+                                     "-o", str(raw), "--force-overwrites", src], check=True)
+        src_video, cut_ss = raw, 0.0
+    else:
+        src_video, cut_ss = Path(src), start
+    clip = work / f".{name}.cut.mp4"
+    yt.run(["ffmpeg", "-y", "-v", "error", "-ss", f"{cut_ss:.3f}", "-i", str(src_video), "-t", f"{dur:.3f}",
+            "-c:v", "libx264", "-preset", "veryfast", "-crf", "16", "-c:a", "aac", str(clip)])
+    raw.unlink(missing_ok=True)
+    return clip
+
+
+def clip_captions(clip, src, start, end, transcript, work):
+    """Short caption chunks timed to the clip. Order: given transcript, Whisper, Gemini, YouTube captions."""
+    segs, how = None, ""
+    if transcript:
+        segs = [(s["start"] - start, s["end"] - start, s["text"]) for s in json.loads(Path(transcript).read_text())
+                if s["end"] > start and s["start"] < end]
+        how = "transcript.json"
+    if segs is None:  # transcribe the clip itself: exact timing, punctuation
+        segs, how = yt.whisper_transcribe(clip, work)
+        if segs is None:
+            segs, how = yt.gemini_transcribe(clip, work)
+    if segs is None and yt.is_url(src):
+        full, _ = fetch_captions(src)
+        segs = [(s - start, e - start, t) for s, e, t in (full or []) if e > start and s < end] or None
+        how = "youtube captions"
+    return chunk_captions([(max(s, 0), max(e, 0), t) for s, e, t in segs or []], n_words=3), how
+
+
 def cmd_render(a):
     yt.need("ffmpeg", "Install ffmpeg (with libass).")
     start, end = yt.parse_time(a.start), yt.parse_time(a.end)
@@ -414,42 +451,11 @@ def cmd_render(a):
     name = a.name or f"{yt.slugify(a.credit or 'clip', 24)}-{int(start)}-{int(end)}"
     work = OUT / "renders"
     work.mkdir(parents=True, exist_ok=True)
-    raw = work / f".{name}.src.mp4"
 
-    # 1) get just the segment (URL: download only that section)
-    if yt.is_url(a.src):
-        subprocess.run(yt.ytdlp() + ["-f", "bv*[height<=1080]+ba/b[height<=1080]/b", "--merge-output-format", "mp4",
-                                     "--download-sections", f"*{start:.2f}-{end:.2f}", "--force-keyframes-at-cuts",
-                                     "-o", str(raw), "--force-overwrites", a.src], check=True)
-        cut_ss = 0.0
-        src_video = raw
-    else:
-        src_video, cut_ss = Path(a.src), start
-    yt.run(["ffmpeg", "-y", "-v", "error", "-ss", f"{cut_ss:.3f}", "-i", str(src_video), "-t", f"{dur:.3f}",
-            "-c:v", "libx264", "-preset", "veryfast", "-crf", "16", "-c:a", "aac", str(raw.with_suffix(".cut.mp4"))])
-    clip = raw.with_suffix(".cut.mp4")
-    if raw.exists() and raw != src_video:
-        raw.unlink()
-
-    # 2) captions for exactly this clip
-    caps, how = [], "off"
-    if not a.no_captions:
-        segs = None
-        if a.transcript:
-            segs = [(s["start"] - start, s["end"] - start, s["text"]) for s in json.loads(Path(a.transcript).read_text())
-                    if s["end"] > start and s["start"] < end]
-            how = "transcript.json"
-        if segs is None:  # transcribe the clip itself: exact timing, punctuation
-            segs, how = yt.whisper_transcribe(clip, work)
-            if segs is None:
-                segs, how = yt.gemini_transcribe(clip, work)
-        if segs is None and yt.is_url(a.src):
-            full, _ = fetch_captions(a.src)
-            segs = [(s - start, e - start, t) for s, e, t in (full or []) if e > start and s < end] or None
-            how = "youtube captions"
-        caps = chunk_captions([(max(s, 0), max(e, 0), t) for s, e, t in segs or []])
-        if not caps:
-            print(f"[render] no captions ({how}); rendering without", file=sys.stderr)
+    clip = cut_segment(a.src, start, end, work, name)
+    caps, how = ([], "off") if a.no_captions else clip_captions(clip, a.src, start, end, a.transcript, work)
+    if not a.no_captions and not caps:
+        print(f"[render] no captions ({how}); rendering without", file=sys.stderr)
 
     # 3) layout + grade + text
     w, h = map(int, yt.run(["ffprobe", "-v", "error", "-select_streams", "v:0", "-show_entries",
@@ -498,6 +504,110 @@ def cmd_render(a):
         print(sheet)
 
 
+# ------------------------------------------------------------------ extract (clean)
+
+def face_track(clip, dur, w, h, crop_w):
+    """Crop x per shot so the speaker's face stays centered. Falls back to center."""
+    center = (w - crop_w) / 2
+    try:
+        import cv2
+        cv2.CascadeClassifier  # removed in OpenCV 5
+    except (ImportError, AttributeError):
+        print("[extract] needs pip install 'opencv-python-headless<5' for face tracking; using center crop",
+              file=sys.stderr)
+        return [(0.0, center)]
+    # alt2 handles close-ups, beards and caps best; the others catch what it misses
+    dets = [cv2.CascadeClassifier(cv2.data.haarcascades + f) for f in (
+        "haarcascade_frontalface_alt2.xml", "haarcascade_frontalface_default.xml", "haarcascade_profileface.xml")]
+    cuts = [0.0]
+    for t in yt.scene_changes(clip, 0.15):  # sensitive, but ignore sub-second flickers
+        if t - cuts[-1] >= 1.0 and t < dur - 0.5:
+            cuts.append(t)
+    cuts.append(dur)
+    cap = cv2.VideoCapture(str(clip))
+    plan = []
+    for a, b in zip(cuts, cuts[1:]):
+        xs, t = [], a + 0.15
+        while t < b:
+            cap.set(cv2.CAP_PROP_POS_MSEC, t * 1000)
+            ok, frame = cap.read()
+            if ok:
+                scale = 640 / frame.shape[1]
+                small = cv2.cvtColor(cv2.resize(frame, None, fx=scale, fy=scale), cv2.COLOR_BGR2GRAY)
+                faces = []
+                for i, det in enumerate(dets):
+                    faces = list(det.detectMultiScale(small, 1.1, 4, minSize=(30, 30)))
+                    if not faces and i == 2:  # profile cascade only sees left-facing; try mirrored
+                        mirrored = det.detectMultiScale(cv2.flip(small, 1), 1.1, 4, minSize=(30, 30))
+                        faces = [(small.shape[1] - x - fw, y, fw, fh) for x, y, fw, fh in mirrored]
+                    if faces:
+                        break
+                if faces:
+                    fx, fy, fw, fh = max(faces, key=lambda f: f[2] * f[3])  # biggest face = speaker
+                    xs.append((fx + fw / 2) / scale)
+            t += max((b - a) / 12, 0.25)
+        x = sorted(xs)[len(xs) // 2] - crop_w / 2 if xs else (plan[-1][1] if plan else center)
+        plan.append((a, min(max(x, 0), w - crop_w)))
+    cap.release()
+    return plan
+
+
+def cmd_extract(a):
+    """The clip, the speaker clearly framed, captions only. Nothing else added."""
+    yt.need("ffmpeg", "Install ffmpeg (with libass).")
+    start, end = yt.parse_time(a.start), yt.parse_time(a.end)
+    if end <= start:
+        yt.die("--end must be after --start")
+    dur = end - start
+    name = a.name or f"clip-{int(start)}-{int(end)}"
+    work = OUT / "extracts"
+    work.mkdir(parents=True, exist_ok=True)
+    clip = cut_segment(a.src, start, end, work, name)
+    caps, how = ([], "off") if a.no_captions else clip_captions(clip, a.src, start, end, a.transcript, work)
+
+    w, h = map(int, yt.run(["ffprobe", "-v", "error", "-select_streams", "v:0", "-show_entries",
+                            "stream=width,height", "-of", "csv=p=0", str(clip)]).stdout.strip().split(","))
+    if a.frame == "vertical" and w / h > 9 / 16 + 0.01:
+        crop_w = int(h * 9 / 16) // 2 * 2
+        plan = face_track(clip, dur, w, h, crop_w)
+        x = str(int(plan[-1][1]))
+        for i in range(len(plan) - 2, -1, -1):  # piecewise x: one framing per shot
+            x = f"if(lt(t,{plan[i + 1][0]:.3f}),{int(plan[i][1])},{x})"
+        vf = f"crop={crop_w}:{h}:'{x}':0,scale=1080:1920:flags=lanczos,setsar=1"
+        W, H = 1080, 1920
+        framing = f"vertical, face-tracked over {len(plan)} shot(s)"
+    else:
+        vf, W, H, framing = "setsar=1", w, h, "original frame"
+    if caps:
+        ass = work / f".{name}.ass"
+        size = round(H * 0.036) if H > W else round(H * 0.06)
+        L = ["[Script Info]", "ScriptType: v4.00+", f"PlayResX: {W}", f"PlayResY: {H}", "WrapStyle: 0", "",
+             "[V4+ Styles]",
+             "Format: Name, Fontname, Fontsize, PrimaryColour, SecondaryColour, OutlineColour, BackColour, Bold, "
+             "Italic, Underline, StrikeOut, ScaleX, ScaleY, Spacing, Angle, BorderStyle, Outline, Shadow, "
+             "Alignment, MarginL, MarginR, MarginV, Encoding",
+             f"Style: Cap,DM Sans,{size},&H00FFFFFF,&H00FFFFFF,&H00000000,&H80000000,-1,0,0,0,100,100,0,0,1,"
+             f"{max(size // 14, 3)},1,2,{W // 12},{W // 12},{round(H * 0.22)},1", "",
+             "[Events]", "Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text"]
+        L += [f"Dialogue: 0,{ass_time(st)},{ass_time(min(en, dur))},Cap,,0,0,0,,{ass_escape(t)}"
+              for st, en, t in caps if st < dur]
+        ass.write_text("\n".join(L) + "\n")
+        vf += f",ass='{ass}':fontsdir='{ensure_fonts()}'"
+    dest = work / f"{name}.mp4"
+    yt.run(["ffmpeg", "-y", "-v", "error", "-i", str(clip), "-vf", vf, "-c:v", "libx264", "-preset", "medium",
+            "-crf", "18", "-pix_fmt", "yuv420p", "-c:a", "aac", "-b:a", "192k", "-movflags", "+faststart", str(dest)])
+    clip.unlink()
+    if caps:
+        ass.unlink()
+    print(f"[extract] {framing}, captions: {how if caps else 'none (' + how + ')'}, {dur:.1f}s", file=sys.stderr)
+    print(dest)
+    if a.preview:
+        sheet = dest.with_suffix(".preview.jpg")
+        yt.run(["ffmpeg", "-y", "-v", "error", "-i", str(dest), "-vf",
+                f"fps={5 / dur:.4f},scale=270:-2,tile=5x1:padding=6", "-frames:v", "1", str(sheet)])
+        print(sheet)
+
+
 def cmd_themes(_):
     for t, d in THEMES.items():
         print(f"{t}\n  searches: " + " | ".join(d["queries"]))
@@ -536,6 +646,14 @@ def main():
     r.add_argument("--name"); r.add_argument("--preview", action="store_true", help="also write a 6-frame preview strip")
     r.add_argument("--keep-ass", action="store_true")
     r.set_defaults(fn=cmd_render)
+
+    x = sub.add_parser("extract", help="clean clip: speaker framed, captions only, nothing else added")
+    x.add_argument("src"); x.add_argument("--start", required=True); x.add_argument("--end", required=True)
+    x.add_argument("--frame", choices=["vertical", "original"], default="vertical",
+                   help="vertical = 9:16 crop that follows the speaker's face (default); original = source framing")
+    x.add_argument("--transcript"); x.add_argument("--no-captions", action="store_true")
+    x.add_argument("--name"); x.add_argument("--preview", action="store_true")
+    x.set_defaults(fn=cmd_extract)
 
     t = sub.add_parser("themes"); t.set_defaults(fn=cmd_themes)
 
