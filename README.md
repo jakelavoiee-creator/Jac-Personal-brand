@@ -29,3 +29,16 @@ python3 .claude/skills/youtube-watch/scripts/yt.py ask "https://youtu.be/VIDEO_I
 ```
 
 To use it in every project, copy the folder to `~/.claude/skills/youtube-watch/`.
+
+### `aura-miami-clips`: speaker clips → branded B&W reels
+
+Finds known people talking about entrepreneur mindset, encouragement, the higher self, doing what you love, meditation, abundance and manifestation. It ranks their most quotable 15–45s moments and renders 1080×1920 black-and-white Aura Miami reels (hook, captions, credit, watermark, end card). Requires `youtube-watch`.
+
+```bash
+S=.claude/skills/aura-miami-clips/scripts
+python3 $S/clips.py hunt --theme manifestation higher-self        # find source videos
+python3 $S/clips.py scan URL1 URL2 --theme manifestation           # rank moments from captions
+python3 $S/clips.py render URL --start 754 --end 786 \
+  --hook "IT ALREADY HAPPENED" --credit "Jim Carrey" --preview      # post-ready reel
+```
+Options: `--logo aura-white.png` uses the real wordmark; `--color` gives muted color instead of B&W.

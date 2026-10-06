@@ -361,7 +361,7 @@ def gemini_key():
     return os.environ.get("GEMINI_API_KEY") or os.environ.get("GOOGLE_API_KEY")
 
 
-def gemini(part, prompt, quiet=False):
+def gemini(part, prompt, quiet=False, schema=None):
     """Send one media part + prompt; fall back across models on overload. Raises RuntimeError."""
     key = gemini_key()
     if not key:
@@ -369,7 +369,10 @@ def gemini(part, prompt, quiet=False):
     # "-latest" aliases track Google's current models, so this list doesn't go stale
     models = [os.environ["GEMINI_MODEL"]] if os.environ.get("GEMINI_MODEL") else []
     models += [m for m in ("gemini-flash-latest", "gemini-pro-latest", "gemini-flash-lite-latest") if m not in models]
-    body = json.dumps({"contents": [{"parts": [part, {"text": prompt}]}]}).encode()
+    payload = {"contents": [{"parts": [part, {"text": prompt}]}]}
+    if schema:  # structured output: the model must return exactly this JSON shape
+        payload["generationConfig"] = {"responseMimeType": "application/json", "responseSchema": schema}
+    body = json.dumps(payload).encode()
     last = ""
     for model in models:
         for attempt in range(3):
@@ -402,6 +405,11 @@ def inline_part(path, mime):
     return {"inline_data": {"mime_type": mime, "data": base64.b64encode(data).decode()}}
 
 
+TRANSCRIPT_SCHEMA = {"type": "ARRAY", "items": {"type": "OBJECT", "required": ["start", "end", "text"],
+                     "properties": {"start": {"type": "NUMBER"}, "end": {"type": "NUMBER"},
+                                    "text": {"type": "STRING"}}}}
+
+
 def gemini_transcribe(video, work):
     """Transcribe via Gemini from a compact mono mp3 (~80 min fits the inline limit)."""
     if not gemini_key():
@@ -412,10 +420,18 @@ def gemini_transcribe(video, work):
         txt = gemini(inline_part(mp3, "audio/mpeg"),
                      "Transcribe all speech verbatim. Return ONLY a JSON array of objects "
                      '{"start": seconds_float, "end": seconds_float, "text": "..."}, one per sentence '
-                     "or short phrase, in order. Use [] if there is no speech.", quiet=True)
+                     "or short phrase, in order. Use [] if there is no speech.", quiet=True, schema=TRANSCRIPT_SCHEMA)
         m = re.search(r"\[.*\]", txt, re.S)
         segs = json.loads(m.group(0)) if m else []
-        return [(float(s["start"]), float(s.get("end", s["start"])), s["text"].strip()) for s in segs], "gemini"
+        out = []
+        for seg in segs:  # models vary key names; accept the common ones
+            text = next((seg[k] for k in ("text", "transcript", "content", "speech") if seg.get(k)), "")
+            st = seg.get("start", seg.get("start_time", seg.get("startTime")))
+            if text and st is not None:
+                st = parse_time(st) if isinstance(st, str) else float(st)
+                en = seg.get("end", seg.get("end_time", seg.get("endTime", st)))
+                out.append((st, parse_time(en) if isinstance(en, str) else float(en), str(text).strip()))
+        return out, "gemini"
     except (RuntimeError, ValueError, KeyError, TypeError) as e:
         return None, f"gemini transcription failed: {e}"
     finally:
