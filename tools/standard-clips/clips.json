@@ -1,0 +1,17 @@
+{
+  "endcard": "build/endcard.mp4",
+  "logo": null,
+  "out_dir": "out",
+  "clips": [
+    {"id": "01-denzel-put-god-first",   "youtube": "ROiNPUwg9bQ", "src": "sources/ROiNPUwg9bQ.mp4", "vtt": "sources/ROiNPUwg9bQ.en.vtt", "start": "7:04.6",  "end": "7:27.0",  "caption": "Everything I have is by the grace of God."},
+    {"id": "02-denzel-fail-big",        "youtube": "ROiNPUwg9bQ", "src": "sources/ROiNPUwg9bQ.mp4", "vtt": "sources/ROiNPUwg9bQ.en.vtt", "start": "9:13.5",  "end": "9:36.4",  "caption": "Fail big. You only live once."},
+    {"id": "03-jobs-connect-the-dots",  "youtube": "UF8uR6Z6KLc", "src": "sources/UF8uR6Z6KLc.mp4", "vtt": "sources/UF8uR6Z6KLc.en.vtt", "start": "5:06.6",  "end": "5:30.4",  "caption": "You can only connect the dots looking backwards."},
+    {"id": "04-jobs-dont-lose-faith",   "youtube": "UF8uR6Z6KLc", "src": "sources/UF8uR6Z6KLc.mp4", "vtt": "sources/UF8uR6Z6KLc.en.vtt", "start": "8:10.6",  "end": "8:38.2",  "caption": "Don't lose faith."},
+    {"id": "05-harvey-jump",            "youtube": "8uPDyzeA1_w", "src": "sources/8uPDyzeA1_w.mp4", "vtt": "sources/8uPDyzeA1_w.en.vtt", "start": "4:58.0",  "end": "5:35.0",  "caption": "If you don't jump, your parachute will never open."},
+    {"id": "06-jensen-pain-and-suffering", "youtube": "AoGmfcsoADI", "src": "sources/AoGmfcsoADI.mp4", "vtt": "sources/AoGmfcsoADI.en.vtt", "start": "0:31.0", "end": "0:54.0", "caption": "High expectations. Low resilience."},
+    {"id": "07-carrey-fail-at-what-you-dont-want", "youtube": "uL2ztWv70wE", "src": "sources/uL2ztWv70wE.mp4", "vtt": "sources/uL2ztWv70wE.en.vtt", "start": "11:14.5", "end": "11:46.0", "caption": "You can fail at what you don't want."},
+    {"id": "08-oprah-what-is-this-here-to-teach-me", "youtube": "Bpd3raj8xww", "src": "sources/Bpd3raj8xww.mp4", "vtt": "sources/Bpd3raj8xww.en.vtt", "start": "17:44.9", "end": "18:20.0", "caption": "What is this here to teach me?"},
+    {"id": "09-kobe-what-god-put-you-here-to-do", "youtube": "T5-vgyEbtPU", "src": "sources/T5-vgyEbtPU.mp4", "vtt": "sources/T5-vgyEbtPU.en.vtt", "start": "7:43.6", "end": "8:10.4", "caption": "If you have to remind yourself to work hard, choose a different profession."},
+    {"id": "10-mcconaughey-fear-is-a-good-thing", "youtube": "3QWQKrJkR9A", "src": "sources/3QWQKrJkR9A.mp4", "vtt": "sources/3QWQKrJkR9A.en.vtt", "start": "35:34.9", "end": "36:17.5", "caption": "Fear is a good thing."}
+  ]
+}

@@ -1,3 +1,6 @@
 yt-watch/
 __pycache__/
 aura-clips/
+tools/standard-clips/sources/
+tools/standard-clips/build/
+tools/standard-clips/out/
