@@ -323,7 +323,7 @@ def cmd_clip(a):
     graph = f"{v};{au};[1:v]setsar=1,fps={FPS}[ev];[1:a]aresample=48000[ea];[body][ba][ev][ea]concat=n=2:v=1:a=1[v][a]"
     Path(a.out).parent.mkdir(parents=True, exist_ok=True)
     run(["ffmpeg", "-v", "error", "-y", *inputs, "-filter_complex", graph, "-map", "[v]", "-map", "[a]",
-         "-c:v", "libx264", "-crf", "19", "-preset", "medium", "-pix_fmt", "yuv420p", "-movflags", "+faststart",
+         "-c:v", "libx264", "-crf", "19", "-maxrate", "6M", "-bufsize", "12M", "-preset", "medium", "-pix_fmt", "yuv420p", "-movflags", "+faststart",
          "-c:a", "aac", "-b:a", "192k", "-ac", "2", a.out])
     print(f"[clip] {a.out} ({raw:.1f}s -> {dur:.1f}s after {len(keep) - 1} dead-space cuts, + end card)")
 
