@@ -3,9 +3,9 @@
 
 Look (measured from @nextstandrd's top reels):
   canvas   1080x1920 black; 16:9 footage full-width, vertically centred (~32% of height)
-  grade    black & white, contrast up, crushed blacks, film grain, soft vignette
+  grade    original colour, contrast up slightly, luma film grain, soft vignette
   captions 1-3 words at a time, Inter Display Bold, UPPERCASE, white, centred on the speaker
-  ending   footage fades to black (1.6s) -> logo on black (0.4s) -> logo on white (0.4s)
+  ending   hard cut -> logo on black (0.4s) -> logo on white (0.4s)
            -> "TOO CREATIVE FOR NINE TO FIVE." white on black (0.4s) -> "LIVE NOW." black on white (3.2s, fades)
            with the end-card sound bed hitting on each switch.
 
@@ -30,7 +30,6 @@ FOOT_H = W * 9 // 16                     # 607px footage band
 FOOT_Y = (H - FOOT_H) // 2               # band top
 FONT = "Inter Display"                   # closest installed match to their caption face
 FONT_FILE = None                          # resolved lazily via fc-match
-FADE_TO_BLACK = 1.6
 SFX_TRIM = 1.0          # sound bed was timed to a 1.4s first card; trimmed so hits stay on the switches
 CARD = [("logo", "black", 0.4), ("logo", "white", 0.4),
         ("TOO CREATIVE FOR NINE TO FIVE.", "black", 0.4), ("LIVE NOW.", "white", 3.2)]
@@ -178,6 +177,43 @@ def card_frame(kind, bg, logo, path):
     im.save(path)
 
 
+def synth_hits(path, total):
+    """Original end-card VFX: a punchy impact on every card switch, a bigger final hit with a
+    ringing tail on the last card. No music bed."""
+    import wave
+    import numpy as np
+    sr = 48000
+    out = np.zeros(int(sr * total) + sr)
+    times = [0.0]
+    for _, _, d in CARD[:-1]:
+        times.append(times[-1] + d)
+    rng = np.random.default_rng(7)
+
+    def hit(at, big=False):
+        n = int(sr * (2.2 if big else 0.45))
+        t = np.arange(n) / sr
+        f = 42 + (150 if big else 110) * np.exp(-t * 28)          # pitch-dropping sub thump
+        body = np.sin(2 * np.pi * np.cumsum(f) / sr) * np.exp(-t * (2.2 if big else 9))
+        click = rng.standard_normal(n) * np.exp(-t * 180)          # transient snap
+        air = np.convolve(rng.standard_normal(n), np.ones(24) / 24, "same") * np.exp(-t * (1.6 if big else 14))
+        ring = (np.sin(2 * np.pi * 880 * t) + 0.5 * np.sin(2 * np.pi * 1320 * t)) * np.exp(-t * 2.5) * 0.08 if big else 0
+        sig = 0.9 * body + 0.35 * click + 0.25 * air + ring
+        i = int(sr * at)
+        out[i:i + n] += sig[:len(out) - i]
+
+    for k, at in enumerate(times):
+        hit(at, big=(k == len(times) - 1))
+    out = out[: int(sr * total)]
+    out *= 0.89 / (np.abs(out).max() + 1e-9)
+    pcm = (np.repeat(out[:, None], 2, 1) * 32767).astype(np.int16)
+    with wave.open(str(path), "wb") as w:
+        w.setnchannels(2)
+        w.setsampwidth(2)
+        w.setframerate(sr)
+        w.writeframes(pcm.tobytes())
+    return path
+
+
 def cmd_endcard(a):
     tmp = Path(tempfile.mkdtemp())
     logo = a.logo or placeholder_logo(tmp / "placeholder.png")
@@ -192,12 +228,11 @@ def cmd_endcard(a):
         filters.append(vf + f"[v{i}]")
     total = sum(d for _, _, d in CARD)
     concat = "".join(f"[v{i}]" for i in range(len(CARD))) + f"concat=n={len(CARD)}:v=1:a=0[v]"
-    if a.sfx:
+    if a.sfx:  # a supplied sound bed (trimmed to the card timing)
         inputs += ["-ss", str(SFX_TRIM), "-i", a.sfx]
-        audio = [f"[{len(CARD)}:a]aresample=48000,apad,atrim=0:{total},afade=t=out:st={total - 0.3}:d=0.3[a]"]
-    else:
-        inputs += ["-f", "lavfi", "-t", str(total), "-i", "anullsrc=r=48000:cl=stereo"]
-        audio = [f"[{len(CARD)}:a]anull[a]"]
+    else:      # default: original synthesized hits, no music
+        inputs += ["-i", str(synth_hits(tmp / "hits.wav", total))]
+    audio = [f"[{len(CARD)}:a]aresample=48000,apad,atrim=0:{total},afade=t=out:st={total - 0.3}:d=0.3[a]"]
     Path(a.out).parent.mkdir(parents=True, exist_ok=True)
     run(["ffmpeg", "-v", "error", "-y", *inputs, "-filter_complex", ";".join(filters + [concat] + audio),
          "-map", "[v]", "-map", "[a]", "-r", str(FPS), "-c:v", "libx264", "-crf", "18", "-pix_fmt", "yuv420p",
@@ -306,19 +341,18 @@ def cmd_clip(a):
         canvas.paste(mark, ((W - mark.width) // 2, FOOT_Y + FOOT_H - mark.height - 28), mark)
         canvas.save(tmp / "wm.png")
         wm = ["-i", str(tmp / "wm.png")]
-    fade_st = max(0.0, dur - FADE_TO_BLACK)
     zoom = float(getattr(a, "zoom", None) or 1.0)   # >1 crops in from the top, e.g. to drop a burned-in timecode
     crop = detect_bars(a.src, start - src_offset, raw)
     crop += f"crop=iw/{zoom}:ih/{zoom}:(iw-ow)/2:0," if zoom > 1 else ""
-    v = (f"[0:v]select='{sel}',setpts=N/FRAME_RATE/TB,{crop}scale={W}:-2,setsar=1,format=gray,eq=contrast=1.22:brightness=-0.03,"
-         f"curves=all='0/0 0.12/0.04 0.5/0.48 1/0.96',noise=alls=12:allf=t,vignette=PI/5,"
+    v = (f"[0:v]select='{sel}',setpts=N/FRAME_RATE/TB,{crop}scale={W}:-2,setsar=1,eq=contrast=1.12:brightness=-0.02:saturation=1.0,"
+         f"curves=all='0/0 0.12/0.04 0.5/0.48 1/0.96',noise=c0s=10:c0f=t,vignette=PI/5,"
          f"pad={W}:{H}:0:(oh-ih)/2:black,format=yuv420p")
     if wm:
         v += "[g];[g][2:v]overlay=0:0"
     v += (f",subtitles={ass}:fontsdir=/usr/share/fonts,fps={FPS},"
-          f"fade=t=out:st={fade_st}:d={FADE_TO_BLACK}[body]")
+          f"null[body]")  # hard cut into the end card
     au = (f"[0:a]aselect='{sel}',asetpts=N/SR/TB,aresample=48000,loudnorm=I=-14:TP=-1.5:LRA=9,"
-          f"afade=t=in:d=0.05,afade=t=out:st={dur - 0.8}:d=0.8[ba]")  # keep the last words at full level
+          f"afade=t=in:d=0.05,afade=t=out:st={max(0.0, dur - 0.06)}:d=0.06[ba]")  # de-click only
     inputs = ["-ss", f"{start - src_offset:.3f}", "-t", f"{raw:.3f}", "-i", a.src, "-i", a.endcard, *wm]
     graph = f"{v};{au};[1:v]setsar=1,fps={FPS}[ev];[1:a]aresample=48000[ea];[body][ba][ev][ea]concat=n=2:v=1:a=1[v][a]"
     Path(a.out).parent.mkdir(parents=True, exist_ok=True)
