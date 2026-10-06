@@ -11,7 +11,7 @@ Cinematic, stripped back, hard-hitting. One idea per clip, 20–45s, opening on 
 | Canvas | 1080×1920 black. 16:9 footage full-width, centred vertically (~32% of height) |
 | Grade | Black & white, contrast +22%, crushed blacks, temporal film grain, soft vignette |
 | Captions | 1–3 words at a time, Inter Display Bold 40px, UPPERCASE, white, on the speaker at 60% of the footage height. Timed word by word from YouTube captions |
-| Watermark | Logo, 70px wide, 55% opacity, bottom centre of the footage (only when a logo is set) |
+| Watermark | Logo, 150px wide, 55% opacity, bottom centre of the footage (only when a logo is set) |
 | Ending (5.4s) | Footage + audio fade to black (1.6s) → logo on black 1.4s → logo on white 0.4s → "TOO CREATIVE FOR NINE TO FIVE." white on black 0.4s → "LIVE NOW." black on white 3.2s, fading out. The end-card sound bed runs under all of it |
 | Audio | Original speech only, loudness-normalised to −14 LUFS |
 
