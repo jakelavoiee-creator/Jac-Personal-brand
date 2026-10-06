@@ -6,7 +6,7 @@
 
 Lets Claude Code search YouTube, watch any video (transcript + timestamped frames + contact sheets), cut clips/stills/GIFs, and turn tutorials into new reusable skills.
 
-**Setup**
+**Setup**: run `bash setup.sh` (installs packages, checks everything, tests YouTube access). Manual equivalent:
 ```bash
 brew install ffmpeg          # or: apt install ffmpeg
 pip install yt-dlp           # downloads + captions
