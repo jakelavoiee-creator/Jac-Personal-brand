@@ -6,7 +6,7 @@ Look (measured from @nextstandrd's top reels):
   grade    black & white, contrast up, crushed blacks, film grain, soft vignette
   captions 1-3 words at a time, Inter Display Bold, UPPERCASE, white, centred on the speaker
   ending   footage fades to black (1.6s) -> logo on black (1.4s) -> logo on white (0.4s)
-           -> logo on black (0.4s) -> "TOO CREATIVE FOR NINE TO FIVE. / LIVE NOW." on white (3.2s, fades)
+           -> "TOO CREATIVE FOR NINE TO FIVE." white on black (0.4s) -> "LIVE NOW." black on white (3.2s, fades)
            with the end-card sound bed hitting on each switch.
 
 Usage:
@@ -30,9 +30,9 @@ FOOT_H = W * 9 // 16                     # 607px footage band
 FOOT_Y = (H - FOOT_H) // 2               # band top
 FONT = "Inter Display"                   # closest installed match to their caption face
 FONT_FILE = None                          # resolved lazily via fc-match
-TAGLINE = ["TOO CREATIVE FOR NINE TO FIVE.", "LIVE NOW."]
 FADE_TO_BLACK = 1.6
-CARD = [("logo", "black", 1.4), ("logo", "white", 0.4), ("logo", "black", 0.4), ("text", "white", 3.2)]
+CARD = [("logo", "black", 1.4), ("logo", "white", 0.4),
+        ("TOO CREATIVE FOR NINE TO FIVE.", "black", 0.4), ("LIVE NOW.", "white", 3.2)]
 
 
 def run(cmd):
@@ -172,12 +172,8 @@ def card_frame(kind, bg, logo, path):
         mark = tint_logo(logo, fg, 560)
         im.paste(mark, ((W - mark.width) // 2, (H - mark.height) // 2), mark)
     else:
-        d = ImageDraw.Draw(im)
         f = ImageFont.truetype(font_file("Bold"), 44)
-        y = H // 2 - 30
-        for line in TAGLINE:
-            d.text((W // 2, y), line, font=f, fill=fg, anchor="mm")
-            y += 60
+        ImageDraw.Draw(im).text((W // 2, H // 2), kind, font=f, fill=fg, anchor="mm")
     im.save(path)
 
 
