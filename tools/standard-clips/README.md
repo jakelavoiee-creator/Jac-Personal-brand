@@ -19,7 +19,7 @@ Cinematic, stripped back, hard-hitting. One idea per clip, 20–45s, opening on 
 ```bash
 cd tools/standard-clips
 ./fetch.sh                                   # sources + captions into sources/
-python3 render.py endcard --logo logo.png --out build/endcard.mp4
+python3 render.py endcard --logo logo.png --sfx build/endcard_sfx.wav --out build/endcard.mp4
 python3 render.py batch clips.json           # renders out/01-….mp4 … out/10-….mp4
 python3 render.py batch clips.json --only 05-harvey-jump   # just one
 ```
