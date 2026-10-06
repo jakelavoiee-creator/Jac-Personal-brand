@@ -18,7 +18,9 @@ import os
 import re
 import shutil
 import subprocess
+import time
 import sys
+import urllib.error
 import urllib.request
 from pathlib import Path
 
@@ -170,10 +172,15 @@ def whisper_transcribe(video, work):
 
 
 def get_transcript(work, video):
+    """Captions first (free, exact timing), then local Whisper, then Gemini."""
     vtts = sorted(work.glob("subs*.vtt"), key=lambda p: (".en." not in p.name, "orig" in p.name))
     if vtts:
         return parse_vtt(vtts[0].read_text(errors="ignore")), f"captions ({vtts[0].name})"
-    return whisper_transcribe(video, work)
+    tx, why = whisper_transcribe(video, work)
+    if tx is not None:
+        return tx, why
+    tx, why2 = gemini_transcribe(video, work)
+    return (tx, why2) if tx is not None else (None, f"{why}; {why2}")
 
 
 # ---------------------------------------------------------------- frames
@@ -350,28 +357,77 @@ def cmd_clip(a):
 
 # ---------------------------------------------------------------- ask (Gemini)
 
-def cmd_ask(a):
-    key = os.environ.get("GEMINI_API_KEY") or os.environ.get("GOOGLE_API_KEY")
+def gemini_key():
+    return os.environ.get("GEMINI_API_KEY") or os.environ.get("GOOGLE_API_KEY")
+
+
+def gemini(part, prompt, quiet=False):
+    """Send one media part + prompt; fall back across models on overload. Raises RuntimeError."""
+    key = gemini_key()
     if not key:
-        die("set GEMINI_API_KEY (free key: https://aistudio.google.com/apikey)")
-    model = os.environ.get("GEMINI_MODEL", "gemini-2.5-flash")
-    if is_url(a.src):
-        part = {"file_data": {"file_uri": a.src}}  # Gemini reads YouTube URLs natively
-    else:
-        data = Path(a.src).read_bytes()
-        if len(data) > 19 * 1024 * 1024:
-            die("local file >19MB: clip it first (yt.py clip) or pass a YouTube URL")
-        part = {"inline_data": {"mime_type": "video/mp4", "data": base64.b64encode(data).decode()}}
-    body = {"contents": [{"parts": [part, {"text": a.question}]}]}
-    req = urllib.request.Request(
-        f"https://generativelanguage.googleapis.com/v1beta/models/{model}:generateContent",
-        data=json.dumps(body).encode(), headers={"Content-Type": "application/json", "x-goog-api-key": key})
+        raise RuntimeError("set GEMINI_API_KEY (free key: https://aistudio.google.com/apikey)")
+    # "-latest" aliases track Google's current models, so this list doesn't go stale
+    models = [os.environ["GEMINI_MODEL"]] if os.environ.get("GEMINI_MODEL") else []
+    models += [m for m in ("gemini-flash-latest", "gemini-pro-latest", "gemini-flash-lite-latest") if m not in models]
+    body = json.dumps({"contents": [{"parts": [part, {"text": prompt}]}]}).encode()
+    last = ""
+    for model in models:
+        for attempt in range(3):
+            req = urllib.request.Request(
+                f"https://generativelanguage.googleapis.com/v1beta/models/{model}:generateContent",
+                data=body, headers={"Content-Type": "application/json", "x-goog-api-key": key})
+            try:
+                resp = json.load(urllib.request.urlopen(req, timeout=600))
+            except urllib.error.HTTPError as e:
+                last = f"{model} -> {e.code}: {e.read().decode()[:300]}"
+                if e.code in (429, 500, 503) and attempt < 2:
+                    time.sleep(4 * 2 ** attempt)  # overloaded / rate-limited: back off, retry
+                    continue
+                if e.code in (404, 429, 500, 503):
+                    if not quiet:
+                        print(f"[gemini] {model} unavailable ({e.code}), trying next model", file=sys.stderr)
+                    break
+                raise RuntimeError(f"Gemini {last}")
+            if not quiet:
+                print(f"[gemini] answered by {model}", file=sys.stderr)
+            return "".join(p.get("text", "") for c in resp.get("candidates", [])
+                           for p in c.get("content", {}).get("parts", []))
+    raise RuntimeError(f"all Gemini models failed; last error: {last}")
+
+
+def inline_part(path, mime):
+    data = Path(path).read_bytes()
+    if len(data) > 19 * 1024 * 1024:
+        raise RuntimeError(f"{path} is >19MB inline limit: clip it first or pass a YouTube URL")
+    return {"inline_data": {"mime_type": mime, "data": base64.b64encode(data).decode()}}
+
+
+def gemini_transcribe(video, work):
+    """Transcribe via Gemini from a compact mono mp3 (~80 min fits the inline limit)."""
+    if not gemini_key():
+        return None, "no GEMINI_API_KEY"
+    mp3 = work / "audio.mp3"
+    run(["ffmpeg", "-y", "-v", "error", "-i", str(video), "-vn", "-ac", "1", "-b:a", "32k", str(mp3)])
     try:
-        resp = json.load(urllib.request.urlopen(req, timeout=600))
-    except urllib.error.HTTPError as e:
-        die(f"Gemini {e.code}: {e.read().decode()[:500]}")
-    print("".join(p.get("text", "") for c in resp.get("candidates", [])
-                  for p in c.get("content", {}).get("parts", [])))
+        txt = gemini(inline_part(mp3, "audio/mpeg"),
+                     "Transcribe all speech verbatim. Return ONLY a JSON array of objects "
+                     '{"start": seconds_float, "end": seconds_float, "text": "..."}, one per sentence '
+                     "or short phrase, in order. Use [] if there is no speech.", quiet=True)
+        m = re.search(r"\[.*\]", txt, re.S)
+        segs = json.loads(m.group(0)) if m else []
+        return [(float(s["start"]), float(s.get("end", s["start"])), s["text"].strip()) for s in segs], "gemini"
+    except (RuntimeError, ValueError, KeyError, TypeError) as e:
+        return None, f"gemini transcription failed: {e}"
+    finally:
+        mp3.unlink(missing_ok=True)
+
+
+def cmd_ask(a):
+    try:
+        part = {"file_data": {"file_uri": a.src}} if is_url(a.src) else inline_part(a.src, "video/mp4")
+        print(gemini(part, a.question))  # Gemini reads YouTube URLs natively
+    except RuntimeError as e:
+        die(str(e))
 
 
 # ---------------------------------------------------------------- main

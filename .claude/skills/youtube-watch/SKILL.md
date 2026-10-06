@@ -20,7 +20,7 @@ Outputs land in `./yt-watch/<video-slug>/` (override with `--out DIR` before the
 - `ffmpeg` + `ffprobe` on PATH (`brew install ffmpeg` / `apt install ffmpeg`)
 - `pip install yt-dlp` for URLs
 - Optional: `pip install faster-whisper`, which transcribes videos that have no captions
-- Optional: `GEMINI_API_KEY` (free at https://aistudio.google.com/apikey) for `ask`
+- Optional: `GEMINI_API_KEY` (free at https://aistudio.google.com/apikey). It enables `ask`, and lets `watch` transcribe videos that have no captions and no Whisper. Set it in your shell profile or the environment's secrets, never in a committed file.
 
 If a command fails on a missing tool, install it and retry. Don't fall back to guessing what the video contains.
 
@@ -29,7 +29,7 @@ If a command fails on a missing tool, install it and retry. Don't fall back to g
 | Command | Use it for |
 |---|---|
 | `search "query" -n 8` | Find candidate videos (title, channel, length, views, URL) |
-| `watch URL_OR_FILE` | Full ingest: download → transcript → frames at even intervals + every scene cut → contact sheets → `timeline.md` |
+| `watch URL_OR_FILE` | Full ingest: download → transcript (captions → Whisper → Gemini, first that works) → frames at even intervals + every scene cut → contact sheets → `timeline.md` |
 | `frame SRC --at 1:23 95 0:02:10.5` | Full-res PNG stills at exact moments (into `stills/`) |
 | `clip SRC --start 1:20 --end 1:45 [--vertical] [--gif] [--audio] [--name hook]` | Extract a segment as mp4 (into `clips/`); `--vertical` center-crops to 1080×1920 for Reels/TikTok/Shorts |
 | `ask SRC "question"` | Gemini watches the whole video natively (YouTube URL, or local file <19MB) and answers |
@@ -41,7 +41,7 @@ If a command fails on a missing tool, install it and retry. Don't fall back to g
 1. Run `watch`. Then **read `timeline.md` first**. It has the metadata, chapters, description, scene cuts and a frame-by-frame merge of what was said.
 2. **Open every contact sheet** (`sheet_01.jpg`, …) with the Read tool. Each tile is stamped with its timestamp. This is how you *see* the video: on-screen text, b-roll, screen recordings, edit style, the speaker's framing.
 3. When a tile matters (code on screen, a slide, a UI), open the full-res still from `frames/` or grab an exact one with `frame`.
-4. If there is no transcript, the timeline says so. Read burned-in captions from the sheets (sample denser with `--max-frames` if needed), or use `ask` for the audio.
+4. Cross-check the transcript against what's on screen: speech-to-text mishears names (e.g. "AI Studio" heard as "GitHub Studio"), and the frames win on proper nouns. If there is no transcript, the timeline says so. Read burned-in captions from the sheets (sample denser with `--max-frames` if needed), or use `ask` for the audio.
 5. Build your answer as **beats**: timestamp → what's on screen → what's said → what changed. Then read across the beats for structure. Report only what the frames and transcript show. Label anything inferred as inference, and anything sampling could have missed as a gap. Cite timestamps.
 
 For long videos (>20 min), watch with chapters in mind. Run `watch` at the default budget for the overview, then `clip` the relevant chapter and `watch` the clip with a higher `--max-frames` to zoom in.

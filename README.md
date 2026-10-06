@@ -11,7 +11,7 @@ Lets Claude Code search YouTube, watch any video (transcript + timestamped frame
 brew install ffmpeg          # or: apt install ffmpeg
 pip install yt-dlp           # downloads + captions
 pip install faster-whisper   # optional: transcribe videos without captions
-export GEMINI_API_KEY=...    # optional: free key from aistudio.google.com/apikey, enables `ask`
+export GEMINI_API_KEY=...    # optional: free key from aistudio.google.com/apikey, enables `ask` + transcribing caption-less videos
 ```
 
 **Use it**: just talk to Claude in this repo:
