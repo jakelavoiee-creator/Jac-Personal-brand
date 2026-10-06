@@ -105,6 +105,9 @@ def ytdlp():
         os.chmod(cookie_file, 0o600)
     if cookie_file:
         cmd += ["--cookies", cookie_file]
+    # YouTube's JS challenges need a JS runtime; without one only storyboards are offered.
+    if shutil.which("node") and not shutil.which("deno"):
+        cmd += ["--js-runtimes", "node", "--remote-components", "ejs:npm"]
     return cmd
 
 
