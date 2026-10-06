@@ -205,16 +205,98 @@ def cmd_endcard(a):
     print(f"[endcard] {a.out} ({total:.1f}s)")
 
 
+
+# ---------------------------------------------------------------- dead space
+
+GAP_MIN, GAP_PAD, FLOOR_LIFT = 0.35, 0.10, 8   # cut pauses > 0.35s; "silence" = noise floor + 8dB
+
+
+def keep_segments(src, start, dur, word_times=()):
+    """Speech segments (relative to clip start) with the speaker's dead space removed.
+    word_times: caption word starts (clip-relative); a cut never swallows one."""
+    import numpy as np
+    pcm = subprocess.run(["ffmpeg", "-v", "error", "-ss", f"{start:.3f}", "-t", f"{dur:.3f}", "-i", src, "-vn",
+                          "-ac", "1", "-ar", "16000", "-f", "s16le", "-"], capture_output=True).stdout
+    x = np.frombuffer(pcm, dtype=np.int16).astype(np.float32)
+    hop = 320  # 20ms frames
+    n = len(x) // hop
+    if n == 0:
+        return [(0.0, dur)]
+    db = 20 * np.log10(np.sqrt((x[:n * hop].reshape(n, hop) ** 2).mean(1)) + 1e-6)
+    quiet = db < np.percentile(db, 10) + FLOOR_LIFT
+    starts, ends, i = [], [], 0
+    while i < n:
+        if quiet[i]:
+            j = i
+            while j < n and quiet[j]:
+                j += 1
+            if (j - i) * 0.02 >= GAP_MIN:
+                starts.append(i * 0.02)
+                ends.append(j * 0.02)
+            i = j
+        else:
+            i += 1
+    cuts = []
+    for s0, s1 in zip(starts, ends + [dur] * (len(starts) - len(ends))):
+        a, b = max(0.0, s0 + GAP_PAD), min(dur, s1 - GAP_PAD)
+        inside = [w for w in word_times if a - 0.05 <= w <= b]
+        if inside:  # quiet word in the "silence": keep it, only cut the gap before it
+            b = min(inside) - GAP_PAD
+        if b - a > 0.15:
+            cuts.append((a, b))
+    keep, t = [], 0.0
+    for a, b in cuts:
+        if a > t:
+            keep.append((t, a))
+        t = b
+    if t < dur:
+        keep.append((t, dur))
+    return keep or [(0.0, dur)]
+
+
+def detect_bars(src, start, dur):
+    """crop= filter that removes baked-in black bars from the source, or '' if there are none."""
+    out = subprocess.run(["ffmpeg", "-v", "info", "-ss", f"{start:.3f}", "-t", f"{min(dur, 20):.3f}", "-i", src,
+                          "-vf", "cropdetect=limit=24:round=2", "-an", "-f", "null", "-"],
+                         capture_output=True, text=True).stderr
+    found = re.findall(r"crop=(\d+):(\d+):(\d+):(\d+)", out)
+    size = re.search(r"Stream.*Video.*?, (\d{2,5})x(\d{2,5})", out)
+    if not found or not size:
+        return ""
+    w, h, x, y = max(set(found), key=found.count)
+    iw, ih = int(size.group(1)), int(size.group(2))
+    if int(w) < iw * 0.96 or int(h) < ih * 0.96:
+        return f"crop={w}:{h}:{x}:{y},"
+    return ""
+
+
+def remap(t, keep):
+    """Clip-relative time -> time after dead space removal."""
+    acc = 0.0
+    for a, b in keep:
+        if t < a:
+            return acc
+        if t <= b:
+            return acc + t - a
+        acc += b - a
+    return acc
+
+
 # ---------------------------------------------------------------- clip
 
 def cmd_clip(a):
     start, end = secs(a.start), secs(a.end)
     src_offset = secs(a.src_offset) if a.src_offset else 0.0   # when --src is already a section
-    dur = end - start
+    raw = end - start
+    words = [w for w in vtt_words(a.vtt) if start - 0.05 <= w["t"] < end] if a.vtt else []
+    keep = keep_segments(a.src, start - src_offset, raw, [w["t"] - start for w in words])
+    dur = sum(b - a_ for a_, b in keep)
     tmp = Path(tempfile.mkdtemp())
     ass = tmp / "caps.ass"
-    words = [w for w in vtt_words(a.vtt) if start - 0.05 <= w["t"] < end] if a.vtt else []
-    write_ass(chunk(words), ass, start, dur)
+    for w in words:  # move caption timing onto the tightened timeline
+        w["t"], w["end"] = remap(w["t"] - start, keep), remap(w["end"] - start, keep)
+    write_ass(chunk(words), ass, 0.0, dur)
+    sel = "+".join(f"between(t,{a_:.3f},{b:.3f})" for a_, b in keep)
     logo = a.logo
     wm = []
     if logo:
@@ -225,22 +307,25 @@ def cmd_clip(a):
         canvas.save(tmp / "wm.png")
         wm = ["-i", str(tmp / "wm.png")]
     fade_st = max(0.0, dur - FADE_TO_BLACK)
-    v = (f"[0:v]scale={W}:-2,setsar=1,format=gray,eq=contrast=1.22:brightness=-0.03,"
+    zoom = float(getattr(a, "zoom", None) or 1.0)   # >1 crops in from the top, e.g. to drop a burned-in timecode
+    crop = detect_bars(a.src, start - src_offset, raw)
+    crop += f"crop=iw/{zoom}:ih/{zoom}:(iw-ow)/2:0," if zoom > 1 else ""
+    v = (f"[0:v]select='{sel}',setpts=N/FRAME_RATE/TB,{crop}scale={W}:-2,setsar=1,format=gray,eq=contrast=1.22:brightness=-0.03,"
          f"curves=all='0/0 0.12/0.04 0.5/0.48 1/0.96',noise=alls=12:allf=t,vignette=PI/5,"
          f"pad={W}:{H}:0:(oh-ih)/2:black,format=yuv420p")
     if wm:
         v += "[g];[g][2:v]overlay=0:0"
     v += (f",subtitles={ass}:fontsdir=/usr/share/fonts,fps={FPS},"
           f"fade=t=out:st={fade_st}:d={FADE_TO_BLACK}[body]")
-    au = (f"[0:a]aresample=48000,loudnorm=I=-14:TP=-1.5:LRA=9,"
+    au = (f"[0:a]aselect='{sel}',asetpts=N/SR/TB,aresample=48000,loudnorm=I=-14:TP=-1.5:LRA=9,"
           f"afade=t=in:d=0.05,afade=t=out:st={dur - 0.8}:d=0.8[ba]")  # keep the last words at full level
-    inputs = ["-ss", f"{start - src_offset:.3f}", "-t", f"{dur:.3f}", "-i", a.src, "-i", a.endcard, *wm]
+    inputs = ["-ss", f"{start - src_offset:.3f}", "-t", f"{raw:.3f}", "-i", a.src, "-i", a.endcard, *wm]
     graph = f"{v};{au};[1:v]setsar=1,fps={FPS}[ev];[1:a]aresample=48000[ea];[body][ba][ev][ea]concat=n=2:v=1:a=1[v][a]"
     Path(a.out).parent.mkdir(parents=True, exist_ok=True)
     run(["ffmpeg", "-v", "error", "-y", *inputs, "-filter_complex", graph, "-map", "[v]", "-map", "[a]",
          "-c:v", "libx264", "-crf", "19", "-preset", "medium", "-pix_fmt", "yuv420p", "-movflags", "+faststart",
          "-c:a", "aac", "-b:a", "192k", "-ac", "2", a.out])
-    print(f"[clip] {a.out} ({dur:.1f}s + end card)")
+    print(f"[clip] {a.out} ({raw:.1f}s -> {dur:.1f}s after {len(keep) - 1} dead-space cuts, + end card)")
 
 
 def cmd_batch(a):
@@ -250,7 +335,7 @@ def cmd_batch(a):
         if a.only and c["id"] not in a.only:
             continue
         ns = argparse.Namespace(src=str(base / c["src"]), vtt=str(base / c["vtt"]) if c.get("vtt") else None,
-                                start=c["start"], end=c["end"], src_offset=c.get("src_offset"),
+                                start=c["start"], end=c["end"], src_offset=c.get("src_offset"), zoom=c.get("zoom"),
                                 endcard=str(base / plan["endcard"]), logo=plan.get("logo") and str(base / plan["logo"]),
                                 out=str(base / plan["out_dir"] / f"{c['id']}.mp4"))
         if not Path(ns.src).exists():
@@ -272,6 +357,7 @@ def main():
     c.add_argument("--vtt")
     c.add_argument("--logo")
     c.add_argument("--src-offset", help="timestamp in the original video where --src begins")
+    c.add_argument("--zoom", help="crop in from the top by this factor (e.g. 1.18) to remove burned-in overlays")
     b = sub.add_parser("batch")
     b.add_argument("plan")
     b.add_argument("--only", nargs="*")
