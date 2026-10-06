@@ -20,6 +20,7 @@ Find the moment where someone the viewer already respects says the line they nee
 ## Pipeline
 `S=.claude/skills/aura-miami-clips/scripts` · `Y=.claude/skills/youtube-watch/scripts` · outputs go to `./aura-clips/`.
 
+0. **Check setup (once per session).** `python3 $Y/yt.py doctor` tests a real 1-second YouTube download and prints the exact fix if anything is missing. If YouTube downloads fail, still do steps 1–3 (search and finding moments work without downloads), then ask the user to upload the source video and run `extract` on the uploaded file path.
 1. **Search.** `python3 $S/clips.py hunt --theme do-what-you-love` (add `--query "Jim Carrey commencement speech full"` for a specific speaker). Favor the original full-length upload (an official channel or a full speech or interview) over compilations and re-edits.
 2. **Find the moment.** Use either:
    - `python3 $S/clips.py scan URL1 URL2 --theme do-what-you-love`, which ranks 15–45s windows from captions in seconds per video and writes `aura-clips/moments.md`; or
@@ -48,7 +49,7 @@ Rejects: sponsor reads, the speaker's own calls to action, politics, mocking any
 
 ## Requirements
 - `ffmpeg` with libass
-- `pip install yt-dlp "opencv-python-headless<5"` (OpenCV 5 removed the face detector this uses; without OpenCV the crop falls back to center)
+- `pip install "yt-dlp[default]" "opencv-python-headless<5"` (OpenCV 5 removed the face detector this uses; without OpenCV the crop falls back to center)
 - Optional: `faster-whisper`
 - Optional: `GEMINI_API_KEY`, for `yt.py ask` and caption fallback
 

@@ -7,7 +7,7 @@ miss() { printf "  \033[31mMISSING\033[0m %s\n     -> %s\n" "$1" "$2"; MISSING=1
 MISSING=0
 
 echo "Installing Python packages..."
-python3 -m pip install -q --upgrade yt-dlp "opencv-python-headless<5" faster-whisper 2>&1 | grep -v -i "warning" || true
+python3 -m pip install -q --upgrade "yt-dlp[default]" "opencv-python-headless<5" faster-whisper 2>&1 | grep -v -i "warning" || true
 
 echo "Checking..."
 command -v python3 >/dev/null && ok "python3" || miss "python3" "Mac: brew install python | Windows: winget install Python.Python.3.12"

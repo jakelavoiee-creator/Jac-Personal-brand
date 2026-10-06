@@ -411,10 +411,22 @@ def cut_segment(src, start, end, work, name):
     dur = end - start
     raw = work / f".{name}.src.mp4"
     if yt.is_url(src):
-        subprocess.run(yt.ytdlp() + ["-f", "bv*[height<=1080]+ba/b[height<=1080]/b", "--merge-output-format", "mp4",
-                                     "--download-sections", f"*{start:.2f}-{end:.2f}", "--force-keyframes-at-cuts",
-                                     "-o", str(raw), "--force-overwrites", src], check=True)
-        src_video, cut_ss = raw, 0.0
+        fmt = ["-f", "bv*[height<=1080]+ba/b[height<=1080]/b", "--merge-output-format", "mp4",
+               "-o", str(raw), "--force-overwrites", src]
+        # 1st try: only the section (fast). It streams through ffmpeg, which YouTube sometimes refuses,
+        # so 2nd try: yt-dlp's own downloader for the whole video, then cut locally.
+        p = subprocess.run(yt.ytdlp() + ["--download-sections", f"*{start:.2f}-{end:.2f}",
+                                         "--force-keyframes-at-cuts"] + fmt, capture_output=True, text=True)
+        if p.returncode == 0 and raw.exists():
+            src_video, cut_ss = raw, 0.0
+        else:
+            print("[extract] section download refused; downloading the full video instead", file=sys.stderr)
+            p2 = subprocess.run(yt.ytdlp() + fmt, capture_output=True, text=True)
+            if p2.returncode != 0 or not raw.exists():
+                out = p.stdout + p.stderr + p2.stdout + p2.stderr
+                yt.die("YouTube download failed.\n" + (yt.explain_ytdlp_error(out) or out[-800:]) +
+                       "\nFallback that always works: upload the video file and run extract on that file.")
+            src_video, cut_ss = raw, start
     else:
         src_video, cut_ss = Path(src), start
     clip = work / f".{name}.cut.mp4"

@@ -35,7 +35,7 @@ To use it in every project, copy the folder to `~/.claude/skills/youtube-watch/`
 Searches YouTube for known people speaking on mindset, entrepreneurship, the higher self, doing what you love, meditation, abundance and manifestation, and finds the strongest moments. It extracts each one as a **clean 9:16 clip**: the crop follows the speaker's face, captions are burned in, and nothing else is added. Requires `youtube-watch`.
 
 ```bash
-pip install yt-dlp "opencv-python-headless<5"
+pip install "yt-dlp[default]" "opencv-python-headless<5"
 S=.claude/skills/aura-miami-clips/scripts
 python3 $S/clips.py hunt --theme do-what-you-love                  # search YouTube
 python3 $S/clips.py scan URL1 URL2 --theme do-what-you-love         # rank moments from captions

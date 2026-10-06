@@ -105,7 +105,51 @@ def ytdlp():
         os.chmod(cookie_file, 0o600)
     if cookie_file:
         cmd += ["--cookies", cookie_file]
+    # YouTube streams need a JS runtime to solve their challenges; yt-dlp only looks for deno by default
+    if not shutil.which("deno") and shutil.which("node"):
+        cmd += ["--js-runtimes", "node"]
     return cmd
+
+
+YT_HELP = {
+    "bot": "YouTube wants a logged-in session from this server. Set YT_COOKIES in the environment settings "
+           "(YouTube Cookie Converter page -> one line starting YT_COOKIES=b64:), then start a new session.",
+    "403": "YouTube refused the video stream (HTTP 403). This server isn't logged in: set YT_COOKIES as above. "
+           "If cookies are already set, they may have expired: export fresh ones.",
+    "blocked": "The network policy blocks YouTube. Set Network access to Full in the environment settings.",
+}
+
+
+def explain_ytdlp_error(text):
+    """Turn yt-dlp's failure output into the one fix the user needs."""
+    t = text.lower()
+    if "confirm you" in t and "bot" in t:
+        return YT_HELP["bot"]
+    if "403" in t:
+        return YT_HELP["403"]
+    if "connect" in t and ("denied" in t or "tunnel" in t or "rejected" in t):
+        return YT_HELP["blocked"]
+    return None
+
+
+def cmd_doctor(_):
+    """Check every requirement and try a real 1-second YouTube download."""
+    checks = [("ffmpeg", bool(shutil.which("ffmpeg"))), ("yt-dlp", bool(shutil.which("yt-dlp"))),
+              ("JS runtime (node/deno)", bool(shutil.which("node") or shutil.which("deno"))),
+              ("YT_COOKIES set", bool(os.environ.get("YT_COOKIES") or os.environ.get("YT_COOKIES_FILE"))),
+              ("GEMINI_API_KEY set", bool(gemini_key()))]
+    for name, ok in checks:
+        print(f"  {'OK ' if ok else '-- '} {name}")
+    test = Path(os.environ.get("TMPDIR", "/tmp")) / "yt-doctor.mp4"
+    p = subprocess.run(ytdlp() + ["--test", "-f", "bv*[height<=480]+ba/bv*+ba/b", "-o", str(test), "--force-overwrites",
+                                  "https://www.youtube.com/watch?v=uL2ztWv70wE"], capture_output=True, text=True)
+    ok = p.returncode == 0 and test.exists()
+    test.unlink(missing_ok=True)
+    print(f"  {'OK ' if ok else 'XX '} YouTube download")
+    if not ok:
+        print("\nFIX: " + (explain_ytdlp_error(p.stdout + p.stderr) or (p.stderr or p.stdout)[-600:]))
+        print("Until then: upload the video file to the chat and run extract on the uploaded path.")
+    sys.exit(0 if ok else 1)
 
 
 # ---------------------------------------------------------------- search
@@ -505,6 +549,9 @@ def main():
 
     q = sub.add_parser("ask"); q.add_argument("src"); q.add_argument("question")
     q.set_defaults(fn=cmd_ask)
+
+    d = sub.add_parser("doctor", help="check setup and test a real YouTube download")
+    d.set_defaults(fn=cmd_doctor)
 
     a = p.parse_args()
     try:
