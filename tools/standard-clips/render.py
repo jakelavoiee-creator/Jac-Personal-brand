@@ -233,7 +233,7 @@ def cmd_clip(a):
     v += (f",subtitles={ass}:fontsdir=/usr/share/fonts,fps={FPS},"
           f"fade=t=out:st={fade_st}:d={FADE_TO_BLACK}[body]")
     au = (f"[0:a]aresample=48000,loudnorm=I=-14:TP=-1.5:LRA=9,"
-          f"afade=t=in:d=0.05,afade=t=out:st={fade_st}:d={FADE_TO_BLACK}[ba]")
+          f"afade=t=in:d=0.05,afade=t=out:st={dur - 0.8}:d=0.8[ba]")  # keep the last words at full level
     inputs = ["-ss", f"{start - src_offset:.3f}", "-t", f"{dur:.3f}", "-i", a.src, "-i", a.endcard, *wm]
     graph = f"{v};{au};[1:v]setsar=1,fps={FPS}[ev];[1:a]aresample=48000[ea];[body][ba][ev][ea]concat=n=2:v=1:a=1[v][a]"
     Path(a.out).parent.mkdir(parents=True, exist_ok=True)
