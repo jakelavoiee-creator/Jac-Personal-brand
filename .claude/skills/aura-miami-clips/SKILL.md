@@ -52,7 +52,7 @@ Rejects: sponsor reads, the speaker's own calls to action, politics, mocking any
 - Optional: `faster-whisper`
 - Optional: `GEMINI_API_KEY`, for `yt.py ask` and caption fallback
 
-YouTube blocks most cloud servers ("Sign in to confirm you're not a bot"). In a browser (cloud) session, set the environment variable `YT_COOKIES` to a YouTube cookies.txt export; yt.py passes it to yt-dlp automatically. If downloads still fail, ask the user to upload the video file (a full video is fine) and run `extract` on the uploaded path.
+YouTube blocks most cloud servers ("Sign in to confirm you're not a bot"). In a browser (cloud) session, set the environment variable `YT_COOKIES` on one line: `b64:<base64 of cookies.txt>` (the YouTube Cookie Converter page produces this), a `\t`/`\n`-escaped cookies.txt, or a `Cookie:` header value. yt.py passes it to yt-dlp automatically. If downloads still fail, ask the user to upload the video file (a full video is fine) and run `extract` on the uploaded path.
 
 ## Rights and risk
 These are other people's footage and likenesses, posted by a brand:

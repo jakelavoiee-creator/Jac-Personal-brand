@@ -73,6 +73,22 @@ def duration(path):
     return float(out)
 
 
+def decode_cookies(raw):
+    """YT_COOKIES must fit on one line in environment settings. Accepts:
+    b64:<base64 of cookies.txt>  |  cookies.txt with literal \\t / \\n  |  a Cookie header "a=b; c=d"."""
+    raw = raw.strip()
+    if raw.startswith("b64:"):
+        return base64.b64decode(raw[4:]).decode()
+    if "\t" in raw or "\\t" in raw:
+        return raw.replace("\\t", "\t").replace("\\n", "\n")
+    lines = []  # Cookie header -> Netscape lines for .youtube.com
+    for pair in raw.split(";"):
+        if "=" in pair:
+            k, v = pair.strip().split("=", 1)
+            lines.append("\t".join([".youtube.com", "TRUE", "/", "TRUE", "2147483647", k, v]))
+    return "\n".join(lines) + "\n"
+
+
 def ytdlp():
     need("yt-dlp", "Install with: pip install yt-dlp")
     cmd = ["yt-dlp", "--no-warnings", "--no-playlist"]
@@ -82,7 +98,7 @@ def ytdlp():
     if not cookie_file and os.environ.get("YT_COOKIES"):
         cookie_file = str(Path.home() / ".cache" / "yt-cookies.txt")
         Path(cookie_file).parent.mkdir(parents=True, exist_ok=True)
-        text = os.environ["YT_COOKIES"].replace("\\t", "\t").replace("\\n", "\n")
+        text = decode_cookies(os.environ["YT_COOKIES"])
         if not text.startswith("# Netscape"):
             text = "# Netscape HTTP Cookie File\n" + text
         Path(cookie_file).write_text(text)
