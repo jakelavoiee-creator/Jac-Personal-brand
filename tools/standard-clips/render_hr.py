@@ -4,7 +4,7 @@
   one famous moment, ~12-25s, one truth
   canvas    black 9:16, the 16:9 clip untouched (original colour) across the middle
   open      fades up from black
-  captions  Bebas Neue Regular, big, one word at a time
+  captions  Bebas Neue Regular, one word at a time, sized by impact, always placed off the speaker's face
   type      Bebas Neue Regular for captions and punchline (end card locked)
   punchline the key line as big stacked caps, right-aligned
   mark      small AURA logo, bottom-centre of the footage, on every frame
@@ -77,21 +77,26 @@ def stacked(d, lines, size, align, box_w, box_h, shadow=True):
     gap = int(cap * 0.30)
     block = len(parsed) * cap + (len(parsed) - 1) * gap
     base = (box_h - block) // 2 + cap
+    top, xs = base - cap, []
     for parts, width in parsed:
-        x = box_w - width - int(box_w * 0.07) if align == "right" else (box_w - width) / 2
+        x = (box_w - width - int(box_w * 0.07) if align == "right" else int(box_w * 0.07) if align == "left"
+             else (box_w - width) / 2)
+        xs += [x, x + width]
         for t, f in parts:
             if shadow:
                 d.text((x + 2 * S, base + 3 * S), t, font=f, fill=(0, 0, 0, 140), anchor="ls")
             d.text((x, base), t, font=f, fill=(255, 255, 255, 255), anchor="ls")
             x += d.textlength(t, font=f)
         base += cap + gap
+    return min(xs) / box_w, top / box_h, max(xs) / box_w, (top + block) / box_h
 
 
 def punchline_png(markup, path, align="right"):
     im = Image.new("RGBA", (W, FOOT_H), (0, 0, 0, 0))
     lines = [l.strip() for l in markup.split("/")]
-    stacked(ImageDraw.Draw(im), lines, 80 * S if align == "right" else 120 * S, align, W, FOOT_H)
+    box = stacked(ImageDraw.Draw(im), lines, 80 * S if align != "center" else 120 * S, align, W, FOOT_H)
     im.save(path)
+    return box
 
 
 def logo_mark(logo, width):
@@ -135,7 +140,69 @@ def word_size(text, punch_words):
     return SIZE_MID
 
 
-def write_ass(chunks, path, dur, hide_from, hide_len=2.0, punch_words=frozenset()):
+def face_track(src, start, length, keep, fps=3):
+    """Sample the source and find faces. Returns [(output_time, [(x0, y0, x1, y1) normalised, padded])]."""
+    try:
+        import cv2
+        import numpy as np
+    except ImportError:
+        print("  note: pip install \"opencv-python-headless<5\" to keep captions off faces")
+        return []
+    casc = [cv2.CascadeClassifier(cv2.data.haarcascades + n) for n in
+            ("haarcascade_frontalface_default.xml", "haarcascade_profileface.xml")]
+    w, h = 480, 270
+    raw = subprocess.run(["ffmpeg", "-v", "error", "-ss", f"{start:.3f}", "-t", f"{length:.3f}", "-i", src,
+                          "-vf", f"fps={fps},scale={w}:{h},format=gray", "-f", "rawvideo", "-"], capture_output=True).stdout
+    track = []
+    for i in range(len(raw) // (w * h)):
+        g = np.frombuffer(raw[i * w * h:(i + 1) * w * h], np.uint8).reshape(h, w)
+        g = cv2.equalizeHist(g)
+        boxes = []
+        for c in casc:
+            for flip in (False, True):
+                img = cv2.flip(g, 1) if flip else g
+                for (x, y, bw, bh) in c.detectMultiScale(img, 1.1, 6, minSize=(h // 9, h // 9)):
+                    if flip:
+                        x = w - x - bw
+                    # pad: hair above, chin below, a little either side
+                    boxes.append((max(0, (x - .2 * bw) / w), max(0, (y - .35 * bh) / h),
+                                  min(1, (x + 1.2 * bw) / w), min(1, (y + 1.3 * bh) / h)))
+        track.append((v1.remap(i / fps, keep), boxes))
+    return track
+
+
+def faces_at(track, t0, t1):
+    near = [b for t, bs in track if t0 - 0.4 <= t <= t1 + 0.4 for b in bs]
+    if not near and track:
+        t, bs = min(track, key=lambda x: abs(x[0] - (t0 + t1) / 2))
+        near = bs if abs(t - (t0 + t1) / 2) < 1.5 else []
+    return near
+
+
+def overlap(a, b):
+    return max(0, min(a[2], b[2]) - max(a[0], b[0])) * max(0, min(a[3], b[3]) - max(a[1], b[1]))
+
+
+def place(text, size, faces, prev=None):
+    """Pick a caption centre (normalised in the footage) that keeps the word off every face."""
+    f = ImageFont.truetype(str(BEBAS), size)
+    tw, th = f.getlength(text) / W + 0.03, size * 0.78 / FOOT_H + 0.03
+    def box(cx, cy):
+        return (cx - tw / 2, cy - th / 2, cx + tw / 2, cy + th / 2)
+    cands = [(0.5, 0.80), (0.5, 0.20)]
+    for fx0, fy0, fx1, fy1 in faces:
+        cands += [(0.5, fy1 + th / 2 + 0.02), (0.5, fy0 - th / 2 - 0.02),
+                  (fx0 / 2, 0.5), ((1 + fx1) / 2, 0.5), (fx0 / 2, 0.8), ((1 + fx1) / 2, 0.8)]
+    def fits(c):
+        x0, y0, x1, y1 = box(*c)
+        return x0 >= 0.02 and x1 <= 0.98 and y0 >= 0.03 and y1 <= 0.90   # stay clear of the AURA mark
+    cands = [c for c in cands if fits(c)] or [(0.5, 0.80)]
+    if prev in cands and not any(overlap(box(*prev), fb) for fb in faces):
+        return prev                                                         # don't jump around if it still fits
+    return min(cands, key=lambda c: sum(overlap(box(*c), fb) for fb in faces))
+
+
+def write_ass(chunks, path, dur, hide_from, hide_len=2.0, punch_words=frozenset(), track=()):
     head = f"""[Script Info]
 ScriptType: v4.00+
 PlayResX: {W}
@@ -149,7 +216,7 @@ Style: S,Bebas Neue,{CAP_SIZE * S},&H00FFFFFF,&H00FFFFFF,&H00000000,&H78000000,0
 [Events]
 Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text
 """
-    ev = []
+    ev, prev = [], None
     for k, c in enumerate(chunks):
         t0 = c["t0"]
         t1 = chunks[k + 1]["t0"] if k + 1 < len(chunks) else min(dur, c["t1"] + 0.4)
@@ -160,8 +227,10 @@ Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text
             if t0 < hide_from < t1:                   # a caption already up gives way when it lands
                 t1 = hide_from
         if t1 > t0:
+            size = word_size(c["text"], punch_words) * S
+            prev = cx, cy = place(c["text"], size, faces_at(track, t0, t1), prev)
             ev.append(f"Dialogue: 0,{v1.ass_time(t0)},{v1.ass_time(t1)},S,,0,0,0,,"
-                      f"{{\\an5\\pos({W // 2},{FOOT_Y + FOOT_H // 2})\\fs{word_size(c['text'], punch_words) * S}}}{c['text']}")
+                      f"{{\\an5\\pos({int(cx * W)},{FOOT_Y + int(cy * FOOT_H)})\\fs{size}}}{c['text']}")
     Path(path).write_text(head + "\n".join(ev) + "\n", encoding="utf-8")
 
 
@@ -183,9 +252,20 @@ def build(m, base, tmp, logo):
     ass_rel = f"build/hr_{m['id']}.ass"
     punch_words = {w.lower() for w in re.findall(r"[A-Za-z0-9'’]+", m.get("punchline", "").replace("[", "").replace("]", ""))} - FILLER
     punch_words |= {w.lower() for w in m.get("emphasis", [])}      # optional per-moment override
-    write_ass(chunks, HERE / ass_rel, dur, p_at, p_len, punch_words)
+    track = face_track(src, a - off, b - a, keep)
+    write_ass(chunks, HERE / ass_rel, dur, p_at, p_len, punch_words, track)
     punch, endc, mark = tmp / "punch.png", tmp / "end.png", tmp / "mark.png"
-    punchline_png(m.get("punchline", ""), punch, m.get("punch_align", "right"))
+    pfaces = faces_at(track, p_at, p_at + p_len) if p_at is not None else []
+    best = None
+    for align in ([m["punch_align"]] if m.get("punch_align") else ["right", "left"]):   # whichever side the face isn't on
+        box = punchline_png(m.get("punchline", ""), punch, align)
+        hit = sum(overlap(box, fb) for fb in pfaces)
+        if best is None or hit < best[0]:
+            best = (hit, align)
+        if hit == 0:
+            break
+    if best[1] != align:
+        punchline_png(m.get("punchline", ""), punch, best[1])
     end_card(endc, logo)
     watermark_png(mark, logo)
     sel = "+".join(f"between(t,{a - off + ka:.3f},{a - off + kb:.3f})" for ka, kb in keep)
