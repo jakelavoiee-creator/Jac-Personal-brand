@@ -22,13 +22,19 @@ for tool in ("yt-dlp", "ffmpeg"):
 plans = sys.argv[1:] or ["clips.json"]
 ids = sorted({c["youtube"] for p in plans for c in json.loads((here / p).read_text())["clips"]})
 base = ["yt-dlp", "--no-warnings", "--sleep-requests", "1"]
+CLIENTS = [None, "web_safari", "tv_simply", "web_embedded", "mweb", "android_vr"]
 
 for i, vid in enumerate(ids, 1):
     url = f"https://www.youtube.com/watch?v={vid}"
     print(f"[{i}/{len(ids)}] {vid}")
-    if not (src / f"{vid}.mp4").exists():
-        subprocess.run(base + ["-f", "bv*[height<=1080]+ba/b", "--merge-output-format", "mp4",
-                               "-o", str(src / f"{vid}.%(ext)s"), url])
+    # YouTube refuses some clients (403 / SABR-only); fall back through others until one serves video.
+    for client in CLIENTS:
+        if (src / f"{vid}.mp4").exists():
+            break
+        extra = ["--extractor-args", f"youtube:player_client={client}"] if client else []
+        print(f"    trying {client or 'default'} client...")
+        subprocess.run(base + extra + ["-f", "bv*[height<=1080]+ba/b", "--merge-output-format", "mp4",
+                                       "-o", str(src / f"{vid}.%(ext)s"), url])
     if not (src / f"{vid}.en.vtt").exists():
         subprocess.run(base + ["--skip-download", "--write-auto-subs", "--sub-langs", "en-orig",
                                "--sub-format", "vtt", "-o", str(src / f"{vid}.%(ext)s"), url])
