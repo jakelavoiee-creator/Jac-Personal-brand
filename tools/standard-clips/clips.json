@@ -1,5 +1,5 @@
 {
-  "endcard": "build/endcard.mp4",
+  "endcard": "assets/endcard.mp4",
   "logo": "logo.png",
   "out_dir": "out",
   "clips": [

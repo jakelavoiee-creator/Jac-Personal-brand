@@ -28,15 +28,14 @@ W, H, FPS = 1080, 1920, 30
 FOOT_H = W * 9 // 16                     # 607px footage band
 FOOT_Y = (H - FOOT_H) // 2               # band top
 FONT = "Inter Display"                   # closest installed match to their caption face
-FONT_FILE = None                          # resolved lazily via fc-match
 CLIP_PAD = 3.0         # seconds fetch.py keeps either side of a clip when downloading only that section
 SFX_TRIM = 1.0          # sound bed was timed to a 1.4s first card; trimmed so hits stay on the switches
 CARD = [("logo", "black", 2.4)]   # simple ending: logo centred on black, fades in and out
 END_FADE = 0.6                    # footage fades to black over the last 0.6s
 
 
-def run(cmd):
-    r = subprocess.run(cmd, capture_output=True, text=True)
+def run(cmd, cwd=None):
+    r = subprocess.run(cmd, capture_output=True, text=True, cwd=cwd)
     if r.returncode:
         sys.exit(f"command failed: {' '.join(map(str, cmd[:6]))}...\n{r.stderr[-2000:]}")
     return r.stdout
@@ -51,8 +50,12 @@ def secs(t):
     return s
 
 
+HERE = Path(__file__).resolve().parent
+FONTS = HERE / "assets" / "fonts"   # bundled Inter Display (SIL OFL) so renders match on every machine
+
+
 def font_file(style="Bold"):
-    return run(["fc-match", "-f", "%{file}", f"{FONT}:style={style}"]).strip()
+    return str(FONTS / f"InterDisplay-{style}.otf")
 
 
 # ---------------------------------------------------------------- captions
@@ -322,6 +325,7 @@ def remap(t, keep):
 # ---------------------------------------------------------------- clip
 
 def cmd_clip(a):
+    a.out, a.src, a.endcard = (str(Path(x).resolve()) for x in (a.out, a.src, a.endcard))
     start, end = secs(a.start), secs(a.end)
     src_offset = secs(a.src_offset) if a.src_offset else 0.0   # when --src is already a section
     raw = end - start
@@ -329,7 +333,11 @@ def cmd_clip(a):
     keep = keep_segments(a.src, start - src_offset, raw, [w["t"] - start for w in words])
     dur = sum(b - a_ for a_, b in keep)
     tmp = Path(tempfile.mkdtemp())
-    ass = tmp / "caps.ass"
+    # Captions live under build/ and are referenced relative to HERE: absolute Windows paths ("C:\\...")
+    # break ffmpeg's subtitles filter.
+    (HERE / "build").mkdir(exist_ok=True)
+    ass_rel = f"build/caps_{Path(a.out).stem}.ass"
+    ass = HERE / ass_rel
     for w in words:  # move caption timing onto the tightened timeline
         w["t"], w["end"] = remap(w["t"] - start, keep), remap(w["end"] - start, keep)
     write_ass(chunk(words), ass, 0.0, dur)
@@ -351,7 +359,7 @@ def cmd_clip(a):
          f"pad={W}:{H}:0:(oh-ih)/2:black,format=yuv420p")
     if wm:
         v += "[g];[g][2:v]overlay=0:0"
-    v += (f",subtitles={ass}:fontsdir=/usr/share/fonts,fps={FPS},"
+    v += (f",subtitles={ass_rel}:fontsdir=assets/fonts,fps={FPS},"
           f"fade=t=out:st={max(0.0, dur - END_FADE)}:d={END_FADE}[body]")  # fade to black into the logo
     au = (f"[0:a]aselect='{sel}',asetpts=N/SR/TB,aresample=48000,loudnorm=I=-14:TP=-1.5:LRA=9,"
           f"afade=t=in:d=0.05,afade=t=out:st={max(0.0, dur - END_FADE)}:d={END_FADE}[ba]")
@@ -360,7 +368,7 @@ def cmd_clip(a):
     Path(a.out).parent.mkdir(parents=True, exist_ok=True)
     run(["ffmpeg", "-v", "error", "-y", *inputs, "-filter_complex", graph, "-map", "[v]", "-map", "[a]",
          "-c:v", "libx264", "-crf", "19", "-maxrate", "6M", "-bufsize", "12M", "-preset", "medium", "-pix_fmt", "yuv420p", "-movflags", "+faststart",
-         "-c:a", "aac", "-b:a", "192k", "-ac", "2", a.out])
+         "-c:a", "aac", "-b:a", "192k", "-ac", "2", a.out], cwd=HERE)
     print(f"[clip] {a.out} ({raw:.1f}s -> {dur:.1f}s after {len(keep) - 1} dead-space cuts, + end card)")
 
 
