@@ -1,0 +1,10 @@
+{
+  "out_dir": "out/moments",
+  "moments": [
+    {"id": "m01-carrey-take-a-chance", "youtube": "uL2ztWv70wE",
+     "src": "sources/clips/hr-carrey-father.mp4", "src_offset": 670.0, "vtt": "sources/uL2ztWv70wE.en.vtt",
+     "start": "678.15", "end": "706.0",
+     "punch_from": "take", "punchline": "TAKE A CHANCE / ON DOING / WHAT YOU [L]OVE",
+     "caption": "He took the safe job. It still wasn't safe."}
+  ]
+}
