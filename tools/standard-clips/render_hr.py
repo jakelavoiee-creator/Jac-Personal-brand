@@ -5,14 +5,15 @@
   canvas    black 9:16, the 16:9 clip untouched (original colour) across the middle
   open      fades up from black
   captions  Bebas Neue Regular, big, one word at a time
-  punchline the key line as big stacked type (condensed caps + blackletter accent letters), right-aligned
+  type      Bebas Neue Regular for captions and punchline (end card locked)
+  punchline the key line as big stacked caps, right-aligned
   mark      small AURA logo, bottom-centre of the footage, on every frame
   end       TOO CREATIVE(TM) / FOR NINE TO FIVE, centred in the footage area, AURA mark beneath
 
     python3 render_hr.py moments.json [id ...]          # 4K (2160x3840) by default
     python3 render_hr.py moments.json --hd [id ...]     # 1080x1920
 
-Punchline markup: lines separated by "/", a letter wrapped in [ ] is set in blackletter,
+Punchline markup: lines separated by "/" ([ ] around a letter is accepted and ignored),
 e.g. "HOW HIGH / [I] CAN FLY". Optional per-moment "punch_align": "right" (default) | "center".
 """
 import json
@@ -29,9 +30,21 @@ import render as v1  # noqa: E402
 
 HERE = Path(__file__).resolve().parent
 FONTS = HERE / "assets" / "fonts"
-COND, GOTH = FONTS / "Oswald-Bold.ttf", FONTS / "UnifrakturMaguntia.ttf"
+BEBAS = FONTS / "BebasNeue-Regular.ttf"   # captions + punchline
+COND = FONTS / "Oswald-Bold.ttf"          # end card (locked)
 FPS, END_LEN, FADE_IN = 30, 2.2, 0.35
-CAP_SIZE = 120                           # captions: Bebas Neue Regular, one word at a time, big
+CAP_SIZE = 120                           # captions: Bebas Neue Regular, one word at a time
+# impact sizing: the buildup words stay smaller, the words that land the sentence go big
+SIZE_SMALL, SIZE_MID, SIZE_BIG = 84, 118, 170
+FILLER = set("""a an the and or but so if of to in on at by for with from as is are was were be been being am
+i you he she it we they me him her us them my your his its our their this that these those there here
+do does did have has had will would can could should shall may might must just like um uh yeah okay oh
+what when where who how which then than also very really because about into out up down over not no
+i'm you're it's that's don't i've you've we're they're there's let's gonna wanna gotta""".split())
+IMPACT = set("""never always everything nothing everyone nobody anything impossible possible god dream dreams win wins
+winner winning lose fail failure fear love life death die die alive free freedom truth power money rich broke
+success successful happy happiness pain hard harder hardest discipline greatness great best worst only
+believe faith purpose why now today tomorrow forever alone enough more less most all""".split())
 
 S = 2                                    # 2 = 4K (2160x3840), 1 = 1080x1920
 W, H = 1080 * S, 1920 * S
@@ -53,8 +66,8 @@ def run(cmd):
 
 
 def stacked(d, lines, size, align, box_w, box_h, shadow=True):
-    """Draw stacked condensed caps; [x] letters in blackletter. Returns nothing (draws on d)."""
-    cond, goth = ImageFont.truetype(str(COND), size), ImageFont.truetype(str(GOTH), int(size * 1.12))
+    """Draw stacked Bebas Neue caps (draws on d)."""
+    cond = goth = ImageFont.truetype(str(BEBAS), size)
     parsed = []
     for line in lines:
         parts = [(m.group(1), goth) if m.group(1) else (m.group(2), cond)
@@ -77,7 +90,7 @@ def stacked(d, lines, size, align, box_w, box_h, shadow=True):
 def punchline_png(markup, path, align="right"):
     im = Image.new("RGBA", (W, FOOT_H), (0, 0, 0, 0))
     lines = [l.strip() for l in markup.split("/")]
-    stacked(ImageDraw.Draw(im), lines, 62 * S if align == "right" else 104 * S, align, W, FOOT_H)
+    stacked(ImageDraw.Draw(im), lines, 80 * S if align == "right" else 120 * S, align, W, FOOT_H)
     im.save(path)
 
 
@@ -113,7 +126,16 @@ def end_card(path, logo):
     im.convert("RGB").save(path)
 
 
-def write_ass(chunks, path, dur, hide_from, hide_len=2.0):
+def word_size(text, punch_words):
+    w = text.lower().strip("'’\".,!?")
+    if w in punch_words or w in IMPACT:
+        return SIZE_BIG
+    if w in FILLER or len(w) <= 2:
+        return SIZE_SMALL
+    return SIZE_MID
+
+
+def write_ass(chunks, path, dur, hide_from, hide_len=2.0, punch_words=frozenset()):
     head = f"""[Script Info]
 ScriptType: v4.00+
 PlayResX: {W}
@@ -139,7 +161,7 @@ Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text
                 t1 = hide_from
         if t1 > t0:
             ev.append(f"Dialogue: 0,{v1.ass_time(t0)},{v1.ass_time(t1)},S,,0,0,0,,"
-                      f"{{\\an5\\pos({W // 2},{FOOT_Y + FOOT_H // 2})}}{c['text']}")
+                      f"{{\\an5\\pos({W // 2},{FOOT_Y + FOOT_H // 2})\\fs{word_size(c['text'], punch_words) * S}}}{c['text']}")
     Path(path).write_text(head + "\n".join(ev) + "\n", encoding="utf-8")
 
 
@@ -151,7 +173,7 @@ def build(m, base, tmp, logo):
     words = [{"w": w["w"], "t": v1.remap(w["t"] - a, keep), "end": v1.remap(w["end"] - a, keep)} for w in ws]
     dur = sum(kb - ka for ka, kb in keep)
     # one word per caption, held until the next word starts (or briefly after the last one)
-    chunks = [{"t0": w["t"], "t1": max(w["end"], w["t"] + 0.12), "text": w["w"].strip(" ,.;:").upper()} for w in words if w["w"].strip(" ,.;:")]
+    chunks = [{"t0": w["t"], "t1": max(w["end"], w["t"] + 0.12), "text": w["w"].strip(" ,.;:\"“”").upper()} for w in words if w["w"].strip(" ,.;:\"“”")]
     p_at = None
     if m.get("punch_from"):
         cue = m["punch_from"].lower()
@@ -159,7 +181,9 @@ def build(m, base, tmp, logo):
         p_at = hit[0] if hit else None
     p_len = float(m.get("punch_len", 2.0))       # the punchline is a beat, not a takeover
     ass_rel = f"build/hr_{m['id']}.ass"
-    write_ass(chunks, HERE / ass_rel, dur, p_at, p_len)
+    punch_words = {w.lower() for w in re.findall(r"[A-Za-z0-9'’]+", m.get("punchline", "").replace("[", "").replace("]", ""))} - FILLER
+    punch_words |= {w.lower() for w in m.get("emphasis", [])}      # optional per-moment override
+    write_ass(chunks, HERE / ass_rel, dur, p_at, p_len, punch_words)
     punch, endc, mark = tmp / "punch.png", tmp / "end.png", tmp / "mark.png"
     punchline_png(m.get("punchline", ""), punch, m.get("punch_align", "right"))
     end_card(endc, logo)
