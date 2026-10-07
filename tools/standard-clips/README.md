@@ -34,19 +34,20 @@ YouTube blocks downloads from cloud servers, so fetch the source videos locally.
 ```powershell
 winget install Gyan.FFmpeg DenoLand.Deno Python.Python.3.12 Git.Git
 # close and reopen PowerShell, then:
-python -m pip install -U "yt-dlp[default]"
+python -m pip install -U "yt-dlp[default]" pillow numpy
 # close and reopen PowerShell, then:
 git clone -b claude/gallant-mccarthy-1e9yfx https://github.com/jakelavoiee-creator/Jac-Personal-brand.git
 cd Jac-Personal-brand\tools\standard-clips
-python fetch.py clips.json clips2.json
+python daily.py day-01.json      # downloads + renders the day's reels into out/day-01/
 ```
 
 **Mac (Terminal):**
 ```bash
 brew install yt-dlp ffmpeg deno git python
+python3 -m pip install pillow numpy
 git clone -b claude/gallant-mccarthy-1e9yfx https://github.com/jakelavoiee-creator/Jac-Personal-brand.git
 cd Jac-Personal-brand/tools/standard-clips
-python3 fetch.py clips.json clips2.json
+python3 daily.py day-01.json
 ```
 The videos land in `tools/standard-clips/sources/`.
 
