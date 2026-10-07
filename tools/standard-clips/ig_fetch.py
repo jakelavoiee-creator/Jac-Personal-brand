@@ -47,7 +47,7 @@ def call(url, data=None):
             try:
                 return json.loads(body)
             except ValueError:
-                sys.exit("Instagram sent the login page - your cookies.txt session expired. Log in to instagram.com in Chrome and export cookies again.")
+                return None   # Instagram answered with its login page
         except urllib.error.HTTPError as e:
             if e.code not in (429, 401, 500, 502, 503) or attempt == 5:
                 raise
@@ -57,6 +57,8 @@ def call(url, data=None):
 
 
 # The search endpoint is lighter and less rate-limited than web_profile_info.
+if not any(c.name == "sessionid" and "instagram" in c.domain for c in jar):
+    sys.exit("cookies.txt has no Instagram login - log in to instagram.com in Chrome, then export cookies again.")
 found = call(f"https://www.instagram.com/web/search/topsearch/?query={urllib.parse.quote(account)}")
 user = next((u["user"] for u in found.get("users", []) if u["user"]["username"].lower() == account.lower()), None)
 if not user:
@@ -69,6 +71,13 @@ for _ in range(40):
     if max_id:
         form["max_id"] = max_id
     d = call("https://www.instagram.com/api/v1/clips/user/", form)
+    if d is None:   # fall back to the profile feed (posts + reels)
+        d = call(f"https://www.instagram.com/api/v1/feed/user/{user['id']}/?count=33" + (f"&max_id={max_id}" if max_id else ""))
+        if d is None:
+            sys.exit("Instagram sent the login page - the session in cookies.txt was logged out. "
+                     "Log in to instagram.com in Chrome, export cookies again and copy the new file over cookies.txt.")
+        d = {"items": [{"media": m} for m in d.get("items", []) if m.get("video_versions")],
+             "paging_info": {"more_available": d.get("more_available"), "max_id": d.get("next_max_id")}}
     items += [it["media"] for it in d.get("items", [])]
     pi = d.get("paging_info") or {}
     if not pi.get("more_available"):
