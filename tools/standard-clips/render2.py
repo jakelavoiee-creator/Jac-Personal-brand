@@ -145,12 +145,20 @@ def build(reel, plan_dir, tmp):
     sched, at, i = [], first, 0
     starts = [c["t0"] for c in chunks]
     while i < len(shots) and at < dur - 3.0:
-        s0 = min((x for x in starts if x >= at), default=None)
+        cue = shots[i].get("on")    # optional: cut to this shot on the first beat containing this word
+        if cue:
+            hit = [c["t0"] for c in chunks if c["t0"] >= at and cue.lower() in c["text"].lower()]
+            s0 = hit[0] if hit else None
+        else:
+            s0 = min((x for x in starts if x >= at), default=None)
         if s0 is None or s0 > dur - 3.0:
+            if cue:          # cue word already passed or absent: skip just this shot
+                i += 1
+                continue
             break
         length = shots[i].get("dur", 2.0)
         sched.append((s0, min(length, dur - 2.5 - s0), shots[i]))
-        at = s0 + length + 1.8                  # back on the speaker ~1.8s before the next cut
+        at = s0 + length + (0.25 if cue else 1.8)   # back on the speaker before the next cut
         i += 1
 
     # Inputs: 0 = speaker source, 1.. = b-roll shots, then background, mask, chrome.
