@@ -35,7 +35,7 @@ if cookies.exists():
     base += ["--cookies", str(cookies)]
 else:
     print("note: no cookies.txt found - if YouTube asks to 'confirm you're not a bot', add one (see README).")
-CLIENTS = [None, "web_safari"]
+CLIENTS = [None, "web_safari", "tv_simply"]
 
 CLIP_PAD = 3.0  # must match render.py
 
