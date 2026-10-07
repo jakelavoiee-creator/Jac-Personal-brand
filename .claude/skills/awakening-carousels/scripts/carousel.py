@@ -2,7 +2,9 @@
 """Awakening carousels: dark, minimal, athletic Instagram carousels.
 
 Commands
+  search   "QUERY" [...] [-n N]   Pinterest keyword search -> library/candidates.jsonl (add --pull to download)
   pull     URL [URL...]           Pinterest board (…/user/board/ or .rss) or direct image URLs -> library
+  pull     --candidates           download every not-yet-downloaded search candidate
   add      PATH [PATH...]         copy local images (files or folders) into the library
   tag      FILE "tag, tag" [--mood M]   set the meaning tags for one library image
   untagged                        list library images that still need tags
@@ -11,7 +13,7 @@ Commands
 
 Library: brand/awakening-carousels/library/ (images + library.json with tags per image).
 """
-import argparse, hashlib, json, random, re, shutil, sys, urllib.request
+import argparse, hashlib, http.cookiejar, json, random, re, sys, urllib.parse, urllib.request
 from pathlib import Path
 from xml.etree import ElementTree
 
@@ -21,6 +23,8 @@ ROOT = Path.cwd()
 BRAND = ROOT / "brand" / "awakening-carousels"
 LIB = BRAND / "library"
 LIB_JSON = LIB / "library.json"
+CANDS = LIB / "candidates.jsonl"
+UA = "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/127.0 Safari/537.36"
 OUT = BRAND / "out"
 FONTS = Path(__file__).resolve().parent.parent / "assets" / "fonts"
 
@@ -66,7 +70,7 @@ def _ingest(data: bytes, source: str, lib, hint=""):
     return name
 
 def _get(url):
-    req = urllib.request.Request(url, headers={"User-Agent": "Mozilla/5.0"})
+    req = urllib.request.Request(url, headers={"User-Agent": UA})
     with urllib.request.urlopen(req, timeout=30) as r:
         return r.read()
 
@@ -74,8 +78,68 @@ def _board_rss(url):
     url = url.split("?")[0].rstrip("/")
     return url if url.endswith(".rss") else url + ".rss"
 
+def pinterest_search(query, limit=40):
+    """Pinterest's own web search (same endpoint the site uses, no login). Returns pins with original-size URLs."""
+    cj = http.cookiejar.CookieJar()
+    op = urllib.request.build_opener(urllib.request.HTTPCookieProcessor(cj))
+    src = "/search/pins/?q=" + urllib.parse.quote(query) + "&rs=typed"
+    op.open(urllib.request.Request("https://www.pinterest.com" + src, headers={"User-Agent": UA}), timeout=20).read()
+    csrf = next((c.value for c in cj if c.name == "csrftoken"), "")
+    pins, bookmark = [], None
+    while len(pins) < limit:
+        opts = {"query": query, "scope": "pins", "rs": "typed", "redux_normalize_feed": True, "source_url": src}
+        if bookmark: opts["bookmarks"] = [bookmark]
+        url = "https://www.pinterest.com/resource/BaseSearchResource/get/?" + urllib.parse.urlencode(
+            {"source_url": src, "data": json.dumps({"options": opts, "context": {}})})
+        req = urllib.request.Request(url, headers={
+            "User-Agent": UA, "Accept": "application/json", "X-Requested-With": "XMLHttpRequest",
+            "X-Pinterest-AppState": "active", "X-Pinterest-PWS-Handler": "www/search/[scope].js",
+            "X-Pinterest-Source-Url": src, "X-CSRFToken": csrf, "Referer": "https://www.pinterest.com/"})
+        d = json.loads(op.open(req, timeout=20).read())["resource_response"]
+        for x in d["data"].get("results", []):
+            im = (x.get("images") or {}).get("orig")
+            if not im or x.get("videos") or x.get("story_pin_data_id"):
+                continue
+            pins.append({"id": x["id"], "query": query, "url": im["url"], "w": im["width"], "h": im["height"],
+                         "title": (x.get("grid_title") or x.get("title") or "").strip(),
+                         "desc": (x.get("description") or "").strip()[:200],
+                         "pin": f"https://www.pinterest.com/pin/{x['id']}/"})
+        bookmark = d.get("bookmark")
+        if not bookmark or bookmark == "-end-":
+            break
+    return pins[:limit]
+
+def cmd_search(a):
+    LIB.mkdir(parents=True, exist_ok=True)
+    seen = {json.loads(l)["id"] for l in CANDS.read_text().splitlines()} if CANDS.exists() else set()
+    new = 0
+    with CANDS.open("a") as fh:
+        for q in a.queries:
+            pins = [p for p in pinterest_search(q, a.n) if min(p["w"], p["h"]) >= 700]
+            fresh = [p for p in pins if p["id"] not in seen]
+            for p in fresh:
+                fh.write(json.dumps(p) + "\n"); seen.add(p["id"])
+            new += len(fresh)
+            print(f"{q!r}: {len(pins)} pins, {len(fresh)} new")
+    print(f"{new} new candidates -> {CANDS}")
+    if a.pull:
+        cmd_pull(argparse.Namespace(urls=[], candidates=True))
+
 def cmd_pull(a):
     lib = load_lib(); added = 0
+    if getattr(a, "candidates", False) and CANDS.exists():
+        have = {v.get("pin_id") for v in lib.values()}
+        for line in CANDS.read_text().splitlines():
+            p = json.loads(line)
+            if p["id"] in have: continue
+            try:
+                n = _ingest(_get(p["url"]), p["pin"], lib, hint=f"{p['query']} | {p['title']} {p['desc']}".strip())
+                if n:
+                    lib[n]["pin_id"] = p["id"]; added += 1; print(f"  + {n}  {p['title'][:50]}")
+            except Exception as e:
+                print(f"  ! {p['url']}: {e}")
+                if "Tunnel" in str(e) or "403" in str(e):
+                    save_lib(lib); sys.exit("image host blocked: allow i.pinimg.com in the network policy, then rerun `pull --candidates`")
     for url in a.urls:
         if "pinterest." in url and not re.search(r"\.(jpe?g|png|webp)$", url, re.I):
             rss = _board_rss(url)
@@ -317,7 +381,8 @@ def cmd_grid(a):
 def main():
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     sp = ap.add_subparsers(dest="cmd", required=True)
-    p = sp.add_parser("pull"); p.add_argument("urls", nargs="+"); p.set_defaults(fn=cmd_pull)
+    p = sp.add_parser("search"); p.add_argument("queries", nargs="+"); p.add_argument("-n", type=int, default=40); p.add_argument("--pull", action="store_true"); p.set_defaults(fn=cmd_search)
+    p = sp.add_parser("pull"); p.add_argument("urls", nargs="*"); p.add_argument("--candidates", action="store_true"); p.set_defaults(fn=cmd_pull)
     p = sp.add_parser("add"); p.add_argument("paths", nargs="+"); p.set_defaults(fn=cmd_add)
     p = sp.add_parser("tag"); p.add_argument("file"); p.add_argument("tags"); p.add_argument("--mood", default=""); p.set_defaults(fn=cmd_tag)
     p = sp.add_parser("untagged"); p.set_defaults(fn=cmd_untagged)

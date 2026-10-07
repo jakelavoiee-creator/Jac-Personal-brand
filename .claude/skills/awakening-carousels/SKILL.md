@@ -22,7 +22,8 @@ Personal brand only. Aura Miami has its own skills.
 ## Pipeline
 `C=.claude/skills/awakening-carousels/scripts/carousel.py` (run from the repo root; needs Pillow).
 
-1. **Fill the library.** Do either or both:
+1. **Fill the library.** Use any of these:
+   - `python3 $C search "winter arc aesthetic" "dark aesthetic" -n 40 --pull`: Pinterest keyword search (the site's own search endpoint, no login). Pins are saved to `library/candidates.jsonl`, and `--pull` (or a later `pull --candidates`) downloads them. Searching needs `www.pinterest.com` and downloading needs `i.pinimg.com`. Skip pins that are brand product shots or show identifiable people (creators, models): they aren't ours to post.
    - `python3 $C pull https://www.pinterest.com/<user>/<board>/`: reads the public board's RSS feed and downloads each pin at full size. This needs pinterest.com and i.pinimg.com to be reachable. The default cloud network policy blocks them, so run it locally or allow those domains.
    - `python3 $C add path/to/folder`: local photos (the user's own training shots, or images saved from Pinterest by hand).
 2. **Tag by meaning, not by object.** Run `python3 $C untagged`, then **look at each image** (Read it) and tag it:
