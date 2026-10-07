@@ -23,25 +23,22 @@ Every clip serves exactly one pillar. If it serves none, it doesn't post.
 ## The roster
 Recurring faces build recognition. The roster is the brand; new voices are added rarely and on purpose.
 
-**Anchor voice**
-- **David Ghiyam:** Kabbalah, the light of the Creator, certainty beyond logic, desire as destiny. 40–50% of clips.
+| Role | Speakers | Share of a day (20 reels) |
+|---|---|---|
+| Anchor | **David Ghiyam** | 6–8 |
+| Core voices | Eckhart Tolle, Dr. Joe Dispenza, Jim Rohn, Bob Proctor, Jim Carrey | 2–3 each |
+| Rotating | Dr. Wayne Dyer, Dr. Bruce Lipton, Dr. Myles Munroe, Keanu Reeves, Bruce Lee | 0–1 each |
+| Audio-only voices | Alan Watts, Neville Goddard | need a still-image or b-roll treatment (little or no footage of them speaking exists) |
+| Cinema | *Peaceful Warrior*, *The Matrix*, *Kung Fu Panda* (Oogway), *Soul* | 1–2 per day max |
+| On hold | Kevin Trudeau | see note below |
 
-**Known faces** (one or two per batch each)
-- **Jim Carrey:** awakening, ego death, visualization and manifestation (the $10M check).
-- **Keanu Reeves:** quiet presence, humility, grief and meaning.
-- **Eckhart Tolle:** presence and the power of now.
-- **Dr. Joe Dispenza:** becoming your future self and changing your reality from within.
-- **Dr. Wayne Dyer:** "you'll see it when you believe it", intention and manifestation.
-- **Bruce Lee:** be water: flow, adaptability, self-knowledge.
+**Kevin Trudeau:** he was convicted in federal court (criminal contempt tied to his infomercials) and served prison time. Featuring him can draw "scammer" comments and undercut the brand's trust. Use him only as a deliberate choice.
 
-**Cinema** (at most 1–2 per batch; the scene must carry one pillar on its own)
-- *Peaceful Warrior* (2006): presence, "this moment".
-- *The Matrix*: freeing your mind, a reality you can see through.
-- *Kung Fu Panda*: Oogway on the present and on trusting your path.
-- *Soul* (Pixar): the fish and the ocean, life is already here.
+**Retired** (don't fit the identity): Steve Harvey, Oprah, Kobe Bryant, Matthew McConaughey, Steve Jobs, Will Smith. Denzel's faith clips are borderline.
 
-**Retired from batch 1**, because they don't fit the identity: Steve Harvey, Oprah, Kobe Bryant, McConaughey, Steve Jobs.
-Denzel "Put God First" and "God's proof" are borderline. They keep faith and desire-as-destiny but use a commencement-speech energy. Use them sparingly.
+## Topics
+Faith · success · limiting beliefs · manifestation · brotherhood · laws of the universe · self-improvement · abundance · love · mission of the soul · evolving · attracting · fulfilling one's purpose.
+Each day should cover at least 8 of these, and no topic should appear in more than 4 reels.
 
 ## Clip rules
 - One idea, 15–45s, opening on the strongest line.
