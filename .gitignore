@@ -4,3 +4,5 @@ aura-clips/
 tools/standard-clips/sources/
 tools/standard-clips/build/
 tools/standard-clips/out/
+tools/standard-clips/cookies.txt
+*cookies*.txt

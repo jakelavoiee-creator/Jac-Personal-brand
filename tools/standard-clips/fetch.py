@@ -27,8 +27,15 @@ if not shutil.which("ffmpeg"):
     sys.exit("ffmpeg not found - install it first (see README, 'Download on your own computer').")
 
 plans = sys.argv[1:] or ["clips.json"]
-base = YTDLP + ["--no-warnings", "--sleep-requests", "1"]
-CLIENTS = [None, "web_safari", "tv_simply", "web_embedded", "mweb", "android_vr"]
+# Gentle pacing: bursts of requests are what trigger YouTube's "confirm you're not a bot" check.
+base = YTDLP + ["--no-warnings", "--sleep-requests", "2", "--sleep-interval", "4", "--max-sleep-interval", "8"]
+# A logged-in cookies.txt next to this script (git-ignored) gets past the bot check.
+cookies = here / "cookies.txt"
+if cookies.exists():
+    base += ["--cookies", str(cookies)]
+else:
+    print("note: no cookies.txt found - if YouTube asks to 'confirm you're not a bot', add one (see README).")
+CLIENTS = [None, "web_safari"]
 
 CLIP_PAD = 3.0  # must match render.py
 
