@@ -3,6 +3,7 @@
 
     python ig_fetch.py hustlersrevivalofficial            # top 8 reels
     python ig_fetch.py hustlersrevivalofficial --top 12
+    python ig_fetch.py ascendrecode --top 999      # every reel on the page
 
 Needs cookies.txt (exported from instagram.com while logged in) next to this script.
 Writes ig/<account>/reels.json (all reels with plays/likes/captions) and ig/<account>/<code>.mp4 for the top ones.
@@ -69,5 +70,6 @@ for r in rows[:top]:
     f = out / f"{r['code']}.mp4"
     if r["video"] and not f.exists():
         urllib.request.urlretrieve(r["video"], f)
+        time.sleep(2)
     print(f"  {r['plays']:>10,} plays  {r['seconds']:>3}s  {f.name}")
 print(f"\nDone. Upload the folder {out}")
