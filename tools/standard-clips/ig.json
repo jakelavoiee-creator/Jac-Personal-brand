@@ -1,0 +1,19 @@
+{
+ "out_dir": "out/ig",
+ "logo": "logo.png",
+ "moments": [
+  {
+   "id": "a01-lucy-hale-trust-the-timing",
+   "youtube": "9bXtnuX-VOM",
+   "src": "sources/clips/a01-lucy-hale-trust-the-timing.mp4",
+   "src_offset": 5580.1,
+   "vtt": "sources/9bXtnuX-VOM.en.vtt",
+   "start": "5583.10",
+   "end": "5612.20",
+   "punch_from": "magic",
+   "punchline": "MAGIC / [U]NFOLDS.",
+   "caption": "Trust the timing of your life.",
+   "ref": "ascendrecode DcdVz63AiE5"
+  }
+ ]
+}
