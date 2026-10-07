@@ -4,7 +4,7 @@
   one famous moment, ~12-25s, one truth
   canvas    black 9:16, the 16:9 clip untouched (original colour) across the middle
   open      fades up from black
-  captions  small white sentence-case, 1-3 words
+  captions  Bebas Neue Regular, big, one word at a time
   punchline the key line as big stacked type (condensed caps + blackletter accent letters), right-aligned
   mark      small AURA logo, bottom-centre of the footage, on every frame
   end       TOO CREATIVE(TM) / FOR NINE TO FIVE, centred in the footage area, AURA mark beneath
@@ -31,6 +31,7 @@ HERE = Path(__file__).resolve().parent
 FONTS = HERE / "assets" / "fonts"
 COND, GOTH = FONTS / "Oswald-Bold.ttf", FONTS / "UnifrakturMaguntia.ttf"
 FPS, END_LEN, FADE_IN = 30, 2.2, 0.35
+CAP_SIZE = 120                           # captions: Bebas Neue Regular, one word at a time, big
 
 S = 2                                    # 2 = 4K (2160x3840), 1 = 1080x1920
 W, H = 1080 * S, 1920 * S
@@ -121,7 +122,7 @@ WrapStyle: 2
 
 [V4+ Styles]
 Format: Name, Fontname, Fontsize, PrimaryColour, SecondaryColour, OutlineColour, BackColour, Bold, Italic, Underline, StrikeOut, ScaleX, ScaleY, Spacing, Angle, BorderStyle, Outline, Shadow, Alignment, MarginL, MarginR, MarginV, Encoding
-Style: S,Inter Display,{38 * S},&H00FFFFFF,&H00FFFFFF,&H00000000,&H78000000,-1,0,0,0,100,100,0,0,1,0,{1.5 * S},5,60,60,0,1
+Style: S,Bebas Neue,{CAP_SIZE * S},&H00FFFFFF,&H00FFFFFF,&H00000000,&H78000000,0,0,0,0,100,100,{1 * S},0,1,0,{3 * S},5,60,60,0,1
 
 [Events]
 Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text
@@ -149,9 +150,8 @@ def build(m, base, tmp, logo):
     keep = v1.keep_segments(src, a - off, b - a, [w["t"] - a for w in ws])
     words = [{"w": w["w"], "t": v1.remap(w["t"] - a, keep), "end": v1.remap(w["end"] - a, keep)} for w in ws]
     dur = sum(kb - ka for ka, kb in keep)
-    chunks = v1.chunk(words, max_words=3, max_chars=20, gap=0.35)
-    for c in chunks:   # sentence case, as spoken
-        c["text"] = " ".join(w["w"] for w in words if c["t0"] <= w["t"] <= c["t1"] + 1e-3) or c["text"].lower()
+    # one word per caption, held until the next word starts (or briefly after the last one)
+    chunks = [{"t0": w["t"], "t1": max(w["end"], w["t"] + 0.12), "text": w["w"].strip(" ,.;:").upper()} for w in words if w["w"].strip(" ,.;:")]
     p_at = None
     if m.get("punch_from"):
         cue = m["punch_from"].lower()
