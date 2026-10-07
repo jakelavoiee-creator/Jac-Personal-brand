@@ -43,3 +43,16 @@ python3 $S/clips.py extract "https://www.youtube.com/watch?v=uL2ztWv70wE" \
   --start 11:17 --end 12:01 --preview                              # clean clip + captions
 ```
 Options: `--frame original` keeps source framing; `--no-captions` gives the raw cut.
+
+### `awakening-carousels`: dark athletic awakening carousels (personal brand)
+
+Builds Instagram carousels for the ages 18–24 awakening story. It pulls images from a Pinterest board or local photos into a tagged library and matches an image to each slide's meaning. Every image is graded into one look (near-black, cold steel, grain), and the type is small, light and lowercase. Requires Pillow (`pip install pillow`).
+
+```bash
+C=.claude/skills/awakening-carousels/scripts/carousel.py
+python3 $C pull https://www.pinterest.com/<user>/<board>/     # or: python3 $C add ~/Pictures/training
+python3 $C untagged                                           # then tag each image by meaning
+python3 $C render brand/awakening-carousels/specs/age-18-the-crack.json
+python3 $C grid                                               # preview the profile grid
+```
+Story chapters per age: `.claude/skills/awakening-carousels/references/story-map.md`.

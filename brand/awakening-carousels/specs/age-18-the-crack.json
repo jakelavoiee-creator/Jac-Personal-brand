@@ -1,0 +1,38 @@
+{
+  "id": "age-18-the-crack",
+  "age": 18,
+  "chapter": "the crack",
+  "handle": "@yourhandle",
+  "darkness": 0.55,
+  "caption": "18. the year the life i was handed stopped fitting.\n\nnothing broke on the outside. something cracked on the inside.\n\nwhere are you on the timeline? comment your age 👇",
+  "slides": [
+    {
+      "text": "the year something cracked.",
+      "image": "alone empty gym single light start"
+    },
+    {
+      "text": "on paper, i was fine.\ntraining. school. friends.",
+      "image": "track lanes others race"
+    },
+    {
+      "text": "but every rep felt like\nrunning from something.",
+      "image": "night run escape restless"
+    },
+    {
+      "text": "i didn't have words for it yet.\njust a quiet: this isn't it.",
+      "image": "window light stillness dark"
+    },
+    {
+      "text": "the mirror showed the body i built.\nnot the person inside it.",
+      "image": "mirror identity self reflection"
+    },
+    {
+      "text": "that's the crack.\nit doesn't break you.\nit lets the light in.",
+      "image": "ocean dawn new beginning clarity"
+    },
+    {
+      "text": "if you feel it too:\nyou're not lost.\nyou're early.",
+      "image": "fog mountain path journey"
+    }
+  ]
+}

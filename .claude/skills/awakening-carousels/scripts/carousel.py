@@ -1,0 +1,329 @@
+#!/usr/bin/env python3
+"""Awakening carousels: dark, minimal, athletic Instagram carousels.
+
+Commands
+  pull     URL [URL...]           Pinterest board (…/user/board/ or .rss) or direct image URLs -> library
+  add      PATH [PATH...]         copy local images (files or folders) into the library
+  tag      FILE "tag, tag" [--mood M]   set the meaning tags for one library image
+  untagged                        list library images that still need tags
+  render   SPEC.json [--out DIR]  build every slide (1080x1350 PNG) + a contact strip
+  grid     [DIR]                  3x3 preview of carousel covers, newest first (how the profile reads)
+
+Library: brand/awakening-carousels/library/ (images + library.json with tags per image).
+"""
+import argparse, hashlib, json, random, re, shutil, sys, urllib.request
+from pathlib import Path
+from xml.etree import ElementTree
+
+from PIL import Image, ImageDraw, ImageFilter, ImageFont, ImageOps
+
+ROOT = Path.cwd()
+BRAND = ROOT / "brand" / "awakening-carousels"
+LIB = BRAND / "library"
+LIB_JSON = LIB / "library.json"
+OUT = BRAND / "out"
+FONTS = Path(__file__).resolve().parent.parent / "assets" / "fonts"
+
+W, H = 1080, 1350          # 4:5, Instagram's tallest feed ratio
+MARGIN = 96                # side gutter; IG grid crops to 3:4, keep type inside the middle 1012px
+TEXT_W = 760               # max line width; short lines read calmer
+INK = (236, 233, 227)      # warm bone white, never pure #fff
+DIM = (236, 233, 227, 140) # footer / meta
+
+STOP = set("a an the of in on at to and or with for my i me is it this that".split())
+
+
+# ---------- library ----------
+
+def load_lib():
+    if LIB_JSON.exists():
+        return json.loads(LIB_JSON.read_text())
+    return {}
+
+def save_lib(lib):
+    LIB.mkdir(parents=True, exist_ok=True)
+    LIB_JSON.write_text(json.dumps(lib, indent=2, sort_keys=True))
+
+def _ingest(data: bytes, source: str, lib, hint=""):
+    h = hashlib.sha1(data).hexdigest()[:12]
+    if any(v.get("sha") == h for v in lib.values()):
+        return None
+    try:
+        from io import BytesIO
+        im = Image.open(BytesIO(data)); im.verify()
+        im = Image.open(BytesIO(data))
+    except Exception:
+        return None
+    w, h_px = im.size
+    if min(w, h_px) < 600:
+        print(f"  skip (too small {w}x{h_px}): {source}")
+        return None
+    ext = (im.format or "jpg").lower().replace("jpeg", "jpg")
+    name = f"{h}.{ext}"
+    LIB.mkdir(parents=True, exist_ok=True)
+    (LIB / name).write_bytes(data)
+    lib[name] = {"sha": h, "source": source, "size": [w, h_px], "tags": [], "mood": "", "hint": hint}
+    return name
+
+def _get(url):
+    req = urllib.request.Request(url, headers={"User-Agent": "Mozilla/5.0"})
+    with urllib.request.urlopen(req, timeout=30) as r:
+        return r.read()
+
+def _board_rss(url):
+    url = url.split("?")[0].rstrip("/")
+    return url if url.endswith(".rss") else url + ".rss"
+
+def cmd_pull(a):
+    lib = load_lib(); added = 0
+    for url in a.urls:
+        if "pinterest." in url and not re.search(r"\.(jpe?g|png|webp)$", url, re.I):
+            rss = _board_rss(url)
+            print(f"board feed: {rss}")
+            try:
+                root = ElementTree.fromstring(_get(rss))
+            except Exception as e:
+                sys.exit(f"could not read {rss}: {e}\n(boards must be public; in a cloud session pinterest.com must be allowed by the network policy)")
+            for item in root.iter("item"):
+                desc = item.findtext("description") or ""
+                title = item.findtext("title") or ""
+                for src in re.findall(r'src="([^"]+)"', desc):
+                    full = re.sub(r"/\d+x/", "/originals/", src)   # thumbnail -> original
+                    for cand in (full, re.sub(r"/\d+x/", "/736x/", src), src):
+                        try:
+                            n = _ingest(_get(cand), cand, lib, hint=title.strip())
+                            if n: added += 1; print(f"  + {n}  {title[:60]}")
+                            break
+                        except Exception:
+                            continue
+        else:
+            try:
+                n = _ingest(_get(url), url, lib)
+                if n: added += 1; print(f"  + {n}")
+            except Exception as e:
+                print(f"  ! {url}: {e}")
+    save_lib(lib)
+    print(f"{added} new image(s). Next: tag them (see `untagged`).")
+
+def cmd_add(a):
+    lib = load_lib(); added = 0
+    paths = []
+    for p in map(Path, a.paths):
+        paths += sorted(x for x in p.rglob("*") if x.suffix.lower() in (".jpg", ".jpeg", ".png", ".webp")) if p.is_dir() else [p]
+    for p in paths:
+        n = _ingest(p.read_bytes(), str(p), lib, hint=p.stem.replace("-", " ").replace("_", " "))
+        if n: added += 1; print(f"  + {n}  ({p.name})")
+    save_lib(lib)
+    print(f"{added} new image(s). Next: tag them (see `untagged`).")
+
+def cmd_tag(a):
+    lib = load_lib()
+    if a.file not in lib:
+        sys.exit(f"not in library: {a.file}")
+    lib[a.file]["tags"] = [t.strip().lower() for t in a.tags.split(",") if t.strip()]
+    if a.mood: lib[a.file]["mood"] = a.mood
+    save_lib(lib)
+    print(f"{a.file}: {', '.join(lib[a.file]['tags'])}")
+
+def cmd_untagged(a):
+    lib = load_lib()
+    todo = [k for k, v in lib.items() if not v.get("tags")]
+    for k in todo:
+        print(f"{LIB / k}   hint: {lib[k].get('hint','')}")
+    print(f"{len(todo)} untagged / {len(lib)} total")
+
+
+# ---------- image matching ----------
+
+def _words(s):
+    return {w for w in re.findall(r"[a-z]+", s.lower()) if w not in STOP}
+
+def pick_image(query, lib, used):
+    """Explicit '@file' wins; otherwise best tag/mood overlap, unused first."""
+    if query.startswith("@"):
+        return query[1:]
+    q = _words(query)
+    best, best_score = None, -1.0
+    for name, meta in lib.items():
+        tags = set()
+        for t in meta.get("tags", []): tags |= _words(t)
+        tags |= _words(meta.get("mood", ""))
+        score = len(q & tags) + 0.25 * len(q & _words(meta.get("hint", "")))
+        score -= 5 if name in used else 0
+        score += random.random() * 0.01          # stable-ish tie break
+        if score > best_score:
+            best, best_score = name, score
+    return best
+
+
+# ---------- look ----------
+
+def grade(im, darkness=0.55, warmth=0.0):
+    """Cover-crop to 4:5 and push to the house look: near-mono, crushed, grain, vignette."""
+    im = ImageOps.exif_transpose(im).convert("RGB")
+    im = ImageOps.fit(im, (W, H), Image.LANCZOS, centering=(0.5, 0.42))
+    g = ImageOps.grayscale(im)
+    g = ImageOps.autocontrast(g, cutoff=1)
+    lut = [int(255 * ((i / 255) ** (1.35 + darkness))) for i in range(256)]   # crush mids + shadows
+    g = g.point(lut)
+    # cold-steel tint (athletic, night training) or slight warmth for later years
+    r = g.point(lambda v: min(255, int(v * (0.96 + warmth))))
+    b = g.point(lambda v: min(255, int(v * (1.04 - warmth))))
+    im = Image.merge("RGB", (r, g, b))
+    # vignette
+    vig = Image.new("L", (W, H), 0)
+    ImageDraw.Draw(vig).ellipse((-W * 0.25, -H * 0.2, W * 1.25, H * 1.2), fill=255)
+    vig = vig.filter(ImageFilter.GaussianBlur(220))
+    im = Image.composite(im, Image.new("RGB", (W, H), (6, 6, 7)), vig)
+    # film grain
+    noise = Image.effect_noise((W, H), 28).point(lambda v: 128 + (v - 128) // 2)
+    im = Image.blend(im, Image.merge("RGB", (noise,) * 3), 0.06)
+    return im
+
+def scrim(im, where):
+    """Soft dark gradient under the type so it reads on any photo."""
+    grad = Image.new("L", (1, H))
+    for y in range(H):
+        t = y / H
+        if where == "bottom": a = max(0.0, (t - 0.38) / 0.62)
+        elif where == "top":  a = max(0.0, (0.62 - t) / 0.62)
+        else:                 a = 0.55 - abs(t - 0.5)
+        grad.putpixel((0, y), int(255 * min(1.0, a) * 0.85))
+    grad = grad.resize((W, H))
+    return Image.composite(Image.new("RGB", (W, H), (4, 4, 5)), im, grad)
+
+
+# ---------- type ----------
+
+def font(name, size):
+    return ImageFont.truetype(str(FONTS / name), size)
+
+def tracked(draw, xy, text, f, fill, tracking=0):
+    x, y = xy
+    for ch in text:
+        draw.text((x, y), ch, font=f, fill=fill)
+        x += draw.textlength(ch, font=f) + tracking
+    return x
+
+def tracked_len(draw, text, f, tracking):
+    return sum(draw.textlength(c, font=f) for c in text) + tracking * max(0, len(text) - 1)
+
+def wrap(draw, text, f, width):
+    lines = []
+    for para in text.split("\n"):
+        line = ""
+        for word in para.split():
+            test = (line + " " + word).strip()
+            if draw.textlength(test, font=f) <= width: line = test
+            else: lines.append(line); line = word
+        lines.append(line)
+    return lines
+
+def compose(bg, slide, idx, total, spec):
+    cover = idx == 0
+    pos = slide.get("position", "bottom" if not cover else "center")
+    im = scrim(bg, pos) if pos != "none" else bg
+    d = ImageDraw.Draw(im, "RGBA")
+
+    size = slide.get("size", 60 if cover else 44)
+    f = font("InterDisplay-Light.otf", size)
+    text = slide["text"].lower() if spec.get("lowercase", True) else slide["text"]
+    lines = wrap(d, text, f, TEXT_W)
+    lh = int(size * 1.32)
+    block = lh * len(lines)
+    if pos == "top":      y = 210
+    elif pos == "center": y = (H - block) // 2
+    else:                 y = H - 230 - block
+    align = slide.get("align", "center" if cover else "left")
+    placed = []
+    for ln in lines:
+        x = (W - d.textlength(ln, font=f)) // 2 if align == "center" else MARGIN
+        placed.append((x, y, ln)); y += lh
+    # soft shadow: keeps light type legible over bright patches without a visible box
+    sh = Image.new("L", (W, H), 0); sd = ImageDraw.Draw(sh)
+    for x, yy, ln in placed: sd.text((x, yy + 2), ln, font=f, fill=255)
+    sh = sh.filter(ImageFilter.GaussianBlur(size * 0.45)).point(lambda v: min(255, v * 2))
+    im.paste(Image.new("RGB", (W, H), (0, 0, 0)), (0, 0), sh.point(lambda v: int(v * 0.7)))
+    d = ImageDraw.Draw(im, "RGBA")
+    for x, yy, ln in placed: d.text((x, yy), ln, font=f, fill=INK)
+
+    # meta: tiny, tracked caps. Cover gets the age marker, every slide gets a counter.
+    meta = font("Inter-Regular.otf", 20)
+    if cover:
+        mark = f"AGE {spec['age']}" if spec.get("age") else spec.get("chapter", "").upper()
+        mw = tracked_len(d, mark, meta, 6)
+        tracked(d, ((W - mw) // 2, 150), mark, meta, DIM, 6)
+        ch = spec.get("chapter", "").upper()
+        if ch and spec.get("age"):
+            cw = tracked_len(d, ch, meta, 6)
+            tracked(d, ((W - cw) // 2, H - 150), ch, meta, DIM, 6)
+    else:
+        left = f"{spec.get('age', '')}  ·  {spec.get('chapter', '')}".upper().strip(" ·")
+        tracked(d, (MARGIN, H - 110), left, meta, DIM, 5)
+        num = f"{idx + 1:02d}/{total:02d}"
+        tracked(d, (W - MARGIN - tracked_len(d, num, meta, 5), H - 110), num, meta, DIM, 5)
+    if spec.get("handle") and idx == total - 1:
+        hw = tracked_len(d, spec["handle"].upper(), meta, 5)
+        tracked(d, ((W - hw) // 2, 150), spec["handle"].upper(), meta, DIM, 5)
+    return im
+
+
+# ---------- render ----------
+
+def cmd_render(a):
+    spec = json.loads(Path(a.spec).read_text())
+    lib = load_lib()
+    if not lib:
+        sys.exit("library is empty: add images first (pull / add)")
+    out = Path(a.out) if a.out else OUT / spec["id"]
+    out.mkdir(parents=True, exist_ok=True)
+    random.seed(spec["id"])
+    used, slides, plan = set(), spec["slides"], []
+    for i, s in enumerate(slides):
+        name = pick_image(s.get("image", s["text"]), lib, used)
+        used.add(name)
+        bg = grade(Image.open(LIB / name), darkness=s.get("darkness", spec.get("darkness", 0.55)),
+                   warmth=spec.get("warmth", 0.0))
+        im = compose(bg, s, i, len(slides), spec)
+        p = out / f"{i + 1:02d}.png"
+        im.save(p, optimize=True)
+        plan.append({"slide": i + 1, "image": name, "query": s.get("image", ""), "tags": lib[name].get("tags", [])})
+        print(f"  {p.name}  <- {name}  [{', '.join(lib[name].get('tags', [])[:5])}]")
+    # contact strip for quick review
+    thumbs = [Image.open(out / f"{i + 1:02d}.png").resize((270, 338)) for i in range(len(slides))]
+    strip = Image.new("RGB", (270 * len(thumbs) + 8 * (len(thumbs) - 1), 338), (20, 20, 20))
+    for i, t in enumerate(thumbs): strip.paste(t, (i * 278, 0))
+    strip.save(out / "strip.jpg", quality=88)
+    (out / "plan.json").write_text(json.dumps(plan, indent=2))
+    caption = spec.get("caption")
+    if caption: (out / "caption.txt").write_text(caption.strip() + "\n")
+    print(f"done: {out}  (strip.jpg = whole carousel at a glance)")
+
+def cmd_grid(a):
+    base = Path(a.dir) if a.dir else OUT
+    covers = sorted(base.glob("*/01.png"), key=lambda p: p.stat().st_mtime, reverse=True)[:9]
+    if not covers:
+        sys.exit(f"no rendered carousels in {base}")
+    tw, th = 360, 480                       # IG profile grid shows 3:4 center crops
+    g = Image.new("RGB", (tw * 3 + 6, th * ((len(covers) + 2) // 3) + 3 * ((len(covers) - 1) // 3)), (0, 0, 0))
+    for i, p in enumerate(covers):
+        im = ImageOps.fit(Image.open(p), (tw, th), Image.LANCZOS)
+        g.paste(im, ((i % 3) * (tw + 3), (i // 3) * (th + 3)))
+    dest = base / "grid.jpg"
+    g.save(dest, quality=90)
+    print(dest)
+
+
+def main():
+    ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
+    sp = ap.add_subparsers(dest="cmd", required=True)
+    p = sp.add_parser("pull"); p.add_argument("urls", nargs="+"); p.set_defaults(fn=cmd_pull)
+    p = sp.add_parser("add"); p.add_argument("paths", nargs="+"); p.set_defaults(fn=cmd_add)
+    p = sp.add_parser("tag"); p.add_argument("file"); p.add_argument("tags"); p.add_argument("--mood", default=""); p.set_defaults(fn=cmd_tag)
+    p = sp.add_parser("untagged"); p.set_defaults(fn=cmd_untagged)
+    p = sp.add_parser("render"); p.add_argument("spec"); p.add_argument("--out"); p.set_defaults(fn=cmd_render)
+    p = sp.add_parser("grid"); p.add_argument("dir", nargs="?"); p.set_defaults(fn=cmd_grid)
+    a = ap.parse_args(); a.fn(a)
+
+if __name__ == "__main__":
+    main()
