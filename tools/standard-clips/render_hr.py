@@ -112,7 +112,7 @@ def end_card(path, logo):
     im.convert("RGB").save(path)
 
 
-def write_ass(chunks, path, dur, hide_from):
+def write_ass(chunks, path, dur, hide_from, hide_len=2.0):
     head = f"""[Script Info]
 ScriptType: v4.00+
 PlayResX: {W}
@@ -132,8 +132,10 @@ Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text
         t1 = chunks[k + 1]["t0"] if k + 1 < len(chunks) else min(dur, c["t1"] + 0.4)
         t1 = min(t1, c["t1"] + 0.5, dur)
         if hide_from is not None:                 # the punchline takes over while it's on screen
-            if hide_from - 0.05 <= t0 < hide_from + 2.0:
+            if hide_from - 0.05 <= t0 < hide_from + hide_len:
                 continue
+            if t0 < hide_from < t1:                   # a caption already up gives way when it lands
+                t1 = hide_from
         if t1 > t0:
             ev.append(f"Dialogue: 0,{v1.ass_time(t0)},{v1.ass_time(t1)},S,,0,0,0,,"
                       f"{{\\an5\\pos({W // 2},{FOOT_Y + FOOT_H // 2})}}{c['text']}")
@@ -157,7 +159,7 @@ def build(m, base, tmp, logo):
         p_at = hit[0] if hit else None
     p_len = float(m.get("punch_len", 2.0))       # the punchline is a beat, not a takeover
     ass_rel = f"build/hr_{m['id']}.ass"
-    write_ass(chunks, HERE / ass_rel, dur, p_at)
+    write_ass(chunks, HERE / ass_rel, dur, p_at, p_len)
     punch, endc, mark = tmp / "punch.png", tmp / "end.png", tmp / "mark.png"
     punchline_png(m.get("punchline", ""), punch, m.get("punch_align", "right"))
     end_card(endc, logo)
