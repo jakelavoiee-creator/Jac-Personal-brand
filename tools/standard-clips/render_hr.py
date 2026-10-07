@@ -62,7 +62,7 @@ def set_scale(s):
 def run(cmd):
     r = subprocess.run(cmd, capture_output=True, text=True, cwd=HERE)
     if r.returncode:
-        sys.exit(f"ffmpeg failed:\n{r.stderr[-2500:]}")
+        raise RuntimeError(f"ffmpeg failed:\n{r.stderr[-1500:]}")
 
 
 def stacked(d, lines, size, align, box_w, box_h, shadow=True):
@@ -296,7 +296,7 @@ def build(m, base, tmp, logo):
 
 
 def main():
-    args = [a for a in sys.argv[1:] if a != "--hd"]
+    args = [a for a in sys.argv[1:] if a not in ("--hd", "--redo")]
     if not args:
         sys.exit(__doc__)
     set_scale(1 if "--hd" in sys.argv else 2)
@@ -304,11 +304,22 @@ def main():
     plan = json.loads(plan_path.read_text())
     logo = str(plan_path.parent / plan["logo"]) if plan.get("logo") else None
     (HERE / "build").mkdir(exist_ok=True)
-    for m in plan["moments"]:
-        if args[1:] and m["id"] not in args[1:]:
-            continue
+    todo = [m for m in plan["moments"] if not args[1:] or m["id"] in args[1:]]
+    failed = []
+    for i, m in enumerate(todo, 1):
         m.setdefault("out_dir", plan.get("out_dir", "out/moments"))
-        build(m, plan_path.parent, Path(tempfile.mkdtemp()), logo)
+        out = plan_path.parent / m["out_dir"] / f"{m['id']}.mp4"
+        if not args[1:] and out.exists() and "--redo" not in sys.argv:
+            print(f"[{i}/{len(todo)}] {m['id']} already rendered - skipping (--redo to render again)")
+            continue
+        print(f"[{i}/{len(todo)}] {m['id']}")
+        try:
+            build(m, plan_path.parent, Path(tempfile.mkdtemp()), logo)
+        except Exception as e:     # one bad clip shouldn't stop the batch
+            failed.append(m["id"])
+            print(f"  FAILED: {str(e).strip().splitlines()[-1] if str(e).strip() else e!r}")
+    if failed:
+        print("\nFailed (fix, then run again - finished reels are skipped):\n  " + "\n  ".join(failed))
 
 
 if __name__ == "__main__":
