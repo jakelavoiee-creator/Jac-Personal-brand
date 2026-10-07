@@ -13,6 +13,7 @@ import http.cookiejar
 import json
 import sys
 import time
+import urllib.error
 import urllib.parse
 import urllib.request
 from pathlib import Path
@@ -37,15 +38,33 @@ HDR = {"User-Agent": UA, "X-IG-App-ID": "936619743392459", "X-CSRFToken": csrf, 
 
 
 def call(url, data=None):
-    req = urllib.request.Request(url, data=urllib.parse.urlencode(data).encode() if data else None, headers=HDR)
-    with opener.open(req, timeout=30) as r:
-        return json.loads(r.read())
+    """GET/POST with patient retries: Instagram answers bursts with 429 and wants you to wait."""
+    for attempt in range(6):
+        req = urllib.request.Request(url, data=urllib.parse.urlencode(data).encode() if data else None, headers=HDR)
+        try:
+            with opener.open(req, timeout=30) as r:
+                body = r.read()
+            try:
+                return json.loads(body)
+            except ValueError:
+                sys.exit("Instagram sent the login page - your cookies.txt session expired. Log in to instagram.com in Chrome and export cookies again.")
+        except urllib.error.HTTPError as e:
+            if e.code not in (429, 401, 500, 502, 503) or attempt == 5:
+                raise
+            wait = 60 * (attempt + 1)
+            print(f"  Instagram says slow down ({e.code}) - waiting {wait}s, then retrying...")
+            time.sleep(wait)
 
 
-user = call(f"https://www.instagram.com/api/v1/users/web_profile_info/?username={account}")["data"]["user"]
-print(f"{user['full_name']} | {user['edge_followed_by']['count']:,} followers")
+# The search endpoint is lighter and less rate-limited than web_profile_info.
+found = call(f"https://www.instagram.com/web/search/topsearch/?query={urllib.parse.quote(account)}")
+user = next((u["user"] for u in found.get("users", []) if u["user"]["username"].lower() == account.lower()), None)
+if not user:
+    sys.exit(f"@{account} not found")
+user["id"] = user.get("pk") or user.get("id")
+print(f"{user.get('full_name') or account} (id {user['id']})")
 items, max_id = [], None
-for _ in range(10):
+for _ in range(40):
     form = {"target_user_id": user["id"], "page_size": 24, "include_feed_video": "true"}
     if max_id:
         form["max_id"] = max_id
@@ -55,7 +74,8 @@ for _ in range(10):
     if not pi.get("more_available"):
         break
     max_id = pi.get("max_id")
-    time.sleep(3)
+    print(f"  {len(items)} reels so far...")
+    time.sleep(4)
 
 out = here / "ig" / account
 out.mkdir(parents=True, exist_ok=True)
