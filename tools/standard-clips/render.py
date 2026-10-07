@@ -29,6 +29,7 @@ FOOT_H = W * 9 // 16                     # 607px footage band
 FOOT_Y = (H - FOOT_H) // 2               # band top
 FONT = "Inter Display"                   # closest installed match to their caption face
 FONT_FILE = None                          # resolved lazily via fc-match
+CLIP_PAD = 3.0         # seconds fetch.py keeps either side of a clip when downloading only that section
 SFX_TRIM = 1.0          # sound bed was timed to a 1.4s first card; trimmed so hits stay on the switches
 CARD = [("logo", "black", 2.4)]   # simple ending: logo centred on black, fades in and out
 END_FADE = 0.6                    # footage fades to black over the last 0.6s
@@ -373,6 +374,9 @@ def cmd_batch(a):
                                 start=c["start"], end=c["end"], src_offset=c.get("src_offset"), zoom=c.get("zoom"),
                                 endcard=str(base / plan["endcard"]), logo=plan.get("logo") and str(base / plan["logo"]),
                                 out=str(base / plan["out_dir"] / f"{c['id']}.mp4"))
+        cut = base / "sources" / "clips" / f"{c['id']}.mp4"   # fetch.py's per-clip download (start - CLIP_PAD)
+        if not Path(ns.src).exists() and cut.exists():
+            ns.src, ns.src_offset = str(cut), str(max(0.0, secs(c["start"]) - CLIP_PAD))
         if not Path(ns.src).exists():
             print(f"[skip] {c['id']}: missing source {ns.src}")
             continue
