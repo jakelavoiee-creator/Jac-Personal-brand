@@ -1,10 +1,10 @@
 {
   "out_dir": "out/moments",
   "moments": [
-    {"id": "m01-carrey-take-a-chance", "youtube": "uL2ztWv70wE",
-     "src": "sources/clips/hr-carrey-father.mp4", "src_offset": 670.0, "vtt": "sources/uL2ztWv70wE.en.vtt",
-     "start": "678.15", "end": "706.0",
-     "punch_from": "take", "punchline": "TAKE A CHANCE / ON DOING / WHAT YOU [L]OVE",
-     "caption": "He took the safe job. It still wasn't safe."}
+    {"id": "m02-elon-never-give-up", "youtube": "23GzpbNUyI4", "src": "sources/clips/m02-elon-never-give-up.mp4", "src_offset": 496.95, "vtt": "sources/23GzpbNUyI4.en.vtt", "start": "499.95", "end": "516.20", "punch_from": "don't", "punchline": "I DON'T / EVER [G]IVE UP.", "caption": "Three failures in a row. He didn't even consider stopping."},
+    {"id": "m03-office-how-high", "youtube": "UJoAJ8kkdEE", "src": "sources/clips/m03-office-how-high.mp4", "src_offset": 44.45, "vtt": "sources/UJoAJ8kkdEE.en.vtt", "start": "47.45", "end": "56.90", "punch_from": "how", "punchline": "HOW HIGH / [I] CAN FLY", "caption": "Some people need to quit to find out."},
+    {"id": "m04-seinfeld-focus", "youtube": "pbF_C-i-0Lk", "src": "sources/clips/m04-seinfeld-focus.mp4", "src_offset": 283.0, "vtt": "sources/pbF_C-i-0Lk.en.vtt", "start": "286.00", "end": "296.80", "punch_from": "everything", "punchline": "EVERYTHING ELSE / IS A COMPLETE / [W]ASTE OF TIME.", "caption": "Get better at what you're doing. That's it."},
+    {"id": "m05-pitt-the-company", "youtube": "v9pmS6lIhBs", "src": "sources/clips/m05-pitt-the-company.mp4", "src_offset": 314.95, "vtt": "sources/v9pmS6lIhBs.en.vtt", "start": "317.95", "end": "330.60", "punch_from": "company", "punchline": "IT'S THE / [C]OMPANY.", "caption": "Choose who you build with."},
+    {"id": "m01-carrey-take-a-chance", "youtube": "uL2ztWv70wE", "src": "sources/clips/hr-carrey-father.mp4", "src_offset": 670.0, "vtt": "sources/uL2ztWv70wE.en.vtt", "start": "678.15", "end": "706.0", "punch_from": "take", "punchline": "TAKE A CHANCE / ON DOING / WHAT YOU [L]OVE", "caption": "He took the safe job. It still wasn't safe."}
   ]
 }

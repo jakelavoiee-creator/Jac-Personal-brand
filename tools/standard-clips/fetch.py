@@ -54,7 +54,7 @@ def download(url, out, extra):
             return True
         ec = ["--extractor-args", f"youtube:player_client={client}"] if client else []
         print(f"    trying {client or 'default'} client...")
-        subprocess.run(base + ec + extra + ["-f", "bv*[height<=1080]+ba/b", "--merge-output-format", "mp4",
+        subprocess.run(base + ec + extra + ["-f", "bv*[height<=2160]+ba/b", "--merge-output-format", "mp4",   # up to 4K source
                                             "-o", str(out.with_suffix(".%(ext)s")), url])
     return out.exists()
 
@@ -63,7 +63,7 @@ def download(url, out, extra):
 # --full: download whole source videos instead.
 full = "--full" in plans
 plans = [p for p in plans if p != "--full"]
-clips = [c for p in plans for c in json.loads((here / p).read_text())["clips"]]
+clips = [c for p in plans for k in ("clips", "moments") for c in json.loads((here / p).read_text()).get(k, [])]
 (src / "clips").mkdir(exist_ok=True)
 for i, c in enumerate(clips, 1):
     vid, url = c["youtube"], f"https://www.youtube.com/watch?v={c['youtube']}"
