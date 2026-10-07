@@ -23,16 +23,23 @@ Every clip serves exactly one pillar. If it serves none, it doesn't post.
 ## The roster
 Recurring faces build recognition. The roster is the brand; new voices are added rarely and on purpose.
 
-| Role | Speakers | Share of a day (20 reels) |
+| Role | Speakers | Reels per day (20 total) |
 |---|---|---|
-| Anchor | **David Ghiyam** | 6–8 |
-| Core voices | Eckhart Tolle, Dr. Joe Dispenza, Jim Rohn, Bob Proctor, Jim Carrey | 2–3 each |
-| Rotating | Dr. Wayne Dyer, Dr. Bruce Lipton, Dr. Myles Munroe, Keanu Reeves, Bruce Lee | 0–1 each |
-| Audio-only voices | Alan Watts, Neville Goddard | need a still-image or b-roll treatment (little or no footage of them speaking exists) |
-| Cinema | *Peaceful Warrior*, *The Matrix*, *Kung Fu Panda* (Oogway), *Soul* | 1–2 per day max |
-| On hold | Kevin Trudeau | see note below |
+| Anchor | **David Ghiyam** | 5–6 |
+| Core voices | Eckhart Tolle, Dr. Joe Dispenza, Jim Rohn, Bob Proctor, Jim Carrey | 1–2 each |
+| Rotating | Dr. Wayne Dyer, Dr. Bruce Lipton, Keanu Reeves, Bruce Lee | 0–1 each |
+| Cinema | Any film, as long as the scene fits the brand (see below) | **5** |
 
-**Kevin Trudeau:** he was convicted in federal court (criminal contempt tied to his infomercials) and served prison time. Featuring him can draw "scammer" comments and undercut the brand's trust. Use him only as a deliberate choice.
+**Cinema scenes:** 5 of every 20 reels. Any film qualifies if the scene:
+- carries one pillar on its own, with no setup needed (presence, awakening, attracting your reality, light through the dark);
+- is a calm, certain or tender moment, not a battle speech or a shouting pep talk;
+- runs 15–45s and lands on its strongest line.
+
+Starting list: *Peaceful Warrior*, *The Matrix*, *Kung Fu Panda* (Oogway), *Soul*. Expand freely.
+Use no more than 2 scenes from the same film per day.
+Studio footage is more likely to get muted or claimed than interviews, so prefer official studio clip uploads as sources.
+
+**Removed from the roster:** Kevin Trudeau, Alan Watts, Neville Goddard, Myles Munroe.
 
 **Retired** (don't fit the identity): Steve Harvey, Oprah, Kobe Bryant, Matthew McConaughey, Steve Jobs, Will Smith. Denzel's faith clips are borderline.
 
@@ -44,4 +51,3 @@ Each day should cover at least 8 of these, and no topic should appear in more th
 - One idea, 15–45s, opening on the strongest line.
 - Post caption = the clip's single thesis line, written as something you'd send to a friend who's struggling.
 - Rotate pillars so no two clips in a row carry the same message.
-- Movie and studio-owned footage gets claimed and muted more often than interviews; keep it to 1–2 clips per batch.
