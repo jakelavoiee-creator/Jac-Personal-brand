@@ -8,6 +8,7 @@ Commands
   add      PATH [PATH...]         copy local images (files or folders) into the library
   tag      FILE "tag, tag" [--mood M]   set the meaning tags for one library image
   untagged                        list library images that still need tags
+  reject   FILE [FILE...]         remove off-brand images (stay blocked from future pulls)
   render   SPEC.json [--out DIR]  build every slide (1080x1350 PNG) + a contact strip
   grid     [DIR]                  3x3 preview of carousel covers, newest first (how the profile reads)
 
@@ -180,6 +181,16 @@ def cmd_add(a):
     save_lib(lib)
     print(f"{added} new image(s). Next: tag them (see `untagged`).")
 
+def cmd_reject(a):
+    """Drop images from the library; the record stays so search/pull never re-adds them."""
+    lib = load_lib()
+    for f in a.files:
+        if f in lib:
+            lib[f].update(rejected=True, tags=[])
+            (LIB / f).unlink(missing_ok=True)
+            print(f"rejected {f}")
+    save_lib(lib)
+
 def cmd_tag(a):
     lib = load_lib()
     if a.file not in lib:
@@ -191,7 +202,7 @@ def cmd_tag(a):
 
 def cmd_untagged(a):
     lib = load_lib()
-    todo = [k for k, v in lib.items() if not v.get("tags")]
+    todo = [k for k, v in lib.items() if not v.get("tags") and not v.get("rejected")]
     for k in todo:
         print(f"{LIB / k}   hint: {lib[k].get('hint','')}")
     print(f"{len(todo)} untagged / {len(lib)} total")
@@ -209,6 +220,8 @@ def pick_image(query, lib, used):
     q = _words(query)
     best, best_score = None, -1.0
     for name, meta in lib.items():
+        if meta.get("rejected") or not meta.get("tags"):
+            continue
         tags = set()
         for t in meta.get("tags", []): tags |= _words(t)
         tags |= _words(meta.get("mood", ""))
@@ -385,6 +398,7 @@ def main():
     p = sp.add_parser("pull"); p.add_argument("urls", nargs="*"); p.add_argument("--candidates", action="store_true"); p.set_defaults(fn=cmd_pull)
     p = sp.add_parser("add"); p.add_argument("paths", nargs="+"); p.set_defaults(fn=cmd_add)
     p = sp.add_parser("tag"); p.add_argument("file"); p.add_argument("tags"); p.add_argument("--mood", default=""); p.set_defaults(fn=cmd_tag)
+    p = sp.add_parser("reject"); p.add_argument("files", nargs="+"); p.set_defaults(fn=cmd_reject)
     p = sp.add_parser("untagged"); p.set_defaults(fn=cmd_untagged)
     p = sp.add_parser("render"); p.add_argument("spec"); p.add_argument("--out"); p.set_defaults(fn=cmd_render)
     p = sp.add_parser("grid"); p.add_argument("dir", nargs="?"); p.set_defaults(fn=cmd_grid)
