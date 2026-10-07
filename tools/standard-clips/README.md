@@ -32,7 +32,9 @@ YouTube blocks downloads from cloud servers, so fetch the source videos locally.
 
 **Windows (PowerShell):**
 ```powershell
-winget install yt-dlp.yt-dlp Gyan.FFmpeg DenoLand.Deno Python.Python.3.12 Git.Git
+winget install Gyan.FFmpeg DenoLand.Deno Python.Python.3.12 Git.Git
+# close and reopen PowerShell, then:
+python -m pip install -U "yt-dlp[default]"
 # close and reopen PowerShell, then:
 git clone -b claude/gallant-mccarthy-1e9yfx https://github.com/jakelavoiee-creator/Jac-Personal-brand.git
 cd Jac-Personal-brand\tools\standard-clips

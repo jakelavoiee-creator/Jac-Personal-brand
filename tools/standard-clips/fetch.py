@@ -3,7 +3,7 @@
 
     python fetch.py clips.json clips2.json
 
-Needs yt-dlp, ffmpeg and deno on PATH. Same job as fetch.sh, without bash.
+Needs ffmpeg and deno on PATH, and yt-dlp (best: python -m pip install -U "yt-dlp[default]"). Same job as fetch.sh, without bash.
 """
 import json
 import shutil
@@ -15,13 +15,20 @@ here = Path(__file__).resolve().parent
 src = here / "sources"
 src.mkdir(exist_ok=True)
 
-for tool in ("yt-dlp", "ffmpeg"):
-    if not shutil.which(tool):
-        sys.exit(f"{tool} not found - install it first (see README, 'Download on your own computer').")
+# Prefer the pip-installed yt-dlp module: the standalone Windows .exe can break (PyInstaller "Failed to extract").
+try:
+    import yt_dlp  # noqa: F401
+    YTDLP = [sys.executable, "-m", "yt_dlp"]
+except ImportError:
+    YTDLP = ["yt-dlp"]
+    if not shutil.which("yt-dlp"):
+        sys.exit('yt-dlp not found - run:  python -m pip install -U "yt-dlp[default]"')
+if not shutil.which("ffmpeg"):
+    sys.exit("ffmpeg not found - install it first (see README, 'Download on your own computer').")
 
 plans = sys.argv[1:] or ["clips.json"]
 ids = sorted({c["youtube"] for p in plans for c in json.loads((here / p).read_text())["clips"]})
-base = ["yt-dlp", "--no-warnings", "--sleep-requests", "1"]
+base = YTDLP + ["--no-warnings", "--sleep-requests", "1"]
 CLIENTS = [None, "web_safari", "tv_simply", "web_embedded", "mweb", "android_vr"]
 
 for i, vid in enumerate(ids, 1):
