@@ -6,7 +6,7 @@
 
   canvas    1080x1920, black-to-grey grain gradient (assets/cover_bg.jpg)
   headline  Bebas Neue: the line in small caps, its LAST word huge in italic bold (+ @aura.miamii)
-  photo     the speaker in black & white, cut out, solid, filling the bottom of the cover
+  photo     the speaker in colour, cut out, solid, filling the bottom of the cover
   safe area everything that matters sits inside the centre 1080x1440 (the profile-grid crop)
 
 Headline per reel: "cover": "TRUST THE TIMING." in the plan - the last word becomes the big one.
@@ -161,7 +161,7 @@ def cover(m, photo, out):
         p = photo.convert("RGBA")
         p = p.crop(p.getbbox() or (0, 0, p.width, p.height))
         alpha = p.getchannel("A")
-        p = ImageOps.autocontrast(ImageOps.grayscale(p.convert("RGB")), cutoff=1).convert("RGBA")
+        p = ImageOps.autocontrast(p.convert("RGB"), cutoff=1).convert("RGBA")   # full colour
         p.putalpha(alpha)
         top = int(y_handle + 10)
         scale = max((H - top) / p.height, W / p.width)     # reach the bottom edge, full width
