@@ -279,6 +279,7 @@ Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text
 
 
 EYE_LEN = 0.8         # seconds for the eye to open
+SFX_VOL = 0.8         # intro sound (assets/sfx_intro.m4a) under the speech
 
 
 def eye_frames(tmp):
@@ -345,14 +346,20 @@ def build(m, base, tmp, logo):
         g.append(f"[v1][pp]overlay=0:{FOOT_Y}:enable='between(t,{p_at:.3f},{p_at + p_len:.3f})':eof_action=repeat[v2]")
     else:
         g.append("[v1]null[v2]")
-    if m.get("intro", "eye") == "eye":                    # eye opens from the middle out
+    eye = m.get("intro", "eye") == "eye"
+    if eye:                                                # intro sound lands with the opening
+        g += [f"[5:a]aresample=48000,aformat=channel_layouts=stereo,volume={SFX_VOL}[sfx]",
+              "[ba0][sfx]amix=inputs=2:duration=first:normalize=0[ba]"]
+    else:
+        g += ["[ba0]anull[ba]"]
+    if eye:                                                # eye opens from the middle out
         g += [f"[4:v]scale={W}:{FOOT_H},format=rgba[lids]",
               f"[v2][lids]overlay=0:{FOOT_Y}:eof_action=pass,trim=duration={dur:.3f},format=yuv420p[body]"]
     else:
         g += [f"[v2]trim=duration={dur:.3f},fade=t=in:st=0:d={FADE_IN},format=yuv420p[body]"]
     g += [
           f"[0:a]aselect='{sel}',asetpts=N/SR/TB,aresample=48000,loudnorm=I=-14:TP=-1.5:LRA=9,"
-          f"afade=t=in:d=0.2,afade=t=out:st={dur - 0.15:.3f}:d=0.15[ba]",
+          f"afade=t=in:d=0.2,afade=t=out:st={dur - 0.15:.3f}:d=0.15[ba0]",
           f"[2:v]format=yuv420p,fade=t=out:st={END_LEN - 0.35}:d=0.35,setsar=1[ev]",
           f"anullsrc=r=48000:cl=stereo,atrim=duration={END_LEN}[ea]",
           "[body][ba][ev][ea]concat=n=2:v=1:a=1[v][a]"]
@@ -363,6 +370,7 @@ def build(m, base, tmp, logo):
          "-loop", "1", "-t", str(END_LEN), "-framerate", str(FPS), "-i", str(endc),
          "-loop", "1", "-t", f"{dur:.3f}", "-i", str(mark),
          "-framerate", str(FPS), "-i", str(tmp / "eye_%03d.png"),
+         "-i", str(HERE / "assets" / "sfx_intro.m4a"),
          "-filter_complex", ";".join(g), "-map", "[v]", "-map", "[a]", "-r", str(FPS),
          "-c:v", "libx264", "-crf", "16" if S == 2 else "17", "-preset", "slow", "-pix_fmt", "yuv420p",
          "-movflags", "+faststart", "-c:a", "aac", "-b:a", "256k", str(out)])
