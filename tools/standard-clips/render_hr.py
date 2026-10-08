@@ -284,6 +284,8 @@ Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text
 EYE_LEN = 0.8         # seconds for the eye to open
 SFX_VOL = 0.8         # intro sound (assets/sfx_intro.m4a) under the speech
 CLICK_VOL, CLICK_LEAD = 0.7, 0.10   # click (assets/sfx_click.mp3) on each key word; its snap is 0.10s in
+RISER_VOL, RISER_LEN = 1.8, 1.88    # riser (assets/sfx_riser.mp3) builds over the end card and ends with it
+RISER_DELAY_MS = max(0, int((END_LEN - RISER_LEN) * 1000))
 
 
 def eye_frames(tmp):
@@ -372,7 +374,8 @@ def build(m, base, tmp, logo):
           f"[0:a]aselect='{sel}',asetpts=N/SR/TB,aresample=48000,loudnorm=I=-14:TP=-1.5:LRA=9,"
           f"afade=t=in:d=0.2,afade=t=out:st={dur - 0.15:.3f}:d=0.15[ba0]",
           f"[2:v]format=yuv420p,fade=t=out:st={END_LEN - 0.35}:d=0.35,setsar=1[ev]",
-          f"anullsrc=r=48000:cl=stereo,atrim=duration={END_LEN}[ea]",
+          f"[7:a]aresample=48000,aformat=channel_layouts=stereo,volume={RISER_VOL},"      # riser peaks as the card ends
+          f"adelay={RISER_DELAY_MS}|{RISER_DELAY_MS},apad,atrim=duration={END_LEN}[ea]",
           "[body][ba][ev][ea]concat=n=2:v=1:a=1[v][a]"]
     eye_frames(tmp)
     out = base / m.get("out_dir", "out/moments") / f"{m['id']}.mp4"
@@ -383,6 +386,7 @@ def build(m, base, tmp, logo):
          "-framerate", str(FPS), "-i", str(tmp / "eye_%03d.png"),
          "-i", str(HERE / "assets" / "sfx_intro.m4a"),
          "-i", str(HERE / "assets" / "sfx_click.mp3"),
+         "-i", str(HERE / "assets" / "sfx_riser.mp3"),
          "-filter_complex", ";".join(g), "-map", "[v]", "-map", "[a]", "-r", str(FPS),
          "-c:v", "libx264", "-crf", "16" if S == 2 else "17", "-preset", "slow", "-pix_fmt", "yuv420p",
          "-movflags", "+faststart", "-c:a", "aac", "-b:a", "256k", str(out)])
