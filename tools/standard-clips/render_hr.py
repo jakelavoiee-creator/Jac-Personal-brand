@@ -305,10 +305,43 @@ def eye_frames(tmp):
     return n
 
 
+FILLERS = {"um", "uh", "uhm", "erm", "hmm", "mm", "mhm", "mmhmm", "mm-hmm", "uh-huh", "ah", "oh"}
+ACKS = FILLERS | {"yeah", "yes", "yep", "right", "okay", "ok", "sure", "wow", "exactly", "true", "totally", "no",
+                  "absolutely", "interesting", "nice", "love", "it", "that", "huh", "really"}
+
+
+def speaker_only(ws):
+    """Captions for the speaker only: drop YouTube's '>>' speaker-change marks, filler sounds, and the
+    other person's short interjections (a few 'yeah / mm / right' words between two speaker changes)."""
+    import html
+    turns, cur = [], []
+    for w in ws:
+        text = html.unescape(w["w"]).replace("[&nbsp;__&nbsp;]", "").replace("\u00a0", " ").strip()
+        if text.startswith(">>"):
+            if cur:
+                turns.append(cur)
+            cur, text = [], text[2:].strip()
+        if text:
+            cur.append({**w, "w": text})
+    if cur:
+        turns.append(cur)
+    out = []
+    for i, turn in enumerate(turns):
+        bare = [re_word(x["w"]) for x in turn]
+        if len(turns) > 1 and len(turn) <= 3 and all(b in ACKS for b in bare):
+            continue                                       # someone else saying "yeah", "mm", "right"
+        out += [x for x, b in zip(turn, bare) if b not in FILLERS]
+    return out
+
+
+def re_word(t):
+    return re.sub(r"[^a-z'-]", "", t.lower())
+
+
 def build(m, base, tmp, logo):
     src, vtt = str(base / m["src"]), str(base / m["vtt"])
     a, b, off = v1.secs(m["start"]), v1.secs(m["end"]), v1.secs(m.get("src_offset", 0))
-    ws = [w for w in v1.vtt_words(vtt) if a - 0.05 <= w["t"] < b]
+    ws = speaker_only([w for w in v1.vtt_words(vtt) if a - 0.05 <= w["t"] < b])
     keep = v1.keep_segments(src, a - off, b - a, [w["t"] - a for w in ws])
     words = [{"w": w["w"], "t": v1.remap(w["t"] - a, keep), "end": v1.remap(w["end"] - a, keep)} for w in ws]
     dur = sum(kb - ka for ka, kb in keep)
