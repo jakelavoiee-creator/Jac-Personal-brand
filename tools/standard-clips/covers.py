@@ -5,7 +5,7 @@
     python covers.py ig.json a01-... a07-...  # just these
 
   canvas    1080x1920, black-to-grey grain gradient (assets/cover_bg.jpg)
-  headline  Bebas Neue: the line in small caps, its LAST word huge in italic bold (+ @aura.miamii)
+  headline  condensed Times italic lowercase line, its LAST word huge in Akzidenz-Grotesk bold caps (+ @aura.miamii)
   photo     the speaker in black & white, cut out, solid, filling the bottom of the cover
   safe area everything that matters sits inside the centre 1080x1440 (the profile-grid crop)
 
@@ -25,7 +25,8 @@ from pathlib import Path
 from PIL import Image, ImageDraw, ImageFilter, ImageFont, ImageOps
 
 HERE = Path(__file__).resolve().parent
-BEBAS = HERE / "assets" / "fonts" / "BebasNeue-Regular.ttf"
+sys.path.insert(0, str(HERE))
+import brandfonts as bf  # noqa: E402  (Times New Roman Condensed + Akzidenz-Grotesk, or free stand-ins)
 W, H = 1080, 1920
 GRID_TOP, GRID_BOT = (H - 1440) // 2, (H + 1440) // 2       # what the 3:4 profile grid shows
 HANDLE = "@aura.miamii"
@@ -43,7 +44,18 @@ def speaker_of(m):
 
 
 def font(size):
-    return ImageFont.truetype(str(BEBAS), size)
+    return ImageFont.truetype(str(bf.GROTESK), size)
+
+
+def serif_line(text, size):
+    """Condensed Times italic, lowercase - the small line above the big word."""
+    f = ImageFont.truetype(str(bf.SERIF), size)
+    text = text.lower()
+    w0, h0 = int(ImageDraw.Draw(Image.new("L", (1, 1))).textlength(text, font=f)) + size, int(size * 1.4)
+    im = Image.new("RGBA", (w0, h0), (0, 0, 0, 0))
+    ImageDraw.Draw(im).text((size // 2, int(size * 1.05)), text, font=f, fill="white", anchor="ls")
+    im = im.crop(im.getbbox())
+    return im.resize((max(1, int(im.width * bf.SERIF_SCALE)), im.height), Image.LANCZOS)
 
 
 # ---------- speaker photo ----------
@@ -143,9 +155,9 @@ def fit(text, max_w, start, d):
 
 
 def italic_bold(text, size):
-    """Bebas Neue made bold (thick outline) and italic (slanted) - the big last word."""
+    """Akzidenz-Grotesk bold caps, slanted - the big last word."""
     f = font(size)
-    stroke = max(2, size // 70)
+    stroke = 0
     w0 = int(ImageDraw.Draw(Image.new("L", (1, 1))).textlength(text, font=f)) + stroke * 2 + size // 3
     h0 = int(size * 1.15)
     im = Image.new("RGBA", (w0, h0), (0, 0, 0, 0))
@@ -165,9 +177,16 @@ def cover(m, photo, out):
     d = ImageDraw.Draw(im)
     # lay the headline out first, so the photo can fill everything below it
     y = GRID_TOP + 60
-    fk = fit(kicker, 940, 110, d) if kicker else None
-    yb = y + (fk.size * 0.92 if fk else 0)
-    size = 470
+    ki = None
+    if kicker:
+        ks = 120
+        while True:
+            ki = serif_line(kicker, ks)
+            if ki.width <= 940 or ks <= 50:
+                break
+            ks -= 6
+    yb = y + (ki.height + 18 if ki else 0)
+    size = 360
     while True:
         bi = italic_bold(big, size)
         if bi.width <= 1000 or size <= 120:
@@ -188,14 +207,14 @@ def cover(m, photo, out):
             p = p.crop((l, 0, l + W, p.height))
         im.paste(p, ((W - p.width) // 2, H - p.height), p)
         d = ImageDraw.Draw(im)
-    if fk:
-        d.text((W // 2, y), kicker, font=fk, fill="white", anchor="mt")
+    if ki:
+        im.paste(ki, ((W - ki.width) // 2, int(y)), ki)
     shadow = Image.new("RGBA", bi.size, (0, 0, 0, 0))
     shadow.putalpha(bi.getchannel("A").point(lambda v: v * 3 // 4))
     x = (W - bi.width) // 2
     im.paste(shadow, (x + 6, int(yb) + 8), shadow)
     im.paste(bi, (x, int(yb)), bi)
-    d.text((x + bi.width, y_handle), HANDLE, font=font(34), fill=(200, 200, 200), anchor="rt")
+    d.text((x + bi.width, y_handle), HANDLE, font=font(28), fill=(200, 200, 200), anchor="rt")
     out.parent.mkdir(parents=True, exist_ok=True)
     im.convert("RGB").save(out, quality=95)
     return True

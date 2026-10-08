@@ -5,7 +5,8 @@
   canvas    black 9:16, the 16:9 clip untouched (original colour) across the middle
   open      fades up from black
   captions  Bebas Neue Regular, one word at a time, sized by impact, always placed off the speaker's face
-  type      Bebas Neue Regular for captions and punchline (end card locked)
+  type      condensed Times New Roman italic (buildup words) + Akzidenz-Grotesk bold caps (impact words,
+            punchline) - see brandfonts.py; end card locked
   punchline the key line as big stacked caps, right-aligned
   mark      small AURA logo, bottom-centre of the footage, on every frame
   end       TOO CREATIVE(TM) / FOR NINE TO FIVE, centred in the footage area, AURA mark beneath
@@ -27,15 +28,17 @@ from PIL import Image, ImageDraw, ImageFont
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 import render as v1  # noqa: E402
+import brandfonts as bf  # noqa: E402
 
 HERE = Path(__file__).resolve().parent
 FONTS = HERE / "assets" / "fonts"
-BEBAS = FONTS / "BebasNeue-Regular.ttf"   # captions + punchline
+BEBAS = FONTS / "BebasNeue-Regular.ttf"   # (previous caption face)
+SERIF, GROTESK, SERIF_SCALE = bf.SERIF, bf.GROTESK, bf.SERIF_SCALE   # captions + punchline
 COND = FONTS / "Oswald-Bold.ttf"          # end card (locked)
 FPS, END_LEN, FADE_IN = 30, 2.2, 0.35
 CAP_SIZE = 120                           # captions: Bebas Neue Regular, one word at a time
 # impact sizing: the buildup words stay smaller, the words that land the sentence go big
-SIZE_SMALL, SIZE_MID, SIZE_BIG = 84, 118, 170
+SIZE_SMALL, SIZE_MID, SIZE_BIG = 92, 118, 150   # serif italic buildup / serif / grotesk caps impact
 FILLER = set("""a an the and or but so if of to in on at by for with from as is are was were be been being am
 i you he she it we they me him her us them my your his its our their this that these those there here
 do does did have has had will would can could should shall may might must just like um uh yeah okay oh
@@ -67,7 +70,7 @@ def run(cmd):
 
 def stacked(d, lines, size, align, box_w, box_h, shadow=True):
     """Draw stacked Bebas Neue caps (draws on d)."""
-    cond = goth = ImageFont.truetype(str(BEBAS), size)
+    cond = goth = ImageFont.truetype(str(GROTESK), size)
     parsed = []
     for line in lines:
         parts = [(m.group(1), goth) if m.group(1) else (m.group(2), cond)
@@ -185,8 +188,10 @@ def overlap(a, b):
 
 def place(text, size, faces, prev=None):
     """Pick a caption centre (normalised in the footage) that keeps the word off every face."""
-    f = ImageFont.truetype(str(BEBAS), size)
-    tw, th = f.getlength(text) / W + 0.03, size * 0.78 / FOOT_H + 0.03
+    big = size >= SIZE_BIG * S
+    f = ImageFont.truetype(str(GROTESK if big else SERIF), size)
+    tw = f.getlength(text if big else text.lower()) * (1 if big else SERIF_SCALE) / W + 0.03
+    th = size * 0.78 / FOOT_H + 0.03
     def box(cx, cy):
         return (cx - tw / 2, cy - th / 2, cx + tw / 2, cy + th / 2)
     cands = [(0.5, 0.80), (0.5, 0.20)]
@@ -202,6 +207,17 @@ def place(text, size, faces, prev=None):
     return min(cands, key=lambda c: sum(overlap(box(*c), fb) for fb in faces))
 
 
+def face(size):
+    """Impact words: grotesk bold caps. Everything else: condensed Times italic, lowercase."""
+    if size >= SIZE_BIG * S:
+        return f"\\fn{bf.family(GROTESK)}\\i0\\b0"
+    return f"\\fn{bf.family(SERIF)}\\i1\\b0\\fscx{int(SERIF_SCALE * 100)}"
+
+
+def word(text, size):
+    return text.upper() if size >= SIZE_BIG * S else text.lower()
+
+
 def write_ass(chunks, path, dur, hide_from, hide_len=2.0, punch_words=frozenset(), track=()):
     head = f"""[Script Info]
 ScriptType: v4.00+
@@ -211,7 +227,7 @@ WrapStyle: 2
 
 [V4+ Styles]
 Format: Name, Fontname, Fontsize, PrimaryColour, SecondaryColour, OutlineColour, BackColour, Bold, Italic, Underline, StrikeOut, ScaleX, ScaleY, Spacing, Angle, BorderStyle, Outline, Shadow, Alignment, MarginL, MarginR, MarginV, Encoding
-Style: S,Bebas Neue,{CAP_SIZE * S},&H00FFFFFF,&H00FFFFFF,&H00000000,&H78000000,0,0,0,0,100,100,{1 * S},0,1,0,{3 * S},5,60,60,0,1
+Style: S,{bf.family(GROTESK)},{CAP_SIZE * S},&H00FFFFFF,&H00FFFFFF,&H00000000,&H78000000,0,0,0,0,100,100,0,0,1,0,{3 * S},5,60,60,0,1
 
 [Events]
 Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text
@@ -230,7 +246,7 @@ Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text
             size = word_size(c["text"], punch_words) * S
             prev = cx, cy = place(c["text"], size, faces_at(track, t0, t1), prev)
             ev.append(f"Dialogue: 0,{v1.ass_time(t0)},{v1.ass_time(t1)},S,,0,0,0,,"
-                      f"{{\\an5\\pos({int(cx * W)},{FOOT_Y + int(cy * FOOT_H)})\\fs{size}}}{c['text']}")
+                      f"{{\\an5\\pos({int(cx * W)},{FOOT_Y + int(cy * FOOT_H)})\\fs{size}{face(size)}}}{word(c['text'], size)}")
     Path(path).write_text(head + "\n".join(ev) + "\n", encoding="utf-8")
 
 
@@ -272,7 +288,7 @@ def build(m, base, tmp, logo):
     g = [f"[0:v]select='{sel}',setpts=N/FRAME_RATE/TB,fps={FPS},scale={W}:{FOOT_H}:flags=lanczos,setsar=1,"
          f"pad={W}:{H}:0:{FOOT_Y}:black,format=yuv420p[v0]",
          f"[v0][3:v]overlay=0:0[vm]",
-         f"[vm]subtitles={ass_rel}:fontsdir=assets/fonts[v1]"]
+         f"[vm]subtitles={ass_rel}:fontsdir=build/fonts[v1]"]
     if p_at is not None:
         g.append(f"[1:v]format=rgba,fade=t=in:st=0:d=0.1:alpha=1,setpts=PTS+{p_at:.3f}/TB[pp]")
         g.append(f"[v1][pp]overlay=0:{FOOT_Y}:enable='between(t,{p_at:.3f},{p_at + p_len:.3f})':eof_action=repeat[v2]")
@@ -304,6 +320,8 @@ def main():
     plan = json.loads(plan_path.read_text())
     logo = str(plan_path.parent / plan["logo"]) if plan.get("logo") else None
     (HERE / "build").mkdir(exist_ok=True)
+    bf.ass_fonts_dir(HERE / "build")
+    print(bf.describe())
     todo = [m for m in plan["moments"] if not args[1:] or m["id"] in args[1:]]
     failed = []
     for i, m in enumerate(todo, 1):
