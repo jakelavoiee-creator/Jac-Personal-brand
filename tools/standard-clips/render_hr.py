@@ -282,7 +282,7 @@ EYE_LEN = 0.8         # seconds for the eye to open
 
 
 def eye_frames(tmp):
-    """Black eyelids opening from the middle out (RGBA, footage-sized), one PNG per frame."""
+    """The picture opens from a line through the middle, top and bottom only (RGBA, footage-sized), one PNG per frame."""
     import numpy as np
     n = int(EYE_LEN * FPS)
     w, h = W // 2, FOOT_H // 2                                  # drawn at half size, scaled up in ffmpeg
@@ -290,8 +290,8 @@ def eye_frames(tmp):
     ys = np.abs(np.arange(h) - h / 2)[:, None]                  # distance from the centre line
     for i in range(n):
         o = 1 - (1 - i / n) ** 3                                # ease-out: quick start, soft landing
-        half = o * (h / 2) * 1.6 * (1 - 0.5 * xs ** 2)         # curved lids, widest in the middle
-        alpha = np.clip((ys - half[None, :]) / (4 + 20 * o), 0, 1)
+        half = np.full(w, o * (h / 2 + 2))                      # straight edges: opens top and bottom only
+        alpha = np.clip(ys - half[None, :], 0, 1)
         rgba = np.zeros((h, w, 4), np.uint8)
         rgba[..., 3] = (alpha * 255).astype(np.uint8)
         Image.fromarray(rgba, "RGBA").save(tmp / f"eye_{i:03d}.png", compress_level=1)
