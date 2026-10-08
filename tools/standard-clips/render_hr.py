@@ -45,10 +45,8 @@ i you he she it we they me him her us them my your his its our their this that t
 do does did have has had will would can could should shall may might must just like um uh yeah okay oh
 what when where who how which then than also very really because about into out up down over not no
 i'm you're it's that's don't i've you've we're they're there's let's gonna wanna gotta""".split())
-IMPACT = set("""never always everything nothing everyone nobody anything impossible possible god dream dreams win wins
-winner winning lose fail failure fear love life death die die alive free freedom truth power money rich broke
-success successful happy happiness pain hard harder hardest discipline greatness great best worst only
-believe faith purpose why now today tomorrow forever alone enough more less most all""".split())
+IMPACT = set("""never always everything nothing impossible god dream dreams fail failure fear love truth purpose
+believe faith greatness discipline success successful happiness pain freedom""".split())
 
 S = 2                                    # 2 = 4K (2160x3840), 1 = 1080x1920
 W, H = 1080 * S, 1920 * S
@@ -290,13 +288,15 @@ def build(m, base, tmp, logo):
     # one word per caption, held until the next word starts (or briefly after the last one)
     chunks = [{"t0": w["t"], "t1": max(w["end"], w["t"] + 0.12), "text": w["w"].strip(" ,.;:\"“”").upper()} for w in words if w["w"].strip(" ,.;:\"“”")]
     p_at = None
-    if m.get("punch_from"):
+    if m.get("punch_from") and m.get("show_punchline"):   # the stacked punchline overlay is off by default
         cue = m["punch_from"].lower()
         hit = [w["t"] for w in words if w["w"].lower().strip(",.!?") == cue and w["t"] >= dur * 0.3]
         p_at = hit[0] if hit else None
     p_len = float(m.get("punch_len", 2.0))       # the punchline is a beat, not a takeover
     ass_rel = f"build/hr_{m['id']}.ass"
-    punch_words = {w.lower() for w in re.findall(r"[A-Za-z0-9'’]+", m.get("punchline", "").replace("[", "").replace("]", ""))} - FILLER
+    # the key word: the one marked [X] in the punchline (e.g. "THE [T]IMING OF") goes big and bold
+    key = re.search(r"\[(\w)\]([\w'’]*)", m.get("punchline", ""))
+    punch_words = {(key.group(1) + key.group(2)).lower()} if key else set()
     punch_words |= {w.lower() for w in m.get("emphasis", [])}      # optional per-moment override
     track = face_track(src, a - off, b - a, keep)
     region = caption_side(track, m.get("caption_side"))
