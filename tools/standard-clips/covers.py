@@ -233,8 +233,14 @@ def main():
         if (args[1:] and m["id"] not in args[1:]) or (not args[1:] and m["id"] in skip):
             continue
         name = speaker_of(m)
-        if name not in photos:
-            photos[name] = speaker_photo(name, reels.clip(m, plan_path.parent))
+        if not photos.get(name):
+            clips = [reels.clip(m, plan_path.parent)] + sorted(reels.DOWNLOADED.glob(f"{m['id'][:3]}-*.mp4"))
+            for c in clips:                                # this reel's clip, else an older clip of the same reel
+                photos[name] = speaker_photo(name, c) if c.exists() else None
+                if photos[name] is not None:
+                    break
+            if photos.get(name) is None:
+                print(f"  ! no photo for {name}: run fetch.py first, or put a photo in speakers/{slug(name)}.jpg")
         if cover(m, photos[name], out_dir / f"{m['id']}.jpg"):
             print(f"[cover] REELS/COVER/{m['id']}.jpg")
         else:
