@@ -9,7 +9,7 @@
   type      condensed Times New Roman italic (buildup words) + Akzidenz-Grotesk bold caps (impact words,
             punchline) - see brandfonts.py; end card locked
   punchline the key line as big stacked caps, right-aligned
-  mark      small AURA logo, bottom-centre of the footage, on every frame
+  mark      AURA logo, solid white, centred in the black band under the footage, on every frame
   end       TOO CREATIVE(TM) / FOR NINE TO FIVE, centred in the footage area, AURA mark beneath
 
     python3 render_hr.py moments.json [id ...]          # 4K (2160x3840) by default
@@ -109,10 +109,11 @@ def logo_mark(logo, width):
 
 
 def watermark_png(path, logo):
+    """AURA mark, solid white, in the black band right under the footage - visible the whole reel."""
     im = Image.new("RGBA", (W, H), (0, 0, 0, 0))
     if logo:
-        mark = logo_mark(logo, 64 * S)
-        im.paste(mark, ((W - mark.width) // 2, FOOT_Y + FOOT_H - mark.height - 12 * S), mark)
+        mark = v1.tint_logo(logo, "white", WATERMARK_W * S)
+        im.paste(mark, ((W - mark.width) // 2, FOOT_Y + FOOT_H + 36 * S), mark)
     im.save(path)
 
 
@@ -283,6 +284,7 @@ Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text
 
 
 EYE_LEN = 0.8         # seconds for the eye to open
+WATERMARK_W = 150     # AURA mark width (px at 1080 wide), under the footage
 SFX_VOL = 0.8         # intro sound (assets/sfx_intro.m4a) under the speech
 CLICK_VOL, CLICK_LEAD = 0.7, 0.10   # click (assets/sfx_click.mp3) on each key word; its snap is 0.10s in
 RISER_VOL, RISER_LEN = 1.8, 1.88    # riser (assets/sfx_riser.mp3) builds over the end card and ends with it
