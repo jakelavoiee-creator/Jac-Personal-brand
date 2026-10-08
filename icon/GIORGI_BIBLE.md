@@ -80,3 +80,11 @@ Bal Harbour Shops · Ocean Drive · Art Basel booth · Monaco yacht deck · a Pa
 - **LOCKED:** look (per the brief), the shoes as the visual logo, the move, the catchphrase, the trust rules.
 - **OPEN:** v1 approved → 3 pilot clips (Bal Harbour, Ferrari showroom, Ocean Drive).
 - **Decision:** is Giorgi replacing Don Calma, or are they launching as two accounts?
+
+---
+
+## Instagram profile picture (v1, in review)
+
+- **Option A:** job `78393b00-e3ac-41cb-aa79-7d2794cffc84` ([render](https://d8j0ntlcm91z4.cloudfront.net/user_38WgIqfb8aRSLfJPTHATd2uH66Y/hf_20261008_201033_78393b00-e3ac-41cb-aa79-7d2794cffc84.png))
+- **Option B:** job `b69c1e02-f658-4eac-a6e1-0051e32ae061` ([render](https://d8j0ntlcm91z4.cloudfront.net/user_38WgIqfb8aRSLfJPTHATd2uH66Y/hf_20261008_201033_b69c1e02-f658-4eac-a6e1-0051e32ae061.png))
+- Spec: 1:1 at 2k, from the v1 sheet as reference. Chest-up and centered, with the head in the middle 60% so it survives the circle crop. Huge braces smile with one finger pushing up the glasses. Solid LED-blue `#2E7BFF` background with blurred Caucasus peaks along the bottom. No text.
