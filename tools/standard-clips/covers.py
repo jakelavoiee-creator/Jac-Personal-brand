@@ -1,0 +1,196 @@
+#!/usr/bin/env python3
+"""AURA reel covers: one photo per speaker, a new headline per reel.
+
+    python covers.py ig.json                 # every reel in the plan
+    python covers.py ig.json a01-... a07-...  # just these
+
+  canvas    1080x1920, dark charcoal with a faint wall of small quote text
+  headline  Bebas Neue: small kicker line / one huge word / optional small line (+ @aura.miamii)
+  photo     the speaker in black & white, cut out, fading into the background
+  safe area everything that matters sits inside the centre 1080x1440 (the profile-grid crop)
+
+Headline per reel: "cover": "KICKER / BIG WORD. / SMALL LINE" in the plan (the last part is optional).
+Speaker photo: speakers/<speaker>.png|jpg if you drop one in; otherwise the sharpest front-facing
+frame of that speaker's first clip is picked, cut out, and saved to speakers/<speaker>.png, so every
+cover for that speaker reuses the same photo. Delete that file to pick again, or replace it with your own.
+
+Needs: pip install pillow numpy "opencv-python-headless<5" "rembg[cpu]"
+"""
+import json
+import re
+import subprocess
+import sys
+from pathlib import Path
+
+from PIL import Image, ImageDraw, ImageFilter, ImageFont, ImageOps
+
+HERE = Path(__file__).resolve().parent
+BEBAS = HERE / "assets" / "fonts" / "BebasNeue-Regular.ttf"
+W, H = 1080, 1920
+GRID_TOP, GRID_BOT = (H - 1440) // 2, (H + 1440) // 2       # what the 3:4 profile grid shows
+HANDLE = "@aura.miamii"
+
+
+def slug(s):
+    return re.sub(r"[^a-z0-9]+", "-", s.lower()).strip("-") or "speaker"
+
+
+def speaker_of(m):
+    if m.get("speaker"):
+        return m["speaker"]
+    cap = m.get("caption", "")
+    return cap.split("—")[-1].strip() if "—" in cap else m["id"]
+
+
+def font(size):
+    return ImageFont.truetype(str(BEBAS), size)
+
+
+# ---------- speaker photo ----------
+def best_frame(clip):
+    """Sharpest, largest front-facing face in the clip -> (PIL image, face box)."""
+    import cv2
+    import numpy as np
+    casc = cv2.CascadeClassifier(cv2.data.haarcascades + "haarcascade_frontalface_default.xml")
+    probe = subprocess.run(["ffprobe", "-v", "error", "-select_streams", "v:0", "-show_entries", "stream=width,height",
+                            "-of", "csv=p=0", str(clip)], capture_output=True, text=True).stdout.strip().split(",")
+    sw, sh = int(probe[0]), int(probe[1])
+    raw = subprocess.run(["ffmpeg", "-v", "error", "-i", str(clip), "-vf", "fps=2", "-f", "rawvideo",
+                          "-pix_fmt", "rgb24", "-"], capture_output=True).stdout
+    n, best = len(raw) // (sw * sh * 3), None
+    for i in range(n):
+        rgb = np.frombuffer(raw[i * sw * sh * 3:(i + 1) * sw * sh * 3], np.uint8).reshape(sh, sw, 3)
+        g = cv2.cvtColor(rgb, cv2.COLOR_RGB2GRAY)
+        small = cv2.resize(g, (640, int(640 * sh / sw)))
+        k = sw / 640
+        for (x, y, fw, fh) in casc.detectMultiScale(small, 1.1, 7, minSize=(50, 50)):
+            x, y, fw, fh = int(x * k), int(y * k), int(fw * k), int(fh * k)
+            sharp = cv2.Laplacian(g[y:y + fh, x:x + fw], cv2.CV_64F).var()
+            centred = 1 - abs((x + fw / 2) / sw - 0.5)            # prefer faces near the middle
+            score = fw * fh * min(sharp, 400) * centred
+            if not best or score > best[0]:
+                best = (score, rgb.copy(), (x, y, fw, fh))
+    if not best:
+        return None, None
+    return Image.fromarray(best[1]), best[2]
+
+
+def speaker_photo(name, clip):
+    d = HERE / "speakers"
+    d.mkdir(exist_ok=True)
+    for ext in ("png", "jpg", "jpeg", "webp"):
+        p = d / f"{slug(name)}.{ext}"
+        if p.exists():
+            im = Image.open(p)
+            return im if im.mode == "RGBA" else cutout(im)
+    if not clip.exists():
+        return None
+    frame, (x, y, fw, fh) = best_frame(clip)
+    if frame is None:
+        return None
+    cw = int(fw * 2.7)                                     # head and shoulders, face big
+    cx, top = x + fw // 2, max(0, int(y - fh * 0.6))
+    box = (max(0, cx - cw // 2), top, min(frame.width, cx + cw // 2), min(frame.height, top + int(cw * 1.1)))
+    im = cutout(frame.crop(box))
+    im.save(d / f"{slug(name)}.png")
+    print(f"  photo for {name}: speakers/{slug(name)}.png (replace it to use your own)")
+    return im
+
+
+def cutout(im):
+    try:
+        from rembg import new_session, remove
+        global _SESSION
+        if "_SESSION" not in globals():
+            _SESSION = new_session("u2net_human_seg")
+        return remove(im.convert("RGB"), session=_SESSION)
+    except ImportError:                                    # no rembg: soft-edged rectangle instead
+        im = im.convert("RGBA")
+        mask = Image.new("L", im.size, 0)
+        ImageDraw.Draw(mask).rectangle((im.width * .08, im.height * .04, im.width * .92, im.height), fill=255)
+        im.putalpha(mask.filter(ImageFilter.GaussianBlur(im.width * .06)))
+        return im
+
+
+# ---------- cover ----------
+def background(text):
+    bg = Image.new("RGB", (W, H), (34, 34, 34))
+    d = ImageDraw.Draw(bg)
+    f = font(17)
+    words = (re.sub(r"\s+", " ", text).upper() + "   ") * 40
+    y, i = 0, 0
+    while y < H:
+        d.text((-((y * 7) % 60), y), words[i:i + 220], font=f, fill=(52, 52, 52))
+        y, i = y + 19, (i + 37) % 400
+    shade = Image.linear_gradient("L").resize((W, H))      # darker toward the bottom
+    return Image.composite(Image.new("RGB", (W, H), (12, 12, 12)), bg, shade.point(lambda v: int(v * 0.55)))
+
+
+def fit(text, max_w, start, d):
+    size = start
+    while size > 40 and d.textlength(text, font=font(size)) > max_w:
+        size -= 4
+    return font(size)
+
+
+def cover(m, photo, out):
+    parts = [p.strip() for p in m.get("cover", "").split("/") if p.strip()]
+    if not parts:
+        return False
+    kicker, big, sub = (parts + ["", ""])[:3] if len(parts) >= 2 else ("", parts[0], "")
+    im = background(m.get("caption", "") + " " + m.get("punchline", ""))
+    if photo is not None:                                  # photo: black & white, bottom-centred
+        p = photo.convert("RGBA")
+        alpha = p.getchannel("A")
+        p = ImageOps.autocontrast(ImageOps.grayscale(p.convert("RGB")), cutoff=1).convert("RGBA")
+        p.putalpha(alpha)
+        target_h = 1120
+        p = p.resize((int(p.width * target_h / p.height), target_h), Image.LANCZOS)
+        if p.width > 1040:
+            p = p.resize((1040, int(p.height * 1040 / p.width)), Image.LANCZOS)
+        fade = Image.linear_gradient("L").resize((p.width, p.height)).point(lambda v: 255 if v < 170 else int(255 * (255 - v) / 85))
+        p.putalpha(Image.composite(p.getchannel("A"), Image.new("L", p.size, 0), fade))
+        im.paste(p, ((W - p.width) // 2, GRID_BOT - p.height + 150), p)
+    d = ImageDraw.Draw(im)
+    y = GRID_TOP + 60
+    if kicker:
+        f = fit(kicker, 940, 110, d)
+        d.text((W // 2, y), kicker, font=f, fill="white", anchor="mt")
+        y += f.size * 0.86
+    fb = fit(big, 1000, 470, d)
+    d.text((W // 2 + 4, y + 6), big, font=fb, fill=(0, 0, 0), anchor="mt")
+    d.text((W // 2, y), big, font=fb, fill="white", anchor="mt")
+    y += fb.size * 0.84
+    bw = d.textlength(big, font=fb)
+    if sub:
+        f = fit(sub, 900, 84, d)
+        d.text((W // 2 + bw / 2, y), sub, font=f, fill="white", anchor="rt")
+        y += f.size * 0.9
+    d.text((W // 2 + bw / 2, y + 4), HANDLE, font=font(34), fill=(200, 200, 200), anchor="rt")
+    out.parent.mkdir(parents=True, exist_ok=True)
+    im.convert("RGB").save(out, quality=95)
+    return True
+
+
+def main():
+    args = sys.argv[1:]
+    if not args:
+        sys.exit(__doc__)
+    plan_path = (Path.cwd() / args[0]).resolve()
+    plan = json.loads(plan_path.read_text(encoding="utf-8"))
+    out_dir = plan_path.parent / "out" / "covers"
+    photos = {}
+    for m in plan["moments"]:
+        if args[1:] and m["id"] not in args[1:]:
+            continue
+        name = speaker_of(m)
+        if name not in photos:
+            photos[name] = speaker_photo(name, plan_path.parent / m["src"])
+        if cover(m, photos[name], out_dir / f"{m['id']}.jpg"):
+            print(f"[cover] out/covers/{m['id']}.jpg")
+        else:
+            print(f"[cover] {m['id']}: no \"cover\" text in the plan - skipped")
+
+
+if __name__ == "__main__":
+    main()
