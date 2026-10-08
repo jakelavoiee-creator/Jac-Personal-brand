@@ -2,7 +2,7 @@
 
 ## North star
 **Too creative for nine to five.**
-One famous moment, one truth, about 12–25 seconds. Faces everyone recognises say what you need to hear to build something of your own. The format is modelled on @hustlersrevivalofficial. Every reel ends on our mantra.
+One famous moment, one truth, 15–30 seconds. Faces everyone recognises say what you need to hear to build something of your own. The format is modelled on @hustlersrevivalofficial. Every reel ends on our mantra.
 
 ## Content rules
 - **Huge, recognisable names only.** Streamers, YouTubers, podcasters, founders, athletes, and award-show speeches.
