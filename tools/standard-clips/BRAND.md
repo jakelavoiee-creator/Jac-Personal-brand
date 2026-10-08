@@ -5,7 +5,11 @@
 One famous moment, one truth, 15–30 seconds. Faces everyone recognises say what you need to hear to build something of your own. The format is modelled on @hustlersrevivalofficial. Every reel ends on our mantra.
 
 ## Content rules
-- **Huge, recognisable names only.** Streamers, YouTubers, podcasters, founders, athletes, and award-show speeches.
+- **Two formats only: movie scenes and podcast moments.** No speeches, award shows, red carpets or TV interviews.
+  - *Movie scenes:* iconic, dialogue-led scenes from the studio's or an official clip channel's upload.
+  - *Podcast moments:* recognisable guests on official podcast channels (Diary of a CEO, Modern Wisdom, Lewis Howes, Rich Roll, Jay Shetty, JRE Clips, High Performance...).
+- **A clear message on brand.** Building your own thing, discipline, belief, faith, purpose, taking the risk, not settling for nine to five. If the point isn't clear in 15-30 seconds, it doesn't post.
+- **Find our own moments.** Use other pages as a reference, but most reels come from moments we find ourselves.
 - **Recent.** Recorded in 2018 or later.
 - **Highest-quality source.** Use the official channel's upload, 4K when it exists. Never use reuploads or compilations.
 - **Clean source only.** The source must have no burned-in captions and no music under the voice. That rules out "motivation", "mindset" and "with subtitles" repost channels. Our captions and sounds go on a clean original.

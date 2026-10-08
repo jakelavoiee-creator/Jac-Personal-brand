@@ -15,22 +15,8 @@
    "caption": "Trust the timing of your life. — Lucy Hale",
    "ref": "ascendrecode DcdVz63AiE5",
    "source_channel": "Lewis Howes",
-   "cover": "TRUST THE TIMING."
-  },
-  {
-   "id": "a02-jensen-ackles-you-re-still-becoming",
-   "youtube": "TpOjLI294Jw",
-   "src": "sources/clips/a02-jensen-ackles-you-re-still-becoming.mp4",
-   "src_offset": 1031.1,
-   "vtt": "sources/TpOjLI294Jw.en.vtt",
-   "start": "1034.10",
-   "end": "1061.46",
-   "punch_from": "becoming",
-   "punchline": "YOU'RE STILL / [B]ECOMING.",
-   "caption": "Take the risk. When you fail, get back up. — Jensen Ackles",
-   "ref": "ascendrecode DZPGvrig4b_",
-   "source_channel": "Robyn Phillips",
-   "cover": "YOU'RE STILL BECOMING."
+   "cover": "TRUST THE TIMING.",
+   "kind": "podcast"
   },
   {
    "id": "a03-matthew-mcconaughey-go-for-the-hundred",
@@ -45,7 +31,8 @@
    "caption": "Take more swings. — Matthew McConaughey",
    "ref": "ascendrecode DYKTPjUAHcP",
    "source_channel": "Chris Williamson",
-   "cover": "GO FOR THE HUNDRED."
+   "cover": "GO FOR THE HUNDRED.",
+   "kind": "podcast"
   },
   {
    "id": "a04-shi-heng-yi-watch-your-habits",
@@ -60,7 +47,8 @@
    "caption": "It all starts with a thought. — Shi Heng Yi",
    "ref": "ascendrecode DahCDiVgLEl",
    "source_channel": "André Duqum and Shi Heng Yi Online",
-   "cover": "WATCH YOUR THOUGHTS."
+   "cover": "WATCH YOUR THOUGHTS.",
+   "kind": "podcast"
   },
   {
    "id": "a05-mel-robbins-act-like-who-you-want-to-b",
@@ -75,22 +63,8 @@
    "caption": "Not fake it till you make it. Intentional. — Mel Robbins",
    "ref": "ascendrecode DaHesvSAr16",
    "source_channel": "The Diary Of A CEO",
-   "cover": "ACT LIKE WHO YOU WANT TO BECOME."
-  },
-  {
-   "id": "a06-oprah-winfrey-to-be-you-not-someone-else",
-   "youtube": "2Ok_KYFWuKs",
-   "src": "sources/clips/a06-oprah-winfrey-to-be-you-not-someone-else.mp4",
-   "src_offset": 1116.25,
-   "vtt": "sources/2Ok_KYFWuKs.en.vtt",
-   "start": "1119.25",
-   "end": "1138.94",
-   "punch_from": "planet",
-   "punchline": "TO BE YOU. / NOT SOMEONE / ELSE'S [I]MITATION.",
-   "caption": "Stop comparing yourself. — Oprah Winfrey",
-   "ref": "ascendrecode DbPu-5Tgwz6",
-   "source_channel": "USC Annenberg",
-   "cover": "STOP COMPARING."
+   "cover": "ACT LIKE WHO YOU WANT TO BECOME.",
+   "kind": "podcast"
   },
   {
    "id": "a08-alison-armstrong-the-shame-is-the-sign-you",
@@ -105,22 +79,8 @@
    "caption": "This is my message to all men. — Alison Armstrong",
    "ref": "ascendrecode DZ9CVORsmS9",
    "source_channel": "Wellness + Wisdom Podcast",
-   "cover": "ONLY HONORABLE MEN FEEL SHAME."
-  },
-  {
-   "id": "a11-cillian-murphy-instinct-over-intellect-al",
-   "youtube": "thHyKiVcWOM",
-   "src": "sources/clips/a11-cillian-murphy-instinct-over-intellect-al.mp4",
-   "src_offset": 4806.58,
-   "vtt": "sources/thHyKiVcWOM.en.vtt",
-   "start": "4809.58",
-   "end": "4824.34",
-   "punch_from": "rationalize",
-   "punchline": "INSTINCT OVER / [I]NTELLECT. / ALWAYS.",
-   "caption": "If you feel it, it's right. — Cillian Murphy",
-   "ref": "orvinworld DUqtGpMjByV",
-   "source_channel": "SAG-AFTRA Foundation",
-   "cover": "INSTINCT OVER INTELLECT."
+   "cover": "ONLY HONORABLE MEN FEEL SHAME.",
+   "kind": "podcast"
   },
   {
    "id": "a12-chris-williamson-everyone-was-rooting-for-y",
@@ -135,7 +95,8 @@
    "caption": "The deck is never stacked against you. — Chris Williamson",
    "ref": "ascendrecode DaPe6edAkQ3",
    "source_channel": "Chris Williamson and Alex Hormozi",
-   "cover": "EVERYONE IS ROOTING."
+   "cover": "EVERYONE IS ROOTING.",
+   "kind": "podcast"
   },
   {
    "id": "a14-tom-holland-rest-is-strategy",
@@ -150,7 +111,8 @@
    "caption": "Only a fool works until they crack. — Tom Holland",
    "ref": "ascendrecode DdGgmp_g5Fv",
    "source_channel": "Rich Roll",
-   "cover": "REST IS STRATEGY."
+   "cover": "REST IS STRATEGY.",
+   "kind": "podcast"
   },
   {
    "id": "a15-barry-hearn-you-re-never-ever-gonna-be-v2",
@@ -165,7 +127,8 @@
    "caption": "I'm too happy to be beaten. — Barry Hearn",
    "ref": "orvinworld DUv1EsEjCFs",
    "source_channel": "High Performance",
-   "cover": "I'M UNBEATABLE."
+   "cover": "I'M UNBEATABLE.",
+   "kind": "podcast"
   },
   {
    "id": "a16-robert-greene-being-bored-will-kill-you",
@@ -180,7 +143,8 @@
    "caption": "Your brain needs pressure. — Robert Greene",
    "ref": "orvinworld DTd4WsDDL1l",
    "source_channel": "Chris Williamson",
-   "cover": "YOUR BRAIN NEEDS PRESSURE."
+   "cover": "YOUR BRAIN NEEDS PRESSURE.",
+   "kind": "podcast"
   },
   {
    "id": "a18-matthew-mcconaughey-when-it-s-time-dive",
@@ -195,7 +159,8 @@
    "caption": "Don't dip a toe. — Matthew McConaughey",
    "ref": "ascendrecode DdbX_JsgkCV",
    "source_channel": "Chris Williamson",
-   "cover": "WHEN IT'S TIME, DIVE."
+   "cover": "WHEN IT'S TIME, DIVE.",
+   "kind": "podcast"
   },
   {
    "id": "a19-wood-harris-trust-people-with-the-real",
@@ -210,37 +175,8 @@
    "caption": "Family don't run from mistakes. — Wood Harris",
    "ref": "ascendrecode Da65eaYgfnv",
    "source_channel": "Cinerama",
-   "cover": "TRUST THEM WITH THE REAL YOU."
-  },
-  {
-   "id": "a20-henry-cavill-don-t-expect-life-to-be-fa-v2",
-   "youtube": "9Lumng-m9K4",
-   "src": "sources/clips/a20-henry-cavill-don-t-expect-life-to-be-fa-v2.mp4",
-   "src_offset": 420.8,
-   "vtt": "sources/9Lumng-m9K4.en.vtt",
-   "start": "423.80",
-   "end": "456.04",
-   "punch_from": "lastly",
-   "punchline": "DON'T EXPECT / LIFE TO / BE [F]AIR.",
-   "caption": "80% of success is people. — Henry Cavill",
-   "ref": "ascendrecode DZMrfUaA9vV",
-   "source_channel": "Good Morning America",
-   "cover": "LIFE ISN'T FAIR."
-  },
-  {
-   "id": "a21-niecy-nash-i-want-to-thank-me",
-   "youtube": "1I5vvRWo1TE",
-   "src": "sources/clips/a21-niecy-nash-i-want-to-thank-me.mp4",
-   "src_offset": 186.94,
-   "vtt": "sources/1I5vvRWo1TE.en.vtt",
-   "start": "189.94",
-   "end": "207.12",
-   "punch_from": "myself",
-   "punchline": "I WANT TO / [T]HANK ME.",
-   "caption": "For believing in me. — Niecy Nash",
-   "ref": "ascendrecode DSxdPnXkmOW",
-   "source_channel": "Television Academy",
-   "cover": "THANK YOURSELF."
+   "cover": "TRUST THEM WITH THE REAL YOU.",
+   "kind": "scene"
   },
   {
    "id": "a23-robert-greene-amor-fati-love-of-fate",
@@ -255,7 +191,8 @@
    "caption": "Everything happens for a reason. — Robert Greene",
    "ref": "ascendrecode Da1unYugYDW",
    "source_channel": "Open Residency and Robert Greene ",
-   "cover": "LOVE YOUR FATE."
+   "cover": "LOVE YOUR FATE.",
+   "kind": "podcast"
   },
   {
    "id": "a26-chris-williamson-to-be-extra-ordinary-do-ex",
@@ -270,7 +207,8 @@
    "caption": "The average person will keep you average. — Chris Williamson",
    "ref": "ascendrecode DcGL5iYA7pI",
    "source_channel": "Chris Williamson and Alex Hormozi",
-   "cover": "DON'T BE AVERAGE."
+   "cover": "DON'T BE AVERAGE.",
+   "kind": "podcast"
   },
   {
    "id": "a27-robert-edward-grant-the-man-who-blames-himself-v2",
@@ -285,22 +223,8 @@
    "caption": "Ancient Chinese proverb. — Robert Edward Grant",
    "ref": "ascendrecode DdBOwETArVD",
    "source_channel": "AO",
-   "cover": "STOP BLAMING."
-  },
-  {
-   "id": "a28-bill-nighy-you-re-supposed-to-be-scar",
-   "youtube": "6Aq_V3LTbtg",
-   "src": "sources/clips/a28-bill-nighy-you-re-supposed-to-be-scar.mp4",
-   "src_offset": 601.46,
-   "vtt": "sources/6Aq_V3LTbtg.en.vtt",
-   "start": "604.46",
-   "end": "622.26",
-   "punch_from": "scared",
-   "punchline": "YOU'RE SUPPOSED / TO BE [S]CARED.",
-   "caption": "That's the healthy reaction. — Bill Nighy",
-   "ref": "ascendrecode DcDKS4oTwcs",
-   "source_channel": "BAFTA Guru",
-   "cover": "YOU'RE SUPPOSED TO BE SCARED."
+   "cover": "STOP BLAMING.",
+   "kind": "podcast"
   },
   {
    "id": "a29-ray-dalio-the-most-adaptable",
@@ -315,7 +239,8 @@
    "caption": "Not the smartest. Not the hardest working. — Ray Dalio",
    "ref": "ascendrecode Dbz1vnxgVqZ",
    "source_channel": "The Diary Of A CEO",
-   "cover": "THE ADAPTABLE WIN."
+   "cover": "THE ADAPTABLE WIN.",
+   "kind": "podcast"
   },
   {
    "id": "a30-chris-williamson-go-all-the-way",
@@ -330,7 +255,8 @@
    "caption": "If you're going to chase a dream, go all in. — Chris Williamson",
    "ref": "ascendrecode DdoaRsGRPnk",
    "source_channel": "Chris Williamson and Alex Hormozi",
-   "cover": "GO ALL IN."
+   "cover": "GO ALL IN.",
+   "kind": "podcast"
   },
   {
    "id": "a31-kendall-jenner-that-s-not-who-i-am",
@@ -345,7 +271,8 @@
    "caption": "They don't know the half of it. — Kendall Jenner",
    "ref": "ascendrecode DcJTp0Bs8hk",
    "source_channel": "Jay Shetty Podcast",
-   "cover": "THEY DON'T KNOW THE HALF."
+   "cover": "THEY DON'T KNOW THE HALF.",
+   "kind": "podcast"
   },
   {
    "id": "a32-robert-greene-you-have-down-moments-then",
@@ -360,7 +287,8 @@
    "caption": "Confidence is built day by day. — Robert Greene",
    "ref": "ascendrecode DdvsCoVgVxl",
    "source_channel": "Raj Shamani and Robert Greene ",
-   "cover": "GET BACK UP."
+   "cover": "GET BACK UP.",
+   "kind": "podcast"
   },
   {
    "id": "a34-chris-williamson-normal-is-average",
@@ -375,7 +303,8 @@
    "caption": "You can't do what everyone does and expect more. — Chris Williamson",
    "ref": "ascendrecode Dd6d8_VguO0",
    "source_channel": "Chris Williamson and Alex Hormozi",
-   "cover": "NORMAL IS AVERAGE."
+   "cover": "NORMAL IS AVERAGE.",
+   "kind": "podcast"
   },
   {
    "id": "a36-dc-young-fly-you-still-got-to-cook",
@@ -390,7 +319,8 @@
    "caption": "It gets hot in that kitchen. — DC Young Fly",
    "ref": "orvinworld DafnSMIs3bt",
    "source_channel": "Cam Newton",
-   "cover": "YOU STILL GOT TO COOK."
+   "cover": "YOU STILL GOT TO COOK.",
+   "kind": "podcast"
   },
   {
    "id": "a37-evy-poumpouras-you-ll-be-successful-v2",
@@ -405,7 +335,8 @@
    "caption": "Get good at life being hard. — Evy Poumpouras",
    "ref": "ascendrecode DeHN6z2sMkx",
    "source_channel": "Raj Shamani",
-   "cover": "GET GOOD AT PAIN."
+   "cover": "GET GOOD AT PAIN.",
+   "kind": "podcast"
   },
   {
    "id": "a39-mr-feeny-open-to-experience",
@@ -420,7 +351,8 @@
    "caption": "Their perception isn't your limit. — Mr. Feeny",
    "ref": "orvinworld DaX56sssM3M",
    "source_channel": "Mr. Feeny's Fence",
-   "cover": "STAY OPEN TO GROWTH."
+   "cover": "STAY OPEN TO GROWTH.",
+   "kind": "scene"
   },
   {
    "id": "a41-lucy-hale-focus-on-what-is-going-rig",
@@ -435,7 +367,8 @@
    "caption": "It multiplies. — Lucy Hale",
    "ref": "ascendrecode DTpSn0CkY8-",
    "source_channel": "Lewis Howes",
-   "cover": "FOCUS ON WHAT'S RIGHT."
+   "cover": "FOCUS ON WHAT'S RIGHT.",
+   "kind": "podcast"
   },
   {
    "id": "a42-jeffrey-hollender-show-up-do-something-long",
@@ -450,7 +383,8 @@
    "caption": "Don't sit home. — Jeffrey Hollender",
    "ref": "ascendrecode DcyBmcMAUMA",
    "source_channel": "Omelas Podcast ",
-   "cover": "DON'T SIT HOME. SHOW UP."
+   "cover": "DON'T SIT HOME. SHOW UP.",
+   "kind": "podcast"
   },
   {
    "id": "a43-shi-heng-yi-who-are-you-truly",
@@ -465,7 +399,8 @@
    "caption": "The root question. — Shi Heng Yi",
    "ref": "ascendrecode Dd0-bHRADve",
    "source_channel": "Jack Neel and Shi Heng Yi Online",
-   "cover": "WHO ARE YOU TRULY?"
+   "cover": "WHO ARE YOU TRULY?",
+   "kind": "podcast"
   },
   {
    "id": "a44-james-gandolfini-you-got-options-v2",
@@ -480,22 +415,8 @@
    "caption": "Never let anyone make you feel you don't. — James Gandolfini",
    "ref": "orvinworld DadH2iYMSzx",
    "source_channel": "TonySoprano",
-   "cover": "YOU GOT OPTIONS."
-  },
-  {
-   "id": "a47-owen-cooper-i-was-nothing-3-years-ago-long",
-   "youtube": "bYOWuV3l7yI",
-   "src": "sources/clips/a47-owen-cooper-i-was-nothing-3-years-ago-long.mp4",
-   "src_offset": 145.1,
-   "vtt": "sources/bYOWuV3l7yI.en.vtt",
-   "start": "148.10",
-   "end": "166.30",
-   "punch_from": "nothing",
-   "punchline": "I WAS NOTHING / 3 YEARS AGO. / I'M [H]ERE NOW.",
-   "caption": "Step out of your comfort zone. — Owen Cooper",
-   "ref": "ascendrecode DVq79wJjWfP",
-   "source_channel": "Television Academy",
-   "cover": "3 YEARS AGO I WAS NOTHING."
+   "cover": "YOU GOT OPTIONS.",
+   "kind": "scene"
   },
   {
    "id": "a49-quinlan-walther-not-your-person-long",
@@ -510,22 +431,8 @@
    "caption": "The one for you wants to be with you. — Quinlan Walther",
    "ref": "ascendrecode DZkOFm-x9FE",
    "source_channel": "Jay Shetty Podcast",
-   "cover": "NOT YOUR PERSON."
-  },
-  {
-   "id": "a50-sheryl-lee-ralph-love-what-you-see-v2",
-   "youtube": "zFqaZkoEu6o",
-   "src": "sources/clips/a50-sheryl-lee-ralph-love-what-you-see-v2.mp4",
-   "src_offset": 150.3,
-   "vtt": "sources/zFqaZkoEu6o.en.vtt",
-   "start": "153.30",
-   "end": "176.00",
-   "punch_from": "mirror",
-   "punchline": "LOVE WHAT / YOU [S]EE.",
-   "caption": "They don't have to like you. — Sheryl Lee Ralph",
-   "ref": "ascendrecode DS40AbqEtL7",
-   "source_channel": "Access Hollywood",
-   "cover": "LOVE WHAT YOU SEE."
+   "cover": "NOT YOUR PERSON.",
+   "kind": "podcast"
   }
  ],
  "blocked_sources": "Reposts with burned-in captions or music are never used - only the original upload (the show, podcast, event or studio channel)."
