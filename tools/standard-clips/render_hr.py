@@ -9,7 +9,7 @@
   type      condensed Times New Roman italic (buildup words) + Akzidenz-Grotesk bold caps (impact words,
             punchline) - see brandfonts.py; end card locked
   punchline the key line as big stacked caps, right-aligned
-  mark      AURA logo, solid white, centred in the black band under the footage, on every frame
+  mark      AURA logo, solid white, bottom-centre on the footage, every frame (not on the end card)
   end       TOO CREATIVE(TM) / FOR NINE TO FIVE, centred in the footage area, AURA mark beneath
 
     python3 render_hr.py moments.json [id ...]          # 4K (2160x3840) by default
@@ -109,11 +109,11 @@ def logo_mark(logo, width):
 
 
 def watermark_png(path, logo):
-    """AURA mark, solid white, in the black band right under the footage - visible the whole reel."""
+    """AURA mark, solid white, bottom-centre on the footage - visible the whole reel."""
     im = Image.new("RGBA", (W, H), (0, 0, 0, 0))
     if logo:
         mark = v1.tint_logo(logo, "white", WATERMARK_W * S)
-        im.paste(mark, ((W - mark.width) // 2, FOOT_Y + FOOT_H + 36 * S), mark)
+        im.paste(mark, ((W - mark.width) // 2, FOOT_Y + FOOT_H - mark.height - 28 * S), mark)
     im.save(path)
 
 
@@ -284,7 +284,7 @@ Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text
 
 
 EYE_LEN = 0.8         # seconds for the eye to open
-WATERMARK_W = 150     # AURA mark width (px at 1080 wide), under the footage
+WATERMARK_W = 120     # AURA mark width (px at 1080 wide), bottom-centre on the footage
 SFX_VOL = 0.8         # intro sound (assets/sfx_intro.m4a) under the speech
 CLICK_VOL, CLICK_LEAD = 0.7, 0.10   # click (assets/sfx_click.mp3) on each key word; its snap is 0.10s in
 RISER_VOL, RISER_LEN = 1.8, 1.88    # riser (assets/sfx_riser.mp3) builds over the end card and ends with it
@@ -376,12 +376,12 @@ def build(m, base, tmp, logo):
             break
     if best[1] != align:
         punchline_png(m.get("punchline", ""), punch, best[1])
-    end_card(endc, logo)
+    end_card(endc, None)                                   # end card: slogan only, no AURA mark
     watermark_png(mark, logo)
     sel = "+".join(f"between(t,{a - off + ka:.3f},{a - off + kb:.3f})" for ka, kb in keep)
     g = [f"[0:v]select='{sel}',setpts=N/FRAME_RATE/TB,fps={FPS},scale={W}:{FOOT_H}:flags=lanczos,setsar=1,"
          f"pad={W}:{H}:0:{FOOT_Y}:black,format=yuv420p[v0]",
-         f"[v0][3:v]overlay=0:0[vm]",
+         f"[v0]null[vm]",
          f"[vm]subtitles={ass_rel}:fontsdir=build/fonts[v1]"]
     if p_at is not None:
         g.append(f"[1:v]format=rgba,fade=t=in:st=0:d=0.1:alpha=1,setpts=PTS+{p_at:.3f}/TB[pp]")
@@ -403,9 +403,11 @@ def build(m, base, tmp, logo):
     g.append("".join(mix) + (f"amix=inputs={len(mix)}:duration=first:normalize=0[ba]" if len(mix) > 1 else "anull[ba]"))
     if eye:                                                # eye opens from the middle out
         g += [f"[4:v]scale={W}:{FOOT_H},format=rgba[lids]",
-              f"[v2][lids]overlay=0:{FOOT_Y}:eof_action=pass,trim=duration={dur:.3f},format=yuv420p[body]"]
+              f"[v2][lids]overlay=0:{FOOT_Y}:eof_action=pass,trim=duration={dur:.3f}[bodyx]",
+              f"[bodyx][3:v]overlay=0:0,format=yuv420p[body]"]                # AURA mark above the lids
     else:
-        g += [f"[v2]trim=duration={dur:.3f},fade=t=in:st=0:d={FADE_IN},format=yuv420p[body]"]
+        g += [f"[v2]trim=duration={dur:.3f},fade=t=in:st=0:d={FADE_IN}[bodyx]",
+              f"[bodyx][3:v]overlay=0:0,format=yuv420p[body]"]
     g += [
           f"[0:a]aselect='{sel}',asetpts=N/SR/TB,aresample=48000,loudnorm=I=-14:TP=-1.5:LRA=9,"
           f"afade=t=in:d=0.2,afade=t=out:st={dur - 0.15:.3f}:d=0.15[ba0]",
