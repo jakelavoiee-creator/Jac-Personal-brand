@@ -13,8 +13,9 @@ Personal brand only. Aura Miami has its own skills.
 ## Locked (do not change without the user saying so)
 - **Canvas:** 1080×1350 (4:5), 96px side gutter. Keep type inside the IG grid's 3:4 center crop.
 - **Grade:** every image goes through the same `grade()`: near-monochrome, crushed shadows, a cold-steel tint, vignette and grain. This is what makes mixed sources read as one grid. Never post an ungraded image.
-- **Type:** Inter Display Light, lowercase, bone white `#ECE9E3`. Cover 60px centered; inside slides 44px left-aligned in the lower third. Meta is Inter 20px tracked caps at ~55% opacity (`AGE 18` / `THE CRACK` on the cover, `18 · THE CRACK   02/07` on inner slides).
-- **Words:** each slide carries at most 2–3 short lines and about 18 words. One idea per slide. 6–8 slides per carousel.
+- **Type (matches the 100-day reel covers):** Bebas Neue caps, white `#FFFFFF`; the **last line of every slide is the payoff, in blue `#A4CCE4`** (`"accent": false` on a slide turns it off). No end punctuation. Lines break automatically into even widths, with no one-word orphan lines; use `\n` to choose the white/blue split. Cover is 150px centered with `AGE 18/24` in Open Sans Bold under it (like `DAY 1/100`) and the chapter name small at the bottom. Inner slides are 96px centered in the lower third with an Open Sans Bold footer `AGE 18 · THE CRACK   02/07`.
+- **Brand:** handle `@jac_lavoiee`. Positioning: *faith · discipline · becoming*. Reels and carousels share the same type and the same blue.
+- **Words:** each slide carries at most 2–3 short lines and about 12 words (Bebas caps are big). One idea per slide. 6–8 slides per carousel.
 
 ## The story spine (ages 18–24)
 `references/story-map.md` holds one chapter per age, with its meaning, image vocabulary and accent darkness. Every carousel belongs to exactly one age. Read it before writing a spec.

@@ -32,8 +32,9 @@ FONTS = Path(__file__).resolve().parent.parent / "assets" / "fonts"
 W, H = 1080, 1350          # 4:5, Instagram's tallest feed ratio
 MARGIN = 96                # side gutter; IG grid crops to 3:4, keep type inside the middle 1012px
 TEXT_W = 760               # max line width; short lines read calmer
-INK = (236, 233, 227)      # warm bone white, never pure #fff
-DIM = (236, 233, 227, 140) # footer / meta
+INK = (255, 255, 255)      # headline white (matches the reel covers)
+ACCENT = (164, 204, 228)   # #A4CCE4, the reel-cover blue: always the payoff line
+DIM = (255, 255, 255, 150) # footer / meta
 
 STOP = set("a an the of in on at to and or with for my i me is it this that".split())
 
@@ -272,8 +273,17 @@ def scrim(im, where):
 
 # ---------- type ----------
 
-def font(name, size):
-    return ImageFont.truetype(str(FONTS / name), size)
+def font(name, size, weight=None):
+    f = ImageFont.truetype(str(FONTS / name), size)
+    if weight:
+        f.set_variation_by_axes([weight, 100] if "OpenSans" in name else [weight])
+    return f
+
+def headline(size):
+    return font("BebasNeue-Regular.ttf", size)
+
+def label(size):
+    return font("OpenSans-VF.ttf", size, weight=700)
 
 def tracked(draw, xy, text, f, fill, tracking=0):
     x, y = xy
@@ -296,56 +306,72 @@ def wrap(draw, text, f, width):
         lines.append(line)
     return lines
 
+def balanced_wrap(draw, text, f, width):
+    """Same line count as a greedy wrap, but evenly filled: no one-word orphan lines."""
+    n = len(wrap(draw, text, f, width))
+    lo, hi = 1, width
+    while lo < hi:                                   # narrowest width that still fits in n lines
+        mid = (lo + hi) // 2
+        if len(wrap(draw, text, f, mid)) <= n: hi = mid
+        else: lo = mid + 1
+    return wrap(draw, text, f, lo)
+
 def compose(bg, slide, idx, total, spec):
+    """House type, matched to the 100-day reel covers: Bebas Neue caps, white lines,
+    the last line (the payoff) in #A4CCE4, Open Sans Bold labels."""
     cover = idx == 0
-    pos = slide.get("position", "bottom" if not cover else "center")
+    pos = slide.get("position", "center" if cover else "bottom")
     im = scrim(bg, pos) if pos != "none" else bg
     d = ImageDraw.Draw(im, "RGBA")
 
-    size = slide.get("size", 60 if cover else 44)
-    f = font("InterDisplay-Light.otf", size)
-    text = slide["text"].lower() if spec.get("lowercase", True) else slide["text"]
-    lines = wrap(d, text, f, TEXT_W)
-    lh = int(size * 1.32)
-    block = lh * len(lines)
-    if pos == "top":      y = 210
+    size = slide.get("size", 150 if cover else 96)
+    f = headline(size)
+    # cover style: caps, no end punctuation (apostrophes and mid-line commas stay)
+    paras = [p.strip().rstrip(".:;") for p in slide["text"].upper().split("\n") if p.strip()]
+    accent_from = len(paras) - 1 if slide.get("accent", True) and len(paras) > 1 else len(paras)
+    lines = []                                   # (text, colour)
+    for i, para in enumerate(paras):
+        for ln in balanced_wrap(d, para, f, W - 2 * MARGIN if cover else TEXT_W + 80):
+            lines.append((ln, ACCENT if i >= accent_from else INK))
+    lh = int(size * 0.98)                        # Bebas is tall and tight; stack lines like the covers
+    lab = label(30 if cover else 24)
+    block = lh * len(lines) + (int(size * 0.35) + 34 if cover else 0)
+    if pos == "top":      y = 200
     elif pos == "center": y = (H - block) // 2
-    else:                 y = H - 230 - block
-    align = slide.get("align", "center" if cover else "left")
+    else:                 y = H - 200 - block
+    align = slide.get("align", "center")
     placed = []
-    for ln in lines:
+    for ln, col in lines:
         x = (W - d.textlength(ln, font=f)) // 2 if align == "center" else MARGIN
-        placed.append((x, y, ln)); y += lh
-    # soft shadow: keeps light type legible over bright patches without a visible box
+        placed.append((x, y, ln, col)); y += lh
+    # soft shadow keeps white type legible over bright patches without a visible box
     sh = Image.new("L", (W, H), 0); sd = ImageDraw.Draw(sh)
-    for x, yy, ln in placed: sd.text((x, yy + 2), ln, font=f, fill=255)
-    sh = sh.filter(ImageFilter.GaussianBlur(size * 0.45)).point(lambda v: min(255, v * 2))
-    im.paste(Image.new("RGB", (W, H), (0, 0, 0)), (0, 0), sh.point(lambda v: int(v * 0.7)))
+    for x, yy, ln, _ in placed: sd.text((x, yy + 3), ln, font=f, fill=255)
+    sh = sh.filter(ImageFilter.GaussianBlur(size * 0.25)).point(lambda v: min(255, v * 2))
+    im.paste(Image.new("RGB", (W, H), (0, 0, 0)), (0, 0), sh.point(lambda v: int(v * 0.6)))
     d = ImageDraw.Draw(im, "RGBA")
-    for x, yy, ln in placed: d.text((x, yy), ln, font=f, fill=INK)
+    for x, yy, ln, col in placed: d.text((x, yy), ln, font=f, fill=col)
 
-    # meta: tiny, tracked caps. Cover gets the age marker, every slide gets a counter.
-    meta = font("Inter-Regular.otf", 20)
+    age, ch = spec.get("age"), spec.get("chapter", "").upper()
     if cover:
-        mark = f"AGE {spec['age']}" if spec.get("age") else spec.get("chapter", "").upper()
-        mw = tracked_len(d, mark, meta, 6)
-        tracked(d, ((W - mw) // 2, 150), mark, meta, DIM, 6)
-        ch = spec.get("chapter", "").upper()
-        if ch and spec.get("age"):
-            cw = tracked_len(d, ch, meta, 6)
-            tracked(d, ((W - cw) // 2, H - 150), ch, meta, DIM, 6)
+        # the series label sits under the headline, exactly like "DAY 1/100" on the reels
+        tag = f"AGE {age}/24" if age else ch
+        y_tag = y + int(size * 0.35)
+        d.text(((W - d.textlength(tag, font=lab)) // 2, y_tag), tag, font=lab, fill=INK)
+        if ch and age:
+            sub = label(22)
+            tracked(d, ((W - tracked_len(d, ch, sub, 4)) // 2, H - 120), ch, sub, DIM, 4)
     else:
-        left = f"{spec.get('age', '')}  ·  {spec.get('chapter', '')}".upper().strip(" ·")
-        tracked(d, (MARGIN, H - 110), left, meta, DIM, 5)
+        meta = label(22)
+        left = f"AGE {age} · {ch}" if age else ch
+        tracked(d, (MARGIN, H - 100), left, meta, DIM, 3)
         num = f"{idx + 1:02d}/{total:02d}"
-        tracked(d, (W - MARGIN - tracked_len(d, num, meta, 5), H - 110), num, meta, DIM, 5)
+        tracked(d, (W - MARGIN - tracked_len(d, num, meta, 3), H - 100), num, meta, DIM, 3)
     if spec.get("handle") and idx == total - 1:
-        hw = tracked_len(d, spec["handle"].upper(), meta, 5)
-        tracked(d, ((W - hw) // 2, 150), spec["handle"].upper(), meta, DIM, 5)
+        hl = label(22); h = spec["handle"].upper()
+        tracked(d, ((W - tracked_len(d, h, hl, 3)) // 2, 130), h, hl, DIM, 3)
     return im
 
-
-# ---------- render ----------
 
 def cmd_render(a):
     spec = json.loads(Path(a.spec).read_text())
