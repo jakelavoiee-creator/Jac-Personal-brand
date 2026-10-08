@@ -17,14 +17,16 @@ Inspiration: the "lovable outsider" archetype of 2000s pop culture (the Austin P
 | Hair | **shiny chestnut bowl cut with blunt bangs + ONE thick braid on each side, hanging in front of the ears** |
 | Face | very round, fair skin, **freckles everywhere**, **exactly 3 small warts (left cheek, chin, beside the nose)**, **huge buck front teeth with silver braces**, blue eyes |
 | Glasses | **thin gold perfectly round wire frames** |
-| Top | **yellow + green horizontal-striped collared polo, two sizes too small, riding up to show a strip of belly** |
-| Bottom | **light-blue denim jorts to the knee + brown leather belt** |
-| Shoes | **white chunky light-up sneakers, with LED soles that flash red/blue on every step** (we describe "light-up kids' sneakers" in prompts and keep brand logos off-screen unless Geox signs a deal) |
+| Top | **CROPPED yellow + green horizontal-striped short-sleeve collared polo, comically tiny, ending well above the navel so a wide band of bare belly + belly button shows** |
+| Bottom | **light-blue frayed denim jorts ending above the knee + brown leather belt; thick chubby bare legs fully visible** |
+| Shoes | **white chunky children's light-up sneakers + white ankle socks, with LED soles that flash red/blue on every step** (we describe "light-up kids' sneakers" in prompts and keep brand logos off-screen unless Geox signs a deal) |
 | Expression | huge proud braces smile, chest out, zero self-awareness |
 
 **Signature visual hook: the shoes.** Every clip ends on a close-up of the LED soles flashing. That's the logo of the character.
 **Palette:** stripe yellow `#F7D23E` · stripe green `#3FA34D` · denim `#8DB4E2` · LED red `#FF2E4D` / blue `#2E7BFF`
-**Master sheet:** Higgsfield job `3bc4d307-ca42-4d60-a747-e579e89e5731` ([v1 render](https://d8j0ntlcm91z4.cloudfront.net/user_38WgIqfb8aRSLfJPTHATd2uH66Y/hf_20261008_195317_3bc4d307-ca42-4d60-a747-e579e89e5731.png)). This is the master reference. **Do not regenerate it once approved.**
+**Master sheets:**
+- **Face (LOCKED):** v1 sheet, job `3bc4d307-ca42-4d60-a747-e579e89e5731` ([v1 render](https://d8j0ntlcm91z4.cloudfront.net/user_38WgIqfb8aRSLfJPTHATd2uH66Y/hf_20261008_195317_3bc4d307-ca42-4d60-a747-e579e89e5731.png)). Always pass it as the identity reference.
+- **Outfit (in review):** v2 sheet, job `ad5cb290-0e9b-4740-862d-016cd154f272` ([v2 render](https://d8j0ntlcm91z4.cloudfront.net/user_38WgIqfb8aRSLfJPTHATd2uH66Y/hf_20261008_195839_ad5cb290-0e9b-4740-862d-016cd154f272.png)). This is v1's face with the cropped shirt. Once it's approved, it becomes the master reference for all video.
 
 ---
 
@@ -77,5 +79,5 @@ Bal Harbour Shops · Ocean Drive · Art Basel booth · Monaco yacht deck · a Pa
 
 ### Status
 - **LOCKED:** look (per the brief), the shoes as the visual logo, the move, the catchphrase, the trust rules.
-- **OPEN:** approve the v1 sheet → 3 pilot clips (Bal Harbour, Ferrari showroom, Ocean Drive).
+- **OPEN:** approve the v2 outfit sheet → 3 pilot clips (Bal Harbour, Ferrari showroom, Ocean Drive).
 - **Decision:** is Giorgi replacing Don Calma, or are they launching as two accounts?
