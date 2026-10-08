@@ -258,7 +258,7 @@ Style: S,{bf.family(GROTESK)},{CAP_SIZE * S},&H00FFFFFF,&H00FFFFFF,&H00000000,&H
 [Events]
 Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text
 """
-    ev, prev = [], None
+    ev, prev, hits = [], None, []
     for k, c in enumerate(chunks):
         t0 = c["t0"]
         t1 = chunks[k + 1]["t0"] if k + 1 < len(chunks) else min(dur, c["t1"] + 0.4)
@@ -273,13 +273,17 @@ Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text
             big = size >= SIZE_BIG * S
             size = fitted(c["text"], size, region)
             cx, cy = (region[1] + region[2]) / 2, 0.5     # one fixed column, beside the speaker
+            if big:
+                hits.append(t0)                               # a click lands on every key word
             ev.append(f"Dialogue: 0,{v1.ass_time(t0)},{v1.ass_time(t1)},S,,0,0,0,,"
                       f"{{\\an5\\pos({int(cx * W)},{FOOT_Y + int(cy * FOOT_H)})\\fs{size}{face(big)}}}{word(c['text'], big)}")
     Path(path).write_text(head + "\n".join(ev) + "\n", encoding="utf-8")
+    return hits
 
 
 EYE_LEN = 0.8         # seconds for the eye to open
 SFX_VOL = 0.8         # intro sound (assets/sfx_intro.m4a) under the speech
+CLICK_VOL, CLICK_LEAD = 0.7, 0.10   # click (assets/sfx_click.mp3) on each key word; its snap is 0.10s in
 
 
 def eye_frames(tmp):
@@ -321,7 +325,7 @@ def build(m, base, tmp, logo):
     punch_words |= {w.lower() for w in m.get("emphasis", [])}      # optional per-moment override
     track = face_track(src, a - off, b - a, keep)
     region = caption_side(track, m.get("caption_side"))
-    write_ass(chunks, HERE / ass_rel, dur, p_at, p_len, punch_words, track, region)
+    clicks = write_ass(chunks, HERE / ass_rel, dur, p_at, p_len, punch_words, track, region)
     punch, endc, mark = tmp / "punch.png", tmp / "end.png", tmp / "mark.png"
     pfaces = faces_at(track, p_at, p_at + p_len) if p_at is not None else []
     best = None
@@ -347,11 +351,18 @@ def build(m, base, tmp, logo):
     else:
         g.append("[v1]null[v2]")
     eye = m.get("intro", "eye") == "eye"
+    mix = ["[ba0]"]
     if eye:                                                # intro sound lands with the opening
-        g += [f"[5:a]aresample=48000,aformat=channel_layouts=stereo,volume={SFX_VOL}[sfx]",
-              "[ba0][sfx]amix=inputs=2:duration=first:normalize=0[ba]"]
-    else:
-        g += ["[ba0]anull[ba]"]
+        g.append(f"[5:a]aresample=48000,aformat=channel_layouts=stereo,volume={SFX_VOL}[sfx]")
+        mix.append("[sfx]")
+    if clicks:                                             # a click on every key word (its snap is 0.10s in)
+        g.append(f"[6:a]aresample=48000,aformat=channel_layouts=stereo,volume={CLICK_VOL},asplit={len(clicks)}"
+                 + "".join(f"[ck{i}]" for i in range(len(clicks))))
+        for i, t in enumerate(clicks):
+            ms = max(0, int((t - CLICK_LEAD) * 1000))
+            g.append(f"[ck{i}]adelay={ms}|{ms}[cd{i}]")
+            mix.append(f"[cd{i}]")
+    g.append("".join(mix) + (f"amix=inputs={len(mix)}:duration=first:normalize=0[ba]" if len(mix) > 1 else "anull[ba]"))
     if eye:                                                # eye opens from the middle out
         g += [f"[4:v]scale={W}:{FOOT_H},format=rgba[lids]",
               f"[v2][lids]overlay=0:{FOOT_Y}:eof_action=pass,trim=duration={dur:.3f},format=yuv420p[body]"]
@@ -371,6 +382,7 @@ def build(m, base, tmp, logo):
          "-loop", "1", "-t", f"{dur:.3f}", "-i", str(mark),
          "-framerate", str(FPS), "-i", str(tmp / "eye_%03d.png"),
          "-i", str(HERE / "assets" / "sfx_intro.m4a"),
+         "-i", str(HERE / "assets" / "sfx_click.mp3"),
          "-filter_complex", ";".join(g), "-map", "[v]", "-map", "[a]", "-r", str(FPS),
          "-c:v", "libx264", "-crf", "16" if S == 2 else "17", "-preset", "slow", "-pix_fmt", "yuv420p",
          "-movflags", "+faststart", "-c:a", "aac", "-b:a", "256k", str(out)])
