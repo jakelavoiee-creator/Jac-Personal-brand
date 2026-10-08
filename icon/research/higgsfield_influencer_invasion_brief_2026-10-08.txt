@@ -1,0 +1,80 @@
+[page] HIGGSFIELD AI INFLUENCER INVASION
+  [sub_header] ABOUT THE CAMPAIGN
+  [text] Make viral, entertaining videos on your dedicated AI character page, similar to @jean_philanthrope and get paid for views.
+  [text] No tutorials required. Post the finished video—not a how-to explanation, tool screen recording, demo, or source/result comparison. Voiceovers and hard sells are not required.
+  [text] AI Influencer Invasion is an official Higgsfield campaign, owned and operated by Higgsfield. The campaign uses the Higgsfield logo and brand identity. Your AI character should have its own original look.
+    [sub_header] ALLOWED COUNTRIES
+    [bulleted_list] 🇺🇸 United States
+    [bulleted_list] 🇨🇦 Canada
+    [bulleted_list] 🇬🇧 United Kingdom
+    [bulleted_list] 🇦🇺 Australia
+    [bulleted_list] 🇳🇿 New Zealand
+    [bulleted_list] 🇩🇪 Germany
+    [bulleted_list] 🇫🇷 France
+    [bulleted_list] 🇳🇱 Netherlands
+    [bulleted_list] 🇨🇭 Switzerland
+    [bulleted_list] 🇦🇹 Austria
+    [bulleted_list] 🇧🇪 Belgium
+    [bulleted_list] 🇩🇰 Denmark
+    [bulleted_list] 🇳🇴 Norway
+    [bulleted_list] 🇸🇪 Sweden
+    [bulleted_list] 🇫🇮 Finland
+    [bulleted_list] 🇮🇪 Ireland
+    [bulleted_list] 🇱🇺 Luxembourg
+    [bulleted_list] 🇮🇹 Italy
+    [bulleted_list] 🇪🇸 Spain
+    [bulleted_list] 🇯🇵 Japan
+    [bulleted_list] 🇰🇷 South Korea
+    [bulleted_list] 🇸🇬 Singapore
+    [bulleted_list] 🇦🇪 United Arab Emirates
+    [bulleted_list] 🇧🇷 Brazil
+    [bulleted_list] 🇹🇷 Turkey
+    [bulleted_list] 🇵🇱 Poland
+    [bulleted_list] 🇲🇽 Mexico
+    [bulleted_list] 🇮🇱 Israel
+    [bulleted_list] 🇦🇷Argentina
+  [sub_header] REQUIREMENTS TO GET PAID
+    [text] All requirements are mandatory. Only approved posts qualify for payment.
+    [numbered_list] Character and tools: Create one original character in Higgsfield AI Studio. Keep its identity and signature look consistent, and make it the main subject of every post. Use Higgsfield Genjutsu for every video: upload a viral source clip and your character image, then recreate the moment with your character replacing the main subject. Dance, reaction, interview, meme, and iconic performance clips are possible starting points.
+    [numbered_list] Original designs only: No existing movie, TV, anime, game, comic, or franchise characters or recognizable lookalikes. Copying a signature face, costume, silhouette, or accessories is not allowed; changing a name or making small edits does not make it original.
+    [numbered_list] Publishing: Post every video vertically on Instagram Reels. Instagram is the only required platform. Upload at the highest quality; enable Instagram’s highest-quality upload setting. Keep likes, views, and comments visible.
+    [numbered_list] Instagram profile bio: Use this exact text:
+      [text] made with @higgsfield.ai
+    [numbered_list] Caption on every Instagram video: Include this exact text:
+      [text] I made this with @higgsfield.ai genjutsu #higgsfieldpartner #higgsfield
+    [numbered_list] Onboarding: Submit every step in Launchpoint onboarding.
+    [numbered_list] Quality and integrity: Do not post broken, unfinished, or visibly low-quality outputs as the main result, or promise guaranteed earnings, follower growth, or brand deals. Botting views disqualifies you from all payouts.
+  [sub_header] APPROVED PAGE EXAMPLES
+  [text] Creative direction: choose a distinctive silhouette, one or two memorable facial or hair details, and a signature outfit. The references below show exaggerated, slightly non-human looks.
+      [sub_sub_header] Jean Phil / @jean_philanthrope
+      [text] A wide blond bob, curled moustache, and brown patterned suit create a distinctive silhouette.
+      [image] Screenshot 2026-10-02 at 1.23.19 AM.png
+      [text] Sid Syyco / @sidsyyco
+      [text] Caricatured facial proportions, a distinctive grin and braces, and a black skull T-shirt.
+      [image] sid-syyco-character-page-inspiration.png
+      [image] sid-syyco-character-page-inspiration.png
+      [text] Derek Mercer / @derek.mercer.2006
+      [text] An exaggerated muscular silhouette, long dark hair covering the eyes, a fitted graphic shirt, and dark trousers with a studded belt.
+      [image] derek-mercer-profile-inspiration.png
+      [image] derek-mercer-grid-inspiration.png
+  [sub_sub_header] Benjamin Stachio / @benjamin_stachio
+      [image] benjamin-stachio-page-inspiration.png
+      [image] ChatGPT Image Oct 2, 2026, 03_51_01 AM.png
+      [image] hf_20261001_115005_8356b72f-99ea-48b7-9e65-1c0f1d0c493b.png
+      [image] hf_20261001_115007_c4d67d59-a674-4e46-82ba-a2677fdec52e.png
+  [image] Screenshot 2026-10-02 at 9.28.49 PM.png
+  [sub_header] VIDEO INSPIRATION — ALL REFERENCES
+  [sub_header] PAYMENT
+  [text] Instagram performance pay only. No guaranteed base payment. Maximum payout: $2,000 per video.
+  [sub_sub_header] PAYOUT TIERS
+    [table_row] Instagram views | Total payout per approved video
+    [table_row] 1,000 views | $2
+    [table_row] 5,000 views | $10
+    [table_row] 10,000 views | $20
+    [table_row] 25,000 views | $50
+    [table_row] 50,000 views | $100
+    [table_row] 100,000 views | $200
+    [table_row] 250,000 views | $500
+    [table_row] 500,000 views | $1,000
+    [table_row] 1,000,000 views | $2,000
+  [text] Each approved video earns one payout based on the highest tier reached by its Instagram views. Tier payouts do not stack.

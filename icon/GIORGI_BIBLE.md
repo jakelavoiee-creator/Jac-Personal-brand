@@ -97,11 +97,10 @@ Bal Harbour Shops · Ocean Drive · Art Basel booth · Monaco yacht deck · a Pa
 
 ## 8. Bio + caption bank (LOCKED signature)
 
-**Bio (Instagram, 4 lines):**
+**Bio (Instagram). Line 1 is the exact text the Higgsfield campaign requires, so never edit it:**
 ```
-Giorgi 🏔️ AI from the mountain
-5'4" of pure aura. Light-up shoes, no brakes 👟🚨
-Bebia's favorite. Your city's problem.
+made with @higgsfield.ai
+Giorgi 🏔️ AI from the mountain. 5'4" of pure aura 👟🚨
 Dumpling, bro. 🥟
 ```
 TikTok (80 chars): `AI from the mountain 🏔️ 5'4" of pure aura 👟 Dumpling, bro. 🥟`
@@ -128,4 +127,24 @@ TikTok (80 chars): `AI from the mountain 🏔️ 5'4" of pure aura 👟 Dumpling
 19. Lambo dealership. Just browsing. With my aura. Dumpling, bro. 🥟
 20. You laughed. Now you're following. Dumpling, bro. 🥟
 
+**Required caption footer (Higgsfield Influencer Invasion, exact text, on every IG video):**
+```
+<flex>. Dumpling, bro. 🥟
+
+I made this with @higgsfield.ai genjutsu #higgsfieldpartner #higgsfield
+```
 **Caption rules:** keep the flex under 10 words · no hashtags in the caption (one comment with 3 tags max) · always end with the signature · the joke is always his confidence, never someone else.
+
+
+---
+
+## 9. Higgsfield AI Influencer Invasion: campaign compliance
+
+Full brief: `research/higgsfield_influencer_invasion_brief_2026-10-08.txt`
+
+- **Pay:** Instagram views only, one payout per approved video at the highest tier reached (tiers don't stack). 1K = $2 · 10K = $20 · 100K = $200 · 500K = $1,000 · **1M+ = $2,000 (max per video)**. No base pay.
+- **Every video must be made with Higgsfield Genjutsu:** upload a viral source clip + the Giorgi image, and Giorgi replaces the main subject. → Our "Mountain Strut" pilots must go through Genjutsu (motion transfer from a real viral walk/dance clip), not plain text-to-video.
+- **Instagram Reels, vertical, highest-quality upload ON, likes/views/comments visible.** Other platforms are optional and don't pay.
+- **Original character only:** no lookalikes of film, TV, game or comic characters. Giorgi is inspired by the archetype but uses no copied costume or face. Keep it that way, and never name either reference in posts.
+- **No botting** (disqualifies all payouts). Never promise earnings or followers.
+- **Onboarding:** finish every Launchpoint onboarding step before the first post.
