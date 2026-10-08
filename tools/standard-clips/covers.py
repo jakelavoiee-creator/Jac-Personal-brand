@@ -6,11 +6,11 @@
 
   canvas    1080x1920, black-to-grey grain gradient (assets/cover_bg.jpg)
   headline  Bebas Neue: the line in small caps, its LAST word huge in italic bold (+ @aura.miamii)
-  photo     the speaker in colour, cut out, solid, filling the bottom of the cover
+  photo     the speaker in black & white, cut out, solid, filling the bottom of the cover
   safe area everything that matters sits inside the centre 1080x1440 (the profile-grid crop)
 
 Headline per reel: "cover": "TRUST THE TIMING." in the plan - the last word becomes the big one.
-Speaker photo: speakers/<speaker>.png|jpg if you drop one in; otherwise the sharpest front-facing
+Speaker photo: speakers/<speaker>.jpg if present (yours, or fetched by portraits.py); otherwise the sharpest front-facing
 frame of that speaker's first clip is picked, cut out, and saved to speakers/<speaker>.png, so every
 cover for that speaker reuses the same photo. Delete that file to pick again, or replace it with your own.
 
@@ -75,14 +75,31 @@ def best_frame(clip):
     return Image.fromarray(best[1]), best[2]
 
 
+def head_and_shoulders(im):
+    """Crop a portrait to head and shoulders around the biggest face (full image if none is found)."""
+    import cv2
+    import numpy as np
+    g = cv2.cvtColor(np.array(im), cv2.COLOR_RGB2GRAY)
+    k = max(1, max(im.size) / 900)
+    small = cv2.resize(g, (int(im.width / k), int(im.height / k)))
+    casc = cv2.CascadeClassifier(cv2.data.haarcascades + "haarcascade_frontalface_default.xml")
+    faces = casc.detectMultiScale(small, 1.1, 6, minSize=(40, 40))
+    if not len(faces):
+        return im
+    x, y, fw, fh = [int(v * k) for v in max(faces, key=lambda f: f[2] * f[3])]
+    cw = int(fw * 2.7)
+    cx, top = x + fw // 2, max(0, int(y - fh * 0.6))
+    return im.crop((max(0, cx - cw // 2), top, min(im.width, cx + cw // 2), min(im.height, top + int(cw * 1.1))))
+
+
 def speaker_photo(name, clip):
     d = HERE / "speakers"
     d.mkdir(exist_ok=True)
-    for ext in ("png", "jpg", "jpeg", "webp"):
+    for ext in ("jpg", "jpeg", "webp", "png"):           # your own / downloaded photo first, clip frame last
         p = d / f"{slug(name)}.{ext}"
         if p.exists():
-            im = Image.open(p)
-            return im if im.mode == "RGBA" else cutout(im)
+            im = ImageOps.exif_transpose(Image.open(p))
+            return im if im.mode == "RGBA" else cutout(head_and_shoulders(im.convert("RGB")))
     if not clip.exists():
         return None
     frame, (x, y, fw, fh) = best_frame(clip)
@@ -161,7 +178,7 @@ def cover(m, photo, out):
         p = photo.convert("RGBA")
         p = p.crop(p.getbbox() or (0, 0, p.width, p.height))
         alpha = p.getchannel("A")
-        p = ImageOps.autocontrast(p.convert("RGB"), cutoff=1).convert("RGBA")   # full colour
+        p = ImageOps.autocontrast(ImageOps.grayscale(p.convert("RGB")), cutoff=1).convert("RGBA")   # black & white
         p.putalpha(alpha)
         top = int(y_handle + 10)
         scale = max((H - top) / p.height, W / p.width)     # reach the bottom edge, full width
