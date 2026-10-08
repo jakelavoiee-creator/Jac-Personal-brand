@@ -3,7 +3,7 @@
 
   one famous moment, ~12-25s, one truth
   canvas    black 9:16, the 16:9 clip untouched (original colour) across the middle
-  open      fades up from black
+  open      the eye opens from the middle out ("intro": "fade" on a reel for the old fade-up)
   captions  one word at a time in one column on the side away from the face ("caption_side" to force);
             small serif buildup, key words big in bold grotesk
   type      condensed Times New Roman italic (buildup words) + Akzidenz-Grotesk bold caps (impact words,
@@ -278,6 +278,26 @@ Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text
     Path(path).write_text(head + "\n".join(ev) + "\n", encoding="utf-8")
 
 
+EYE_LEN = 0.8         # seconds for the eye to open
+
+
+def eye_frames(tmp):
+    """Black eyelids opening from the middle out (RGBA, footage-sized), one PNG per frame."""
+    import numpy as np
+    n = int(EYE_LEN * FPS)
+    w, h = W // 2, FOOT_H // 2                                  # drawn at half size, scaled up in ffmpeg
+    xs = (np.arange(w) - w / 2) / (w / 2)                       # -1..1 across
+    ys = np.abs(np.arange(h) - h / 2)[:, None]                  # distance from the centre line
+    for i in range(n):
+        o = 1 - (1 - i / n) ** 3                                # ease-out: quick start, soft landing
+        half = o * (h / 2) * 1.6 * (1 - 0.5 * xs ** 2)         # curved lids, widest in the middle
+        alpha = np.clip((ys - half[None, :]) / (4 + 20 * o), 0, 1)
+        rgba = np.zeros((h, w, 4), np.uint8)
+        rgba[..., 3] = (alpha * 255).astype(np.uint8)
+        Image.fromarray(rgba, "RGBA").save(tmp / f"eye_{i:03d}.png", compress_level=1)
+    return n
+
+
 def build(m, base, tmp, logo):
     src, vtt = str(base / m["src"]), str(base / m["vtt"])
     a, b, off = v1.secs(m["start"]), v1.secs(m["end"]), v1.secs(m.get("src_offset", 0))
@@ -325,17 +345,24 @@ def build(m, base, tmp, logo):
         g.append(f"[v1][pp]overlay=0:{FOOT_Y}:enable='between(t,{p_at:.3f},{p_at + p_len:.3f})':eof_action=repeat[v2]")
     else:
         g.append("[v1]null[v2]")
-    g += [f"[v2]trim=duration={dur:.3f},fade=t=in:st=0:d={FADE_IN},format=yuv420p[body]",
+    if m.get("intro", "eye") == "eye":                    # eye opens from the middle out
+        g += [f"[4:v]scale={W}:{FOOT_H},format=rgba[lids]",
+              f"[v2][lids]overlay=0:{FOOT_Y}:eof_action=pass,trim=duration={dur:.3f},format=yuv420p[body]"]
+    else:
+        g += [f"[v2]trim=duration={dur:.3f},fade=t=in:st=0:d={FADE_IN},format=yuv420p[body]"]
+    g += [
           f"[0:a]aselect='{sel}',asetpts=N/SR/TB,aresample=48000,loudnorm=I=-14:TP=-1.5:LRA=9,"
           f"afade=t=in:d=0.2,afade=t=out:st={dur - 0.15:.3f}:d=0.15[ba]",
           f"[2:v]format=yuv420p,fade=t=out:st={END_LEN - 0.35}:d=0.35,setsar=1[ev]",
           f"anullsrc=r=48000:cl=stereo,atrim=duration={END_LEN}[ea]",
           "[body][ba][ev][ea]concat=n=2:v=1:a=1[v][a]"]
+    eye_frames(tmp)
     out = base / m.get("out_dir", "out/moments") / f"{m['id']}.mp4"
     out.parent.mkdir(parents=True, exist_ok=True)
     run(["ffmpeg", "-v", "error", "-y", "-i", src, "-loop", "1", "-t", f"{dur:.3f}", "-i", str(punch),
          "-loop", "1", "-t", str(END_LEN), "-framerate", str(FPS), "-i", str(endc),
          "-loop", "1", "-t", f"{dur:.3f}", "-i", str(mark),
+         "-framerate", str(FPS), "-i", str(tmp / "eye_%03d.png"),
          "-filter_complex", ";".join(g), "-map", "[v]", "-map", "[a]", "-r", str(FPS),
          "-c:v", "libx264", "-crf", "16" if S == 2 else "17", "-preset", "slow", "-pix_fmt", "yuv420p",
          "-movflags", "+faststart", "-c:a", "aac", "-b:a", "256k", str(out)])
