@@ -30,6 +30,7 @@ from PIL import Image, ImageDraw, ImageFont
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 import render as v1  # noqa: E402
 import brandfonts as bf  # noqa: E402
+import reels  # noqa: E402
 
 HERE = Path(__file__).resolve().parent
 FONTS = HERE / "assets" / "fonts"
@@ -339,7 +340,7 @@ def re_word(t):
 
 
 def build(m, base, tmp, logo):
-    src, vtt = str(base / m["src"]), str(base / m["vtt"])
+    src, vtt = str(reels.clip(m, base)), str(base / m["vtt"])
     a, b, off = v1.secs(m["start"]), v1.secs(m["end"]), v1.secs(m.get("src_offset", 0))
     ws = speaker_only([w for w in v1.vtt_words(vtt) if a - 0.05 <= w["t"] < b])
     keep = v1.keep_segments(src, a - off, b - a, [w["t"] - a for w in ws])
@@ -411,7 +412,7 @@ def build(m, base, tmp, logo):
           f"adelay={RISER_DELAY_MS}|{RISER_DELAY_MS},apad,atrim=duration={END_LEN}[ea]",
           "[body][ba][ev][ea]concat=n=2:v=1:a=1[v][a]"]
     eye_frames(tmp)
-    out = base / m.get("out_dir", "out/moments") / f"{m['id']}.mp4"
+    out = reels.DONE / f"{m['id']}.mp4"
     out.parent.mkdir(parents=True, exist_ok=True)
     run(["ffmpeg", "-v", "error", "-y", "-i", src, "-loop", "1", "-t", f"{dur:.3f}", "-i", str(punch),
          "-loop", "1", "-t", str(END_LEN), "-framerate", str(FPS), "-i", str(endc),
@@ -437,11 +438,12 @@ def main():
     (HERE / "build").mkdir(exist_ok=True)
     bf.ass_fonts_dir(HERE / "build")
     print(bf.describe())
-    todo = [m for m in plan["moments"] if not args[1:] or m["id"] in args[1:]]
+    skip = reels.skipped()
+    todo = [m for m in plan["moments"] if (not args[1:] and m["id"] not in skip) or m["id"] in args[1:]]
     failed = []
     for i, m in enumerate(todo, 1):
         m.setdefault("out_dir", plan.get("out_dir", "out/moments"))
-        out = plan_path.parent / m["out_dir"] / f"{m['id']}.mp4"
+        out = reels.DONE / f"{m['id']}.mp4"
         if not args[1:] and out.exists() and "--redo" not in sys.argv:
             print(f"[{i}/{len(todo)}] {m['id']} already rendered - skipping (--redo to render again)")
             continue

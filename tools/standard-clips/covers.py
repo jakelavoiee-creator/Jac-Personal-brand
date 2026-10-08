@@ -27,6 +27,7 @@ from PIL import Image, ImageDraw, ImageFilter, ImageFont, ImageOps
 HERE = Path(__file__).resolve().parent
 sys.path.insert(0, str(HERE))
 import brandfonts as bf  # noqa: E402  (Times New Roman Condensed + Akzidenz-Grotesk, or free stand-ins)
+import reels  # noqa: E402
 W, H = 1080, 1920
 GRID_TOP, GRID_BOT = (H - 1440) // 2, (H + 1440) // 2       # what the 3:4 profile grid shows
 HANDLE = "@aura.miamii"
@@ -226,16 +227,16 @@ def main():
         sys.exit(__doc__)
     plan_path = (Path.cwd() / args[0]).resolve()
     plan = json.loads(plan_path.read_text(encoding="utf-8"))
-    out_dir = plan_path.parent / "out" / "covers"
+    out_dir, skip = reels.COVER, reels.skipped()
     photos = {}
     for m in plan["moments"]:
-        if args[1:] and m["id"] not in args[1:]:
+        if (args[1:] and m["id"] not in args[1:]) or (not args[1:] and m["id"] in skip):
             continue
         name = speaker_of(m)
         if name not in photos:
-            photos[name] = speaker_photo(name, plan_path.parent / m["src"])
+            photos[name] = speaker_photo(name, reels.clip(m, plan_path.parent))
         if cover(m, photos[name], out_dir / f"{m['id']}.jpg"):
-            print(f"[cover] out/covers/{m['id']}.jpg")
+            print(f"[cover] REELS/COVER/{m['id']}.jpg")
         else:
             print(f"[cover] {m['id']}: no \"cover\" text in the plan - skipped")
 

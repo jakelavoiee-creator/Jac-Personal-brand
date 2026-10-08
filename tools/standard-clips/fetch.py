@@ -64,15 +64,18 @@ def download(url, out, extra):
 full = "--full" in plans
 plans = [p for p in plans if p != "--full"]
 clips = [c for p in plans for k in ("clips", "moments") for c in json.loads((here / p).read_text()).get(k, [])]
-(src / "clips").mkdir(exist_ok=True)
+sys.path.insert(0, str(here))
+import reels  # noqa: E402  REELS/DOWNLOADED, DONE, COVER
+skip = reels.skipped()
+clips = [c for c in clips if c["id"] not in skip]
 for i, c in enumerate(clips, 1):
     vid, url = c["youtube"], f"https://www.youtube.com/watch?v={c['youtube']}"
     print(f"[{i}/{len(clips)}] {c['id']}")
     if full:
         download(url, src / f"{vid}.mp4", [])
-    elif not (src / f"{vid}.mp4").exists():
+    elif not (src / f"{vid}.mp4").exists() and not reels.clip(c, here).exists():
         a, b = max(0.0, secs(c["start"]) - CLIP_PAD), secs(c["end"]) + CLIP_PAD
-        download(url, src / "clips" / f"{c['id']}.mp4", ["--download-sections", f"*{a:.2f}-{b:.2f}", "--force-keyframes-at-cuts"])
+        download(url, reels.DOWNLOADED / f"{c['id']}.mp4", ["--download-sections", f"*{a:.2f}-{b:.2f}", "--force-keyframes-at-cuts"])
     if not (src / f"{vid}.en.vtt").exists():
         subprocess.run(base + ["--skip-download", "--write-auto-subs", "--sub-langs", "en-orig",
                                "--sub-format", "vtt", "-o", str(src / f"{vid}.%(ext)s"), url])
@@ -80,5 +83,5 @@ for i, c in enumerate(clips, 1):
         if orig.exists():
             orig.rename(src / f"{vid}.en.vtt")
 
-missing = [c["id"] for c in clips if not ((src / f"{c['youtube']}.mp4").exists() or (src / "clips" / f"{c['id']}.mp4").exists())]
-print(f"\nDone. Upload the files in {src / 'clips'}" + (f"\nStill missing: {', '.join(missing)}" if missing else ""))
+missing = [c["id"] for c in clips if not ((src / f"{c['youtube']}.mp4").exists() or reels.clip(c, here).exists())]
+print(f"\nDone. Clips are in {reels.DOWNLOADED}" + (f"\nStill missing: {', '.join(missing)}" if missing else ""))
