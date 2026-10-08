@@ -78,5 +78,5 @@ Bal Harbour Shops · Ocean Drive · Art Basel booth · Monaco yacht deck · a Pa
 
 ### Status
 - **LOCKED:** look (per the brief), the shoes as the visual logo, the move, the catchphrase, the trust rules.
-- **OPEN:** v1 approved → → 3 pilot clips (Bal Harbour, Ferrari showroom, Ocean Drive).
+- **OPEN:** v1 approved → 3 pilot clips (Bal Harbour, Ferrari showroom, Ocean Drive).
 - **Decision:** is Giorgi replacing Don Calma, or are they launching as two accounts?
