@@ -8,6 +8,8 @@ One famous moment, one truth, about 12–25 seconds. Faces everyone recognises s
 - **Huge, recognisable names only.** Streamers, YouTubers, podcasters, founders, athletes, and award-show speeches.
 - **Recent.** Recorded in 2018 or later.
 - **Highest-quality source.** Use the official channel's upload, 4K when it exists. Never use reuploads or compilations.
+- **Clean source only.** The source must have no burned-in captions and no music under the voice. That rules out "motivation", "mindset" and "with subtitles" repost channels. Our captions and sounds go on a clean original.
+- **15–30 seconds** per reel, including the end card. Shorter feels incomplete, and people skip longer ones.
 - **One truth per reel.** Cut on word boundaries and open on the line that hooks.
 - **Positive frame.** Faith, discipline, belief and building are on-brand. Beefs, politics and dunking on people are not.
 - **Music is added in Instagram**, using its licensed audio library.
