@@ -4,7 +4,7 @@
     python covers.py ig.json                 # every reel in the plan
     python covers.py ig.json a01-... a07-...  # just these
 
-  canvas    1080x1920, dark charcoal with a faint wall of small quote text
+  canvas    1080x1920, black-to-grey grain gradient (assets/cover_bg.jpg)
   headline  Bebas Neue: small kicker line / one huge word / optional small line (+ @aura.miamii)
   photo     the speaker in black & white, cut out, fading into the background
   safe area everything that matters sits inside the centre 1080x1440 (the profile-grid crop)
@@ -114,16 +114,8 @@ def cutout(im):
 
 # ---------- cover ----------
 def background(text):
-    bg = Image.new("RGB", (W, H), (34, 34, 34))
-    d = ImageDraw.Draw(bg)
-    f = font(17)
-    words = (re.sub(r"\s+", " ", text).upper() + "   ") * 40
-    y, i = 0, 0
-    while y < H:
-        d.text((-((y * 7) % 60), y), words[i:i + 220], font=f, fill=(52, 52, 52))
-        y, i = y + 19, (i + 37) % 400
-    shade = Image.linear_gradient("L").resize((W, H))      # darker toward the bottom
-    return Image.composite(Image.new("RGB", (W, H), (12, 12, 12)), bg, shade.point(lambda v: int(v * 0.55)))
+    """The AURA cover background: black-to-grey grain gradient (assets/cover_bg.jpg)."""
+    return ImageOps.fit(Image.open(HERE / "assets" / "cover_bg.jpg").convert("RGB"), (W, H), Image.LANCZOS)
 
 
 def fit(text, max_w, start, d):
