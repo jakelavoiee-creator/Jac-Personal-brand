@@ -115,9 +115,10 @@ def speaker_photo(name, clip):
             return im if im.mode == "RGBA" else cutout(head_and_shoulders(im.convert("RGB")))
     if not clip.exists():
         return None
-    frame, (x, y, fw, fh) = best_frame(clip)
-    if frame is None:
+    frame, box = best_frame(clip)
+    if frame is None:                                      # no clear face in this clip
         return None
+    x, y, fw, fh = box
     cw = int(fw * 2.7)                                     # head and shoulders, face big
     cx, top = x + fw // 2, max(0, int(y - fh * 0.6))
     box = (max(0, cx - cw // 2), top, min(frame.width, cx + cw // 2), min(frame.height, top + int(cw * 1.1)))
