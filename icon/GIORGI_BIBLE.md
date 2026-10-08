@@ -32,8 +32,11 @@ Inspiration: the "lovable outsider" archetype of 2000s pop culture (the Austin P
 ## 2. Signature move and catchphrase (the Jean Phil formula, our version)
 
 - **The Move: "The Mountain Strut."** A slow-motion, ultra-confident runway walk straight at the camera: hips swinging, braids bouncing, shoes flashing on every step. He stops, pushes his glasses up with one finger, and flashes the braces smile.
-- **Catchphrase (caption sign-off on every post):** **"Gamarjoba."** (Georgian for "hello". It's short, sounds funny to non-speakers, and becomes the comment-section call-and-response.)
-  Caption format: `<deadpan 3–6 word flex>. Gamarjoba.` For example, "Rolex shopping today. Gamarjoba."
+- **Signature (his "Oui Madame"):** **"Khinkali, dzmao. 🥟"**
+  - *Khinkali* = a Georgian soup dumpling. *Dzmao* = Georgian for "bro". Together it means "dumpling, bro": a polite-sounding non sequitur in a language nobody knows, which is the same mechanic that makes "Oui Madame" work.
+  - **Call-and-response:** fans comment "khinkali dzmao 🥟" under every post, so 🥟 becomes the fandom emoji.
+  - **Caption formula:** `<unhinged-calm flex, 3–7 words>. Khinkali, dzmao. 🥟`. The flex is said with total confidence and zero explanation.
+  - **Backup signatures (for A/B tests):** "Gaumarjos, chat." (Georgian toast) · "Mountain rizz activated." · "Bebia said yes." · "Braids don't lie."
 - **The contrast engine:** the ugliest-possible outfit in the most luxurious place (Miami Design District, Monaco yacht, Fashion Week front row, Lamborghini dealership), treated with total confidence.
 
 ---
@@ -64,7 +67,7 @@ Bal Harbour Shops · Ocean Drive · Art Basel booth · Monaco yacht deck · a Pa
 
 ## 6. Trust rules
 
-- **Disclose AI in the bio:** "AI. From the mountain. Real confidence. 🏔️👟"
+- **Disclose AI in the bio** (see the locked bio in §8).
 - **No crypto and no tokens.** Monetize with merch and brand deals tagged `#ad`.
 - **The joke is his confidence, never his body or his origins.** He always wins in the end, and people are always kind to him on camera. That's what makes him shareable instead of mean.
 
@@ -88,3 +91,41 @@ Bal Harbour Shops · Ocean Drive · Art Basel booth · Monaco yacht deck · a Pa
 - **Option A:** job `78393b00-e3ac-41cb-aa79-7d2794cffc84` ([render](https://d8j0ntlcm91z4.cloudfront.net/user_38WgIqfb8aRSLfJPTHATd2uH66Y/hf_20261008_201033_78393b00-e3ac-41cb-aa79-7d2794cffc84.png))
 - **Option B:** job `b69c1e02-f658-4eac-a6e1-0051e32ae061` ([render](https://d8j0ntlcm91z4.cloudfront.net/user_38WgIqfb8aRSLfJPTHATd2uH66Y/hf_20261008_201033_b69c1e02-f658-4eac-a6e1-0051e32ae061.png))
 - Spec: 1:1 at 2k, from the v1 sheet as reference. Chest-up and centered, with the head in the middle 60% so it survives the circle crop. Huge braces smile with one finger pushing up the glasses. Solid LED-blue `#2E7BFF` background with blurred Caucasus peaks along the bottom. No text.
+
+
+---
+
+## 8. Bio + caption bank (LOCKED signature)
+
+**Bio (Instagram, 4 lines):**
+```
+Giorgi 🏔️ AI from the mountain
+5'4" of pure aura. Light-up shoes, no brakes 👟🚨
+Bebia's favorite. Your city's problem.
+Khinkali, dzmao. 🥟
+```
+TikTok (80 chars): `AI from the mountain 🏔️ 5'4" of pure aura 👟 Khinkali, dzmao. 🥟`
+
+**Caption bank (the first 20 posts):**
+1. Ferrari said test drive. I said walk. Khinkali, dzmao. 🥟
+2. Bal Harbour security knows my name now. Khinkali, dzmao. 🥟
+3. Bebia ironed this shirt in 2009. Still fits. Khinkali, dzmao. 🥟
+4. Aura +10,000. Shoes charging. Khinkali, dzmao. 🥟
+5. Ocean Drive got the mountain treatment. Khinkali, dzmao. 🥟
+6. Braids tied. Belly out. Taxes not filed. Khinkali, dzmao. 🥟
+7. Michelin star chef asked for my autograph. Khinkali, dzmao. 🥟
+8. I don't walk into rooms. I arrive. Khinkali, dzmao. 🥟
+9. My shoes have more lights than your apartment. Khinkali, dzmao. 🥟
+10. Warts: 3. Fear: 0. Khinkali, dzmao. 🥟
+11. Grandma sent me to buy bread. I'm in Monaco. Khinkali, dzmao. 🥟
+12. Main character. Supporting belly. Khinkali, dzmao. 🥟
+13. Doorman said dress code. I said look down. 👟🚨 Khinkali, dzmao. 🥟
+14. Braces cost more than your car. Khinkali, dzmao. 🥟
+15. The mountain sent its strongest soldier. Khinkali, dzmao. 🥟
+16. Rizz level: Caucasus. Khinkali, dzmao. 🥟
+17. Fashion Week called. I put them on hold. Khinkali, dzmao. 🥟
+18. 0 followers to 1M. Same shirt. Khinkali, dzmao. 🥟
+19. Lambo dealership. Just browsing. With my aura. Khinkali, dzmao. 🥟
+20. You laughed. Now you're following. Khinkali, dzmao. 🥟
+
+**Caption rules:** keep the flex under 10 words · no hashtags in the caption (one comment with 3 tags max) · always end with the signature · the joke is always his confidence, never someone else.
