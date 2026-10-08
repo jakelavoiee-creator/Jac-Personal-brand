@@ -32,11 +32,11 @@ Inspiration: the "lovable outsider" archetype of 2000s pop culture (the Austin P
 ## 2. Signature move and catchphrase (the Jean Phil formula, our version)
 
 - **The Move: "The Mountain Strut."** A slow-motion, ultra-confident runway walk straight at the camera: hips swinging, braids bouncing, shoes flashing on every step. He stops, pushes his glasses up with one finger, and flashes the braces smile.
-- **Signature (his "Oui Madame"):** **"Khinkali, dzmao. 🥟"**
-  - *Khinkali* = a Georgian soup dumpling. *Dzmao* = Georgian for "bro". Together it means "dumpling, bro": a polite-sounding non sequitur in a language nobody knows, which is the same mechanic that makes "Oui Madame" work.
-  - **Call-and-response:** fans comment "khinkali dzmao 🥟" under every post, so 🥟 becomes the fandom emoji.
-  - **Caption formula:** `<unhinged-calm flex, 3–7 words>. Khinkali, dzmao. 🥟`. The flex is said with total confidence and zero explanation.
-  - **Backup signatures (for A/B tests):** "Gaumarjos, chat." (Georgian toast) · "Mountain rizz activated." · "Bebia said yes." · "Braids don't lie."
+- **Signature (his "Oui Madame"), ENGLISH, 2 words:** **"Dumpling, bro. 🥟"**
+  - It's a polite-sounding, totally random sign-off with zero explanation, the same mechanic as "Oui Madame". Everyone understands it in one read, and it sounds just as dumb out loud.
+  - **Call-and-response:** fans comment "dumpling bro 🥟" under every post, so 🥟 becomes the fandom emoji.
+  - **Caption formula:** `<unhinged-calm flex, 3–7 words>. Dumpling, bro. 🥟`
+  - **Backups (2 words, for A/B tests):** "Mountain rizz." · "Belly first." · "Shoes on."
 - **The contrast engine:** the ugliest-possible outfit in the most luxurious place (Miami Design District, Monaco yacht, Fashion Week front row, Lamborghini dealership), treated with total confidence.
 
 ---
@@ -102,30 +102,30 @@ Bal Harbour Shops · Ocean Drive · Art Basel booth · Monaco yacht deck · a Pa
 Giorgi 🏔️ AI from the mountain
 5'4" of pure aura. Light-up shoes, no brakes 👟🚨
 Bebia's favorite. Your city's problem.
-Khinkali, dzmao. 🥟
+Dumpling, bro. 🥟
 ```
-TikTok (80 chars): `AI from the mountain 🏔️ 5'4" of pure aura 👟 Khinkali, dzmao. 🥟`
+TikTok (80 chars): `AI from the mountain 🏔️ 5'4" of pure aura 👟 Dumpling, bro. 🥟`
 
 **Caption bank (the first 20 posts):**
-1. Ferrari said test drive. I said walk. Khinkali, dzmao. 🥟
-2. Bal Harbour security knows my name now. Khinkali, dzmao. 🥟
-3. Bebia ironed this shirt in 2009. Still fits. Khinkali, dzmao. 🥟
-4. Aura +10,000. Shoes charging. Khinkali, dzmao. 🥟
-5. Ocean Drive got the mountain treatment. Khinkali, dzmao. 🥟
-6. Braids tied. Belly out. Taxes not filed. Khinkali, dzmao. 🥟
-7. Michelin star chef asked for my autograph. Khinkali, dzmao. 🥟
-8. I don't walk into rooms. I arrive. Khinkali, dzmao. 🥟
-9. My shoes have more lights than your apartment. Khinkali, dzmao. 🥟
-10. Warts: 3. Fear: 0. Khinkali, dzmao. 🥟
-11. Grandma sent me to buy bread. I'm in Monaco. Khinkali, dzmao. 🥟
-12. Main character. Supporting belly. Khinkali, dzmao. 🥟
-13. Doorman said dress code. I said look down. 👟🚨 Khinkali, dzmao. 🥟
-14. Braces cost more than your car. Khinkali, dzmao. 🥟
-15. The mountain sent its strongest soldier. Khinkali, dzmao. 🥟
-16. Rizz level: Caucasus. Khinkali, dzmao. 🥟
-17. Fashion Week called. I put them on hold. Khinkali, dzmao. 🥟
-18. 0 followers to 1M. Same shirt. Khinkali, dzmao. 🥟
-19. Lambo dealership. Just browsing. With my aura. Khinkali, dzmao. 🥟
-20. You laughed. Now you're following. Khinkali, dzmao. 🥟
+1. Ferrari said test drive. I said walk. Dumpling, bro. 🥟
+2. Bal Harbour security knows my name now. Dumpling, bro. 🥟
+3. Bebia ironed this shirt in 2009. Still fits. Dumpling, bro. 🥟
+4. Aura +10,000. Shoes charging. Dumpling, bro. 🥟
+5. Ocean Drive got the mountain treatment. Dumpling, bro. 🥟
+6. Braids tied. Belly out. Taxes not filed. Dumpling, bro. 🥟
+7. Michelin star chef asked for my autograph. Dumpling, bro. 🥟
+8. I don't walk into rooms. I arrive. Dumpling, bro. 🥟
+9. My shoes have more lights than your apartment. Dumpling, bro. 🥟
+10. Warts: 3. Fear: 0. Dumpling, bro. 🥟
+11. Grandma sent me to buy bread. I'm in Monaco. Dumpling, bro. 🥟
+12. Main character. Supporting belly. Dumpling, bro. 🥟
+13. Doorman said dress code. I said look down. 👟🚨 Dumpling, bro. 🥟
+14. Braces cost more than your car. Dumpling, bro. 🥟
+15. The mountain sent its strongest soldier. Dumpling, bro. 🥟
+16. Rizz level: Caucasus. Dumpling, bro. 🥟
+17. Fashion Week called. I put them on hold. Dumpling, bro. 🥟
+18. 0 followers to 1M. Same shirt. Dumpling, bro. 🥟
+19. Lambo dealership. Just browsing. With my aura. Dumpling, bro. 🥟
+20. You laughed. Now you're following. Dumpling, bro. 🥟
 
 **Caption rules:** keep the flex under 10 words · no hashtags in the caption (one comment with 3 tags max) · always end with the signature · the joke is always his confidence, never someone else.
