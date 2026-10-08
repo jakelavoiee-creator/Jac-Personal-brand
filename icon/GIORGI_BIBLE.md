@@ -24,9 +24,8 @@ Inspiration: the "lovable outsider" archetype of 2000s pop culture (the Austin P
 
 **Signature visual hook: the shoes.** Every clip ends on a close-up of the LED soles flashing. That's the logo of the character.
 **Palette:** stripe yellow `#F7D23E` · stripe green `#3FA34D` · denim `#8DB4E2` · LED red `#FF2E4D` / blue `#2E7BFF`
-**Master sheets:**
-- **Face (LOCKED):** v1 sheet, job `3bc4d307-ca42-4d60-a747-e579e89e5731` ([v1 render](https://d8j0ntlcm91z4.cloudfront.net/user_38WgIqfb8aRSLfJPTHATd2uH66Y/hf_20261008_195317_3bc4d307-ca42-4d60-a747-e579e89e5731.png)). Always pass it as the identity reference.
-- **Outfit (in review):** v2 sheet, job `ad5cb290-0e9b-4740-862d-016cd154f272` ([v2 render](https://d8j0ntlcm91z4.cloudfront.net/user_38WgIqfb8aRSLfJPTHATd2uH66Y/hf_20261008_195839_ad5cb290-0e9b-4740-862d-016cd154f272.png)). This is v1's face with the cropped shirt. Once it's approved, it becomes the master reference for all video.
+**Master sheet (LOCKED, face + outfit):** v1, job `3bc4d307-ca42-4d60-a747-e579e89e5731` ([v1 render](https://d8j0ntlcm91z4.cloudfront.net/user_38WgIqfb8aRSLfJPTHATd2uH66Y/hf_20261008_195317_3bc4d307-ca42-4d60-a747-e579e89e5731.png)). Use it as the character reference for every video. **Never regenerate it.**
+> Rejected: v2 (job `ad5cb290-…`). Re-rendering the sheet with v1 as a reference produced a different person. Lesson: change wardrobe at the video/image-edit stage, with v1 as the reference, and never rebuild the character sheet.
 
 ---
 
@@ -79,5 +78,5 @@ Bal Harbour Shops · Ocean Drive · Art Basel booth · Monaco yacht deck · a Pa
 
 ### Status
 - **LOCKED:** look (per the brief), the shoes as the visual logo, the move, the catchphrase, the trust rules.
-- **OPEN:** approve the v2 outfit sheet → 3 pilot clips (Bal Harbour, Ferrari showroom, Ocean Drive).
+- **OPEN:** v1 approved → → 3 pilot clips (Bal Harbour, Ferrari showroom, Ocean Drive).
 - **Decision:** is Giorgi replacing Don Calma, or are they launching as two accounts?
