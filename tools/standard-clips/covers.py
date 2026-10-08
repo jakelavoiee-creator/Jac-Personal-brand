@@ -6,7 +6,7 @@
 
   canvas    1080x1920, black-to-grey grain gradient (assets/cover_bg.jpg)
   headline  Bebas Neue: the line in small caps, its LAST word huge in italic bold (+ @aura.miamii)
-  photo     the speaker in black & white, cut out, fading into the background
+  photo     the speaker in black & white, cut out, solid, filling the bottom of the cover
   safe area everything that matters sits inside the centre 1080x1440 (the profile-grid crop)
 
 Headline per reel: "cover": "TRUST THE TIMING." in the plan - the last word becomes the big one.
@@ -145,37 +145,40 @@ def cover(m, photo, out):
         return False
     kicker, big = " ".join(words[:-1]), words[-1]          # the big word is always the last one
     im = background(m.get("caption", "") + " " + m.get("punchline", ""))
-    if photo is not None:                                  # photo: black & white, bottom-centred
-        p = photo.convert("RGBA")
-        alpha = p.getchannel("A")
-        p = ImageOps.autocontrast(ImageOps.grayscale(p.convert("RGB")), cutoff=1).convert("RGBA")
-        p.putalpha(alpha)
-        target_h = 1120
-        p = p.resize((int(p.width * target_h / p.height), target_h), Image.LANCZOS)
-        if p.width > 1040:
-            p = p.resize((1040, int(p.height * 1040 / p.width)), Image.LANCZOS)
-        fade = Image.linear_gradient("L").resize((p.width, p.height)).point(lambda v: 255 if v < 170 else int(255 * (255 - v) / 85))
-        p.putalpha(Image.composite(p.getchannel("A"), Image.new("L", p.size, 0), fade))
-        im.paste(p, ((W - p.width) // 2, GRID_BOT - p.height + 150), p)
     d = ImageDraw.Draw(im)
+    # lay the headline out first, so the photo can fill everything below it
     y = GRID_TOP + 60
-    if kicker:
-        f = fit(kicker, 940, 110, d)
-        d.text((W // 2, y), kicker, font=f, fill="white", anchor="mt")
-        y += f.size * 0.92
+    fk = fit(kicker, 940, 110, d) if kicker else None
+    yb = y + (fk.size * 0.92 if fk else 0)
     size = 470
     while True:
         bi = italic_bold(big, size)
         if bi.width <= 1000 or size <= 120:
             break
         size -= 10
+    y_handle = yb + bi.height + 14
+    if photo is not None:                                  # photo: black & white, solid, filling the bottom
+        p = photo.convert("RGBA")
+        p = p.crop(p.getbbox() or (0, 0, p.width, p.height))
+        alpha = p.getchannel("A")
+        p = ImageOps.autocontrast(ImageOps.grayscale(p.convert("RGB")), cutoff=1).convert("RGBA")
+        p.putalpha(alpha)
+        top = int(y_handle + 10)
+        scale = max((H - top) / p.height, W / p.width)     # reach the bottom edge, full width
+        p = p.resize((int(p.width * scale), int(p.height * scale)), Image.LANCZOS)
+        if p.width > W:                                    # keep the face centred, trim the sides
+            l = (p.width - W) // 2
+            p = p.crop((l, 0, l + W, p.height))
+        im.paste(p, ((W - p.width) // 2, H - p.height), p)
+        d = ImageDraw.Draw(im)
+    if fk:
+        d.text((W // 2, y), kicker, font=fk, fill="white", anchor="mt")
     shadow = Image.new("RGBA", bi.size, (0, 0, 0, 0))
     shadow.putalpha(bi.getchannel("A").point(lambda v: v * 3 // 4))
     x = (W - bi.width) // 2
-    im.paste(shadow, (x + 6, int(y) + 8), shadow)
-    im.paste(bi, (x, int(y)), bi)
-    y += bi.height + 14
-    d.text((x + bi.width, y), HANDLE, font=font(34), fill=(200, 200, 200), anchor="rt")
+    im.paste(shadow, (x + 6, int(yb) + 8), shadow)
+    im.paste(bi, (x, int(yb)), bi)
+    d.text((x + bi.width, y_handle), HANDLE, font=font(34), fill=(200, 200, 200), anchor="rt")
     out.parent.mkdir(parents=True, exist_ok=True)
     im.convert("RGB").save(out, quality=95)
     return True
