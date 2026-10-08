@@ -4,7 +4,8 @@
   one famous moment, ~12-25s, one truth
   canvas    black 9:16, the 16:9 clip untouched (original colour) across the middle
   open      fades up from black
-  captions  Bebas Neue Regular, one word at a time, sized by impact, always placed off the speaker's face
+  captions  one word at a time in one column on the side away from the face ("caption_side" to force);
+            small serif buildup, key words big in bold grotesk
   type      condensed Times New Roman italic (buildup words) + Akzidenz-Grotesk bold caps (impact words,
             punchline) - see brandfonts.py; end card locked
   punchline the key line as big stacked caps, right-aligned
@@ -38,7 +39,7 @@ COND = FONTS / "Oswald-Bold.ttf"          # end card (locked)
 FPS, END_LEN, FADE_IN = 30, 2.2, 0.35
 CAP_SIZE = 120                           # captions: Bebas Neue Regular, one word at a time
 # impact sizing: the buildup words stay smaller, the words that land the sentence go big
-SIZE_SMALL, SIZE_MID, SIZE_BIG = 92, 118, 150   # serif italic buildup / serif / grotesk caps impact
+SIZE_SMALL, SIZE_MID, SIZE_BIG = 58, 70, 124    # small serif italic buildup / serif / big grotesk caps key words
 FILLER = set("""a an the and or but so if of to in on at by for with from as is are was were be been being am
 i you he she it we they me him her us them my your his its our their this that these those there here
 do does did have has had will would can could should shall may might must just like um uh yeah okay oh
@@ -207,18 +208,45 @@ def place(text, size, faces, prev=None):
     return min(cands, key=lambda c: sum(overlap(box(*c), fb) for fb in faces))
 
 
-def face(size):
+def face(big):
     """Impact words: grotesk bold caps. Everything else: condensed Times italic, lowercase."""
-    if size >= SIZE_BIG * S:
+    if big:
         return f"\\fn{bf.family(GROTESK)}\\i0\\b0"
     return f"\\fn{bf.family(SERIF)}\\i1\\b0\\fscx{int(SERIF_SCALE * 100)}"
 
 
-def word(text, size):
-    return text.upper() if size >= SIZE_BIG * S else text.lower()
+def word(text, big):
+    return text.upper() if big else text.lower()
 
 
-def write_ass(chunks, path, dur, hide_from, hide_len=2.0, punch_words=frozenset(), track=()):
+def caption_side(track, forced=None):
+    """One side for the whole reel - the side away from the speaker's face. Returns (side, x0, x1) in footage units."""
+    boxes = [b for _, bs in track for b in bs]
+    if forced in ("left", "right"):
+        side = forced
+    else:
+        cx = sorted((b[0] + b[2]) / 2 for b in boxes)[len(boxes) // 2] if boxes else 0.5
+        side = "right" if cx <= 0.5 else "left"
+    if side == "right":
+        edge = sorted(b[2] for b in boxes)[int(len(boxes) * 0.9)] if boxes else 0.55
+        return side, min(max(edge + 0.02, 0.52), 0.70), 0.97
+    edge = sorted(b[0] for b in boxes)[int(len(boxes) * 0.1)] if boxes else 0.45
+    return side, 0.03, max(min(edge - 0.02, 0.48), 0.30)
+
+
+def fitted(text, size, region):
+    """Shrink a word until it fits the caption column."""
+    big = size >= SIZE_BIG * S
+    while size > 30 * S:
+        f = ImageFont.truetype(str(GROTESK if big else SERIF), size)
+        w = f.getlength(text if big else text.lower()) * (1 if big else SERIF_SCALE)
+        if w <= (region[2] - region[1]) * W:
+            break
+        size = int(size * 0.92)
+    return size
+
+
+def write_ass(chunks, path, dur, hide_from, hide_len=2.0, punch_words=frozenset(), track=(), region=None):
     head = f"""[Script Info]
 ScriptType: v4.00+
 PlayResX: {W}
@@ -244,9 +272,11 @@ Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text
                 t1 = hide_from
         if t1 > t0:
             size = word_size(c["text"], punch_words) * S
-            prev = cx, cy = place(c["text"], size, faces_at(track, t0, t1), prev)
+            big = size >= SIZE_BIG * S
+            size = fitted(c["text"], size, region)
+            cx, cy = (region[1] + region[2]) / 2, 0.5     # one fixed column, beside the speaker
             ev.append(f"Dialogue: 0,{v1.ass_time(t0)},{v1.ass_time(t1)},S,,0,0,0,,"
-                      f"{{\\an5\\pos({int(cx * W)},{FOOT_Y + int(cy * FOOT_H)})\\fs{size}{face(size)}}}{word(c['text'], size)}")
+                      f"{{\\an5\\pos({int(cx * W)},{FOOT_Y + int(cy * FOOT_H)})\\fs{size}{face(big)}}}{word(c['text'], big)}")
     Path(path).write_text(head + "\n".join(ev) + "\n", encoding="utf-8")
 
 
@@ -269,11 +299,12 @@ def build(m, base, tmp, logo):
     punch_words = {w.lower() for w in re.findall(r"[A-Za-z0-9'’]+", m.get("punchline", "").replace("[", "").replace("]", ""))} - FILLER
     punch_words |= {w.lower() for w in m.get("emphasis", [])}      # optional per-moment override
     track = face_track(src, a - off, b - a, keep)
-    write_ass(chunks, HERE / ass_rel, dur, p_at, p_len, punch_words, track)
+    region = caption_side(track, m.get("caption_side"))
+    write_ass(chunks, HERE / ass_rel, dur, p_at, p_len, punch_words, track, region)
     punch, endc, mark = tmp / "punch.png", tmp / "end.png", tmp / "mark.png"
     pfaces = faces_at(track, p_at, p_at + p_len) if p_at is not None else []
     best = None
-    for align in ([m["punch_align"]] if m.get("punch_align") else ["right", "left"]):   # whichever side the face isn't on
+    for align in ([m["punch_align"]] if m.get("punch_align") else [region[0]]):   # same side as the captions
         box = punchline_png(m.get("punchline", ""), punch, align)
         hit = sum(overlap(box, fb) for fb in pfaces)
         if best is None or hit < best[0]:
