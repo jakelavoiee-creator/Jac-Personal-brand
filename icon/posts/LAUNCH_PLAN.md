@@ -7,13 +7,17 @@ The hook is a recognizable clip of a real person, usually 2–5s, keeping its or
 
 Reference hook: `../hooks/lower_your_tone.mp4` (5.3s). A woman holds up a tape measure: "If this is you… you better lower your mother*** tone when you're talking to me."
 
-## Ready-to-post cuts (in this folder)
-| File | Hook | Giorgi answer | Length | Verdict |
-|---|---|---|---|---|
-| `giorgi_B_lower_your_tone_x_face_in_lens.mp4` | lower_your_tone (0–5.3s) | Giorgi lunges face-first into the lens, then dances | 17.0s | **Post first.** The face-in-lens beat reads as a direct reaction to her. |
-| `giorgi_A_lower_your_tone_x_3am_dance.mp4` | lower_your_tone (0–5.3s) | Giorgi does the big arm-swinging dance | 18.0s | Backup, or use it on TikTok. |
+## Workflow
+**You send a hook clip → I splice it onto all 3 Giorgi videos → 3 finals land in this folder.**
 
-Don't post both on Instagram (same hook twice). Post B on IG, and A on TikTok.
+## Batch 1: hook `lower_your_tone` (5.3s) × 3 Giorgi videos
+| Post | File | Giorgi answer | Length | When (ET) |
+|---|---|---|---|---|
+| 1 | `giorgi_01_lower_your_tone_face_in_lens.mp4` | Lunges face-first into the lens, then the knee-lift dance | 17.0s | Thu Oct 9, 7pm |
+| 2 | `giorgi_02_lower_your_tone_arm_swing.mp4` | Stands still for a beat, then a big arm-swinging dance | 18.0s | Sat Oct 11, 12pm |
+| 3 | `giorgi_03_lower_your_tone_living_room.mp4` | Instant fists-up dance in a bright living room | 14.0s | Mon Oct 13, 7pm |
+
+The same hook on all 3 is fine because it makes it a recurring bit. Viewers start recognizing the setup, and Giorgi's different answer each time is the payoff.
 
 **Caption (IG):**
 ```
