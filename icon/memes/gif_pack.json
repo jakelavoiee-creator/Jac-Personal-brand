@@ -1,0 +1,16 @@
+{
+ "stills": [
+  {"src": "icon/memes/src/06_shock.png",        "out": "giorgi_no_way.gif",    "label": "NO WAY",    "anim": "shake",    "face_y": 0.38},
+  {"src": "icon/memes/src/08_crying_car.png",   "out": "giorgi_crying.gif",    "label": "NOOOOO",    "anim": "shake",    "face_y": 0.40},
+  {"src": "icon/memes/src/01_time_out.png",     "out": "giorgi_hold_up.gif",   "label": "HOLD UP",   "anim": "punch",    "face_y": 0.40},
+  {"src": "icon/memes/src/07_temple_tap.png",   "out": "giorgi_big_brain.gif", "label": "BIG BRAIN", "anim": "push",     "face_y": 0.40},
+  {"src": "icon/memes/src/05_eyebrow.png",      "out": "giorgi_sus.gif",       "label": "SUS",       "anim": "zoomface", "face_y": 0.40},
+  {"src": "icon/memes/src/04_hide_the_pain.png","out": "giorgi_im_fine.gif",   "label": "I'M FINE",  "anim": "push",     "face_y": 0.30}
+ ],
+ "loops": [
+  {"src": "/root/.claude/uploads/704f3d3d-9353-5b39-a868-d0d8f789ad09/3667479a-hf_20261008_224115_73e04489-0b9f-4910-a7f4-6990e8699fb7.mp4", "out": "giorgi_incoming.gif",   "label": "INCOMING",    "start": 0.0, "dur": 2.0},
+  {"src": "/root/.claude/uploads/704f3d3d-9353-5b39-a868-d0d8f789ad09/3667479a-hf_20261008_224115_73e04489-0b9f-4910-a7f4-6990e8699fb7.mp4", "out": "giorgi_knee_lift.gif",  "label": "GIORGI MODE", "start": 5.0, "dur": 2.4},
+  {"src": "/root/.claude/uploads/704f3d3d-9353-5b39-a868-d0d8f789ad09/b6031a5e-hf_20261008_230316_480d73c9-4487-408f-951d-ddc2559fb87d_1.mp4", "out": "giorgi_lets_go.gif", "label": "LET'S GOOO",  "start": 0.0, "dur": 2.2},
+  {"src": "/root/.claude/uploads/704f3d3d-9353-5b39-a868-d0d8f789ad09/7dd8dba9-hf_20261008_212335_cb30b201-f72f-4e10-8a8f-b9111d78b2da.mp4", "out": "giorgi_vibing.gif",     "label": "VIBING",      "start": 3.0, "dur": 2.4}
+ ]
+}
