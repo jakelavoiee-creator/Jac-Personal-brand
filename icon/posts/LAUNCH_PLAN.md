@@ -61,3 +61,26 @@ Pick clips that **end on a setup Giorgi can answer**. Ranked by how well they fi
 4. **Oct 19 (credits reset):** scale whichever hook type got the most shares and saves
 
 On every post: Reels only, highest-quality upload ON, likes and views visible, and paste the link into the Launchpoint dashboard the same day.
+
+## Batch 2: hook `groom_breaks_down` (4.3s) × 3 Giorgi videos
+The groom turns, sees his bride and breaks down crying. Hard cut: Giorgi is the "bride".
+
+| File | Giorgi answer | Length |
+|---|---|---|
+| `giorgi_04_groom_breaks_down_face_in_lens.mp4` | Face-first into the lens. Reads as him walking up to the groom. | 16.1s |
+| `giorgi_05_groom_breaks_down_arm_swing.mp4` | Standing still like he's at the altar, then the arm-swing dance | 17.1s |
+| `giorgi_06_groom_breaks_down_living_room.mp4` | Instant fists-up dance | 13.1s |
+
+**Caption:** `he saw me walk down the aisle. Dumpling, bro. 🥟` + the required Higgsfield line.
+
+## Combined posting schedule: alternate the hooks, 1 post a day (ET)
+| Date | Post |
+|---|---|
+| Thu Oct 9, 7pm | 01 tone × face-in-lens |
+| Fri Oct 10, 7pm | 05 groom × arm swing |
+| Sat Oct 11, 12pm | 03 tone × living room |
+| Sun Oct 12, 7pm | 04 groom × face-in-lens |
+| Mon Oct 13, 7pm | 02 tone × arm swing |
+| Tue Oct 14, 7pm | 06 groom × living room |
+
+Rule: never post the same Giorgi footage two days in a row. Each Giorgi clip appears twice in total (once per hook), at least 3 days apart.
