@@ -1,6 +1,6 @@
 # GIORGI: Character Bible v1
 
-> **North Star:** *The most confident man on the internet, from a mountain village nobody can find on a map.* He looks like the kid everyone picked last, and he walks like he owns the city.
+> **North Star:** *The most confident man on the internet.* No backstory, no explanation. He looks like the kid everyone picked last, and he walks like he owns the city.
 > Tone: **wholesome cringe-to-iconic.** Viewers laugh at him in the first second and are rooting for him by the third.
 
 Inspiration: the "lovable outsider" archetype of 2000s pop culture (the Austin Powers parody nerd + the Wimpy Kid best friend). We **mix the energy and keep the design original**: no names, logos, or exact costumes from either film or book.
@@ -11,8 +11,9 @@ Inspiration: the "lovable outsider" archetype of 2000s pop culture (the Austin P
 
 | Token | Spec (paste word-for-word in every prompt) |
 |---|---|
-| Name / handle | **Giorgi** · `@giorgi.from.the.mountain` (backups: `@giorgi_caucasus`, `@itsgiorgi`) |
-| Origin | an adult man (30s) from a tiny village high in the Caucasus mountains, visiting the big city for the first time |
+| Name / handle | **Giorgi** · `@itsgiorgi` (backups: `@giorgi.dumpling`, `@giorgi.bro`) |
+| Backstory | **none, by design.** He just exists. Never explain where he's from. The mystery fuels the comments. |
+| Age | adult (30s) |
 | Body | very heavy-set, round belly, short chubby legs, average height |
 | Hair | **shiny chestnut bowl cut with blunt bangs + ONE thick braid on each side, hanging in front of the ears** |
 | Face | very round, fair skin, **freckles everywhere**, **exactly 3 small warts (left cheek, chin, beside the nose)**, **huge buck front teeth with silver braces**, blue eyes |
@@ -31,12 +32,12 @@ Inspiration: the "lovable outsider" archetype of 2000s pop culture (the Austin P
 
 ## 2. Signature move and catchphrase (the Jean Phil formula, our version)
 
-- **The Move: "The Mountain Strut."** A slow-motion, ultra-confident runway walk straight at the camera: hips swinging, braids bouncing, shoes flashing on every step. He stops, pushes his glasses up with one finger, and flashes the braces smile.
+- **The Move: "The Strut."** A slow-motion, ultra-confident runway walk straight at the camera: hips swinging, braids bouncing, shoes flashing on every step. He stops, pushes his glasses up with one finger, and flashes the braces smile.
 - **Signature (his "Oui Madame"), ENGLISH, 2 words:** **"Dumpling, bro. 🥟"**
   - It's a polite-sounding, totally random sign-off with zero explanation, the same mechanic as "Oui Madame". Everyone understands it in one read, and it sounds just as dumb out loud.
   - **Call-and-response:** fans comment "dumpling bro 🥟" under every post, so 🥟 becomes the fandom emoji.
   - **Caption formula:** `<unhinged-calm flex, 3–7 words>. Dumpling, bro. 🥟`
-  - **Backups (2 words, for A/B tests):** "Mountain rizz." · "Belly first." · "Shoes on."
+  - **Backups (2 words, for A/B tests):** "Belly first." · "Braids tied." · "Shoes on."
 - **The contrast engine:** the ugliest-possible outfit in the most luxurious place (Miami Design District, Monaco yacht, Fashion Week front row, Lamborghini dealership), treated with total confidence.
 
 ---
@@ -46,30 +47,30 @@ Inspiration: the "lovable outsider" archetype of 2000s pop culture (the Austin P
 | Zone | Time | Direction |
 |---|---|---|
 | Hook | 0–1.5s | Wide shot of the luxury location. Giorgi enters frame from the bottom-left, already strutting. |
-| Strut | 1.5–6s | Mountain Strut toward the lens on the beat. Camera locked at waist height, subject in the center third. |
+| Strut | 1.5–6s | The Strut toward the lens on the beat. Camera locked at waist height, subject in the center third. |
 | Button | 6–8.5s | Glasses push + braces smile. Then a 1-second close-up of the flashing LED soles, and a hard loop cut. |
 
 ---
 
 ## 4. Locations: the only variable
 
-Bal Harbour Shops · Ocean Drive · Art Basel booth · Monaco yacht deck · a Paris Fashion Week runway · a Dubai Mall aquarium · a Ferrari showroom · a Michelin-star restaurant · a ski lift in Gudauri (home episode) · his village with grandma (lore episode).
+Bal Harbour Shops · Ocean Drive · Art Basel booth · Monaco yacht deck · a Paris Fashion Week runway · a Dubai Mall aquarium · a Ferrari showroom · a Michelin-star restaurant
 
 ## 5. Story arc (to keep people past week 2)
 
 | Week | Beat |
 |---|---|
 | 1–2 | The Formula: one strut a day in luxury places. |
-| 3 | **Bebia** (his tiny, tough grandma from the village) appears on video calls and judges his outfits. |
+| 3 | Duets: Giorgi "reacts" to viral clips (see the meme-hook format in `posts/LAUNCH_PLAN.md`). |
 | 4 | The Rival: a sleek male model who copies the strut and fails. |
-| 5 | **#MountainStrutChallenge**: followers strut in their worst outfit with light-up shoes. |
+| 5 | **#GiorgiStrutChallenge**: followers strut in their worst outfit with light-up shoes. |
 | 6+ | Brand era: pitch Geox (or any light-up sneaker brand) on an official collab, plus the "Giorgi stripe polo" merch drop. |
 
 ## 6. Trust rules
 
 - **Disclose AI in the bio** (see the locked bio in §8).
 - **No crypto and no tokens.** Monetize with merch and brand deals tagged `#ad`.
-- **The joke is his confidence, never his body or his origins.** He always wins in the end, and people are always kind to him on camera. That's what makes him shareable instead of mean.
+- **The joke is his confidence, never his body.** He always wins in the end, and people are always kind to him on camera. That's what makes him shareable instead of mean.
 
 ## 7. Prompt template
 
@@ -90,7 +91,7 @@ Bal Harbour Shops · Ocean Drive · Art Basel booth · Monaco yacht deck · a Pa
 
 - **Option A:** job `78393b00-e3ac-41cb-aa79-7d2794cffc84` ([render](https://d8j0ntlcm91z4.cloudfront.net/user_38WgIqfb8aRSLfJPTHATd2uH66Y/hf_20261008_201033_78393b00-e3ac-41cb-aa79-7d2794cffc84.png))
 - **Option B:** job `b69c1e02-f658-4eac-a6e1-0051e32ae061` ([render](https://d8j0ntlcm91z4.cloudfront.net/user_38WgIqfb8aRSLfJPTHATd2uH66Y/hf_20261008_201033_b69c1e02-f658-4eac-a6e1-0051e32ae061.png))
-- Spec: 1:1 at 2k, from the v1 sheet as reference. Chest-up and centered, with the head in the middle 60% so it survives the circle crop. Huge braces smile with one finger pushing up the glasses. Solid LED-blue `#2E7BFF` background with blurred Caucasus peaks along the bottom. No text.
+- Spec: 1:1 at 2k, from the v1 sheet as reference. Chest-up and centered, with the head in the middle 60% so it survives the circle crop. Huge braces smile with one finger pushing up the glasses. Solid LED-blue `#2E7BFF` background. (Note: the rendered options show mountain peaks. Crop or regenerate if the backstory must be fully gone.) No text.
 
 
 ---
@@ -100,28 +101,28 @@ Bal Harbour Shops · Ocean Drive · Art Basel booth · Monaco yacht deck · a Pa
 **Bio (Instagram). Line 1 is the exact text the Higgsfield campaign requires, so never edit it:**
 ```
 made with @higgsfield.ai
-Giorgi 🏔️ AI from the mountain. 5'4" of pure aura 👟🚨
+Giorgi. AI. 5'4" of pure aura 👟🚨
 Dumpling, bro. 🥟
 ```
-TikTok (80 chars): `AI from the mountain 🏔️ 5'4" of pure aura 👟 Dumpling, bro. 🥟`
+TikTok (80 chars): `AI. 5'4" of pure aura 👟 Dumpling, bro. 🥟`
 
 **Caption bank (the first 20 posts):**
 1. Ferrari said test drive. I said walk. Dumpling, bro. 🥟
 2. Bal Harbour security knows my name now. Dumpling, bro. 🥟
-3. Bebia ironed this shirt in 2009. Still fits. Dumpling, bro. 🥟
+3. Ironed this shirt in 2009. Still fits. Dumpling, bro. 🥟
 4. Aura +10,000. Shoes charging. Dumpling, bro. 🥟
-5. Ocean Drive got the mountain treatment. Dumpling, bro. 🥟
+5. Ocean Drive got the Giorgi treatment. Dumpling, bro. 🥟
 6. Braids tied. Belly out. Taxes not filed. Dumpling, bro. 🥟
 7. Michelin star chef asked for my autograph. Dumpling, bro. 🥟
 8. I don't walk into rooms. I arrive. Dumpling, bro. 🥟
 9. My shoes have more lights than your apartment. Dumpling, bro. 🥟
 10. Warts: 3. Fear: 0. Dumpling, bro. 🥟
-11. Grandma sent me to buy bread. I'm in Monaco. Dumpling, bro. 🥟
+11. Went out to buy bread. I'm in Monaco. Dumpling, bro. 🥟
 12. Main character. Supporting belly. Dumpling, bro. 🥟
 13. Doorman said dress code. I said look down. 👟🚨 Dumpling, bro. 🥟
 14. Braces cost more than your car. Dumpling, bro. 🥟
-15. The mountain sent its strongest soldier. Dumpling, bro. 🥟
-16. Rizz level: Caucasus. Dumpling, bro. 🥟
+15. They sent their strongest soldier. Dumpling, bro. 🥟
+16. Rizz level: unmeasurable. Dumpling, bro. 🥟
 17. Fashion Week called. I put them on hold. Dumpling, bro. 🥟
 18. 0 followers to 1M. Same shirt. Dumpling, bro. 🥟
 19. Lambo dealership. Just browsing. With my aura. Dumpling, bro. 🥟
@@ -143,7 +144,7 @@ I made this with @higgsfield.ai genjutsu #higgsfieldpartner #higgsfield
 Full brief: `research/higgsfield_influencer_invasion_brief_2026-10-08.txt`
 
 - **Pay:** Instagram views only, one payout per approved video at the highest tier reached (tiers don't stack). 1K = $2 · 10K = $20 · 100K = $200 · 500K = $1,000 · **1M+ = $2,000 (max per video)**. No base pay.
-- **Every video must be made with Higgsfield Genjutsu:** upload a viral source clip + the Giorgi image, and Giorgi replaces the main subject. → Our "Mountain Strut" pilots must go through Genjutsu (motion transfer from a real viral walk/dance clip), not plain text-to-video.
+- **Every video must be made with Higgsfield Genjutsu:** upload a viral source clip + the Giorgi image, and Giorgi replaces the main subject. → Our "Strut" pilots must go through Genjutsu (motion transfer from a real viral walk/dance clip), not plain text-to-video.
 - **Instagram Reels, vertical, highest-quality upload ON, likes/views/comments visible.** Other platforms are optional and don't pay.
 - **Original character only:** no lookalikes of film, TV, game or comic characters. Giorgi is inspired by the archetype but uses no copied costume or face. Keep it that way, and never name either reference in posts.
 - **No botting** (disqualifies all payouts). Never promise earnings or followers.
