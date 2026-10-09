@@ -3,6 +3,7 @@
 
     python covers.py ig.json                 # every reel in the plan
     python covers.py ig.json a01-... a07-...  # just these
+    python covers.py ig.json --done          # exactly the finished reels in REELS/DONE (also old ones, from archive.json)
 
   canvas    1080x1920, black-to-grey grain gradient (assets/cover_bg.jpg)
   headline  condensed Times italic lowercase line, its LAST word huge in Akzidenz-Grotesk bold caps (+ @aura.miamii)
@@ -12,9 +13,10 @@
 Headline per reel: "cover": "TRUST THE TIMING." in the plan - the last word becomes the big one.
 Speaker photo, in this order (the first one found is reused for every cover of that speaker):
   1. speakers/<speaker>.jpg / .png - your own photo, or one fetched by portraits.py
-  2. the best frame of the reel's clip: a clear front-facing face beats a side-on one, then bigger, sharper, more
+  2. the best frame of the reel's raw clip in REELS/DOWNLOADED: a clear front-facing face beats a side-on one, then bigger, sharper, more
      central; cut out and saved to speakers/<speaker>.png. Delete that file to pick again, or replace it.
-  3. a free-licence portrait from Wikipedia (only if no face is found in the clip)
+  3. a free-licence portrait from Wikipedia (when there's no raw clip, or no face in it)
+  4. last resort: a frame of the finished reel in REELS/DONE
 No photo at all (clip not downloaded yet) -> no cover is written, and the summary at the end says why.
 
 Needs: pip install pillow numpy "opencv-python-headless<5" "rembg[cpu]"
@@ -94,8 +96,10 @@ def faces_in(g, cascades):
 
 
 def best_frame(clip):
-    """Sharpest, largest, most central face in the clip -> (full-res PIL frame, face box), or (frame, None) if no face.
-    A clear front-facing face anywhere in the clip always beats a looser or side-on match."""
+    """The speaker's best frame -> (full-res PIL frame, face box), or (frame, None) if no face.
+    Clear front-facing faces beat looser / side-on ones. Detections are grouped by camera shot (face position + size)
+    and only the shots on screen most are kept - in a clip of someone talking that's them, not the host's cut-aways.
+    Then bigger, sharper, more central wins."""
     import cv2
     import numpy as np
     cascades = [cv2.CascadeClassifier(cv2.data.haarcascades + f) for f in
@@ -104,7 +108,9 @@ def best_frame(clip):
     dw, dh = DETECT_W, int(DETECT_W * sh / sw) // 2 * 2
     raw = subprocess.run(["ffmpeg", "-v", "error", "-i", str(clip), "-vf", f"fps=2,scale={dw}:{dh}", "-f", "rawvideo",
                           "-pix_fmt", "gray", "-"], capture_output=True).stdout
-    n, best, sharpest = len(raw) // (dw * dh), None, None
+    n, hits, sharpest = len(raw) // (dw * dh), [], None
+    if not n:
+        return None, None
     for i in range(n):
         g = np.frombuffer(raw[i * dw * dh:(i + 1) * dw * dh], np.uint8).reshape(dh, dw)
         whole = cv2.Laplacian(g, cv2.CV_64F).var()
@@ -112,16 +118,34 @@ def best_frame(clip):
             sharpest = (whole, i)
         for tier, (x, y, fw, fh) in faces_in(g, cascades):
             sharp = cv2.Laplacian(g[y:y + fh, x:x + fw], cv2.CV_64F).var()
-            centred = 1 - abs((x + fw / 2) / dw - 0.5)            # prefer faces near the middle
-            key = (-tier, fw * fh * min(sharp, 400) * centred)
-            if not best or key > best[0]:
-                best = (key, i, (x, y, fw, fh))
-    if not n:
+            centred = 1 - abs((x + fw / 2) / dw - 0.5)
+            shot = (round((x + fw / 2) / dw * 5), round(np.log2(fw) * 2))
+            hits.append((tier, shot, i, fw * fh * min(sharp, 400) * centred, (x, y, fw, fh)))
+    if not hits:
+        return frame_at(clip, sharpest[1] / 2), None
+    top = min(h[0] for h in hits)
+    hits = [h for h in hits if h[0] == top]
+    frames = {}
+    for h in hits:
+        frames.setdefault(h[1], set()).add(h[2])
+    most = max(len(v) for v in frames.values())
+    hits = [h for h in hits if len(frames[h[1]]) >= 0.6 * most]
+    _, _, i, _, box = max(hits, key=lambda h: h[3])
+    frame = frame_at(clip, i / 2)
+    if frame is None:
         return None, None
+    # re-find the face on the full-res frame, so the crop sits exactly on it
     k = sw / dw
-    if best:
-        return frame_at(clip, best[1] / 2), tuple(int(v * k) for v in best[2])
-    return frame_at(clip, sharpest[1] / 2), None
+    box = tuple(int(v * k) for v in box)
+    g = cv2.cvtColor(np.array(frame), cv2.COLOR_RGB2GRAY)
+    small = cv2.resize(g, (dw, int(dw * frame.height / frame.width)))
+    kk = frame.width / dw
+    cx, cy = box[0] + box[2] / 2, box[1] + box[3] / 2
+    near = [tuple(int(v * kk) for v in f) for _, f in faces_in(small, cascades)]
+    near = [f for f in near if abs(f[0] + f[2] / 2 - cx) < box[2] and abs(f[1] + f[3] / 2 - cy) < box[3]]
+    if near:
+        box = max(near, key=lambda f: f[2] * f[3])
+    return frame, box
 
 
 def person_crop(frame):
@@ -172,6 +196,8 @@ def speaker_photo(name, clip):
         cx, top = x + fw // 2, max(0, int(y - fh * 0.6))
         im = cutout(frame.crop((max(0, cx - cw // 2), top, min(frame.width, cx + cw // 2),
                                 min(frame.height, top + int(cw * 1.1)))))
+        if solid(im) < 0.2:                                # cut-out came back mostly empty: not a usable photo
+            return None
     else:
         im = person_crop(frame)
         if im is None:
@@ -179,6 +205,12 @@ def speaker_photo(name, clip):
     im.save(d / f"{slug(name)}.png")
     print(f"  photo for {name}: speakers/{slug(name)}.png (replace it to use your own)")
     return im
+
+
+def solid(im):
+    """Share of the cut-out that is person (0..1)."""
+    a = im.getchannel("A").point(lambda v: 255 if v > 128 else 0)
+    return sum(a.histogram()[255:]) / (im.width * im.height)
 
 
 def cutout(im):
@@ -297,27 +329,46 @@ def wiki_photo(name, m):
         return None
 
 
+def done_reels(plan):
+    """The moments for every finished reel in REELS/DONE: from the plan, else from archive.json (older plans)."""
+    by_id = {m["id"]: m for m in json.loads((HERE / "archive.json").read_text(encoding="utf-8"))["moments"]}
+    by_id.update({m["id"]: m for m in plan["moments"]})
+    ids = sorted({re.sub(r"( - Copy)+( \(\d+\))?$", "", f.stem) for f in reels.DONE.glob("*.mp4")})
+    found = [by_id[i] for i in ids if i in by_id]
+    for i in ids:
+        if i not in by_id:
+            print(f"  ? REELS/DONE/{i}.mp4 isn't in any plan - add a \"cover\" line for it to ig.json")
+    return found
+
+
 def main():
-    args = sys.argv[1:]
+    args = [a for a in sys.argv[1:] if a != "--done"]
     if not args:
         sys.exit(__doc__)
     plan_path = (Path.cwd() / args[0]).resolve()
     plan = json.loads(plan_path.read_text(encoding="utf-8"))
     out_dir, skip = reels.COVER, reels.skipped()
     photos, made, missing = {}, 0, []
-    for m in plan["moments"]:
-        if (args[1:] and m["id"] not in args[1:]) or (not args[1:] and m["id"] in skip):
+    todo = plan["moments"]
+    if "--done" in sys.argv:
+        todo = done_reels(plan)
+        print(f"{len(todo)} finished reels in REELS/DONE")
+    for m in todo:
+        if (args[1:] and m["id"] not in args[1:]) or (not args[1:] and m["id"] in skip and "--done" not in sys.argv):
             continue
         name = speaker_of(m)
         if photos.get(name) is None:
             clips = [reels.clip(m, plan_path.parent)] + sorted(reels.DOWNLOADED.glob(f"{m['id'][:3]}-*.mp4"))
-            photos[name] = speaker_photo(name, Path("-"))  # a photo you saved in speakers/ wins
-            for c in clips:                                # else this reel's clip, else an older clip of the same reel
+            photos[name] = speaker_photo(name, Path("-"))  # 1. a photo you saved in speakers/
+            for c in clips:                                # 2. this reel's raw clip, else an older clip of the same reel
                 if photos[name] is not None:
                     break
                 photos[name] = speaker_photo(name, c) if c.exists() else None
-            if photos[name] is None and any(c.exists() for c in clips):
+            if photos[name] is None:                       # 3. a free-licence portrait from Wikipedia
                 photos[name] = wiki_photo(name, m)
+            done = reels.DONE / f"{m['id']}.mp4"
+            if photos[name] is None and done.exists():     # 4. last resort: a frame of the finished reel
+                photos[name] = speaker_photo(name, done)
         if photos[name] is None:                           # never save a cover without the speaker on it
             missing.append((m["id"], name, reels.clip(m, plan_path.parent).exists()))
             continue
@@ -330,7 +381,7 @@ def main():
     if missing:
         print(f"{len(missing)} skipped - no speaker photo:")
         for i, name, have_clip in missing:
-            why = "no face found in the clip" if have_clip else "clip not downloaded yet - run: python fetch.py " + args[0]
+            why = "no face found in the clip" if have_clip else "no clip - run: python fetch.py " + args[0]
             print(f"  {i}  ({why}; or save a photo as speakers/{slug(name)}.jpg)")
 
 
