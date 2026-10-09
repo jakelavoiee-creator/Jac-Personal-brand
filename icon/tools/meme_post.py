@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Classic meme post: white caption bar on top + image below, 1080x1350 (IG 4:5), small handle watermark.
 Usage:
-  meme_post.py IMAGE "top line" OUT.jpg [--handle @itsgiorgi]
+  meme_post.py IMAGE "top line" OUT.jpg [--handle @thebiggiorgi]
   meme_post.py --batch captions.json IN_DIR OUT_DIR      # captions.json: {"1.png": "line", ...}
 """
 import json, os, sys
@@ -26,7 +26,7 @@ def wrap(draw, text, font, maxw):
     return lines
 
 
-def make(img_path, text, out, handle="@itsgiorgi"):
+def make(img_path, text, out, handle="@thebiggiorgi"):
     font = ImageFont.truetype(FONT, SIZE)
     probe = ImageDraw.Draw(Image.new("RGB", (W, 10)))
     lines = wrap(probe, text, font, W - 2 * PAD_X)
@@ -63,7 +63,7 @@ def make(img_path, text, out, handle="@itsgiorgi"):
 
 if __name__ == "__main__":
     a = sys.argv[1:]
-    handle = "@itsgiorgi"
+    handle = "@thebiggiorgi"
     if "--handle" in a:
         i = a.index("--handle"); handle = a[i + 1]; del a[i:i + 2]
     if a and a[0] == "--batch":

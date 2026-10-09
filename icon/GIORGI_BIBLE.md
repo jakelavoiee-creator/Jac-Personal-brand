@@ -11,7 +11,7 @@ Inspiration: the "lovable outsider" archetype of 2000s pop culture (the Austin P
 
 | Token | Spec (paste word-for-word in every prompt) |
 |---|---|
-| Name / handle | **Giorgi** · `@itsgiorgi` (backups: `@giorgi.dumpling`, `@giorgi.bro`) |
+| Name / handle | **Giorgi** · `@thebiggiorgi` (display name: THE BIG GIORGI) |
 | Backstory | **none, by design.** He just exists. Never explain where he's from. The mystery fuels the comments. |
 | Age | adult (30s) |
 | Body | very heavy-set, round belly, short chubby legs, average height |
@@ -98,11 +98,11 @@ Bal Harbour Shops · Ocean Drive · Art Basel booth · Monaco yacht deck · a Pa
 
 ## 8. Bio + caption bank (LOCKED signature)
 
-**Bio (Instagram). Line 1 is the exact text the Higgsfield campaign requires, so never edit it:**
+**Bio (Instagram, LIVE as of Oct 9):** @thebiggiorgi · display name THE BIG GIORGI
 ```
+I love Cheetos
 made with @higgsfield.ai
-Giorgi. AI. 5'4" of pure aura 👟🚨
-Dumpling, bro. 🥟
+📧 omyaagency@gmail.com
 ```
 TikTok (80 chars): `AI. 5'4" of pure aura 👟 Dumpling, bro. 🥟`
 

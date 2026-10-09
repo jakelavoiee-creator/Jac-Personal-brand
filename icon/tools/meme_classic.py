@@ -59,14 +59,14 @@ def draw_block(d, text, top):
         y += lh
 
 
-def make(src, top, bottom, out, handle="@itsgiorgi"):
+def make(src, top, bottom, out, handle="@thebiggiorgi"):
     im = Image.open(src).convert("RGB")
     im = im.resize((W, round(im.height * W / im.width)), Image.LANCZOS)
     d = ImageDraw.Draw(im)
     draw_block(d, top, True)
     draw_block(d, bottom, False)
     if handle:
-        hf = ImageFont.truetype(FONT, 30)
+        hf = ImageFont.truetype(FONT, 40)
         tw = d.textlength(handle, font=hf)
         d.text((W - tw - 24, im.height // 2), handle, font=hf, fill=(255, 255, 255),
                stroke_width=2, stroke_fill=(0, 0, 0))
