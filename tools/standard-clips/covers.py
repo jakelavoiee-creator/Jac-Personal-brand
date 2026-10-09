@@ -10,12 +10,16 @@
   safe area everything that matters sits inside the centre 1080x1440 (the profile-grid crop)
 
 Headline per reel: "cover": "TRUST THE TIMING." in the plan - the last word becomes the big one.
-Speaker photo: speakers/<speaker>.jpg if present (yours, or fetched by portraits.py); otherwise the sharpest front-facing
-frame of that speaker's first clip is picked, cut out, and saved to speakers/<speaker>.png, so every
-cover for that speaker reuses the same photo. Delete that file to pick again, or replace it with your own.
+Speaker photo, in this order (the first one found is reused for every cover of that speaker):
+  1. speakers/<speaker>.jpg / .png - your own photo, or one fetched by portraits.py
+  2. the best frame of the reel's clip: a clear front-facing face beats a side-on one, then bigger, sharper, more
+     central; cut out and saved to speakers/<speaker>.png. Delete that file to pick again, or replace it.
+  3. a free-licence portrait from Wikipedia (only if no face is found in the clip)
+No photo at all (clip not downloaded yet) -> no cover is written, and the summary at the end says why.
 
 Needs: pip install pillow numpy "opencv-python-headless<5" "rembg[cpu]"
 """
+import io
 import json
 import re
 import subprocess
@@ -60,32 +64,76 @@ def serif_line(text, size):
 
 
 # ---------- speaker photo ----------
+DETECT_W = 960                                             # faces are found on a small copy, the cover uses full res
+
+
+def probe_size(clip):
+    out = subprocess.run(["ffprobe", "-v", "error", "-select_streams", "v:0", "-show_entries", "stream=width,height",
+                          "-of", "csv=p=0", str(clip)], capture_output=True, text=True).stdout.strip().split(",")
+    return int(out[0]), int(out[1])
+
+
+def frame_at(clip, t):
+    """One full-resolution frame at t seconds."""
+    raw = subprocess.run(["ffmpeg", "-v", "error", "-ss", f"{t:.2f}", "-i", str(clip), "-frames:v", "1",
+                          "-f", "image2pipe", "-vcodec", "png", "-"], capture_output=True).stdout
+    return Image.open(io.BytesIO(raw)).convert("RGB") if raw else None
+
+
+def faces_in(g, cascades):
+    """(tier, box) per face: 0 = clear front face, 1 = looser front face, 2 = side / three-quarter face."""
+    import cv2
+    out = [(0, f) for f in cascades[0].detectMultiScale(g, 1.1, 8, minSize=(48, 48))]
+    if out:
+        return out
+    out = [(1, f) for f in cascades[0].detectMultiScale(g, 1.1, 5, minSize=(48, 48))]
+    out += [(2, f) for f in cascades[1].detectMultiScale(g, 1.1, 6, minSize=(48, 48))]
+    flipped = cv2.flip(g, 1)
+    out += [(2, (g.shape[1] - x - w, y, w, h)) for (x, y, w, h) in cascades[1].detectMultiScale(flipped, 1.1, 6, minSize=(48, 48))]
+    return out
+
+
 def best_frame(clip):
-    """Sharpest, largest front-facing face in the clip -> (PIL image, face box)."""
+    """Sharpest, largest, most central face in the clip -> (full-res PIL frame, face box), or (frame, None) if no face.
+    A clear front-facing face anywhere in the clip always beats a looser or side-on match."""
     import cv2
     import numpy as np
-    casc = cv2.CascadeClassifier(cv2.data.haarcascades + "haarcascade_frontalface_default.xml")
-    probe = subprocess.run(["ffprobe", "-v", "error", "-select_streams", "v:0", "-show_entries", "stream=width,height",
-                            "-of", "csv=p=0", str(clip)], capture_output=True, text=True).stdout.strip().split(",")
-    sw, sh = int(probe[0]), int(probe[1])
-    raw = subprocess.run(["ffmpeg", "-v", "error", "-i", str(clip), "-vf", "fps=2", "-f", "rawvideo",
-                          "-pix_fmt", "rgb24", "-"], capture_output=True).stdout
-    n, best = len(raw) // (sw * sh * 3), None
+    cascades = [cv2.CascadeClassifier(cv2.data.haarcascades + f) for f in
+                ("haarcascade_frontalface_default.xml", "haarcascade_profileface.xml")]
+    sw, sh = probe_size(clip)
+    dw, dh = DETECT_W, int(DETECT_W * sh / sw) // 2 * 2
+    raw = subprocess.run(["ffmpeg", "-v", "error", "-i", str(clip), "-vf", f"fps=2,scale={dw}:{dh}", "-f", "rawvideo",
+                          "-pix_fmt", "gray", "-"], capture_output=True).stdout
+    n, best, sharpest = len(raw) // (dw * dh), None, None
     for i in range(n):
-        rgb = np.frombuffer(raw[i * sw * sh * 3:(i + 1) * sw * sh * 3], np.uint8).reshape(sh, sw, 3)
-        g = cv2.cvtColor(rgb, cv2.COLOR_RGB2GRAY)
-        small = cv2.resize(g, (640, int(640 * sh / sw)))
-        k = sw / 640
-        for (x, y, fw, fh) in casc.detectMultiScale(small, 1.1, 7, minSize=(50, 50)):
-            x, y, fw, fh = int(x * k), int(y * k), int(fw * k), int(fh * k)
+        g = np.frombuffer(raw[i * dw * dh:(i + 1) * dw * dh], np.uint8).reshape(dh, dw)
+        whole = cv2.Laplacian(g, cv2.CV_64F).var()
+        if not sharpest or whole > sharpest[0]:
+            sharpest = (whole, i)
+        for tier, (x, y, fw, fh) in faces_in(g, cascades):
             sharp = cv2.Laplacian(g[y:y + fh, x:x + fw], cv2.CV_64F).var()
-            centred = 1 - abs((x + fw / 2) / sw - 0.5)            # prefer faces near the middle
-            score = fw * fh * min(sharp, 400) * centred
-            if not best or score > best[0]:
-                best = (score, rgb.copy(), (x, y, fw, fh))
-    if not best:
+            centred = 1 - abs((x + fw / 2) / dw - 0.5)            # prefer faces near the middle
+            key = (-tier, fw * fh * min(sharp, 400) * centred)
+            if not best or key > best[0]:
+                best = (key, i, (x, y, fw, fh))
+    if not n:
         return None, None
-    return Image.fromarray(best[1]), best[2]
+    k = sw / dw
+    if best:
+        return frame_at(clip, best[1] / 2), tuple(int(v * k) for v in best[2])
+    return frame_at(clip, sharpest[1] / 2), None
+
+
+def person_crop(frame):
+    """No face found: cut the person out and keep their head and shoulders (top of the silhouette)."""
+    im = cutout(frame)
+    box = im.getchannel("A").point(lambda v: 255 if v > 128 else 0).getbbox()
+    if not box or (box[2] - box[0]) * (box[3] - box[1]) < 0.04 * im.width * im.height:
+        return None                                        # nobody clearly in frame
+    l, t, r, b = box
+    cw = min(r - l, int((b - t) * 0.9))
+    cx = (l + r) // 2
+    return im.crop((max(0, cx - cw // 2), t, min(im.width, cx + cw // 2), min(b, t + int(cw * 1.1))))
 
 
 def head_and_shoulders(im):
@@ -116,13 +164,18 @@ def speaker_photo(name, clip):
     if not clip.exists():
         return None
     frame, box = best_frame(clip)
-    if frame is None:                                      # no clear face in this clip
+    if frame is None:                                      # unreadable clip
         return None
-    x, y, fw, fh = box
-    cw = int(fw * 2.7)                                     # head and shoulders, face big
-    cx, top = x + fw // 2, max(0, int(y - fh * 0.6))
-    box = (max(0, cx - cw // 2), top, min(frame.width, cx + cw // 2), min(frame.height, top + int(cw * 1.1)))
-    im = cutout(frame.crop(box))
+    if box:
+        x, y, fw, fh = box
+        cw = int(fw * 2.7)                                 # head and shoulders, face big
+        cx, top = x + fw // 2, max(0, int(y - fh * 0.6))
+        im = cutout(frame.crop((max(0, cx - cw // 2), top, min(frame.width, cx + cw // 2),
+                                min(frame.height, top + int(cw * 1.1)))))
+    else:
+        im = person_crop(frame)
+        if im is None:
+            return None
     im.save(d / f"{slug(name)}.png")
     print(f"  photo for {name}: speakers/{slug(name)}.png (replace it to use your own)")
     return im
@@ -204,6 +257,8 @@ def cover(m, photo, out):
         top = int(y_handle + 10)
         scale = max((H - top) / p.height, W / p.width)     # reach the bottom edge, full width
         p = p.resize((int(p.width * scale), int(p.height * scale)), Image.LANCZOS)
+        if p.height > H - top:                             # never up into the headline: trim the bottom instead
+            p = p.crop((0, 0, p.width, H - top))
         if p.width > W:                                    # keep the face centred, trim the sides
             l = (p.width - W) // 2
             p = p.crop((l, 0, l + W, p.height))
@@ -222,6 +277,26 @@ def cover(m, photo, out):
     return True
 
 
+def wiki_photo(name, m):
+    """Last resort: a free-licence portrait from Wikipedia (portraits.py), saved to speakers/<speaker>.jpg."""
+    try:
+        import portraits
+        fname, _ = portraits.lead_image(m.get("wiki") or portraits.TITLES.get(name, name))
+        info = portraits.image_info(fname) if fname else None
+        if not info or not portraits.FREE.match(info["license"]) or (info["h"] or 0) < 700:
+            return None
+        import urllib.request
+        with urllib.request.urlopen(urllib.request.Request(info["url"], headers=portraits.UA), timeout=60) as r:
+            (HERE / "speakers" / f"{slug(name)}.jpg").write_bytes(r.read())
+        with (HERE / "speakers" / "CREDITS.txt").open("a", encoding="utf-8") as c:
+            c.write(f"{name}: photo by {info['artist'] or 'unknown'}, {info['license']} - {info['page']}\n")
+        print(f"  photo for {name}: speakers/{slug(name)}.jpg from Wikipedia ({info['license']})")
+        return speaker_photo(name, Path("-"))
+    except Exception as e:                                 # offline / blocked: just report it
+        print(f"  (Wikipedia lookup for {name} failed: {e})")
+        return None
+
+
 def main():
     args = sys.argv[1:]
     if not args:
@@ -229,23 +304,34 @@ def main():
     plan_path = (Path.cwd() / args[0]).resolve()
     plan = json.loads(plan_path.read_text(encoding="utf-8"))
     out_dir, skip = reels.COVER, reels.skipped()
-    photos = {}
+    photos, made, missing = {}, 0, []
     for m in plan["moments"]:
         if (args[1:] and m["id"] not in args[1:]) or (not args[1:] and m["id"] in skip):
             continue
         name = speaker_of(m)
-        if not photos.get(name):
+        if photos.get(name) is None:
             clips = [reels.clip(m, plan_path.parent)] + sorted(reels.DOWNLOADED.glob(f"{m['id'][:3]}-*.mp4"))
-            for c in clips:                                # this reel's clip, else an older clip of the same reel
-                photos[name] = speaker_photo(name, c) if c.exists() else None
+            photos[name] = speaker_photo(name, Path("-"))  # a photo you saved in speakers/ wins
+            for c in clips:                                # else this reel's clip, else an older clip of the same reel
                 if photos[name] is not None:
                     break
-            if photos.get(name) is None:
-                print(f"  ! no photo for {name}: run fetch.py first, or put a photo in speakers/{slug(name)}.jpg")
+                photos[name] = speaker_photo(name, c) if c.exists() else None
+            if photos[name] is None and any(c.exists() for c in clips):
+                photos[name] = wiki_photo(name, m)
+        if photos[name] is None:                           # never save a cover without the speaker on it
+            missing.append((m["id"], name, reels.clip(m, plan_path.parent).exists()))
+            continue
         if cover(m, photos[name], out_dir / f"{m['id']}.jpg"):
+            made += 1
             print(f"[cover] REELS/COVER/{m['id']}.jpg")
         else:
             print(f"[cover] {m['id']}: no \"cover\" text in the plan - skipped")
+    print(f"\n{made} covers in REELS/COVER")
+    if missing:
+        print(f"{len(missing)} skipped - no speaker photo:")
+        for i, name, have_clip in missing:
+            why = "no face found in the clip" if have_clip else "clip not downloaded yet - run: python fetch.py " + args[0]
+            print(f"  {i}  ({why}; or save a photo as speakers/{slug(name)}.jpg)")
 
 
 if __name__ == "__main__":
