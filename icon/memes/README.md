@@ -21,3 +21,10 @@ Cost: ~12.4 credits (9 × high/2k).
 - **Meme templates:** post each one as a blank template with "use this, tag @itsgiorgi". Other meme pages reusing it is the growth engine (the "movement" angle).
 - **Reaction posts:** Giorgi meme + a relatable caption line on top (classic meme format). Shares go up.
 - **Carousel:** "Giorgi replaced every meme" (all 9 in one post). Saves and shares go up.
+
+## Classic meme posts (local, no Higgsfield)
+`icon/tools/meme_post.py` builds a 1080×1350 post: white top bar, one black Montserrat ExtraBold line, image cover-fit below, `@itsgiorgi` watermark bottom-right.
+Captions for the 9 images: `captions.json`. Once the 9 images are saved as `1.png` … `9.png` in a folder:
+```bash
+python3 icon/tools/meme_post.py --batch icon/memes/captions.json IN_DIR icon/memes/posts
+```
