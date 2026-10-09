@@ -28,3 +28,19 @@ Captions for the 9 images: `captions.json`. Once the 9 images are saved as `1.pn
 ```bash
 python3 icon/tools/meme_post.py --batch icon/memes/captions.json IN_DIR icon/memes/posts
 ```
+
+## Classic viral memes (batch 1, final)
+`icon/memes/classic/01…09.jpg`: Impact-style (Anton) white text with black outline, top and bottom, on the image itself. Original aspect ratio at 1080 wide, small `@itsgiorgi` watermark.
+Built locally with `icon/tools/meme_classic.py --batch icon/memes/classic.json icon/memes/src icon/memes/classic`. Lines auto-size and balance across lines.
+
+| # | Meme | Top | Bottom |
+|---|---|---|---|
+| 01 | Time out | HOLD UP | YOU GUYS ARE GETTING PAID? |
+| 02 | Furious | ME WHEN SOMEONE | SPOILS THE SHOW I'M WATCHING |
+| 03 | Side-eye smirk | WHEN YOU HEAR YOUR NAME | IN SOMEONE ELSE'S CONVERSATION |
+| 04 | Hide the pain | "HOW ARE YOU DOING?" | "I'M FINE" |
+| 05 | Eyebrow raise | WHEN SOMEONE SAYS | THEY DON'T LIKE PIZZA |
+| 06 | Shock | WHEN YOU REALIZE | TOMORROW IS MONDAY |
+| 07 | Temple tap | CAN'T GET FIRED | IF YOU NEVER GO TO WORK |
+| 08 | Crying in car | WHEN THE GROUP CHAT | MAKES PLANS WITHOUT YOU |
+| 09 | Squished face | POV: | YOU'RE MY FRONT CAMERA |
