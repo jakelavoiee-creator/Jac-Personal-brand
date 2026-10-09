@@ -84,20 +84,36 @@ The groom turns, sees his bride and breaks down crying. Hard cut: Giorgi is the 
 
 **Caption:** `found a better sound. Dumpling, bro. 🥟` + the required Higgsfield line.
 
-## Combined posting schedule: 9 posts, 1 a day, Oct 9 → Oct 17 (ET, 7pm unless noted)
-Footage rotates face → arm swing → living room (each clip comes back every 3 days). The hook never repeats on consecutive days.
+## Batch 4: hook `jurassic_shock_trim` (2.9s, jump-cut) × 3 Giorgi videos
+A famous film moment: her head gets turned, she whips off her sunglasses and stares in shock. Hard cut: Giorgi is the "dinosaur".
+Trimmed from the 6.9s original (`hooks/jurassic_shock_full.mp4`): 0–1.25s (head turn) + 3.75–5.4s (glasses off, stare). It stops before the black-frame flash at 5.5s.
+
+| File | Giorgi answer | Length |
+|---|---|---|
+| `giorgi_10_jurassic_face_in_lens.mp4` | Face-first into the lens. **Best: he's what she's staring at.** | 14.6s |
+| `giorgi_11_jurassic_arm_swing.mp4` | Still beat, then the arm-swing dance | 15.6s |
+| `giorgi_12_jurassic_living_room.mp4` | Instant fists-up dance | 11.7s |
+
+**Caption:** `they said extinct. Dumpling, bro. 🥟` + the required Higgsfield line.
+⚠️ This clip is from a major studio film and its score. Instagram may mute the audio or block the post in some countries. If it gets muted, re-upload with a trending sound under the hook.
+
+## Combined posting schedule: 12 posts, 1 a day, Oct 9 → Oct 20 (ET, 7pm unless noted)
+Footage rotates face → arm swing → living room. The hooks cycle tone → groom → jurassic → coffee, so they never repeat on consecutive days and every hook × footage pair is used exactly once.
 
 | Date | Post | Hook | Footage |
 |---|---|---|---|
 | Thu Oct 9 | 01 | tone | face-in-lens |
 | Fri Oct 10 | 05 | groom | arm swing |
-| Sat Oct 11 (12pm) | 09 | ice coffee | living room |
-| Sun Oct 12 | 04 | groom | face-in-lens |
-| Mon Oct 13 | 08 | ice coffee | arm swing |
-| Tue Oct 14 | 03 | tone | living room |
-| Wed Oct 15 | 07 | ice coffee | face-in-lens |
-| Thu Oct 16 | 02 | tone | arm swing |
-| Fri Oct 17 | 06 | groom | living room |
+| Sat Oct 11 (12pm) | 12 | jurassic | living room |
+| Sun Oct 12 | 07 | ice coffee | face-in-lens |
+| Mon Oct 13 | 02 | tone | arm swing |
+| Tue Oct 14 | 06 | groom | living room |
+| Wed Oct 15 | 10 | jurassic | face-in-lens |
+| Thu Oct 16 | 08 | ice coffee | arm swing |
+| Fri Oct 17 | 03 | tone | living room |
+| Sat Oct 18 (12pm) | 04 | groom | face-in-lens |
+| Sun Oct 19 | 11 | jurassic | arm swing |
+| Mon Oct 20 | 09 | ice coffee | living room |
 
-Oct 18: rest day plus a Story. Oct 19: credits reset, so new Genjutsu footage goes into the hooks that won.
-Watch the 2nd and 3rd uses of each Giorgi clip. If views drop sharply, Instagram is treating them as reused content: space them out and prioritize new footage after the 19th.
+From Oct 19 (credits reset), slot new Genjutsu footage in with whichever hook is winning, ahead of the remaining reruns.
+Watch the 2nd–4th uses of each Giorgi clip. If views drop sharply, Instagram is treating them as reused content: prioritize new footage.
