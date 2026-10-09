@@ -10,9 +10,9 @@ One famous moment, one truth, 15–30 seconds. Faces everyone recognises say wha
   - *Podcast moments:* recognisable guests on official podcast channels (Diary of a CEO, Modern Wisdom, Lewis Howes, Rich Roll, Jay Shetty, JRE Clips, High Performance...).
 - **A clear message on brand.** Building your own thing, discipline, belief, faith, purpose, taking the risk, not settling for nine to five. If the point isn't clear in 15-30 seconds, it doesn't post.
 - **Find our own moments.** Use other pages as a reference, but most reels come from moments we find ourselves.
-- **Recent.** Recorded in 2018 or later.
+- **Recent.** Podcasts recorded in 2018 or later. Movie scenes can be classics (Rocky Balboa, Any Given Sunday, The Pursuit of Happyness), as long as the upload is the studio's or an official clip channel's.
 - **Highest-quality source.** Use the official channel's upload, 4K when it exists. Never use reuploads or compilations.
-- **Clean source only.** The source must have no burned-in captions and no music under the voice. That rules out "motivation", "mindset" and "with subtitles" repost channels. Our captions and sounds go on a clean original.
+- **Clean source only.** The source must have no burned-in captions and no added music under the voice. A film's own score is part of the scene and stays. That rules out "motivation", "mindset" and "with subtitles" repost channels. Our captions and sounds go on a clean original.
 - **15–30 seconds** per reel, including the end card. Shorter feels incomplete, and people skip longer ones.
 - **One truth per reel.** Cut on word boundaries and open on the line that hooks.
 - **Positive frame.** Faith, discipline, belief and building are on-brand. Beefs, politics and dunking on people are not.

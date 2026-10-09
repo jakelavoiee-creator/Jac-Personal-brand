@@ -18,6 +18,7 @@
 Punchline markup: lines separated by "/" ([ ] around a letter is accepted and ignored),
 e.g. "HOW HIGH / [I] CAN FLY". Optional per-moment "punch_align": "right" (default) | "center".
 """
+import html
 import json
 import re
 import subprocess
@@ -337,6 +338,17 @@ def speaker_only(ws):
     return out
 
 
+def find_span(ws, first, last, after=0.0):
+    """Start / end time of the stretch from the words `first` to the words `last` in the transcript."""
+    toks = [re_word(html.unescape(w["w"]).replace("’", "'")) for w in ws]
+    f, l = [re_word(x) for x in first.split()], [re_word(x) for x in last.split()]
+    i = next((k for k in range(len(toks)) if ws[k]["t"] >= after - 0.05 and toks[k:k + len(f)] == f), None)
+    j = next((k for k in range(i or 0, len(toks)) if toks[k:k + len(l)] == l), None) if i is not None else None
+    if i is None or j is None:
+        raise SystemExit(f"couldn't find \"{first}\" ... \"{last}\" in the transcript - check the 'find' words")
+    return ws[i]["t"] - 0.15, ws[j + len(l) - 1]["end"] + 0.25
+
+
 def re_word(t):
     return re.sub(r"[^a-z'-]", "", t.lower())
 
@@ -344,6 +356,8 @@ def re_word(t):
 def build(m, base, tmp, logo):
     src, vtt = str(reels.clip(m, base)), str(base / m["vtt"])
     a, b, off = v1.secs(m["start"]), v1.secs(m["end"]), v1.secs(m.get("src_offset", 0))
+    if m.get("find"):                                      # cut by words: "find": ["first words", "last words"]
+        a, b = find_span(v1.vtt_words(vtt), *m["find"], a)
     ws = speaker_only([w for w in v1.vtt_words(vtt) if a - 0.05 <= w["t"] < b])
     keep = v1.keep_segments(src, a - off, b - a, [w["t"] - a for w in ws])
     words = [{"w": w["w"], "t": v1.remap(w["t"] - a, keep), "end": v1.remap(w["end"] - a, keep)} for w in ws]

@@ -59,6 +59,33 @@ def download(url, out, extra):
     return out.exists()
 
 
+def ts(t):
+    return f"{int(t // 3600):02d}:{int(t % 3600 // 60):02d}:{t % 60:06.3f}"
+
+
+def transcribe(clip, vtt, offset):
+    """Speech-to-text with word timings (Whisper), written as a YouTube-style auto-caption VTT."""
+    try:
+        from faster_whisper import WhisperModel
+    except ImportError:
+        print(f"    no captions on YouTube for this one - to transcribe it: python -m pip install faster-whisper, then run fetch.py again")
+        return
+    print(f"    no captions on YouTube - transcribing {clip.name} (first run downloads the speech model)...")
+    global _WHISPER
+    if "_WHISPER" not in globals():
+        _WHISPER = WhisperModel("small.en", device="cpu", compute_type="int8")
+    segments, _ = _WHISPER.transcribe(str(clip), language="en", word_timestamps=True, vad_filter=True)
+    out = ["WEBVTT", "Kind: captions", "Language: en", ""]
+    for seg in segments:
+        ws = [w for w in (seg.words or []) if w.word.strip()]
+        if not ws:
+            continue
+        line = ws[0].word.strip() + "".join(f"<{ts(w.start + offset)}><c> {w.word.strip()}</c>" for w in ws[1:])
+        out += [f"{ts(ws[0].start + offset)} --> {ts(ws[-1].end + offset)}", line, ""]
+    vtt.write_text("\n".join(out), encoding="utf-8")
+    print(f"    wrote {vtt.name}")
+
+
 # Default: download only each clip's few seconds (full quality, small files that fit upload limits).
 # --full: download whole source videos instead.
 full = "--full" in plans
@@ -76,12 +103,18 @@ for i, c in enumerate(clips, 1):
     elif not (src / f"{vid}.mp4").exists() and not reels.clip(c, here).exists():
         a, b = max(0.0, secs(c["start"]) - CLIP_PAD), secs(c["end"]) + CLIP_PAD
         download(url, reels.DOWNLOADED / f"{c['id']}.mp4", ["--download-sections", f"*{a:.2f}-{b:.2f}", "--force-keyframes-at-cuts"])
-    if not (src / f"{vid}.en.vtt").exists():
-        subprocess.run(base + ["--skip-download", "--write-auto-subs", "--sub-langs", "en-orig",
+    vtt = src / f"{vid}.en.vtt"
+    if not vtt.exists():                               # auto-captions first, else the uploader's own captions
+        subprocess.run(base + ["--skip-download", "--write-auto-subs", "--write-subs", "--sub-langs", "en-orig,en,en-US,en-GB",
                                "--sub-format", "vtt", "-o", str(src / f"{vid}.%(ext)s"), url])
-        orig = src / f"{vid}.en-orig.vtt"
-        if orig.exists():
-            orig.rename(src / f"{vid}.en.vtt")
+        for lang in ("en-orig", "en-US", "en-GB"):
+            alt = src / f"{vid}.{lang}.vtt"
+            if alt.exists() and not vtt.exists():
+                alt.rename(vtt)
+    if not vtt.exists():                               # no captions on YouTube at all: transcribe the clip here
+        clip = reels.clip(c, here)
+        if clip.exists():
+            transcribe(clip, vtt, 0.0 if full else max(0.0, secs(c["start"]) - CLIP_PAD))
 
 missing = [c["id"] for c in clips if not ((src / f"{c['youtube']}.mp4").exists() or reels.clip(c, here).exists())]
 print(f"\nDone. Clips are in {reels.DOWNLOADED}" + (f"\nStill missing: {', '.join(missing)}" if missing else ""))

@@ -80,6 +80,8 @@ def vtt_words(path):
         for ts, w in re.findall(r"<(\d+:\d+:\d+\.\d+)><c>\s*([^<]+)</c>", line):
             toks.append((secs(ts), w.strip()))
         words.extend(toks)
+    if not words:                                      # hand-made captions: no per-word times, spread each cue's words
+        words = cue_words(text)
     words.sort()
     out = []
     for i, (t, w) in enumerate(words):
@@ -90,6 +92,26 @@ def vtt_words(path):
         w["end"] = out[i + 1]["t"] if i + 1 < len(out) else w["t"] + 0.5
         w["end"] = min(w["end"], w["t"] + 0.9)
     return out
+
+
+def cue_words(text):
+    """(time, word) from a plain VTT: each cue's words spread over the cue, longer words get more time."""
+    toks = []
+    for block in text.split("\n\n"):
+        m = re.search(r"(\d+:\d+:\d+\.\d+) --> (\d+:\d+:\d+\.\d+)", block)
+        if not m:
+            continue
+        body = " ".join(l for l in block.split("\n")[1:] if "-->" not in l)
+        body = re.sub(r"<[^>]+>|\[[^\]]*\]|\([^)]*\)|♪", " ", body)
+        ws = [w for w in re.sub(r"(^|\s)-(?=\S)", " ", body).split() if re.search(r"\w", w)]
+        if not ws:
+            continue
+        t0, t1 = secs(m.group(1)), secs(m.group(2))
+        total, at = sum(len(w) + 2 for w in ws), t0
+        for w in ws:
+            toks.append((round(at, 3), w))
+            at += (t1 - t0) * (len(w) + 2) / total
+    return toks
 
 
 def chunk(words, max_words=3, max_chars=18, gap=0.35):
