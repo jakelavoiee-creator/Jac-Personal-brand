@@ -73,14 +73,31 @@ The groom turns, sees his bride and breaks down crying. Hard cut: Giorgi is the 
 
 **Caption:** `he saw me walk down the aisle. Dumpling, bro. 🥟` + the required Higgsfield line.
 
-## Combined posting schedule: alternate the hooks, 1 post a day (ET)
-| Date | Post |
-|---|---|
-| Thu Oct 9, 7pm | 01 tone × face-in-lens |
-| Fri Oct 10, 7pm | 05 groom × arm swing |
-| Sat Oct 11, 12pm | 03 tone × living room |
-| Sun Oct 12, 7pm | 04 groom × face-in-lens |
-| Mon Oct 13, 7pm | 02 tone × arm swing |
-| Tue Oct 14, 7pm | 06 groom × living room |
+## Batch 3: hook `ice_coffee_shake` (3.7s) × 3 Giorgi videos
+"Tell me a sound that's better than this" plus an iced-coffee shake. Hard cut: Giorgi's track drops, so he IS the better sound.
 
-Rule: never post the same Giorgi footage two days in a row. Each Giorgi clip appears twice in total (once per hook), at least 3 days apart.
+| File | Giorgi answer | Length |
+|---|---|---|
+| `giorgi_07_ice_coffee_face_in_lens.mp4` | Face-first into the lens | 15.4s |
+| `giorgi_08_ice_coffee_arm_swing.mp4` | Still beat, then the arm-swing dance | 16.4s |
+| `giorgi_09_ice_coffee_living_room.mp4` | Instant fists-up dance | 12.4s |
+
+**Caption:** `found a better sound. Dumpling, bro. 🥟` + the required Higgsfield line.
+
+## Combined posting schedule: 9 posts, 1 a day, Oct 9 → Oct 17 (ET, 7pm unless noted)
+Footage rotates face → arm swing → living room (each clip comes back every 3 days). The hook never repeats on consecutive days.
+
+| Date | Post | Hook | Footage |
+|---|---|---|---|
+| Thu Oct 9 | 01 | tone | face-in-lens |
+| Fri Oct 10 | 05 | groom | arm swing |
+| Sat Oct 11 (12pm) | 09 | ice coffee | living room |
+| Sun Oct 12 | 04 | groom | face-in-lens |
+| Mon Oct 13 | 08 | ice coffee | arm swing |
+| Tue Oct 14 | 03 | tone | living room |
+| Wed Oct 15 | 07 | ice coffee | face-in-lens |
+| Thu Oct 16 | 02 | tone | arm swing |
+| Fri Oct 17 | 06 | groom | living room |
+
+Oct 18: rest day plus a Story. Oct 19: credits reset, so new Genjutsu footage goes into the hooks that won.
+Watch the 2nd and 3rd uses of each Giorgi clip. If views drop sharply, Instagram is treating them as reused content: space them out and prioritize new footage after the 19th.
