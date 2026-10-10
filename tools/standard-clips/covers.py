@@ -164,12 +164,12 @@ PHOTO_ASPECT = 2 / 3      # photo area: full width, from the headline down to th
 FACE_AT = 0.40            # top of the face sits 40% down the photo, clear of the headline
 
 
-def portrait(frame, box):
+def portrait(frame, box, reel=False):
     """Full-frame crop around a face, sized for the cover. The face sits FACE_AT down the crop; when the frame has no
     room above the head, the crop runs past its top edge (that part is inside the fade, so it just melts into black)."""
     l0, t0, r0, b0 = frame.convert("L").point(lambda v: 255 if v > 20 else 0).getbbox() or (0, 0, *frame.size)
     x, y, fw, fh = box                                     # (letterbox / pillarbox bars trimmed off first)
-    if frame.height > frame.width:                         # a finished vertical reel: stop above our AURA mark
+    if reel:                                               # a finished vertical reel: stop above our AURA mark
         b0 = t0 + int((b0 - t0) * 0.89)
     room_below = b0 - y
     cw = int(min(r0 - l0, max(fw * 1.8, min(fw * 3.2, room_below / (1 - FACE_AT) * PHOTO_ASPECT))))
@@ -193,9 +193,14 @@ def find_face(im):
 
 
 def head_and_shoulders(im):
-    """Your own / downloaded photo, cropped the cover way around its biggest face (as is if none is found)."""
+    """Your own / downloaded photo (a studio portrait): cropped the cover way around the face, then the person is cut
+    out so the studio background becomes the cover's black. The person stays solid - nothing on them fades."""
     box = find_face(im)
-    return portrait(im, box) if box else im
+    crop = portrait(im, box) if box else im
+    if crop.width < 900:                                   # small web photos: upscale before the cut-out
+        k = 900 / crop.width
+        crop = crop.resize((900, int(crop.height * k)), Image.LANCZOS).filter(ImageFilter.UnsharpMask(2, 60, 2))
+    return cutout(crop)
 
 
 def speaker_photo(name, clip):
@@ -214,7 +219,7 @@ def speaker_photo(name, clip):
     if frame is None:                                      # unreadable clip
         return None
     if box:
-        im = portrait(frame, box)
+        im = portrait(frame, box, reel=frame.height > frame.width)
     else:
         im = person_crop(frame)
         if im is None:
@@ -300,8 +305,20 @@ def cover(m, photo, out):
     if photo is not None:                                  # photo: black & white, full width, fading up into the headline
         top = int(y)                                       # the photo area starts at the headline...
         area = (W, H - top)
-        p = ImageOps.autocontrast(ImageOps.grayscale(photo.convert("RGB")), cutoff=1)
-        p = ImageOps.fit(p, area, Image.LANCZOS, centering=(0.5, 0.3)).convert("RGBA")
+        if photo.mode == "RGBA":                           # a cut-out portrait: solid person on the black, no fade
+            alpha = photo.getchannel("A")
+            g = ImageOps.autocontrast(ImageOps.grayscale(photo.convert("RGB")), cutoff=1,
+                                      mask=alpha.point(lambda v: 255 if v > 128 else 0))
+            p = Image.merge("RGBA", (g, g, g, alpha))
+            p = ImageOps.fit(p, area, Image.LANCZOS, centering=(0.5, 0.3))
+            a = p.getchannel("A").filter(ImageFilter.MinFilter(7)).filter(ImageFilter.GaussianBlur(2))
+            p.putalpha(a)                                  # pull the edge in: no light halo from the studio background
+            im.paste(p, (0, top), p)
+            photo = None
+        else:
+            p = ImageOps.autocontrast(ImageOps.grayscale(photo.convert("RGB")), cutoff=1)
+            p = ImageOps.fit(p, area, Image.LANCZOS, centering=(0.5, 0.3)).convert("RGBA")
+    if photo is not None:
         rows = [sum(p.convert("L").crop((0, r, W, r + 1)).getdata()) / W for r in range(area[1] // 2)]
         start = next((r for r, v in enumerate(rows) if v > 14), 0)   # where the picture really starts (below padding)
         fade = int(area[1] * FADE)                         # ...and from there it dissolves into the background
