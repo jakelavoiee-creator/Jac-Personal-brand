@@ -7,7 +7,7 @@
     python cover_from_reel.py reel.mp4 --sheet                  # contact sheet of the reel, to tell which one it is
 
 The headline comes from the plan (ig.json, then archive.json) when --id is given. The photo is the speaker's best
-front-facing frame in the reel (or speakers/<speaker>.jpg/.png if you have one), cropped and faded like every cover.
+front-facing frame in the reel (or speakers/<speaker>.jpg if you have one), cut out and placed like every cover.
 Writes REELS/COVER/<id>.jpg (or --out).
 """
 import argparse
@@ -68,16 +68,15 @@ def main():
     name = covers.speaker_of(m)
     if a.at is not None:
         frame = covers.frame_at(video, a.at)
-        box = covers.find_face(frame) if frame else None
-        if not box:
+        src = covers.footage(frame, covers.find_face(frame)) if frame else None
+        if not src or not src[1]:
             sys.exit(f"no face found at {a.at}s - try another time")
-        photo = covers.portrait(frame, box)
     else:
-        photo = covers.speaker_photo(name, Path("-")) or covers.speaker_photo(name, video)
-    if photo is None:
+        src = covers.speaker_source(name, Path("-")) or covers.speaker_source(name, video)
+    if src is None:
         sys.exit("no clear face in this reel - pass --at <seconds> on a frame where the speaker faces the camera")
     out = Path(a.out) if a.out else reels.COVER / f"{m['id']}.jpg"
-    covers.cover(m, photo, out)
+    covers.cover(m, src, out)
     print(f"[cover] {out}")
 
 

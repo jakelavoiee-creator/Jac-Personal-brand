@@ -5,16 +5,17 @@
     python covers.py ig.json a01-... a07-...  # just these
     python covers.py ig.json --done          # exactly the finished reels in REELS/DONE (also old ones, from archive.json)
 
-  canvas    1080x1920, black-to-grey grain gradient (assets/cover_bg.jpg)
-  headline  condensed Times italic lowercase line, its LAST word huge in Akzidenz-Grotesk bold caps (+ @aura.miamii)
-  photo     the speaker in black & white, full frame, full width, its top 36% fading smoothly up into the headline
-  safe area everything that matters sits inside the centre 1080x1440 (the profile-grid crop)
+  canvas    1080x1350 (4:5), smooth gradient: near-black at the top to warm light grey at the bottom
+  headline  serif italic lowercase line, its LAST word huge in heavy italic grotesk caps (Akzidenz-Grotesk bold)
+  speaker   in colour, cut out of their photo, standing in front of the big word and filling down to the bottom edge;
+            face ~400px wide, centred, its top at y=585
+  handle    @aura.miamii in serif italic, right-aligned under the big word, on top of everything
 
 Headline per reel: "cover": "TRUST THE TIMING." in the plan - the last word becomes the big one.
 Speaker photo, in this order (the first one found is reused for every cover of that speaker):
-  1. speakers/<speaker>.jpg / .png - your own photo, or one fetched by portraits.py
-  2. the best frame of the reel's raw clip in REELS/DOWNLOADED: a clear front-facing face beats a side-on one, then bigger, sharper, more
-     central; cut out and saved to speakers/<speaker>.png. Delete that file to pick again, or replace it.
+  1. speakers/<speaker>.jpg / .jpeg / .webp - your own photo (a clean portrait works best)
+  2. the best frame of the reel's raw clip in REELS/DOWNLOADED (clear front-facing face first, then bigger, sharper,
+     more central), saved to speakers/<speaker>.frame.jpg. Delete that file to pick again.
   3. a free-licence portrait from Wikipedia (when there's no raw clip, or no face in it)
   4. last resort: a frame of the finished reel in REELS/DONE
 No photo at all (clip not downloaded yet) -> no cover is written, and the summary at the end says why.
@@ -28,18 +29,22 @@ import subprocess
 import sys
 from pathlib import Path
 
-from PIL import Image, ImageChops, ImageDraw, ImageFilter, ImageFont, ImageOps
+from PIL import Image, ImageDraw, ImageFilter, ImageFont, ImageOps
 
 HERE = Path(__file__).resolve().parent
 sys.path.insert(0, str(HERE))
 import brandfonts as bf  # noqa: E402  (Times New Roman Condensed + Akzidenz-Grotesk, or free stand-ins)
 import reels  # noqa: E402
-W, H = 1080, 1920
-GRID_TOP, GRID_BOT = (H - 1440) // 2, (H + 1440) // 2       # what the 3:4 profile grid shows
+W, H = 1080, 1350
 HANDLE = "@aura.miamii"
-FADE = 0.36               # top 36% of the photo fades in from the background, under the headline
-FADE_AROUND = 0.62        # with a face found: the background fades down to ~shoulder height, the head kept solid
-
+# background colour down the left edge of the template, every 135px
+STOPS = [(9, 9, 9), (24, 24, 24), (49, 49, 49), (83, 81, 82), (119, 117, 118), (155, 152, 152), (185, 180, 180),
+         (205, 200, 199), (216, 212, 211), (220, 215, 215), (221, 216, 216)]
+WORD_BOTTOM, WORD_MAX_W, WORD_MAX_H = 452, 920, 178       # the big word
+WORD_SQUEEZE = 0.86                                       # letters narrowed: taller word at the same width
+KICKER_GAP, KICKER_MAX_W = 16, 900                        # the small line above it
+HANDLE_RIGHT, HANDLE_TOP, HANDLE_SIZE = 990, 472, 44
+FACE_W, FACE_TOP = 400, 585                               # where the speaker's face goes
 
 def slug(s):
     return re.sub(r"[^a-z0-9]+", "-", s.lower()).strip("-") or "speaker"
@@ -54,17 +59,6 @@ def speaker_of(m):
 
 def font(size):
     return ImageFont.truetype(str(bf.GROTESK), size)
-
-
-def serif_line(text, size):
-    """Condensed Times italic, lowercase - the small line above the big word."""
-    f = ImageFont.truetype(str(bf.SERIF), size)
-    text = text.lower()
-    w0, h0 = int(ImageDraw.Draw(Image.new("L", (1, 1))).textlength(text, font=f)) + size, int(size * 1.4)
-    im = Image.new("RGBA", (w0, h0), (0, 0, 0, 0))
-    ImageDraw.Draw(im).text((size // 2, int(size * 1.05)), text, font=f, fill="white", anchor="ls")
-    im = im.crop(im.getbbox())
-    return im.resize((max(1, int(im.width * bf.SERIF_SCALE)), im.height), Image.LANCZOS)
 
 
 # ---------- speaker photo ----------
@@ -150,36 +144,6 @@ def best_frame(clip):
     return frame, box
 
 
-def person_crop(frame):
-    """No face found: find the person's silhouette and frame the top of it (head) like a face crop."""
-    im = cutout(frame)
-    box = im.getchannel("A").point(lambda v: 255 if v > 128 else 0).getbbox()
-    if not box or (box[2] - box[0]) * (box[3] - box[1]) < 0.04 * im.width * im.height:
-        return None                                        # nobody clearly in frame
-    l, t, r, b = box
-    head = max(40, (r - l) // 3)                           # guess a head-sized box at the top of the silhouette
-    return portrait(frame, ((l + r) // 2 - head // 2, t + head // 4, head, head))
-
-
-PHOTO_ASPECT = 2 / 3      # photo area: full width, from the headline down to the bottom edge
-FACE_AT = 0.40            # top of the face sits 40% down the photo, clear of the headline
-
-
-def portrait(frame, box, reel=False):
-    """Full-frame crop around a face, sized for the cover. The face sits FACE_AT down the crop; when the frame has no
-    room above the head, the crop runs past its top edge (that part is inside the fade, so it just melts into black)."""
-    l0, t0, r0, b0 = frame.convert("L").point(lambda v: 255 if v > 20 else 0).getbbox() or (0, 0, *frame.size)
-    x, y, fw, fh = box                                     # (letterbox / pillarbox bars trimmed off first)
-    if reel:                                               # a finished vertical reel: stop above our AURA mark
-        b0 = t0 + int((b0 - t0) * 0.89)
-    room_below = b0 - y
-    cw = int(min(r0 - l0, max(fw * 1.8, min(fw * 3.2, room_below / (1 - FACE_AT) * PHOTO_ASPECT))))
-    ch = int(cw / PHOTO_ASPECT)
-    left = min(max(l0, x + fw // 2 - cw // 2), r0 - cw)
-    top = min(int(y - ch * FACE_AT), b0 - ch)
-    return frame.crop((left, top, left + cw, top + ch))
-
-
 def find_face(im):
     import cv2
     import numpy as np
@@ -193,46 +157,32 @@ def find_face(im):
     return tuple(int(v * k) for v in max(faces, key=lambda f: f[2] * f[3]))
 
 
-def head_and_shoulders(im):
-    """Your own / downloaded photo: cropped the cover way around the face (background kept), small web photos upscaled."""
-    box = find_face(im)
-    crop = portrait(im, box) if box else im
-    if crop.width < 900:
-        k = 900 / crop.width
-        crop = crop.resize((900, int(crop.height * k)), Image.LANCZOS).filter(ImageFilter.UnsharpMask(2, 60, 2))
-    return crop
+def footage(frame, box):
+    """Trim black bars; on a finished vertical reel keep only the footage band, above our AURA mark."""
+    l, t, r, b = frame.convert("L").point(lambda v: 255 if v > 20 else 0).getbbox() or (0, 0, *frame.size)
+    if frame.height > frame.width:
+        b = t + int((b - t) * 0.89)
+    frame = frame.crop((l, t, r, b))
+    return frame, ((box[0] - l, box[1] - t, box[2], box[3]) if box else None)
 
 
-def speaker_photo(name, clip):
+def speaker_source(name, clip):
+    """(photo, face box) for a speaker: your photo in speakers/, else the best frame of the clip (saved for next time)."""
     d = HERE / "speakers"
     d.mkdir(exist_ok=True)
-    for ext in ("jpg", "jpeg", "webp", "png"):           # your own / downloaded photo first, clip frame last
-        p = d / f"{slug(name)}.{ext}"
+    for p in [d / f"{slug(name)}.{ext}" for ext in ("jpg", "jpeg", "webp")] + [d / f"{slug(name)}.frame.jpg"]:
         if p.exists():
-            im = ImageOps.exif_transpose(Image.open(p))
-            if ext == "png" and im.mode == "RGBA":         # an old cut-out from the previous cover style: pick again
-                continue
-            return im.convert("RGB") if ext == "png" else head_and_shoulders(im.convert("RGB"))
+            im = ImageOps.exif_transpose(Image.open(p)).convert("RGB")
+            return im, find_face(im)
     if not clip.exists():
         return None
     frame, box = best_frame(clip)
-    if frame is None:                                      # unreadable clip
+    if frame is None:
         return None
-    if box:
-        im = portrait(frame, box, reel=frame.height > frame.width)
-    else:
-        im = person_crop(frame)
-        if im is None:
-            return None
-    im.save(d / f"{slug(name)}.png")
-    print(f"  photo for {name}: speakers/{slug(name)}.png (replace it to use your own)")
-    return im
-
-
-def solid(im):
-    """Share of the cut-out that is person (0..1)."""
-    a = im.getchannel("A").point(lambda v: 255 if v > 128 else 0)
-    return sum(a.histogram()[255:]) / (im.width * im.height)
+    frame, box = footage(frame, box)
+    frame.save(d / f"{slug(name)}.frame.jpg", quality=95)
+    print(f"  photo for {name}: speakers/{slug(name)}.frame.jpg (or save your own as speakers/{slug(name)}.jpg)")
+    return frame, box or find_face(frame)
 
 
 def cutout(im):
@@ -240,7 +190,10 @@ def cutout(im):
         from rembg import new_session, remove
         global _SESSION
         if "_SESSION" not in globals():
-            _SESSION = new_session("u2net_human_seg")
+            try:                                           # best hair edges; ~1 min per photo on a CPU
+                _SESSION = new_session("birefnet-portrait")
+            except Exception:
+                _SESSION = new_session("u2net_human_seg")
         return remove(im.convert("RGB"), session=_SESSION)
     except ImportError:                                    # no rembg: soft-edged rectangle instead
         im = im.convert("RGBA")
@@ -251,22 +204,60 @@ def cutout(im):
 
 
 # ---------- cover ----------
-def background(text):
-    """The AURA cover background: black-to-grey grain gradient (assets/cover_bg.jpg)."""
-    return ImageOps.fit(Image.open(HERE / "assets" / "cover_bg.jpg").convert("RGB"), (W, H), Image.LANCZOS)
+def background():
+    """Smooth vertical gradient sampled from the template: near-black top, warm light grey bottom."""
+    col = []
+    for y in range(H):
+        f = y / 135
+        i = min(int(f), len(STOPS) - 2)
+        t = min(1.0, f - i)
+        col.append(tuple(round(a + (b - a) * t) for a, b in zip(STOPS[i], STOPS[i + 1])))
+    strip = Image.new("RGB", (1, H))
+    strip.putdata(col)
+    return strip.resize((W, H))
 
 
-def fit(text, max_w, start, d):
-    size = start
-    while size > 40 and d.textlength(text, font=font(size)) > max_w:
-        size -= 4
-    return font(size)
+def person(src):
+    """The speaker cut out of their photo, scaled and placed on a transparent cover-sized layer."""
+    im, box = src
+    if im.width < 1000:                                    # small web photos: upscale before the cut-out
+        k = 1000 / im.width
+        im = im.resize((1000, round(im.height * k)), Image.LANCZOS).filter(ImageFilter.UnsharpMask(2, 60, 2))
+        box = tuple(round(v * k) for v in box) if box else None
+    import hashlib
+    key = hashlib.md5(im.resize((64, 64)).tobytes()).hexdigest()[:16]
+    cache = HERE / "speakers" / ".cutouts" / f"{key}.png"   # the cut-out model is slow: once per photo
+    if cache.exists():
+        cut = Image.open(cache).convert("RGBA")
+    else:
+        cut = cutout(im)
+        cache.parent.mkdir(parents=True, exist_ok=True)
+        cut.save(cache)
+    alpha = cut.getchannel("A")
+    bbox = alpha.point(lambda v: 255 if v > 128 else 0).getbbox()
+    if not bbox:
+        return None
+    if box:
+        x, y, fw, fh = box
+        s = FACE_W / fw
+        if (bbox[3] - y) * s < H - FACE_TOP:              # the person always reaches the bottom edge
+            s = (H - FACE_TOP) / (bbox[3] - y)
+        ox, oy = W / 2 - (x + fw / 2) * s, FACE_TOP - y * s
+    else:                                                  # no face found: fit the silhouette, bottom-anchored
+        s = 0.8 * W / (bbox[2] - bbox[0])
+        ox, oy = W / 2 - (bbox[0] + bbox[2]) / 2 * s, H - bbox[3] * s
+    cut = cut.resize((round(cut.width * s), round(cut.height * s)), Image.LANCZOS)
+    a = cut.getchannel("A").point(lambda v: 0 if v < 40 else v)         # drop the faint fringe...
+    cut.putalpha(a.filter(ImageFilter.MinFilter(3)).filter(ImageFilter.GaussianBlur(0.8)))   # ...and pull the edge in
+    layer = Image.new("RGBA", (W, H), (0, 0, 0, 0))
+    layer.paste(cut, (round(ox), round(oy)), cut)
+    return layer
 
 
 def italic_bold(text, size):
-    """Akzidenz-Grotesk bold caps, slanted - the big last word."""
+    """Heavy italic grotesk caps - the big last word."""
     f = font(size)
-    stroke = 0
+    stroke = max(1, size // 30)                            # a touch heavier than the font's bold
     w0 = int(ImageDraw.Draw(Image.new("L", (1, 1))).textlength(text, font=f)) + stroke * 2 + size // 3
     h0 = int(size * 1.15)
     im = Image.new("RGBA", (w0, h0), (0, 0, 0, 0))
@@ -274,70 +265,45 @@ def italic_bold(text, size):
                             stroke_width=stroke, stroke_fill="white")
     slant = 0.2
     im = im.transform((w0, h0), Image.AFFINE, (1, slant, -slant * h0 / 2, 0, 1, 0), Image.BICUBIC)
+    im = im.crop(im.getbbox())
+    return im.resize((round(im.width * WORD_SQUEEZE), im.height), Image.LANCZOS)   # tall and tight, like the template
+
+
+def serif_text(text, size):
+    f = ImageFont.truetype(str(bf.SERIF), size)
+    w0, h0 = int(ImageDraw.Draw(Image.new("L", (1, 1))).textlength(text, font=f)) + size, int(size * 1.5)
+    im = Image.new("RGBA", (w0, h0), (0, 0, 0, 0))
+    ImageDraw.Draw(im).text((size // 2, int(size * 1.1)), text, font=f, fill="white", anchor="ls")
     return im.crop(im.getbbox())
 
 
-def cover(m, photo, out):
+def cover(m, src, out):
     words = m.get("cover", "").replace("/", " ").split()
     if not words:
         return False
-    kicker, big = " ".join(words[:-1]), words[-1]          # the big word is always the last one
-    im = background(m.get("caption", "") + " " + m.get("punchline", ""))
-    d = ImageDraw.Draw(im)
-    # lay the headline out first, so the photo can fill everything below it
-    y = GRID_TOP + 60
-    ki = None
-    if kicker:
-        ks = 120
-        while True:
-            ki = serif_line(kicker, ks)
-            if ki.width <= 940 or ks <= 50:
-                break
-            ks -= 6
-    yb = y + (ki.height + 18 if ki else 0)
-    size = 360
+    kicker, big = " ".join(words[:-1]).lower(), words[-1].upper()   # the big word is always the last one
+    im = background().convert("RGBA")
+    size = 260
     while True:
         bi = italic_bold(big, size)
-        if bi.width <= 1000 or size <= 120:
+        if (bi.width <= WORD_MAX_W and bi.height <= WORD_MAX_H) or size <= 80:
             break
-        size -= 10
-    y_handle = yb + bi.height + 14
-    if photo is not None:                                  # photo: black & white, full width, fading up into the headline
-        top = int(y)                                       # the photo area starts at the headline...
-        area = (W, H - top)
-        p = ImageOps.autocontrast(ImageOps.grayscale(photo.convert("RGB")), cutoff=1)
-        p = ImageOps.fit(p, area, Image.LANCZOS, centering=(0.5, 0.3)).convert("RGBA")
-        rows = [sum(p.convert("L").crop((0, r, W, r + 1)).getdata()) / W for r in range(area[1] // 2)]
-        start = next((r for r, v in enumerate(rows) if v > 14), 0)   # where the picture really starts (below padding)
-        face = find_face(p.convert("RGB"))
-        fade = int(area[1] * float(m.get("cover_fade") or (FADE_AROUND if face else FADE)))   # per reel: "cover_fade": 0.4
-        ramp = [0] * start + [255] * (area[1] - start)
-        for i in range(min(fade, area[1] - start)):
-            u = i / fade
-            ramp[start + i] = int(255 * u * u * (3 - 2 * u))   # smoothstep: no visible edge
-        alpha = Image.frombytes("L", (1, area[1]), bytes(ramp)).resize(area)
-        if face:                                           # the head (face + hair) stays solid: soft oval kept opaque
-            x, y0, fw, fh = face
-            keep = Image.new("L", area, 0)
-            cx, cy = x + fw / 2, y0 + fh * 0.45
-            ImageDraw.Draw(keep).ellipse((cx - fw * 1.05, cy - fh * 1.25, cx + fw * 1.05, cy + fh * 1.6), fill=255)
-            short = max(1, min(int(area[1] * 0.28), int(y0 + fh * 0.1) - start))   # ...but eases in at the top edge,
-            edge = [0] * start + [255 if i >= short else int(255 * (3 - 2 * i / short) * (i / short) ** 2)   # done by the brow
-                                  for i in range(area[1] - start)]
-            edge = Image.frombytes("L", (1, area[1]), bytes(edge)).resize(area)
-            keep = ImageChops.multiply(keep.filter(ImageFilter.GaussianBlur(fw * 0.3)), edge)
-            alpha = ImageChops.lighter(alpha, keep)
-        p.putalpha(alpha)
-        im.paste(p, (0, top), p)
-        d = ImageDraw.Draw(im)
-    if ki:
-        im.paste(ki, ((W - ki.width) // 2, int(y)), ki)
-    shadow = Image.new("RGBA", bi.size, (0, 0, 0, 0))
-    shadow.putalpha(bi.getchannel("A").point(lambda v: v * 3 // 4))
-    x = (W - bi.width) // 2
-    im.paste(shadow, (x + 6, int(yb) + 8), shadow)
-    im.paste(bi, (x, int(yb)), bi)
-    d.text((x + bi.width, y_handle), HANDLE, font=font(28), fill=(200, 200, 200), anchor="rt")
+        size -= 6
+    by = WORD_BOTTOM - bi.height
+    im.alpha_composite(bi, ((W - bi.width) // 2, by))
+    if kicker:
+        ks = 112
+        while True:
+            ki = serif_text(kicker, ks)
+            if ki.width <= KICKER_MAX_W or ks <= 40:
+                break
+            ks -= 4
+        im.alpha_composite(ki, ((W - ki.width) // 2, by - KICKER_GAP - ki.height))
+    layer = person(src) if src else None
+    if layer:
+        im.alpha_composite(layer)                          # the speaker stands in front of the big word
+    hi = serif_text(HANDLE, HANDLE_SIZE)
+    im.alpha_composite(hi, (HANDLE_RIGHT - hi.width, HANDLE_TOP))
     out.parent.mkdir(parents=True, exist_ok=True)
     im.convert("RGB").save(out, quality=95)
     return True
@@ -357,7 +323,7 @@ def wiki_photo(name, m):
         with (HERE / "speakers" / "CREDITS.txt").open("a", encoding="utf-8") as c:
             c.write(f"{name}: photo by {info['artist'] or 'unknown'}, {info['license']} - {info['page']}\n")
         print(f"  photo for {name}: speakers/{slug(name)}.jpg from Wikipedia ({info['license']})")
-        return speaker_photo(name, Path("-"))
+        return speaker_source(name, Path("-"))
     except Exception as e:                                 # offline / blocked: just report it
         print(f"  (Wikipedia lookup for {name} failed: {e})")
         return None
@@ -393,16 +359,16 @@ def main():
         name = speaker_of(m)
         if photos.get(name) is None:
             clips = [reels.clip(m, plan_path.parent)] + sorted(reels.DOWNLOADED.glob(f"{m['id'][:3]}-*.mp4"))
-            photos[name] = speaker_photo(name, Path("-"))  # 1. a photo you saved in speakers/
+            photos[name] = speaker_source(name, Path("-"))  # 1. a photo you saved in speakers/
             for c in clips:                                # 2. this reel's raw clip, else an older clip of the same reel
                 if photos[name] is not None:
                     break
-                photos[name] = speaker_photo(name, c) if c.exists() else None
+                photos[name] = speaker_source(name, c) if c.exists() else None
             if photos[name] is None:                       # 3. a free-licence portrait from Wikipedia
                 photos[name] = wiki_photo(name, m)
             done = reels.DONE / f"{m['id']}.mp4"
             if photos[name] is None and done.exists():     # 4. last resort: a frame of the finished reel
-                photos[name] = speaker_photo(name, done)
+                photos[name] = speaker_source(name, done)
         if photos[name] is None:                           # never save a cover without the speaker on it
             missing.append((m["id"], name, reels.clip(m, plan_path.parent).exists()))
             continue
