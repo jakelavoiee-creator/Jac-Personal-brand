@@ -7,7 +7,7 @@
 
   canvas    1080x1920, black-to-grey grain gradient (assets/cover_bg.jpg)
   headline  condensed Times italic lowercase line, its LAST word huge in Akzidenz-Grotesk bold caps (+ @aura.miamii)
-  photo     the speaker in black & white, cut out, solid, filling the bottom of the cover
+  photo     the speaker in black & white, full frame, full width, its top 36% fading smoothly up into the headline
   safe area everything that matters sits inside the centre 1080x1440 (the profile-grid crop)
 
 Headline per reel: "cover": "TRUST THE TIMING." in the plan - the last word becomes the big one.
@@ -37,6 +37,7 @@ import reels  # noqa: E402
 W, H = 1080, 1920
 GRID_TOP, GRID_BOT = (H - 1440) // 2, (H + 1440) // 2       # what the 3:4 profile grid shows
 HANDLE = "@aura.miamii"
+FADE = 0.36               # top 36% of the photo fades in from the background, under the headline
 
 
 def slug(s):
@@ -140,28 +141,43 @@ def best_frame(clip):
     g = cv2.cvtColor(np.array(frame), cv2.COLOR_RGB2GRAY)
     small = cv2.resize(g, (dw, int(dw * frame.height / frame.width)))
     kk = frame.width / dw
-    cx, cy = box[0] + box[2] / 2, box[1] + box[3] / 2
     near = [tuple(int(v * kk) for v in f) for _, f in faces_in(small, cascades)]
-    near = [f for f in near if abs(f[0] + f[2] / 2 - cx) < box[2] and abs(f[1] + f[3] / 2 - cy) < box[3]]
+    near = [f for f in near if box[0] < f[0] + f[2] / 2 < box[0] + box[2] and box[1] < f[1] + f[3] / 2 < box[1] + box[3]
+            and 0.6 < f[2] / box[2] < 1.6]                # same face: centre inside the first box, similar size
     if near:
         box = max(near, key=lambda f: f[2] * f[3])
     return frame, box
 
 
 def person_crop(frame):
-    """No face found: cut the person out and keep their head and shoulders (top of the silhouette)."""
+    """No face found: find the person's silhouette and frame the top of it (head) like a face crop."""
     im = cutout(frame)
     box = im.getchannel("A").point(lambda v: 255 if v > 128 else 0).getbbox()
     if not box or (box[2] - box[0]) * (box[3] - box[1]) < 0.04 * im.width * im.height:
         return None                                        # nobody clearly in frame
     l, t, r, b = box
-    cw = min(r - l, int((b - t) * 0.9))
-    cx = (l + r) // 2
-    return im.crop((max(0, cx - cw // 2), t, min(im.width, cx + cw // 2), min(b, t + int(cw * 1.1))))
+    head = max(40, (r - l) // 3)                           # guess a head-sized box at the top of the silhouette
+    return portrait(frame, ((l + r) // 2 - head // 2, t + head // 4, head, head))
 
 
-def head_and_shoulders(im):
-    """Crop a portrait to head and shoulders around the biggest face (full image if none is found)."""
+PHOTO_ASPECT = 2 / 3      # photo area: full width, from the headline down to the bottom edge
+FACE_AT = 0.40            # top of the face sits 40% down the photo, clear of the headline
+
+
+def portrait(frame, box):
+    """Full-frame crop around a face, sized for the cover. The face sits FACE_AT down the crop; when the frame has no
+    room above the head, the crop runs past its top edge (that part is inside the fade, so it just melts into black)."""
+    l0, t0, r0, b0 = frame.convert("L").point(lambda v: 255 if v > 20 else 0).getbbox() or (0, 0, *frame.size)
+    x, y, fw, fh = box                                     # (letterbox / pillarbox bars trimmed off first)
+    room_below = b0 - y
+    cw = int(min(r0 - l0, max(fw * 1.8, min(fw * 3.2, room_below / (1 - FACE_AT) * PHOTO_ASPECT))))
+    ch = int(cw / PHOTO_ASPECT)
+    left = min(max(l0, x + fw // 2 - cw // 2), r0 - cw)
+    top = min(int(y - ch * FACE_AT), b0 - ch)
+    return frame.crop((left, top, left + cw, top + ch))
+
+
+def find_face(im):
     import cv2
     import numpy as np
     g = cv2.cvtColor(np.array(im), cv2.COLOR_RGB2GRAY)
@@ -170,11 +186,14 @@ def head_and_shoulders(im):
     casc = cv2.CascadeClassifier(cv2.data.haarcascades + "haarcascade_frontalface_default.xml")
     faces = casc.detectMultiScale(small, 1.1, 6, minSize=(40, 40))
     if not len(faces):
-        return im
-    x, y, fw, fh = [int(v * k) for v in max(faces, key=lambda f: f[2] * f[3])]
-    cw = int(fw * 2.7)
-    cx, top = x + fw // 2, max(0, int(y - fh * 0.6))
-    return im.crop((max(0, cx - cw // 2), top, min(im.width, cx + cw // 2), min(im.height, top + int(cw * 1.1))))
+        return None
+    return tuple(int(v * k) for v in max(faces, key=lambda f: f[2] * f[3]))
+
+
+def head_and_shoulders(im):
+    """Your own / downloaded photo, cropped the cover way around its biggest face (as is if none is found)."""
+    box = find_face(im)
+    return portrait(im, box) if box else im
 
 
 def speaker_photo(name, clip):
@@ -184,20 +203,16 @@ def speaker_photo(name, clip):
         p = d / f"{slug(name)}.{ext}"
         if p.exists():
             im = ImageOps.exif_transpose(Image.open(p))
-            return im if im.mode == "RGBA" else cutout(head_and_shoulders(im.convert("RGB")))
+            if ext == "png" and im.mode == "RGBA":         # an old cut-out from the previous cover style: pick again
+                continue
+            return im.convert("RGB") if ext == "png" else head_and_shoulders(im.convert("RGB"))
     if not clip.exists():
         return None
     frame, box = best_frame(clip)
     if frame is None:                                      # unreadable clip
         return None
     if box:
-        x, y, fw, fh = box
-        cw = int(fw * 2.7)                                 # head and shoulders, face big
-        cx, top = x + fw // 2, max(0, int(y - fh * 0.6))
-        im = cutout(frame.crop((max(0, cx - cw // 2), top, min(frame.width, cx + cw // 2),
-                                min(frame.height, top + int(cw * 1.1)))))
-        if solid(im) < 0.2:                                # cut-out came back mostly empty: not a usable photo
-            return None
+        im = portrait(frame, box)
     else:
         im = person_crop(frame)
         if im is None:
@@ -280,21 +295,20 @@ def cover(m, photo, out):
             break
         size -= 10
     y_handle = yb + bi.height + 14
-    if photo is not None:                                  # photo: black & white, solid, filling the bottom
-        p = photo.convert("RGBA")
-        p = p.crop(p.getbbox() or (0, 0, p.width, p.height))
-        alpha = p.getchannel("A")
-        p = ImageOps.autocontrast(ImageOps.grayscale(p.convert("RGB")), cutoff=1).convert("RGBA")   # black & white
-        p.putalpha(alpha)
-        top = int(y_handle + 10)
-        scale = max((H - top) / p.height, W / p.width)     # reach the bottom edge, full width
-        p = p.resize((int(p.width * scale), int(p.height * scale)), Image.LANCZOS)
-        if p.height > H - top:                             # never up into the headline: trim the bottom instead
-            p = p.crop((0, 0, p.width, H - top))
-        if p.width > W:                                    # keep the face centred, trim the sides
-            l = (p.width - W) // 2
-            p = p.crop((l, 0, l + W, p.height))
-        im.paste(p, ((W - p.width) // 2, H - p.height), p)
+    if photo is not None:                                  # photo: black & white, full width, fading up into the headline
+        top = int(y)                                       # the photo area starts at the headline...
+        area = (W, H - top)
+        p = ImageOps.autocontrast(ImageOps.grayscale(photo.convert("RGB")), cutoff=1)
+        p = ImageOps.fit(p, area, Image.LANCZOS, centering=(0.5, 0.3)).convert("RGBA")
+        rows = [sum(p.convert("L").crop((0, r, W, r + 1)).getdata()) / W for r in range(area[1] // 2)]
+        start = next((r for r, v in enumerate(rows) if v > 14), 0)   # where the picture really starts (below padding)
+        fade = int(area[1] * FADE)                         # ...and from there it dissolves into the background
+        ramp = [0] * start + [255] * (area[1] - start)
+        for i in range(min(fade, area[1] - start)):
+            u = i / fade
+            ramp[start + i] = int(255 * u * u * (3 - 2 * u))   # smoothstep: no visible edge
+        p.putalpha(Image.frombytes("L", (1, area[1]), bytes(ramp)).resize(area))
+        im.paste(p, (0, top), p)
         d = ImageDraw.Draw(im)
     if ki:
         im.paste(ki, ((W - ki.width) // 2, int(y)), ki)
