@@ -64,7 +64,8 @@
    "ref": "ascendrecode DaHesvSAr16",
    "source_channel": "The Diary Of A CEO",
    "cover": "ACT LIKE WHO YOU WANT TO BECOME.",
-   "kind": "podcast"
+   "kind": "podcast",
+   "cover_fade": 0.3
   },
   {
    "id": "a08-alison-armstrong-the-shame-is-the-sign-you",

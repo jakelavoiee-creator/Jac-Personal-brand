@@ -310,7 +310,7 @@ def cover(m, photo, out):
         rows = [sum(p.convert("L").crop((0, r, W, r + 1)).getdata()) / W for r in range(area[1] // 2)]
         start = next((r for r, v in enumerate(rows) if v > 14), 0)   # where the picture really starts (below padding)
         face = find_face(p.convert("RGB"))
-        fade = int(area[1] * (FADE_AROUND if face else FADE))   # with a face to protect, the background fades longer
+        fade = int(area[1] * float(m.get("cover_fade") or (FADE_AROUND if face else FADE)))   # per reel: "cover_fade": 0.4
         ramp = [0] * start + [255] * (area[1] - start)
         for i in range(min(fade, area[1] - start)):
             u = i / fade
