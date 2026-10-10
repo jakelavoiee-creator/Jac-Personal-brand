@@ -169,6 +169,8 @@ def portrait(frame, box):
     room above the head, the crop runs past its top edge (that part is inside the fade, so it just melts into black)."""
     l0, t0, r0, b0 = frame.convert("L").point(lambda v: 255 if v > 20 else 0).getbbox() or (0, 0, *frame.size)
     x, y, fw, fh = box                                     # (letterbox / pillarbox bars trimmed off first)
+    if frame.height > frame.width:                         # a finished vertical reel: stop above our AURA mark
+        b0 = t0 + int((b0 - t0) * 0.89)
     room_below = b0 - y
     cw = int(min(r0 - l0, max(fw * 1.8, min(fw * 3.2, room_below / (1 - FACE_AT) * PHOTO_ASPECT))))
     ch = int(cw / PHOTO_ASPECT)
