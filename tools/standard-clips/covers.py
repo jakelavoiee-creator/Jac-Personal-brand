@@ -28,7 +28,7 @@ import subprocess
 import sys
 from pathlib import Path
 
-from PIL import Image, ImageDraw, ImageFilter, ImageFont, ImageOps
+from PIL import Image, ImageChops, ImageDraw, ImageFilter, ImageFont, ImageOps
 
 HERE = Path(__file__).resolve().parent
 sys.path.insert(0, str(HERE))
@@ -38,6 +38,7 @@ W, H = 1080, 1920
 GRID_TOP, GRID_BOT = (H - 1440) // 2, (H + 1440) // 2       # what the 3:4 profile grid shows
 HANDLE = "@aura.miamii"
 FADE = 0.36               # top 36% of the photo fades in from the background, under the headline
+FADE_AROUND = 0.62        # with a face found: the background fades down to ~shoulder height, the head kept solid
 
 
 def slug(s):
@@ -193,14 +194,13 @@ def find_face(im):
 
 
 def head_and_shoulders(im):
-    """Your own / downloaded photo (a studio portrait): cropped the cover way around the face, then the person is cut
-    out so the studio background becomes the cover's black. The person stays solid - nothing on them fades."""
+    """Your own / downloaded photo: cropped the cover way around the face (background kept), small web photos upscaled."""
     box = find_face(im)
     crop = portrait(im, box) if box else im
-    if crop.width < 900:                                   # small web photos: upscale before the cut-out
+    if crop.width < 900:
         k = 900 / crop.width
         crop = crop.resize((900, int(crop.height * k)), Image.LANCZOS).filter(ImageFilter.UnsharpMask(2, 60, 2))
-    return cutout(crop)
+    return crop
 
 
 def speaker_photo(name, clip):
@@ -305,28 +305,29 @@ def cover(m, photo, out):
     if photo is not None:                                  # photo: black & white, full width, fading up into the headline
         top = int(y)                                       # the photo area starts at the headline...
         area = (W, H - top)
-        if photo.mode == "RGBA":                           # a cut-out portrait: solid person on the black, no fade
-            alpha = photo.getchannel("A")
-            g = ImageOps.autocontrast(ImageOps.grayscale(photo.convert("RGB")), cutoff=1,
-                                      mask=alpha.point(lambda v: 255 if v > 128 else 0))
-            p = Image.merge("RGBA", (g, g, g, alpha))
-            p = ImageOps.fit(p, area, Image.LANCZOS, centering=(0.5, 0.3))
-            a = p.getchannel("A").filter(ImageFilter.MinFilter(7)).filter(ImageFilter.GaussianBlur(2))
-            p.putalpha(a)                                  # pull the edge in: no light halo from the studio background
-            im.paste(p, (0, top), p)
-            photo = None
-        else:
-            p = ImageOps.autocontrast(ImageOps.grayscale(photo.convert("RGB")), cutoff=1)
-            p = ImageOps.fit(p, area, Image.LANCZOS, centering=(0.5, 0.3)).convert("RGBA")
-    if photo is not None:
+        p = ImageOps.autocontrast(ImageOps.grayscale(photo.convert("RGB")), cutoff=1)
+        p = ImageOps.fit(p, area, Image.LANCZOS, centering=(0.5, 0.3)).convert("RGBA")
         rows = [sum(p.convert("L").crop((0, r, W, r + 1)).getdata()) / W for r in range(area[1] // 2)]
         start = next((r for r, v in enumerate(rows) if v > 14), 0)   # where the picture really starts (below padding)
-        fade = int(area[1] * FADE)                         # ...and from there it dissolves into the background
+        face = find_face(p.convert("RGB"))
+        fade = int(area[1] * (FADE_AROUND if face else FADE))   # with a face to protect, the background fades longer
         ramp = [0] * start + [255] * (area[1] - start)
         for i in range(min(fade, area[1] - start)):
             u = i / fade
             ramp[start + i] = int(255 * u * u * (3 - 2 * u))   # smoothstep: no visible edge
-        p.putalpha(Image.frombytes("L", (1, area[1]), bytes(ramp)).resize(area))
+        alpha = Image.frombytes("L", (1, area[1]), bytes(ramp)).resize(area)
+        if face:                                           # the head (face + hair) stays solid: soft oval kept opaque
+            x, y0, fw, fh = face
+            keep = Image.new("L", area, 0)
+            cx, cy = x + fw / 2, y0 + fh * 0.45
+            ImageDraw.Draw(keep).ellipse((cx - fw * 1.05, cy - fh * 1.25, cx + fw * 1.05, cy + fh * 1.6), fill=255)
+            short = max(1, min(int(area[1] * 0.28), int(y0 + fh * 0.1) - start))   # ...but eases in at the top edge,
+            edge = [0] * start + [255 if i >= short else int(255 * (3 - 2 * i / short) * (i / short) ** 2)   # done by the brow
+                                  for i in range(area[1] - start)]
+            edge = Image.frombytes("L", (1, area[1]), bytes(edge)).resize(area)
+            keep = ImageChops.multiply(keep.filter(ImageFilter.GaussianBlur(fw * 0.3)), edge)
+            alpha = ImageChops.lighter(alpha, keep)
+        p.putalpha(alpha)
         im.paste(p, (0, top), p)
         d = ImageDraw.Draw(im)
     if ki:
