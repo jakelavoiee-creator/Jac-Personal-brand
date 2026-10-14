@@ -19,7 +19,7 @@ HERE = os.path.dirname(os.path.abspath(__file__))
 def shot_filter(i, s):
     dur = float(s["dur"])
     frames = max(1, round(dur * FPS))
-    z0 = float(s.get("zoom_from", 1.15))
+    z0 = float(s.get("zoom_from", 1.12))
     z1 = float(s.get("zoom_to", 1.0))
     fx = float(s.get("focus_x", 0.5))
     fy = float(s.get("focus_y", 0.5))
@@ -38,8 +38,12 @@ def shot_filter(i, s):
             f"crop=2*{W}:2*{H}:(iw-ow)*{fx}:(ih-oh)*{fy}"
         )
 
-    # Ease-out cubic from z0 to z1 across the shot.
-    zexpr = f"{z0}+({z1}-{z0})*(1-pow(1-min(on/{frames}\\,1)\\,3))"
+    # Slow, progressive zoom-out: constant speed from z0 to z1 across the whole shot.
+    # Set "ease": true on a shot for the faster ease-out cubic instead.
+    if s.get("ease"):
+        zexpr = f"{z0}+({z1}-{z0})*(1-pow(1-min(on/{frames}\\,1)\\,3))"
+    else:
+        zexpr = f"{z0}+({z1}-{z0})*min(on/{frames}\\,1)"
     zoom = (
         f"zoompan=z='{zexpr}':d=1:"
         f"x='(iw-iw/zoom)*{fx}':y='(ih-ih/zoom)*{fy}':s={W}x{H}:fps={FPS}"
@@ -83,7 +87,7 @@ def main(cfg_path):
         audio_labels.append(f"[c{k}]")
     kbase = n + len(clicks)
     for k, kt in enumerate(keys):
-        inputs += ["-i", os.path.join(HERE, "sfx", f"key{k % 3}.wav")]
+        inputs += ["-i", os.path.join(HERE, "sfx", f"key{k % 5}.wav")]
         filters.append(f"[{kbase + k}:a]adelay={int(kt * 1000)}:all=1,volume={cfg.get('key_volume', 0.8)}[k{k}]")
         audio_labels.append(f"[k{k}]")
     base = kbase + len(keys)
