@@ -3,16 +3,98 @@
   "grade": "eq=gamma=1.18:contrast=1.06:saturation=1.08,colorbalance=rs=0.02:bs=-0.05:bm=-0.04,unsharp=5:5:0.4",
   "click_volume": 0.9,
   "shots": [
-    {"file": "clips/raw01.mp4", "in": 0.9, "dur": 1.3, "zoom_from": 1.15},
-    {"file": "clips/raw02.mp4", "in": 0.9, "dur": 1.4, "clicks": [0.92]},
-    {"file": "clips/raw03.mp4", "in": 0.2, "dur": 1.0},
-    {"file": "clips/raw04.mp4", "in": 0.0, "dur": 0.9},
-    {"file": "clips/raw05.mp4", "in": 0.2, "dur": 1.0, "clicks": [0.52]},
-    {"file": "clips/raw06.mp4", "in": 0.1, "dur": 1.2, "clicks": [0.35]},
-    {"file": "clips/raw07.mov", "in": 0.0, "dur": 1.8, "clicks": [0.15], "keys": [0.97, 1.11, 1.31, 1.51, 1.71]},
-    {"file": "clips/raw08.mp4", "in": 0.1, "dur": 1.3, "clicks": [0.52]},
-    {"file": "clips/raw09.mp4", "in": 0.1, "dur": 0.8, "clicks": [0.42]},
-    {"file": "clips/raw10.mp4", "in": 1.2, "dur": 1.3, "clicks": [1.0]},
-    {"file": "clips/raw11.mp4", "in": 0.3, "dur": 1.6}
+    {
+      "file": "clips/raw01.mp4",
+      "in": 0.9,
+      "dur": 1.3,
+      "zoom_from": 1.15
+    },
+    {
+      "file": "clips/raw02.mp4",
+      "in": 0.9,
+      "dur": 1.4,
+      "clicks": [
+        0.92
+      ]
+    },
+    {
+      "file": "clips/raw03.mp4",
+      "in": 0.2,
+      "dur": 1.0
+    },
+    {
+      "file": "clips/raw04.mp4",
+      "in": 0.0,
+      "dur": 0.9
+    },
+    {
+      "file": "clips/raw05.mp4",
+      "in": 0.2,
+      "dur": 1.0,
+      "clicks": [
+        0.52
+      ]
+    },
+    {
+      "file": "clips/raw06.mp4",
+      "in": 0.1,
+      "dur": 1.2,
+      "clicks": [
+        0.35
+      ]
+    },
+    {
+      "file": "clips/raw07.mov",
+      "in": 0.0,
+      "dur": 1.8,
+      "clicks": [
+        0.15
+      ],
+      "keys": [
+        0.97,
+        1.11,
+        1.31,
+        1.51,
+        1.71
+      ]
+    },
+    {
+      "file": "clips/raw08.mp4",
+      "in": 0.1,
+      "dur": 1.3,
+      "clicks": [
+        0.52
+      ]
+    },
+    {
+      "file": "clips/raw09.mp4",
+      "in": 0.1,
+      "dur": 0.8,
+      "clicks": [
+        0.42
+      ]
+    },
+    {
+      "file": "clips/raw10.mp4",
+      "in": 1.2,
+      "dur": 1.3,
+      "clicks": [
+        1.0
+      ]
+    },
+    {
+      "file": "clips/raw11.mp4",
+      "in": 0.3,
+      "dur": 1.6
+    }
+  ],
+  "overlays": [
+    {
+      "file": "overlays/logo-row.png",
+      "start": 0.0,
+      "end": 1.3,
+      "width": 820,
+      "y": 0.3
+    }
   ]
 }

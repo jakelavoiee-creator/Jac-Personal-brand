@@ -60,7 +60,7 @@ def main(cfg_path):
     concat = "".join(f"[v{i}]" for i in range(len(shots))) + f"concat=n={len(shots)}:v=1:a=0"
     # Optional page-wide color grade (any ffmpeg video filter chain).
     grade = cfg.get("grade")
-    filters.append(concat + (f",{grade}" if grade else "") + "[vout]")
+    filters.append(concat + (f",{grade}" if grade else "") + "[vg]")
 
     # Absolute times for SFX: shot start + per-shot click offsets.
     clicks, keys, whooshes, t = [], [], [], 0.0
@@ -99,6 +99,22 @@ def main(cfg_path):
             f"volume={cfg.get('music_volume', 0.5)},afade=t=out:st={max(0, total - 0.6)}:d=0.6[m]"
         )
         audio_labels.append("[m]")
+
+    # Image overlays (logos, titles): pop in (scale 85% -> 100% + fade), hard cut out.
+    vlabel = "vg"
+    for k, ov in enumerate(cfg.get("overlays", [])):
+        start, end = float(ov["start"]), float(ov["end"])
+        width = int(ov.get("width", 860))
+        y = float(ov.get("y", 0.3)) * H
+        idx = inputs.count("-i")
+        inputs += ["-loop", "1", "-t", f"{end - start}", "-i", os.path.join(base_dir, ov["file"])]
+        filters.append(
+            f"[{idx}:v]format=rgba,scale=w='{width}*(0.85+0.15*(1-pow(1-min(t/0.22\\,1)\\,3)))':h=-1:eval=frame,"
+            f"fade=t=in:st=0:d=0.12:alpha=1,setpts=PTS+{start}/TB[ov{k}]"
+        )
+        filters.append(f"[{vlabel}][ov{k}]overlay=x=(W-w)/2:y={y}-h/2:eof_action=pass[vo{k}]")
+        vlabel = f"vo{k}"
+    filters.append(f"[{vlabel}]null[vout]")
 
     amap = []
     if audio_labels:
