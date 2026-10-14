@@ -9,6 +9,13 @@
       "dur": 1.3
     },
     {
+      "file": "clips/raw12-url.mp4",
+      "in": 0.1,
+      "dur": 1.2,
+      "focus_x": 0.35,
+      "focus_y": 0.25
+    },
+    {
       "file": "clips/raw02.mp4",
       "in": 0.9,
       "dur": 1.4,
