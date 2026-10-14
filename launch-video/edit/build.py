@@ -57,12 +57,16 @@ def main(cfg_path):
     for i, s in enumerate(shots):
         inputs += ["-i", os.path.join(base_dir, s["file"])]
         filters.append(shot_filter(i, s))
-    filters.append("".join(f"[v{i}]" for i in range(len(shots))) + f"concat=n={len(shots)}:v=1:a=0[vout]")
+    concat = "".join(f"[v{i}]" for i in range(len(shots))) + f"concat=n={len(shots)}:v=1:a=0"
+    # Optional page-wide color grade (any ffmpeg video filter chain).
+    grade = cfg.get("grade")
+    filters.append(concat + (f",{grade}" if grade else "") + "[vout]")
 
     # Absolute times for SFX: shot start + per-shot click offsets.
-    clicks, whooshes, t = [], [], 0.0
+    clicks, keys, whooshes, t = [], [], [], 0.0
     for s in shots:
         clicks += [t + float(c) for c in s.get("clicks", [])]
+        keys += [t + float(k) for k in s.get("keys", [])]
         if s.get("whoosh"):
             whooshes.append(max(0.0, t - 0.18))
         t += float(s["dur"])
@@ -77,7 +81,12 @@ def main(cfg_path):
         idx = n + k
         filters.append(f"[{idx}:a]adelay={int(ct * 1000)}:all=1,volume={cfg.get('click_volume', 0.9)}[c{k}]")
         audio_labels.append(f"[c{k}]")
-    base = n + len(clicks)
+    kbase = n + len(clicks)
+    for k, kt in enumerate(keys):
+        inputs += ["-i", os.path.join(HERE, "sfx", f"key{k % 3}.wav")]
+        filters.append(f"[{kbase + k}:a]adelay={int(kt * 1000)}:all=1,volume={cfg.get('key_volume', 0.8)}[k{k}]")
+        audio_labels.append(f"[k{k}]")
+    base = kbase + len(keys)
     for k, wt in enumerate(whooshes):
         inputs += ["-i", sfx_whoosh]
         filters.append(f"[{base + k}:a]adelay={int(wt * 1000)}:all=1,volume={cfg.get('whoosh_volume', 0.6)}[w{k}]")
@@ -107,7 +116,7 @@ def main(cfg_path):
            "-pix_fmt", "yuv420p", "-movflags", "+faststart", out]
     )
     subprocess.run(cmd, check=True)
-    print(f"wrote {out} ({total:.2f}s, {len(clicks)} clicks, {len(whooshes)} whooshes)")
+    print(f"wrote {out} ({total:.2f}s, {len(clicks)} clicks, {len(keys)} keys, {len(whooshes)} whooshes)")
 
 
 if __name__ == "__main__":
