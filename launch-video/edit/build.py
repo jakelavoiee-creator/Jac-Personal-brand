@@ -95,6 +95,16 @@ def main(cfg_path):
         inputs += ["-i", sfx_whoosh]
         filters.append(f"[{base + k}:a]adelay={int(wt * 1000)}:all=1,volume={cfg.get('whoosh_volume', 0.6)}[w{k}]")
         audio_labels.append(f"[w{k}]")
+    # Shots flagged "keep_audio" contribute their own soundtrack at their timeline position.
+    t = 0.0
+    for i, s in enumerate(shots):
+        if s.get("keep_audio"):
+            filters.append(
+                f"[{i}:a]atrim=start={float(s.get('in', 0))}:duration={float(s['dur'])},asetpts=PTS-STARTPTS,"
+                f"aresample=48000,volume={s.get('audio_volume', 1.0)},adelay={int(t * 1000)}:all=1[sa{i}]"
+            )
+            audio_labels.append(f"[sa{i}]")
+        t += float(s["dur"])
     if cfg.get("music"):
         inputs += ["-i", os.path.join(base_dir, cfg["music"])]
         midx = base + len(whooshes)
