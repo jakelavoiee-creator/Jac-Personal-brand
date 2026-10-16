@@ -19,6 +19,9 @@ The research shows three groups, and none of them sits where you are:
 
 Three words to own: **honest · still building · every day**.
 
+**Jac's stated goal:** build a personal brand around who he is, to help people and show them it's possible.
+**How we keep that honest:** show that it's possible to *start, keep going and be yourself while figuring it out*, through the daily process. Never imply results that haven't happened.
+
 **Positioning statement (internal, not for the bio):**
 > I document what it's actually like to build something before it works (the doubt, the slow days, the small wins) so people in the middle of their own build feel less alone and keep going.
 

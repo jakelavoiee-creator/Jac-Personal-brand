@@ -2,6 +2,8 @@
 
 **What this audit is based on:** two profile screenshots you shared on Oct 8, 2026. I can't log in to Instagram from here. The profile API returns `401 require_login`, and the third-party trackers are blocked by this environment's network policy. So I have **not** seen your reels play, your captions, your audio or any Insights data. Everything below about performance is marked *unknown*.
 
+**Update Oct 16, 2026 (from Jac):** Day 12/100 · **1,060 followers** (+16 since Oct 8).
+
 ## What's visible (as of Oct 8, 2026)
 | Element | Observed |
 |---|---|

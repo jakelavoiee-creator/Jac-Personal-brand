@@ -1,6 +1,6 @@
 # Task 5: First 14-day publishing plan, plus 5 scripts
 
-Day numbers continue **your** 100-day count. Plan day 1 = your next post. `[BRACKETS]` = real facts only you can fill in.
+Day numbers continue **your** 100-day count. **Plan day 1 = Day 13/100** (Jac was on Day 12 with 1,060 followers on Oct 16, 2026), so plan day N = Day N+12. `[BRACKETS]` = real facts only you can fill in.
 
 ## The 14 days
 | Plan day | Concept (#) | Hook | Format | Emotional objective | Production |
@@ -34,22 +34,23 @@ Day numbers continue **your** 100-day count. Plan day 1 = your next post. `[BRAC
 - B. "I've posted [N] days in a row, and I think I've been doing it wrong."
 - C. "I broke my own rule [N] days in a row."
 
-**Script (to camera):**
-> For [N] days, I posted quotes I'd probably scroll past.
+**Script (to camera). Film for Day 13:**
+> For 12 days, I posted quotes I'd probably scroll past.
 > *(beat)*
 > "You can do it. You deserve it."
 > And look, they're not wrong. They're just… not really me.
-> I started this because I'm trying to build something. [REAL, one line: e.g. "I'm building a brand called Aura Miami."]
+> What I actually want is to build something around who I am. And show people it's possible.
+> But I can't show you that with quotes. I can only show you by doing it.
 > And honestly? I haven't figured it out yet.
 > So the rest of these hundred days are going to be different.
-> No more quotes. Just what it actually looks like, the good days and the ones that go nowhere.
-> If you're building something too, and you feel like you're the only one who hasn't figured it out… you're not.
-> Day [N+1]. Let's actually start.
+> Just what it actually looks like. The good days, and the ones that go nowhere.
+> If you're trying to build something too, and you feel like you're the only one who hasn't figured it out… you're not.
+> Day 13. Let's actually start.
 
 **Visuals:** to camera, eye level, window light. On "You can do it. You deserve it," cut for 1.5s to a screen recording of your grid of quote reels.
 **Editing:** cut every pause; burned-in captions; no music, or a very low ambient bed. End card `DAY [N+1]/100`.
 **Ending:** "Let's actually start." It turns the confession into a beginning.
-**Caption:** `the first [N] days were practice. the rest is the real thing. what are you building right now?`
+**Caption:** `the first 12 days were practice. the next 88 are the real thing. what are you building right now?`
 **CTA:** the caption question only (Conversation).
 **Research inspiration:** GaryVee's "document, don't create"; Trahan-style numbered series ([02-competitor-research.md](02-competitor-research.md)).
 **Test hypothesis:** comments and shares per 1,000 reach beat your quote-reel baseline (H1).
@@ -69,17 +70,17 @@ Day numbers continue **your** 100-day count. Plan day 1 = your next post. `[BRAC
 **Script (to camera):**
 > I'm trying to post every single day for 100 days.
 > Not because I think I'll go viral. Because I want to see if I can actually stay consistent at something.
-> [REAL, one line, only if true: e.g. "I've started a lot of things and quietly stopped." / "Every time it's been just me holding me accountable, I've let it slide."]
+> Because if I want to show people what's possible, I have to actually do the thing first.
 > So I'm doing it in public. If I miss a day, you'll see it.
-> Right now I've got [REAL: follower count] followers. On day 100, I'll show you the number again, whatever it is.
+> Right now I've got [count on the day you film, about 1,060] followers. On day 100, I'll show you the number again, whatever it is.
 > Some of these posts will be good. Some won't. That's kind of the point.
-> Day [N] of 100. Come back tomorrow.
+> Day 14 of 100. Come back tomorrow.
 
 **Visuals:** to camera. Write `100` on paper and cross off each day. That paper becomes a recurring object you show briefly in every Honest Sunday.
 **Ending:** "Come back tomorrow." Simple, and it's the whole premise.
 **Caption:** `100 days. every day. pinning this so I can't pretend I never said it. what's something you've been trying to stay consistent with?`
 **Test hypothesis:** this becomes your best follows-per-1,000-reach post. Pinning it lifts profile visit → follow rate (H4).
-**Truth check:** the goal is real ✓. The bracketed lines only go in if true.
+**Truth check:** the goal (100 days of daily posting) and the motivation (build a brand around who you are, show people it's possible) are both confirmed by Jac ✓
 
 ## Script 3: Nobody posts this part #1
 **Concept:** the day where nothing happened. **Only post this on a day that was really like that.**
