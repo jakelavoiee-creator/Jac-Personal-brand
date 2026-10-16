@@ -6,7 +6,7 @@ Day numbers continue **your** 100-day count. Plan day 1 = your next post. `[BRAC
 | Plan day | Concept (#) | Hook | Format | Emotional objective | Production |
 |---|---|---|---|---|---|
 | 1 | Why I'm changing the challenge (1) | "For [N] days I posted quotes I'd probably scroll past." | To camera, 35–45s | Trust: "he's honest about himself" | Tripod, window light, 3 takes |
-| 2 | What the 100 days are for (2) **pin it** | "In [X] days I'm trying to [REAL GOAL]. Here's why that scares me." | To camera, 40–50s | Community: a reason to come back | Same setup as Day 1, film both together |
+| 2 | What the 100 days are for (2) **pin it** | "I'm trying to post every day for 100 days. Here's why that's harder than it sounds." | To camera, 40–50s | Community: a reason to come back | Same setup as Day 1, film both together |
 | 3 | Nobody posts this part #1 (3) | "Nobody posts this part." | Voiceover over footage, 20s | Connection: "me too" | 6–8 clips from a real slow day |
 | 4 | Feeling behind (4) | "Some people my age are [REAL]. I'm [REAL]." | To camera, 35s | Reach: recognition | Tripod |
 | 5 | Working on it tonight (10) | "This one's for whoever's working on their thing tonight." | Voiceover, night footage, 20s | Reach: something to send to a friend | Footage from your evening |
@@ -58,28 +58,28 @@ Day numbers continue **your** 100-day count. Plan day 1 = your next post. `[BRAC
 ---
 
 ## Script 2: What the 100 days are for (pin this)
-**Concept:** give the series a goal and stakes. **It doesn't work without a real goal from you.** Pick something specific, measurable within the remaining days, and slightly scary to miss. Ideas, only if true: first [X] customers for Aura Miami, launching [product], posting every day, [a real revenue or audience milestone].
-**Audience emotion:** "I want to see if he does it."
+**The goal (confirmed by Jac):** post every day for 100 days. The challenge is **consistency itself**, so every `DAY N/100` is a check-in on one question: *is he still showing up?*
+**Optional stake (recommended, only if you're comfortable):** show your real follower count on day 1 and promise to show it again on day 100, *whatever it is*. That isn't a promise of growth. It's a promise to be honest about the result, and it gives people a reason to come back.
+**Audience emotion:** "I've quit things too. I want to see if he makes it."
 **Hook options:**
-- A. "In [X] days I'm trying to [REAL GOAL]. Here's why that scares me." ← **recommended:** stakes up front
-- B. "I'm putting this in public so I can't quietly give up on it."
-- C. "Here's what these hundred days are actually for."
+- A. "I'm trying to post every day for 100 days. Here's why that's harder than it sounds." ← **recommended:** clear stakes, no claim of success
+- B. "I'm putting this in public so I can't quietly quit."
+- C. "Most people quit by day [X]. I'm on day [N]."
 
-**Script:**
-> In [X] days, I'm trying to [REAL GOAL].
-> Right now I'm at [REAL STARTING POINT, e.g. "zero"].
-> I'm saying it out loud because when I keep goals to myself, I quietly let them go. [Only if true.]
-> I don't know if I'll hit it. Genuinely.
-> But I'll show you every day: what I tried, what worked, and what didn't.
-> If I miss it, you'll see that too.
-> Day [N]. Come back on day 100.
+**Script (to camera):**
+> I'm trying to post every single day for 100 days.
+> Not because I think I'll go viral. Because I want to see if I can actually stay consistent at something.
+> [REAL, one line, only if true: e.g. "I've started a lot of things and quietly stopped." / "Every time it's been just me holding me accountable, I've let it slide."]
+> So I'm doing it in public. If I miss a day, you'll see it.
+> Right now I've got [REAL: follower count] followers. On day 100, I'll show you the number again, whatever it is.
+> Some of these posts will be good. Some won't. That's kind of the point.
+> Day [N] of 100. Come back tomorrow.
 
-**Visuals:** to camera. Show the goal written on paper or a whiteboard. That object becomes recurring and can appear in every Honest Sunday.
-**Ending:** "Come back on day 100." It's a reason to follow, and it doesn't beg.
-**Caption:** `pinning this so I can't pretend I never said it. [GOAL] by day 100.`
-**Test hypothesis:** this becomes your best follows-per-1,000-reach post. Pinning it should also lift profile visit → follow rate (H4).
-
----
+**Visuals:** to camera. Write `100` on paper and cross off each day. That paper becomes a recurring object you show briefly in every Honest Sunday.
+**Ending:** "Come back tomorrow." Simple, and it's the whole premise.
+**Caption:** `100 days. every day. pinning this so I can't pretend I never said it. what's something you've been trying to stay consistent with?`
+**Test hypothesis:** this becomes your best follows-per-1,000-reach post. Pinning it lifts profile visit → follow rate (H4).
+**Truth check:** the goal is real ✓. The bracketed lines only go in if true.
 
 ## Script 3: Nobody posts this part #1
 **Concept:** the day where nothing happened. **Only post this on a day that was really like that.**

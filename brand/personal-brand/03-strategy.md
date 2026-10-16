@@ -53,7 +53,7 @@ Three words to own: **honest · still building · every day**.
 | Occasional | C: Honest perspectives | At most 1 in 7 posts, and framed as "I think," not as universal truths |
 
 ### Three recurring series
-1. **`DAY N/100` (daily, the backbone).** Keep the counter, change what's inside it. Each day is one honest update, observation or small moment from building, not a quote. It now needs a **real goal** (Reel 2). *Purpose: community (a reason to come back).* Model: [Ryan Trahan](https://creatordb.app/creatorstats/ryan-trahan/)'s numbered challenge series.
+1. **`DAY N/100` (daily, the backbone).** Keep the counter, change what's inside it. Each day is one honest update, observation or small moment from building, not a quote. **The goal is consistency itself: post every day for 100 days** (Reel 2). Every post is a check-in on whether you're still showing up. *Purpose: community (a reason to come back).* Model: [Ryan Trahan](https://creatordb.app/creatorstats/ryan-trahan/)'s numbered challenge series.
 2. **`nobody posts this part` (2× a week).** The unglamorous moments: a day where nothing happened, the post that flopped, the awkward family question. *Purpose: reach (people share these because they recognize themselves).*
 3. **`honest sunday` (weekly).** What I did this week, what worked, what didn't, what's next, with real numbers when you're comfortable. *Purpose: trust (your proof that you're documenting, not performing).*
 
@@ -70,7 +70,7 @@ You've committed to daily posts publicly, and breaking that streak would cost tr
 | # | Concept | Pillar | Purpose | Format | Needs from you |
 |---|---|---|---|---|---|
 | 1 | **Why I'm changing my 100-day challenge:** I posted quotes I'd scroll past | D | T | To camera | Number of days so far |
-| 2 | **What these 100 days are actually for:** the goal and the stakes | D | Cm | To camera, pinned | **A real, measurable goal** |
+| 2 | **What these 100 days are actually for:** posting every day for 100 days, with follower count shown on day 1 and day 100 | D | Cm | To camera, pinned | Your current follower count |
 | 3 | **Nobody posts this part #1:** a day where nothing happened | A | C | Voiceover over footage | A real "nothing" day |
 | 4 | **Feeling behind people my age** | B | R | To camera | A real comparison that stings |
 | 5 | **"It's going good":** what I tell family vs what's actually happening | A | R | To camera, split-screen | Is this true for you? |
@@ -109,7 +109,7 @@ You've committed to daily posts publicly, and breaking that streak would cost tr
 - **H1:** Honest journey reels (D/B) get more **shares per 1,000 reach** than your quote reels did. *Needs Insights for your existing quote reels as the baseline.*
 - **H2:** To-camera anchor reels convert better than voiceover reels (**follows per 1,000 reach**), because people follow a face.
 - **H3:** Voiceover reels reach about as many non-followers as to-camera reels at half the effort.
-- **H4:** Giving the 100 days a real goal increases return viewing (rising **follower share of views** on Day N reels).
+- **H4:** Making the consistency goal explicit (with day-1/day-100 follower numbers) increases return viewing (rising **follower share of views** on Day N reels).
 - **H5:** "Nobody posts this part" reels get the highest share rate of any series.
 
 ## Stage gates (defined by evidence, not follower counts)
