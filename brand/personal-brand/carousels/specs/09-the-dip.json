@@ -1,0 +1,37 @@
+{
+  "chapter": "I looked it up",
+  "tag": "SWIPE →",
+  "handle": "@jac_lavoiee",
+  "darkness": 0.6,
+  "caption": "the start was exciting. the result will be too.\n\nright now it's just the middle.\n\nare you in the dip right now? 👇",
+  "slides": [
+    {
+      "text": "why does the middle\nfeel so boring?",
+      "image": "treadmill black white routine running in place"
+    },
+    {
+      "type": "search",
+      "query": "what is the dip seth godin",
+      "result": "Seth Godin calls it **the dip:** the long, hard stretch between starting something and getting good at it, where most people quit.",
+      "source": "Seth Godin, The Dip (2007)",
+      "image": "notebooks papers planning"
+    },
+    {
+      "text": "the beginning is fun because it's new\nthe end is fun because it's working",
+      "image": "running shoe close dark first step"
+    },
+    {
+      "text": "the middle is just\nyou showing up",
+      "image": "headphones dumbbells mat routine minimal"
+    },
+    {
+      "text": "most people read the dip as a sign to stop\nmaybe it's a sign you're actually in it",
+      "image": "hooded figure sitting dark gym exhaustion"
+    },
+    {
+      "text": "if it feels boring right now\nyou might be exactly where you're supposed to be",
+      "image": "pull up silhouette sunset rise rebirth"
+    }
+  ],
+  "id": "09-the-dip"
+}

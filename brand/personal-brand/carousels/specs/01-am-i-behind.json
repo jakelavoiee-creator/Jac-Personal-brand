@@ -1,0 +1,44 @@
+{
+  "id": "01-am-i-behind",
+  "chapter": "I looked it up",
+  "tag": "SWIPE →",
+  "handle": "@jac_lavoiee",
+  "darkness": 0.6,
+  "caption": "i really thought everyone my age was ahead of me.\n\nturns out the feed is built from exceptions.\n\nhow old are you, and what are you building? 👇",
+  "slides": [
+    {
+      "text": "everyone my age is ahead of me\nso i looked it up",
+      "image": "isolation dark night alone exhaustion doubt hooded"
+    },
+    {
+      "type": "search",
+      "query": "average age of a successful startup founder",
+      "result": "A study of 2.7 million US founders found the average age of the most successful high-growth founders was **45 years old.**",
+      "source": "Azoulay, Jones, Kim & Miranda, AER: Insights (2020)",
+      "image": "notebooks papers study search planning"
+    },
+    {
+      "text": "forty-five\nnot nineteen",
+      "image": "city towers night isolation distance"
+    },
+    {
+      "type": "search",
+      "query": "how old was colonel sanders when he started kfc",
+      "result": "Harland Sanders started franchising Kentucky Fried Chicken in 1952, at **62 years old.**",
+      "source": "KFC company history",
+      "image": "window foggy city dark room waiting"
+    },
+    {
+      "text": "the feed shows you the exceptions\nand makes you think they're the rule",
+      "image": "wet crosswalk city night direction lanes"
+    },
+    {
+      "text": "i'm not behind\ni'm just not done yet",
+      "image": "fog forest road lone runner path"
+    },
+    {
+      "text": "send this to the friend\nwho keeps saying they're too late",
+      "image": "lone figure under light shaft water awakening"
+    }
+  ]
+}

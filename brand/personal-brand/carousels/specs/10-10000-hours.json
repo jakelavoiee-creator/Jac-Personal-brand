@@ -1,0 +1,40 @@
+{
+  "chapter": "I looked it up",
+  "tag": "SWIPE →",
+  "handle": "@jac_lavoiee",
+  "darkness": 0.6,
+  "caption": "i used to think i was 10,000 hours away from my life starting.\n\nturns out the rule isn't even a rule.\n\nwhat are you practicing right now? 👇",
+  "slides": [
+    {
+      "text": "10,000 hours to master anything\nso i looked it up",
+      "image": "watch pov dark run time discipline"
+    },
+    {
+      "type": "search",
+      "query": "where does the 10000 hour rule come from",
+      "result": "It was popularized by Malcolm Gladwell's Outliers, based on research by psychologist **Anders Ericsson.**",
+      "source": "Malcolm Gladwell, Outliers (2008)",
+      "image": "glasses on book study knowledge"
+    },
+    {
+      "type": "search",
+      "query": "is the 10000 hour rule true",
+      "result": "Ericsson said 10,000 was an average, not a rule. A 2014 analysis found practice explained only **about 12%** of differences in performance.",
+      "source": "Macnamara, Hambrick & Oswald, Psychological Science (2014)",
+      "image": "notebooks papers study"
+    },
+    {
+      "text": "so it's not about the hours\nit's about what you do with them",
+      "image": "hands on barbell setup grip effort"
+    },
+    {
+      "text": "you're not 9,000 hours away\nfrom your life starting",
+      "image": "night run reflective light alone"
+    },
+    {
+      "text": "stop counting\nstart paying attention",
+      "image": "ghost blur runner glow soul awakening"
+    }
+  ],
+  "id": "10-10000-hours"
+}

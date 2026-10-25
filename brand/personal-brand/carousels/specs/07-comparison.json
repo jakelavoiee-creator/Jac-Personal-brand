@@ -1,0 +1,37 @@
+{
+  "chapter": "I looked it up",
+  "tag": "SWIPE →",
+  "handle": "@jac_lavoiee",
+  "darkness": 0.6,
+  "caption": "i'm comparing my middle to everyone else's finish line.\n\nmaybe you are too.\n\nsend this to someone who's been too hard on themselves lately.",
+  "slides": [
+    {
+      "text": "why does everyone else's life\nlook better than mine?",
+      "image": "city towers night isolation distance"
+    },
+    {
+      "type": "search",
+      "query": "why do we compare ourselves to others",
+      "result": "Psychologist Leon Festinger proposed that people judge themselves by **comparing to others,** especially when there's no objective way to measure.",
+      "source": "Festinger, Human Relations (1954)",
+      "image": "glasses on book study"
+    },
+    {
+      "text": "and building something has no objective measure\nso we compare",
+      "image": "standing on track lanes comparison identity"
+    },
+    {
+      "text": "you see their highlights\nthey don't see your behind the scenes",
+      "image": "night run under bridge alone city"
+    },
+    {
+      "text": "compare yourself to who you were last year\nthat's the only race you're actually in",
+      "image": "blur runner black white track motion"
+    },
+    {
+      "text": "send this to someone\nwho's been too hard on themselves lately",
+      "image": "back facing horizon reflection peace dawn"
+    }
+  ],
+  "id": "07-comparison"
+}

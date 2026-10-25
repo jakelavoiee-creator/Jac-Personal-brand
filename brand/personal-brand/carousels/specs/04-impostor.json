@@ -1,0 +1,40 @@
+{
+  "chapter": "I looked it up",
+  "tag": "SWIPE →",
+  "handle": "@jac_lavoiee",
+  "darkness": 0.6,
+  "caption": "that feeling that you're faking it and someone's about to find out?\n\nit has a name. and it shows up in the people you'd least expect.\n\nwhen do you feel it most? 👇",
+  "slides": [
+    {
+      "text": "if you feel like a fraud\nread this",
+      "image": "hooded man shadow gym identity mask"
+    },
+    {
+      "type": "search",
+      "query": "what is impostor syndrome",
+      "result": "First described in 1978 by psychologists Pauline Clance and Suzanne Imes, in **high-achieving women** who believed they weren't as capable as others thought.",
+      "source": "Clance & Imes, Psychotherapy: Theory, Research & Practice (1978)",
+      "image": "glasses on book study knowledge"
+    },
+    {
+      "type": "search",
+      "query": "how common is impostor syndrome",
+      "result": "A review of 62 studies found rates anywhere from **9% to 82%,** depending on the group.",
+      "source": "Bravata et al., Journal of General Internal Medicine (2020)",
+      "image": "notebooks papers study search"
+    },
+    {
+      "text": "it was first found in people\nwho were already succeeding",
+      "image": "window foggy city dark room"
+    },
+    {
+      "text": "feeling like a fraud isn't proof you are one\nsometimes it means you're growing",
+      "image": "shadow self overhead runner long shadow"
+    },
+    {
+      "text": "the feeling doesn't leave first\nyou go first",
+      "image": "silhouette in window frame freedom breaking out"
+    }
+  ],
+  "id": "04-impostor"
+}

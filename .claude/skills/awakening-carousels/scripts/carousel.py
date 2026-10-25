@@ -355,21 +355,89 @@ def compose(bg, slide, idx, total, spec):
     age, ch = spec.get("age"), spec.get("chapter", "").upper()
     if cover:
         # the series label sits under the headline, exactly like "DAY 1/100" on the reels
-        tag = f"AGE {age}/24" if age else ch
+        tag = spec.get("tag") or (f"AGE {age}/24" if age else ch)
         y_tag = y + int(size * 0.35)
         d.text(((W - d.textlength(tag, font=lab)) // 2, y_tag), tag, font=lab, fill=INK)
         if ch and age:
             sub = label(22)
             tracked(d, ((W - tracked_len(d, ch, sub, 4)) // 2, H - 120), ch, sub, DIM, 4)
     else:
-        meta = label(22)
-        left = f"AGE {age} · {ch}" if age else ch
-        tracked(d, (MARGIN, H - 100), left, meta, DIM, 3)
-        num = f"{idx + 1:02d}/{total:02d}"
-        tracked(d, (W - MARGIN - tracked_len(d, num, meta, 3), H - 100), num, meta, DIM, 3)
+        footer(d, idx, total, spec)
+    return im
+
+
+def footer(d, idx, total, spec):
+    age, ch = spec.get("age"), spec.get("chapter", "").upper()
+    meta = label(22)
+    left = f"AGE {age} · {ch}" if age else ch
+    tracked(d, (MARGIN, H - 100), left, meta, DIM, 3)
+    num = f"{idx + 1:02d}/{total:02d}"
+    tracked(d, (W - MARGIN - tracked_len(d, num, meta, 3), H - 100), num, meta, DIM, 3)
     if spec.get("handle") and idx == total - 1:
         hl = label(22); h = spec["handle"].upper()
         tracked(d, ((W - tracked_len(d, h, hl, 3)) // 2, 130), h, hl, DIM, 3)
+
+
+def body(size, weight=400):
+    return font("OpenSans-VF.ttf", size, weight=weight)
+
+def compose_search(bg, slide, idx, total, spec):
+    """'I looked it up' slide, echoing the search-chain reels: a search bar with the query,
+    a result card with the key phrase highlighted in the brand blue (**like this**), and the source."""
+    im = scrim(bg, "center")
+    im = Image.blend(im, Image.new("RGB", (W, H), (0, 0, 0)), 0.5)   # quieter background for reading
+    d = ImageDraw.Draw(im, "RGBA")
+    cw = W - 2 * MARGIN
+
+    # result text -> words tagged highlighted or not
+    tokens = []
+    for i, chunk in enumerate(slide["result"].split("**")):
+        tokens += [(w, i % 2 == 1) for w in chunk.split()]
+    rf = body(36); pad = 44; lh = 58
+    lines, line, lw = [], [], 0
+    space = d.textlength(" ", font=rf)
+    for w, hi in tokens:
+        ww = d.textlength(w, font=rf)
+        if line and lw + space + ww > cw - 2 * pad:
+            lines.append(line); line, lw = [], 0
+        line.append((w, hi)); lw += (space if lw else 0) + ww
+    if line: lines.append(line)
+
+    qf = body(32); bar_h = 96
+    lab = label(22)
+    card_h = pad * 2 + lh * len(lines)
+    src_h = 60 if slide.get("source") else 0
+    block = 40 + bar_h + 56 + 40 + card_h + src_h
+    y = (H - block) // 2
+
+    tracked(d, (MARGIN, y), "I SEARCHED", lab, DIM, 4); y += 40
+    d.rounded_rectangle((MARGIN, y, MARGIN + cw, y + bar_h), radius=bar_h // 2,
+                        fill=(28, 28, 31, 235), outline=(255, 255, 255, 46), width=2)
+    cx, cy = MARGIN + 52, y + bar_h // 2                               # magnifier icon
+    d.ellipse((cx - 14, cy - 16, cx + 10, cy + 8), outline=(255, 255, 255, 170), width=3)
+    d.line((cx + 7, cy + 5, cx + 18, cy + 16), fill=(255, 255, 255, 170), width=4)
+    q = slide["query"]
+    while d.textlength(q, font=qf) > cw - 130: q = q[:-2] + "…"
+    d.text((MARGIN + 92, cy), q, font=qf, fill=INK, anchor="lm"); y += bar_h + 56
+
+    tracked(d, (MARGIN, y), "WHAT I FOUND", lab, DIM, 4); y += 40
+    d.rounded_rectangle((MARGIN, y, MARGIN + cw, y + card_h), radius=30, fill=(16, 16, 18, 238))
+    ty = y + pad
+    for ln in lines:
+        x = MARGIN + pad
+        for j, (w, hi) in enumerate(ln):
+            ww = d.textlength(w, font=rf)
+            nxt_hi = j + 1 < len(ln) and ln[j + 1][1]
+            if hi:   # highlight bar, joined across consecutive highlighted words
+                d.rectangle((x - 6, ty - 4, x + ww + (space + 6 if nxt_hi else 6), ty + lh - 12), fill=ACCENT + (255,))
+            d.text((x, ty), w, font=rf, fill=(12, 22, 32) if hi else INK)
+            x += ww + space
+        ty += lh
+    y += card_h + 26
+    if slide.get("source"):
+        sf = body(22)
+        d.text((MARGIN, y), "Source: " + slide["source"], font=sf, fill=DIM)
+    footer(d, idx, total, spec)
     return im
 
 
@@ -383,11 +451,11 @@ def cmd_render(a):
     random.seed(spec["id"])
     used, slides, plan = set(), spec["slides"], []
     for i, s in enumerate(slides):
-        name = pick_image(s.get("image", s["text"]), lib, used)
+        name = pick_image(s.get("image") or s.get("text") or s.get("query", ""), lib, used)
         used.add(name)
         bg = grade(Image.open(LIB / name), darkness=s.get("darkness", spec.get("darkness", 0.55)),
                    warmth=spec.get("warmth", 0.0))
-        im = compose(bg, s, i, len(slides), spec)
+        im = (compose_search if s.get("type") == "search" else compose)(bg, s, i, len(slides), spec)
         p = out / f"{i + 1:02d}.png"
         im.save(p, optimize=True)
         plan.append({"slide": i + 1, "image": name, "query": s.get("image", ""), "tags": lib[name].get("tags", [])})

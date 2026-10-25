@@ -1,0 +1,40 @@
+{
+  "chapter": "I looked it up",
+  "tag": "SWIPE →",
+  "handle": "@jac_lavoiee",
+  "darkness": 0.6,
+  "caption": "day 1 of my 100 days, i posted: be who you were meant to be, not told to be.\n\ni didn't know there was research behind it.\n\nwhat are you putting off? 👇",
+  "slides": [
+    {
+      "text": "what do people regret most\nat the end of their lives?",
+      "image": "angel statue fog grief faith"
+    },
+    {
+      "type": "search",
+      "query": "most common regrets of the dying",
+      "result": "A palliative care nurse wrote that the most common regret was: **\"I wish I'd had the courage to live a life true to myself,** not the life others expected of me.\"",
+      "source": "Bronnie Ware, The Top Five Regrets of the Dying (2012)",
+      "image": "window snowy forest dark room waiting"
+    },
+    {
+      "type": "search",
+      "query": "do people regret action or inaction more",
+      "result": "Over the long run, people regret **the things they didn't do** more than the things they did.",
+      "source": "Gilovich & Medvec, Psychological Review (1995)",
+      "image": "open book lap quiet study"
+    },
+    {
+      "text": "not the risk\nthe never trying",
+      "image": "hand entering water threshold first step"
+    },
+    {
+      "text": "be who you were meant to be\nnot told to be",
+      "image": "silhouette in window frame freedom breaking out"
+    },
+    {
+      "text": "whatever you keep putting off\nthis is your sign",
+      "image": "headlamp runners dark road light path"
+    }
+  ],
+  "id": "08-regret"
+}

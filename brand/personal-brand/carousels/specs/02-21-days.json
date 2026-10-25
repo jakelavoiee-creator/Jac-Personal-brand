@@ -1,0 +1,44 @@
+{
+  "chapter": "I looked it up",
+  "tag": "SWIPE →",
+  "handle": "@jac_lavoiee",
+  "darkness": 0.6,
+  "caption": "i was waiting for day 21 to feel easy.\n\nit didn't. now i know why.\n\nwhat habit are you in the hard part of right now? 👇",
+  "slides": [
+    {
+      "text": "they said it takes 21 days to build a habit\nso i looked it up",
+      "image": "alarm list sheets waking up early routine"
+    },
+    {
+      "type": "search",
+      "query": "where does the 21 day habit rule come from",
+      "result": "It traces back to Maxwell Maltz's 1960 book Psycho-Cybernetics, which said change takes **a minimum of about 21 days.**",
+      "source": "Maxwell Maltz, Psycho-Cybernetics (1960)",
+      "image": "glasses on book study knowledge"
+    },
+    {
+      "text": "a minimum\nsomewhere along the way it became a promise",
+      "image": "watch wrist dark grey time discipline"
+    },
+    {
+      "type": "search",
+      "query": "how long does it actually take to form a habit",
+      "result": "In a study of 96 people, habits took **about 66 days** on average to become automatic, anywhere from 18 to 254 days.",
+      "source": "Lally et al., European Journal of Social Psychology (2009)",
+      "image": "track at night floodlight rain discipline"
+    },
+    {
+      "text": "so if day 21 still feels like work\nnothing is wrong with you",
+      "image": "running blur dark night run motion"
+    },
+    {
+      "text": "i'm still in the part where it's not automatic\nstill showing up",
+      "image": "phone alarms dark bedding waking early"
+    },
+    {
+      "text": "day 66 is further than you think\nbut closer than yesterday",
+      "image": "fog forest road lone runner path"
+    }
+  ],
+  "id": "02-21-days"
+}

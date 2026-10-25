@@ -1,0 +1,44 @@
+{
+  "chapter": "I looked it up",
+  "tag": "SWIPE →",
+  "handle": "@jac_lavoiee",
+  "darkness": 0.6,
+  "caption": "we only talk about the 3 years everyone remembers.\n\nnot the 30 that came before.\n\nif you're in your quiet years, they're not wasted. ✝",
+  "slides": [
+    {
+      "text": "before anyone knew his name\nthere were 30 quiet years",
+      "image": "window light dark room stillness waiting"
+    },
+    {
+      "type": "search",
+      "query": "how old was jesus when he started his ministry",
+      "result": "Luke 3:23 says Jesus was **about thirty years old** when he began his ministry.",
+      "source": "Luke 3:23",
+      "image": "open book in lap quiet"
+    },
+    {
+      "type": "search",
+      "query": "what did jesus do before his ministry",
+      "result": "In Mark 6:3 the people of his hometown call him **\"the carpenter.\"** Ordinary work, in a small town.",
+      "source": "Mark 6:3",
+      "image": "hands clasped calm stillness"
+    },
+    {
+      "text": "thirty years of ordinary days\nthree years everyone remembers",
+      "image": "snowy pines winter stillness quiet"
+    },
+    {
+      "text": "we only post the three\nnobody posts the thirty",
+      "image": "city street night alone"
+    },
+    {
+      "text": "if you're in your quiet years\nthey aren't wasted",
+      "image": "lake dock dawn new beginning clarity"
+    },
+    {
+      "text": "maybe the quiet years\nare where you're being built",
+      "image": "lone figure under light shaft water awakening grace"
+    }
+  ],
+  "id": "06-thirty-years"
+}

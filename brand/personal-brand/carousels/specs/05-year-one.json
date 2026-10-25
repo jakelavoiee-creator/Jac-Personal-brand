@@ -1,0 +1,44 @@
+{
+  "chapter": "I looked it up",
+  "tag": "SWIPE →",
+  "handle": "@jac_lavoiee",
+  "darkness": 0.6,
+  "caption": "everyone warns you about year one.\n\nnobody warns you about the years after.\n\nwhat year are you in? 👇",
+  "slides": [
+    {
+      "text": "everyone says most businesses fail in year one\nso i looked it up",
+      "image": "empty bright gym start alone"
+    },
+    {
+      "type": "search",
+      "query": "what percent of new businesses fail in the first year",
+      "result": "About **1 in 5** new US businesses close within their first year.",
+      "source": "U.S. Bureau of Labor Statistics, Business Employment Dynamics",
+      "image": "laptop dark room late nights work"
+    },
+    {
+      "type": "search",
+      "query": "what percent of businesses survive 5 years",
+      "result": "Roughly **half** are still open after five years.",
+      "source": "U.S. Bureau of Labor Statistics, Business Employment Dynamics",
+      "image": "dark laptop headphones bed night focus"
+    },
+    {
+      "text": "so year one isn't where most people stop\nit's the years after",
+      "image": "treadmill by window running in place stuck"
+    },
+    {
+      "text": "the boring years\nthe ones nobody films",
+      "image": "dumbbells plate dark floor iron"
+    },
+    {
+      "text": "year one is excitement\nyear two is where you find out if you meant it",
+      "image": "sled push dark gym grit"
+    },
+    {
+      "text": "if you're in the middle years\nyou're in the part that counts",
+      "image": "pull up silhouette sunset rise rebuild"
+    }
+  ],
+  "id": "05-year-one"
+}

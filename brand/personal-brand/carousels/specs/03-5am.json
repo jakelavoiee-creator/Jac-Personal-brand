@@ -1,0 +1,37 @@
+{
+  "chapter": "I looked it up",
+  "tag": "SWIPE →",
+  "handle": "@jac_lavoiee",
+  "darkness": 0.6,
+  "caption": "i felt guilty every morning i didn't wake up at 5.\n\nthen i actually looked into it.\n\nare you a morning person or a night person? 👇",
+  "slides": [
+    {
+      "text": "every successful person wakes up at 5am\nright?",
+      "image": "alarm list sheets waking up early"
+    },
+    {
+      "type": "search",
+      "query": "does waking up early make you more successful",
+      "result": "Research hasn't shown that waking early **causes success.** Whether you're a morning or night person is partly in your genes.",
+      "source": "Jones et al., Nature Communications (2019), 697,828 people",
+      "image": "moon through bare branches dark night"
+    },
+    {
+      "text": "so the 5am club might just be\npeople who were already morning people",
+      "image": "street lamp foggy road night run"
+    },
+    {
+      "text": "the routine was never the secret\nshowing up was",
+      "image": "barbell in shaft of light discipline focus"
+    },
+    {
+      "text": "find the hours where you're actually you\nand protect them",
+      "image": "window snow dark room solitude"
+    },
+    {
+      "text": "send this to the friend\nwho feels guilty for sleeping in",
+      "image": "hands coffee dark morning ritual"
+    }
+  ],
+  "id": "03-5am"
+}
