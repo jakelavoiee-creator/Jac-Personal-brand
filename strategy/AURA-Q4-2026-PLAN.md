@@ -37,7 +37,7 @@ Prepared 27 Oct 2026 by Claude (advisor) for Jac. Built on 75 studied ad videos 
    > **US duties paid. No surprise fees at delivery.** Ships in 1–3 days · Most US orders arrive in 9 days · Free shipping over $100.
 
    Put the same line under the Add to Cart button. Every BitBranding offer audit ranks delivery and checkout friction ahead of creative. With duties paid and 1–3 day production, our "W" (wait time) score in the Clothing Offer Equation drops from ~7–8 to ~4 out of 10 once the page *says* so.
-3. **Real on-body photos.** ⚠ The product images look like rendered mockups: identical "TooCreative…png" filenames at 765×1070 across products, no alt text. The homepage hero is an AI-generated image (`ChatGPT_Image_Aug_30…`). You *do* have real photos (`IMG_0577`, `image00007`… in the homepage gallery); move the best on-body shots to the product pages. Per product you need:
+3. **Real on-body photos.** ⚠ The product images look like rendered mockups: identical "TooCreative…png" filenames at 765×1070 across products. (Alt text ✅ added 27 Oct to all 106 product images + 13 homepage gallery photos.) The homepage hero is an AI-generated image (`ChatGPT_Image_Aug_30…`). You *do* have real photos (`IMG_0577`, `image00007`… in the homepage gallery); move the best on-body shots to the product pages. Per product you need:
    - front on body
    - back print on body
    - a close-up of print and fabric
