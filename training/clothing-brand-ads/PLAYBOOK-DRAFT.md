@@ -1,4 +1,6 @@
-# Clothing Brand Meta Ads Playbook (DRAFT v4)
+# Clothing Brand Meta Ads Playbook (DRAFT v5)
+
+v5 (11:50 UTC): +8 videos, including Meta for Business's official Advantage+ Sales guidance, the Advantage+ Sales vs Shopping changes, Andromeda/GEM mechanics, BitBranding's newest method, TikTok Shop as a UGC engine, returns economics, and an apparel retention case study. 69 videos total; 3 failed (Gemini had no access).
 
 v4 (09:30 UTC): +15 videos, including all 11 re-watches with the full model. Small-budget structure revised (1 campaign / 1 ad set), weekly decision cadence for new accounts, tracking verification, UGC and creator partnerships, AI shoot locks, and a **Never-do list** (§10). 61 videos total.
 v3 (07:30 UTC): +13 videos covering hooks, retargeting, Advantage+ Sales, the product page, drops and pre-orders, and Klaviyo (46 total at full-model quality; 11 more are being re-watched).
@@ -87,6 +89,10 @@ Why one ad set: with ~20 purchases a week, 3 ad sets get ~7 each and none leaves
 - Split concepts into their own ad sets **after** the account reaches about 50 purchases a week (the BitBranding concept-ad-set structure in the next bullet).
 - To steer age without hard limits, use **Value Rules** (e.g. −90% bid on non-target ages) rather than turning Advantage+ off [_OSs0Jgv4L8 03:25].
 - Separate campaigns only for different product **categories**, locations or offers, never for colour variants [13s-G9Uj51A 18:58].
+- **Advantage+ Sales is becoming the default.** About half of accounts now go straight into an Advantage+ Sales setup when you pick Sales. It requires the budget at **campaign level**; switching to ad-set budgets turns the Advantage+ label off. Unlike the old Advantage+ Shopping campaigns, it **allows several ad sets** (use them as creative-batch folders) [2bAG9xURZvQ 01:00–05:10]. The 1-ad-set starter above works as-is inside an Advantage+ Sales campaign.
+- **Meta's official levers** for new-customer acquisition: Budget, Audience, Placements. Add an **existing-customer exclusion** when the goal is purely new buyers (peaks, drops) [-JHTDBW30_s 00:11–01:03]. See the retargeting row in §8.
+
+**How Meta's delivery works** (so the creative rules make sense) [x1b4h42HTG8 01:51–05:41]: *Andromeda* retrieves candidate ads from millions; *GEM* predicts what this user will act on; *Lattice* picks the final ad. Retrieval works on what the creative shows and says. That's why diversity and creative-as-targeting matter more than any audience setting, and why a higher AOV (bundles) lets you outbid competitors in the auction.
 - Test copy using the **5 primary texts / 5 headlines** inside each ad, not by duplicating ads [13s-G9Uj51A 12:41].
 
 **Later additions, in order, as spend grows:**
@@ -222,6 +228,7 @@ Why one ad set: with ~20 purchases a week, 3 ad sets get ~7 each and none leaves
 ---
 
 ## 6. Offer and retention levers
+- **Value-stacked first-order offer** (new customers only), instead of site-wide 30–50% sales: e.g. a $139 retail product at $69 + free shipping + a free bonus item. Built in an offer calculator so order #1 still clears about $15 profit after CAC; the profit then comes from $100–150 of repeat spend through 7-day email/SMS flows [XSLffs4nGmw 10:13–12:08]. Repeated deep sales are what pushed that client from $1.5M down to $1M a year [XSLffs4nGmw 01:27, 03:22].
 - Prefer bundles and gifts over flat discounts. Flat 20% off is risky (needs about +470% volume to break even). Buy 2 Get 1, Buy 3 Get 1, BOGO 50% and gift-with-purchase are safe [Ng-tbllMb8g 13:47–14:14].
 - Pricing table: single (strikethrough) / 2-pack "Most popular" + free shipping / 3-pack [kMlgNR-0djA 39:58].
 - Price objections → run a value-justification campaign (2 IG posts + 1 email + 1 ad + 1 PDP update) instead of discounting [XFahxHZUS_c 20:30].
@@ -230,6 +237,19 @@ Why one ad set: with ~20 purchases a week, 3 ad sets get ~7 each and none leaves
 - Drop ritual: Day −3 teaser → Day −1 reveal Reel → Drop-day "It's live" story [W-QZGhQWrP0 17:59].
 - Post-purchase: ask buyers to tag the brand in the confirmation email, and run a 3-email second-purchase sequence within 45 days [rhP-S30Rmqo 04:37, NzcjnNbjoZY 17:01].
 - Health benchmarks: MER 3–5× healthy, repeat rate ≥20% at 30 days, 4% site CVR as an aspirational target [NzcjnNbjoZY 16:05–17:34, W-QZGhQWrP0 18:35].
+
+**Returns and fit (profit lives after the return window)** [x9colvKlmhc, a low-authority source citing third-party stats]:
+- Apparel returns commonly run **40%+**, and processing can cost up to 66% of the item price. Judge ROAS on **net sales after returns**.
+- Add **fit notes** on every PDP ("runs small, size up", "oversized cut", "stretch fabric"), sizing videos, and review-based fit insight.
+- Analyse returns per SKU to catch bad materials or suppliers. Watch for **bracketing** (several sizes ordered, one kept).
+- **Never scale a garment until a physical sample is fit-verified.** A fit problem at scale becomes a mass-return event.
+- *(Still wanted: a stronger source with real apparel return data.)*
+
+**Retention before scale** [i5EdMV0g-2s]: Perfect White Tee lifted LTV about 60–70% through segmented Klaviyo flows, list hygiene (bots hitting the loyalty sign-up wrecked deliverability) and "reply-to-buy" SMS, and only *then* raised Meta spend. Their full-price months beat Black Friday on profit [i5EdMV0g-2s 02:30–13:58]. Verbal claims only; no dashboards shown.
+
+**TikTok as a second channel and UGC engine** [ijeGs0XCwso, Oh4kY-GykvM]:
+- TikTok Shop + affiliates = a creator army whose videos feed Meta Partnership ads. Vet creators on post rate >70% and real shoppable-video revenue. Import reviews to the TikTok listing before outreach. Move any video with a strong GMV-per-view to Meta.
+- Organic recipe: batch 21 clips of 5–10 seconds in one hour, post 3 a day, 9 relatable niche/"inside joke" posts for every 1 product post. Low-fi beats polished [Oh4kY-GykvM 03:44–07:23].
 
 **Drops** [hRWOsZbsCD0, 8tMm_XZA0HU]:
 - Content mix: 70% identity/value, 30% product. Four content types: studio, lifestyle, UGC on bodies, macro product details.
@@ -280,7 +300,8 @@ Why one ad set: with ~20 purchases a week, 3 ad sets get ~7 each and none leaves
 | Test and scale together? | One CBO does both [66GBrizQebM, 10eQ39SCRN4] | Separate testing campaign, or winners eat the new ads' spend [QoGFOGEqijw 03:10, Antonio Ventre/Skaleit structure 4] | One CBO at launch (not enough budget to split). Add a separate test campaign once a proven winner takes >70% of spend |
 | CBO vs ABO | CBO always; ABO is "inefficient" under $300/day [daWXtGJmgls 04:52] | ABO for testing so every set gets spend [fSGnE6-yM4A 01:10, kfE5jYBymBI 09:54] | CBO, using the forced-impression method [rBD9xJswb5k] when fair tests matter |
 | Bid strategy | Highest volume [most] | Test "Highest value" for higher-AOV buyers [fSGnE6-yM4A 02:40] | Highest volume first. Test Highest value once there are 50+ purchases/week |
-| Retargeting | Built into broad campaigns; separate only for VIP offers [YZ_zNzXHOio] · 5–8% retention ABO [WpsFxcqNQrg] | Prospecting excludes warm audiences, plus a separate retargeting campaign at frequency 5–8/week [NTx5NxEfAqc 08:03, 18:08] | Hybrid (Ben Heath): it has primary data (a $79k breakdown) and avoids bidding against ourselves. Map Audience Segments to watch the split |
+| Retargeting | Built into broad campaigns; separate only for VIP offers [YZ_zNzXHOio] · 5–8% retention ABO [WpsFxcqNQrg] | Prospecting excludes warm audiences, plus a separate retargeting campaign at frequency 5–8/week [NTx5NxEfAqc 08:03, 18:08] · **Meta's official advice:** exclude existing customers for net-new acquisition [-JHTDBW30_s 00:27] | Hybrid by default (primary data, no self-bidding). **Exclude existing customers during drops and peaks**, when the goal is new buyers and email/SMS reaches past buyers for free. Check *Breakdown → Audience segments* weekly; if more than ~30% of spend goes to existing customers, add the exclusion |
+| Funnel split | No funnel campaigns; Meta sequences on its own [10eQ39SCRN4, 13s-G9Uj51A] | Creative mix ~70–75% cold/entry, 10–15% social proof, ~5% hard CTA [XSLffs4nGmw 13:06] | Both hold: one campaign, but write the **creative mix** in roughly those proportions so Meta has an ad for every stage |
 | Minimum budget | $50/day floor [z4UAXut0kCA, jW1TLgpzrLA] | $10–20/day Advantage+ test, judged on CPM/CPC/ATC [YzTg8c5DnWI] | $50 if cash allows. If not, run the $10–20 micro-test on proxy metrics, but don't scale until purchases are real |
 | Advantage+ Sales vs manual | Advantage+ Sales from day 1 [YzTg8c5DnWI] | New pixel: run manual Sales first to feed the pixel, then switch [NTx5NxEfAqc 16:30] | Manual CBO first. Consider Advantage+ Sales after ~50 purchases |
 | Attribution | 7d click / 1d view, *not* engaged view [kfE5jYBymBI 11:39] | Keep the default including engaged view; changing it hides data [NTx5NxEfAqc 05:10] | Optimize on 7d click / 1d view. Add a reporting column with engaged view for comparison |
@@ -308,6 +329,8 @@ These came up in sources I studied. I won't use them on Jac's account, whatever 
 | Getting around "PROTECTED" watermarks, or cloning competitor ads with your product swapped in | B7z0vcKS67k 01:25, 03:00 | Copyright and trade-dress risk. Model the structure, never the assets |
 | AI avatars or voices posing as real customers giving testimonials | warned in oBzZFFBwVC0 26:12 | A fake endorsement under FTC rules. AI is fine for product visuals, never as a fake reviewer |
 | Selling from AI renders of a garment that doesn't exist yet, without saying so | (inferred risk from GumUlP6UiSU) | Misrepresentation. Label it as a pre-order or concept, and match it to the real sample |
+| "Identity resolution" scripts that grab emails from shoppers who never submitted a form, then email them | XSLffs4nGmw 17:37 (Retention.com) | **Not without a legal and consent review** (CAN-SPAM/CASL, state privacy laws, Klaviyo terms). Default: only email people who opted in |
+| Optimizing for link clicks or landing-page views to "fix" CPM or frequency | warned in XSLffs4nGmw 14:52 | Meta then finds clickers, not buyers. Always optimize for Purchase |
 
 ## 11. Day-0 launch checklist for Jac
 1. [ ] Share brand basics: name, URL, hero product(s), price, COGS, shipping cost, fulfillment time.
@@ -336,5 +359,6 @@ These came up in sources I studied. I won't use them on Jac's account, whatever 
 - ✅ Closed in v3: hooks, the Motion creative-testing framework, drops and pre-orders, Klaviyo flows and pop-ups, Advantage+ Sales vs manual, retargeting.
 - ✅ Closed in v4: pixel/CAPI verification and EMQ, small-budget structure, Advantage+ audience, Claude + Ads Library, Shopify CRO, the operator cadence (Jar Builds), the organic flywheel, UGC briefs, partnership ads, and the AI shoot workflow. All 11 Lite notes were re-watched with the full model. The two Lite notes v2 had used (MzjvY4O9r-Q, kfE5jYBymBI) were confirmed: same numbers, and the 7.3× claim is still unbacked by account data.
 - ❌ Spending limits: the only video found (G5hAorYVS5M) was a suspicious extension, now on the Never-do list. Still open: the legitimate new-account limit and warm-up path.
-- ⏳ Queued: TikTok (ijeGs0XCwso, Oh4kY-GykvM) and returns (x9colvKlmhc, low authority).
+- ✅ Closed in v5: Advantage+ Sales (official plus practitioner), Andromeda/GEM mechanics, TikTok, returns (provisional), retention-before-scale.
+- ❌ Gemini had no access (403): a6-l6BD3dDg and bv8AsY0xkIk (Ben Heath), xl5a--Wuask (Marshall Crews). x1b4h42HTG8 was queued as Dara Denney, but the note names Savannah Sanchez on screen; the content is consistent with the topic, but treat its attribution as uncertain.
 - Still uncovered: sizing and returns reduction from a credible source, and Meta's own Advantage+ Sales documentation.
