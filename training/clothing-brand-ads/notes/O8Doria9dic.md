@@ -11,7 +11,7 @@ studied_at: 2026-10-27 03:12 UTC
 This guide outlines the "Meta Andromeda" scaling strategy as presented by Manel Gómez. It focuses on bypassing the "Ad Retrieval" bottleneck through high-volume creative diversification and high-integrity data signals.
 
 ## Title & channel
-* **Video:** [How To Scale With Meta Andromeda: Creative Diversification & Signal Quality Explained (With Examples)](https://www.youtube.com/watch?v=S0T09FidWjM)
+* **Video:** [How To Scale With Meta Andromeda: Creative Diversification & Signal Quality Explained (With Examples)](https://www.youtube.com/watch?v=O8Doria9dic)
 * **Channel:** Manel Gómez
 
 ## One-line thesis

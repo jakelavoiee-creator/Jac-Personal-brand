@@ -2,7 +2,7 @@
 url: https://youtu.be/rhP-S30Rmqo
 video_id: rhP-S30Rmqo
 title: (user-assigned)
-channel: 
+channel: Ray (per on-screen intro; likely Rayinthedarkk)
 why_studied: user-assigned
 watched_by: gemini-3.6-flash
 studied_at: 2026-10-27 01:53 UTC

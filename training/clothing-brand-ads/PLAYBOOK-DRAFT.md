@@ -1,6 +1,7 @@
-# Clothing Brand Meta Ads Playbook (DRAFT v1)
+# Clothing Brand Meta Ads Playbook (DRAFT v2)
 
-Synthesis of 27 studied videos (notes in `notes/<id>.md`, cited as `[id mm:ss]`).
+v2 (05:10 UTC): +6 videos on creative diversity, signal quality, and small-brand operators (33 total).
+Synthesis of 33 studied videos (notes in `notes/<id>.md`, cited as `[id mm:ss]`).
 Status: **draft**. It gets refined at every check-in as more videos land. The final version becomes `.claude/skills/clothing-brand-meta-ads/SKILL.md`.
 
 **North star:** profitable, compounding Meta growth for a clothing brand. Creative does the targeting, the offer does the converting, and the numbers make every scaling decision.
@@ -22,6 +23,7 @@ Status: **draft**. It gets refined at every check-in as more videos land. The fi
 Every serious source puts these ahead of campaign settings. Ads amplify what already works; they cannot fix a leaky offer [XFahxHZUS_c 00:45, s1wGNE_2TX4 00:31, W-QZGhQWrP0 18:52].
 
 1. **Tracking is live.** Business Manager with Page + Instagram + Ad Account + Dataset all cross-assigned. Shopify "Facebook & Instagram" app with data sharing set to **Maximum** (Pixel + Conversions API + Advanced Matching). Pixel ID in Shopify matches Business Settings [-h9OK0iuyWs 04:20–07:57].
+   - In Events Manager: **Automatic Advanced Matching ON**, data freshness **Real time**, browser and server events deduplicated. Target **Event Match Quality ≥ 9/10 on Purchase**. Weak signal makes every CPM more expensive [O8Doria9dic 12:15–14:45].
 2. **Unit economics known.** Break-even ROAS = price ÷ (price − COGS − shipping − fees − returns buffer). Worked example: $65 tee − $30 hard costs → $35 margin → **BE ROAS 1.86** [66GBrizQebM 03:26–04:36]. Target ~2.0+ for safety [daWXtGJmgls 18:21].
 3. **The offer passes the COE audit.** Score = (Style Aspiration × Quality/Fit confidence) ÷ (Wait time + Shopping friction + Price sensitivity). Fix the biggest denominator first. Scale only when the offer is strong [XFahxHZUS_c 01:46–07:41, Ng-tbllMb8g 15:11].
    - Fulfillment >5 business days → wait-time problem. Repeat rate <20% → fit/trust problem. >50% of orders on a code → price-sensitivity problem [XFahxHZUS_c 05:51, 21:16].
@@ -41,7 +43,8 @@ Every serious source puts these ahead of campaign settings. Ads amplify what alr
 - **Broad** targeting: country + age + gender only. No interest stacks, lookalikes or exclusions [daWXtGJmgls 06:53, 10eQ39SCRN4 22:48, 15Sgh3-xjRk 05:13, z4UAXut0kCA 02:30].
 - Ad sets are organized by **creative concept**, never by audience [66GBrizQebM 07:16, mYtqeeW7NiU 01:36, z4UAXut0kCA 01:48].
 - Consolidate: **one CBO** under $100/day; at most **two** above that (Prospecting CBO + category-segmented DPA CBO) [10eQ39SCRN4 11:08–11:15].
-- Attribution: 7-day click / 1-day view.
+- Attribution: 7-day click / 1-day view. **Not** "engaged view", which inflates results with scrollers [kfE5jYBymBI 11:39].
+- No end date on ad sets; it caps delivery [jW1TLgpzrLA 02:48]. For carousels, keep "Highlight carousel card" **on** and check that 1:1 crops don't cut off the garment [jW1TLgpzrLA 03:55, 08:05].
 - Turn **off** Advantage+ creative enhancements (music, touch-ups, text tweaks, catalog add-ons, animation) and **off** "Optimize website destination". Keep "Relevant comments" **on** [s1wGNE_2TX4 10:50–11:33, z4UAXut0kCA 08:24–09:25].
 - Link to the **specific product page**, never the homepage, for product-led ads [s1wGNE_2TX4 10:16]. Lifestyle/brand ads can go to a collection [WpsFxcqNQrg 19:12].
 
@@ -64,7 +67,11 @@ Location US · Age 18–35* · All genders · Advantage+ placements*
 ---
 
 ## 3. Testing system
-- **Ratio:** 80% brand-new concepts, 20% variations of winners (the pre-Andromeda ratio, flipped) [z4UAXut0kCA 00:48].
+- **Ratio:** 80% brand-new concepts, 20% variations of winners (the pre-Andromeda ratio, flipped) [z4UAXut0kCA 00:48]. "Volume" means net-new concepts, not 50 cuts of one UGC video. Meta gives each ad a similarity score and groups look-alikes into one asset [QoGFOGEqijw 01:44, MzjvY4O9r-Q 13:21].
+- **Diversity matrix:** Personas × Angles × Formats. Example: 3 personas (quality seeker, identity buyer, occasion/gift) × 3 angles × 8 formats (iPhone try-on, hi-fi static, lo-fi static, meme, founder-led, street interview, GRWM, how-to) = 72 distinct creatives. Brand values stay fixed; only the "outfits" change [MzjvY4O9r-Q 10:03–17:47].
+- **Two diversity axes:** *horizontal* (format, visual style, people pictured) and *vertical* (problem-aware → solution-aware → offer-aware creative) [O8Doria9dic 05:10–05:25].
+- **Visual congruence:** the people in the ad must look like the buyer. 20-year-old models for a 40+ customer send the wrong signal [O8Doria9dic 12:35].
+- **Research before scripting:** Reddit threads in the niche, review exports, and post-purchase surveys. Separate what you know from what you assume [QoGFOGEqijw 04:55–05:39].
 - **Variation rule:** each variant differs by **≥20%** (headline, layout, format, hook). Near-identical ads get deduplicated by Andromeda and receive $0 [mYtqeeW7NiU 09:28, 10eQ39SCRN4 20:40].
 - **Concept rule:** 3–5 concepts per test CBO, 2–5 ads per concept [z4UAXut0kCA 04:06]. Keep images and videos in **separate** CBOs, because video eats the budget [z4UAXut0kCA 04:28].
 - **Cadence:** launch new concept ad sets **once a week, same day (Monday)**, scheduled for midnight or 6am so the first day is full [mYtqeeW7NiU 16:05, s1wGNE_2TX4 03:59].
@@ -87,7 +94,7 @@ Location US · Age 18–35* · All genders · Advantage+ placements*
 **Ad-level kill rules:**
 - Spent **3× target CPA** with ROAS below target → kill [WpsFxcqNQrg 12:25].
 - Live 14–30 days and spent **<$10** → it lost the auction, so archive it [WpsFxcqNQrg 12:40].
-- Ignore CTR and CPM as kill criteria. Purchases decide [daWXtGJmgls 18:41]. Exception: on small-budget tests, CTR (≥6% "all" is healthy) and CPM help rank the ads [rBD9xJswb5k 08:18–09:18].
+- Ignore CTR and CPM as kill criteria. Purchases decide [daWXtGJmgls 18:41]. Read order: **CPA first** (against LTV), then CTR, then CPM. Hook rate is a soft metric, judged against the account's own average, not a universal benchmark [QoGFOGEqijw 07:29–08:24]. Exception: on small-budget tests, CTR (≥6% "all" is healthy) and CPM help rank the ads [rBD9xJswb5k 08:18–09:18].
 - Bid caps and cost caps stay off for a new account. Bid caps are an advanced scaling tool only (see contradictions).
 
 ---
@@ -115,11 +122,13 @@ Location US · Age 18–35* · All genders · Advantage+ placements*
 - Under 125 words, line breaks, no exclamation marks, no opening question, one clear CTA [dK4kMQnaM5g 02:34].
 - Match copy to awareness stage: identity/problem hooks for cold traffic, a hard offer only for Most-Aware/retargeting. Scaling warm-audience creative into cold traffic makes CAC explode [Ng-tbllMb8g 01:53–05:21].
 - Message match: the ad headline is mirrored on the landing page (+15–20% CVR claimed) [NTmWqnPIb2s 12:25].
+- **Scarcity must be true.** Real limits (numbered runs, drop dates, "no restock" when it really won't restock) are strong. Invented ones ("website shutting down in 24 hours") are deceptive, risk Meta ad-policy rejections and FTC trouble, and burn trust. I won't write them [fSGnE6-yM4A 05:08 uses them; rejected].
 
 **Production:**
 - 2 video bodies × 10 hooks = 20 variants without 20 shoots [onFwSud9C2Y 11:18].
 - Statics are cheap volume [NTmWqnPIb2s 00:06].
-- AI lifestyle shoots: Claude + Higgsfield + Shopify via MCP. Outputs go to Shopify **Files** for human review, never straight onto live products [sOAYhPaLnZ4 06:29–11:49]. *(Jac already has the Higgsfield and Shopify connectors.)*
+- **Photo quality bar:** flat lays with no wrinkles, shadows or hangers. The background contrasts with the garment, never the same colour. Leave space for the CTA so it isn't cropped [kfE5jYBymBI 03:54–08:44]. References for the standard: Ditch, YoungLA.
+- AI lifestyle shoots: Claude + Higgsfield + Shopify via MCP. **Quality gate:** an AI image ships only if the garment, print and fit are indistinguishable from the real product. Visibly AI "slop" gets penalized and erodes trust [kfE5jYBymBI 08:26]. Outputs go to Shopify **Files** for human review, never straight onto live products [sOAYhPaLnZ4 06:29–11:49]. *(Jac already has the Higgsfield and Shopify connectors.)*
 - Creative research: Meta Ads Library sorted by **highest impressions**, a burner IG account following 10–15 competitors [15Sgh3-xjRk 19:12, rhP-S30Rmqo 06:57].
 
 ---
@@ -151,7 +160,10 @@ Location US · Age 18–35* · All genders · Advantage+ placements*
 | Placements | Instagram-only for an 18–35 streetwear audience [s1wGNE_2TX4 06:20, -h9OK0iuyWs 10:50] | Advantage+ all placements [daWXtGJmgls 07:59, 10eQ39SCRN4 17:01] | Start Advantage+, then read the placement breakdown at day 7. If Facebook/Audience Network have a worse CPA, switch to IG-only. *Data decides.* |
 | Age | 18–35 or 18–28 [s1wGNE_2TX4 05:19] | 18–65+, let creative target [z4UAXut0kCA 07:13] | 18–65+ broad, because creative targets. Narrow only if the audience breakdown proves waste. |
 | Budget step | +5%/day on a 3-day avg [66GBrizQebM] | +20–30% every 2–3 days, double at 2× target [15Sgh3-xjRk 13:24] · ≤33%/day [-h9OK0iuyWs 10:07] | **+5%/day**: the most conservative rule, it compounds, and it protects inventory |
-| Bid controls | Never cap [10eQ39SCRN4, xZAJ9JBByxo 17:49] | Scale winners in a Bid Cap campaign, bid = AOV ÷ target ROAS [15Sgh3-xjRk 09:35] | Off until $300+/day with proven winners |
+| Bid controls | Never cap [10eQ39SCRN4, xZAJ9JBByxo 17:49] | Scale winners in a Bid Cap campaign, bid = AOV ÷ target ROAS [15Sgh3-xjRk 09:35] · caps over 20–30 ad CBOs [O8Doria9dic 02:30] | Off until $300+/day with proven winners |
+| Test and scale together? | One CBO does both [66GBrizQebM, 10eQ39SCRN4] | Separate testing campaign, or winners eat the new ads' spend [QoGFOGEqijw 03:10, Antonio Ventre/Skaleit structure 4] | One CBO at launch (not enough budget to split). Add a separate test campaign once a proven winner takes >70% of spend |
+| CBO vs ABO | CBO always; ABO is "inefficient" under $300/day [daWXtGJmgls 04:52] | ABO for testing so every set gets spend [fSGnE6-yM4A 01:10, kfE5jYBymBI 09:54] | CBO, using the forced-impression method [rBD9xJswb5k] when fair tests matter |
+| Bid strategy | Highest volume [most] | Test "Highest value" for higher-AOV buyers [fSGnE6-yM4A 02:40] | Highest volume first. Test Highest value once there are 50+ purchases/week |
 | Interest ad set | 60/25/15 split broad / interests / retargeting [xZAJ9JBByxo 15:39] | Zero interests and zero retargeting [10eQ39SCRN4, 15Sgh3-xjRk] | Broad only. BitBranding's own newer videos dropped the interest set. |
 | Creative volume | 15–60 ads per ad set [WpsFxcqNQrg 03:41, 15Sgh3-xjRk 06:35] | 10–16 with forced spend on small budgets [rBD9xJswb5k] | Size the volume to budget: $10 per ad, and use rBD9xJswb5k's method under $100/day |
 | Paid ads at all? | Clipper army instead of Meta ads [kMlgNR-0djA] | Meta is the scaling channel (everyone else) | Meta as the scaling channel. Organic and clipping feed it proven creative and social proof. |
@@ -169,8 +181,13 @@ Location US · Age 18–35* · All genders · Advantage+ placements*
 7. [ ] Launch a $90/day CBO (or $50 with 5 ads) at midnight, Sales/Purchase, broad, enhancements off.
 8. [ ] Leave it alone for 72h. Then run the 3-day rolling routine, +5% scaling, and weekly Monday concept launches.
 
+## Source reliability notes
+- Strongest evidence (live Ads Manager numbers shown): 66GBrizQebM ($150k/30d, $29.97 CPA), 10eQ39SCRN4 ($1.44M/yr Shopify), WpsFxcqNQrg ($77k → $491k), 15Sgh3-xjRk ($377k/30d at 3.34), mYtqeeW7NiU ($148k/mo).
+- Claims with no account data shown, treated as hypotheses: MzjvY4O9r-Q's "7.3× lower CPA" (Miro board only) and dK4kMQnaM5g's "AI beat humans" (the dashboard doesn't split AI and human ads).
+- BitBranding is 16 of 33 sources, so the consensus leans its way. Ben Heath, Antonio Ventre/Skaleit, Fraser Cottrell and Manel Gomez are the independent cross-checks.
+
 ## Open gaps (next study round)
-- Pixel/CAPI verification and Event Match Quality targets (queued: lDG8OnKYdp4)
+- Pixel/CAPI verification (partly closed: EMQ ≥ 9 target; setup walkthrough still queued: lDG8OnKYdp4, JhVTBCpo0wc)
 - Hooks deep-dive (queued: Dara Denney ×2, Tiana Asperjan)
 - Creative testing framework from the Motion team (queued: aCkulCPAYzw)
 - Drops and pre-orders (queued: hRWOsZbsCD0, yny_Z-Zec0U)

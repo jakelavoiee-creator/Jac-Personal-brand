@@ -2,7 +2,7 @@
 url: https://youtu.be/s1wGNE_2TX4
 video_id: s1wGNE_2TX4
 title: (user-assigned)
-channel: 
+channel: Mr. BeSpecial
 why_studied: user-assigned
 watched_by: gemini-3.6-flash
 studied_at: 2026-10-27 01:50 UTC

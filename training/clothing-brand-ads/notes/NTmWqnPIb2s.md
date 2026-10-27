@@ -2,7 +2,7 @@
 url: https://youtu.be/NTmWqnPIb2s
 video_id: NTmWqnPIb2s
 title: (user-assigned)
-channel: 
+channel: Sabri Suby
 why_studied: user-assigned
 watched_by: gemini-3.6-flash
 studied_at: 2026-10-27 01:51 UTC

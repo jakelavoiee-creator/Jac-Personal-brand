@@ -2,7 +2,7 @@
 url: https://youtu.be/kMlgNR-0djA
 video_id: kMlgNR-0djA
 title: (user-assigned)
-channel: 
+channel: Mr. BeSpecial (per on-screen intro)
 why_studied: user-assigned
 watched_by: gemini-3.6-flash
 studied_at: 2026-10-27 01:48 UTC
