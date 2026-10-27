@@ -1,7 +1,8 @@
-# Clothing Brand Meta Ads Playbook (DRAFT v2)
+# Clothing Brand Meta Ads Playbook (DRAFT v3)
 
-v2 (05:10 UTC): +6 videos on creative diversity, signal quality, and small-brand operators (33 total).
-Synthesis of 33 studied videos (notes in `notes/<id>.md`, cited as `[id mm:ss]`).
+v3 (07:30 UTC): +13 videos covering hooks, retargeting, Advantage+ Sales, the product page, drops and pre-orders, and Klaviyo (46 total at full-model quality; 11 more are being re-watched).
+v2 (05:10 UTC): +6 videos on creative diversity, signal quality, and small-brand operators.
+Synthesis of 46 studied videos (notes in `notes/<id>.md`, cited as `[id mm:ss]`).
 Status: **draft**. It gets refined at every check-in as more videos land. The final version becomes `.claude/skills/clothing-brand-meta-ads/SKILL.md`.
 
 **North star:** profitable, compounding Meta growth for a clothing brand. Creative does the targeting, the offer does the converting, and the numbers make every scaling decision.
@@ -33,6 +34,15 @@ Every serious source puts these ahead of campaign settings. Ads amplify what alr
    - Social proof near the top.
    - PDP with multiple angles, size chart, reviews, customer photos, and "complete the outfit" cross-sells [XFahxHZUS_c 05:32, kMlgNR-0djA 36:00–40:02, 15Sgh3-xjRk 03:45].
    - Funnel health: **≥10% of product views → Add to Cart**, and **≤50% drop from ATC → checkout** [rBD9xJswb5k 24:18–24:50].
+   - **Fashion PDP checklist** (Represent/Comfrt teardown) [gHAHjtfKJjQ 04:13–15:51]:
+     - Flat lay, detail close-ups, full-fit lifestyle shots and a short in-use video loop.
+     - Directly under the size selector: "Model is 187cm / 75kg wearing M". For unisex pieces, show both a male and a female model.
+     - A size-guide pop-up with garment measurements and an in/cm toggle, plus review-based fit sliders (True to size / Length / Comfort).
+     - The BNPL instalment (Klarna/Shop Pay) directly under the price.
+     - A high-contrast Add to Cart button with stock status, and one-line answers to objections under it (free shipping, easy returns, in stock).
+     - Details, FAQ and Shipping & returns in collapsible sections.
+     - Customer photo reviews.
+   - **The first 20 reviews:** contact the earliest customers personally and ask. Don't wait for reviews to arrive [gHAHjtfKJjQ 14:04].
 5. **The Instagram profile can close the sale.** Cold traffic checks the profile. Five highlights: About/Mission, Latest Drop, Customer Reviews, Shipping Proof, FAQ [rhP-S30Rmqo 03:13–05:30].
 
 ---
@@ -64,6 +74,12 @@ Location US · Age 18–35* · All genders · Advantage+ placements*
 3. **Winners/scaling campaign** using **Post IDs**, so likes and comments carry over [WpsFxcqNQrg 08:11, yvfub6Wgr3Q 17:50].
 4. Small customer-retention ABO at **5–8% of budget**. Email/SMS does the rest [WpsFxcqNQrg 09:14–10:38].
 
+**Retargeting is built in.** In one broad campaign Ben Heath showed, Meta spent about 40% of the budget on warm visitors and existing customers. That warm spend produced 55% of the purchases, at roughly half the cold CPA [YZ_zNzXHOio 00:51–02:28]. So:
+- Map **Audience segments** under Advertising settings: *Engaged* = site visitors 180d, IG/FB engagers 365d, email list; *Existing customers* = Shopify buyer list plus pixel purchasers 180d. Then check *Breakdown → Audience segments* weekly to see the new-vs-warm split [YZ_zNzXHOio 03:10–04:22].
+- Upload the Shopify customer CSV regularly. It goes past the pixel's 180-day memory [YZ_zNzXHOio 05:14].
+- Write cold-ad creative that also makes sense to warm viewers. Never "thanks for visiting yesterday" in the main campaign [YZ_zNzXHOio 09:33].
+- Build a separate warm-only ad set **only** for VIP/insider offers. Use "Further limit reach", and leave **"Use as a suggestion" unchecked**, or Meta expands to cold traffic anyway [YZ_zNzXHOio 11:44–13:08].
+
 ---
 
 ## 3. Testing system
@@ -79,6 +95,9 @@ Location US · Age 18–35* · All genders · Advantage+ placements*
 - **Minor-variation tests** (hooks, text overlays, price banner, B&W vs colour): use Meta's ad-level **Creative testing** tool (2–5 versions, 7 days, comparison metric set to **cost per purchase**, not the default engagement metric) [onFwSud9C2Y 03:25–04:57].
 - **Small-budget override (<$100/day):** test 10–16 ads. Manually switch off each ad at **1,000–3,000 impressions** so every ad gets a fair sample, then keep the top 2–5 [rBD9xJswb5k 07:30–11:15].
 - Zero-spend ads that you believe in → relaunch them together in a "zombie" ad set [NTmWqnPIb2s 06:54].
+- **Statics validate the message, video scales it:** test each messaging pillar with cheap statics first. Only pillars that win get video, usually full-body clips of the garment being put on and worn. Chest-up talking heads don't sell wearables [aCkulCPAYzw 09:40–10:40, 33:40].
+- **Breakout signal:** if Meta pushes **$2k+ into one ad in 4–5 days**, treat it as a breakout even if its in-platform ROAS looks soft, and judge it on account MER and new-customer CAC [aCkulCPAYzw 19:15–19:53]. (Scale this threshold to budget: at $100/day, read it as an ad taking >50% of spend for 4–5 days.)
+- **Micro-budget signal ($10–30/day):** purchases are too few for CPA to mean anything. Rank ads on **CPM <$25, CPC <$1, cost per Add to Cart <$15** held for 3 days [YzTg8c5DnWI 11:48–12:51].
 
 ---
 
@@ -115,6 +134,22 @@ Location US · Age 18–35* · All genders · Advantage+ placements*
 - **Existing organic post** with high engagement (Use existing post), so the social proof travels with the ad [s1wGNE_2TX4 09:31, -h9OK0iuyWs 13:43]
 - Angle lenses: **4F** (Fit, Fabric, Function, Fashion), Body-identity archetype, Moment + Motion, Cost-per-wear [mYtqeeW7NiU 03:05–04:53]
 
+**Angle → hooks (the hierarchy):**
+- An **angle** = the desire activated + the pain/benefit amplified + the motivation tied to the product. A **hook** = the first 3 seconds that opens that angle. Write at least 3 hooks per angle (POV, demonstration, problem/solution). A healthy test win rate is >30% [fvO-wSLXck4 04:55–09:15, 00:51].
+- A hook has **4 layers that all fire in second zero**: on-screen text, sound, visual action, overall vibe. Stacking 2–3 hooks is allowed. Put the explosive visual just *after* the opening line [t-Xf12o4jt4 03:09–05:04, I8tXqqfjIX4 00:46].
+- **Hook library for apparel** [t-Xf12o4jt4, I8tXqqfjIX4]:
+  - *Investment:* "I spent $650 on jeans that shrank after 2 washes before I found these". Mine reviews for what customers tried before you.
+  - *POV: you hate…:* "POV: you hate linen shirts because they wrinkle the second you sit". POV appears in 10–15% of top ads.
+  - *If you…:* persona self-selection.
+  - *How do I pick…:* "How do I pick the right fit for my body type". One stayed a top performer for 6 months.
+  - *Why is it important that your [garment] is [organic/heavyweight]:* (Pact).
+  - *Why did no one tell me…*
+  - *"You're welcome"*
+  - Founder intro with **name + title on screen**, which beats the same intro without them.
+- Test **3–6 structurally different hooks per winning body**, never one-word tweaks [I8tXqqfjIX4 09:34].
+- UGC creators should be filmed **mid-action** (throwing on the jacket on the way out), not seated at a ring light [t-Xf12o4jt4 09:25].
+- Run creator and founder content as **Partnership ads** (ad-level toggle → identity) [t-Xf12o4jt4 08:43–09:13].
+
 **Copy rules (pooled):**
 - Hook in the first 3 seconds: *Pattern interrupt + identity signal + curiosity gap* [dK4kMQnaM5g 09:50].
 - 3-second retention: <20% is average, 30–40% good, >50% outlier [dK4kMQnaM5g 05:20].
@@ -143,6 +178,34 @@ Location US · Age 18–35* · All genders · Advantage+ placements*
 - Post-purchase: ask buyers to tag the brand in the confirmation email, and run a 3-email second-purchase sequence within 45 days [rhP-S30Rmqo 04:37, NzcjnNbjoZY 17:01].
 - Health benchmarks: MER 3–5× healthy, repeat rate ≥20% at 30 days, 4% site CVR as an aspirational target [NzcjnNbjoZY 16:05–17:34, W-QZGhQWrP0 18:35].
 
+**Drops** [hRWOsZbsCD0, 8tMm_XZA0HU]:
+- Content mix: 70% identity/value, 30% product. Four content types: studio, lifestyle, UGC on bodies, macro product details.
+- Build hype for 2–4 weeks, because people need 4–5 exposures before they buy.
+- All traffic goes to the VIP SMS/email list. Subscribers convert 10–20× better than followers.
+- Drop on **Friday**: reminder on Wednesday, then "live in 30 min" to the VIP list.
+- First run: **50 pieces** pre-made. Get the factory's price breaks at 100/150 first so a sell-out can restock fast. Reinvest in the winner instead of jumping to a new design.
+
+**Pre-orders** [yny_Z-Zec0U]:
+- Full price, never discounted.
+- Title format: `(Pre-Order 6 Weeks) Product – Colour`.
+- A bold note at the top of the description: mixed orders ship in **one package** by [date].
+- Size-level inventory set to the factory order quantities.
+- A pre-order email flow with weekly updates.
+- A ShipStation/Shopify hold on pre-order items.
+
+**Retention stack (Klaviyo)** [pjkqcWoN0NA, ikRu6fsPfA8]:
+- Six core flows: Welcome, Site abandon (3h), Browse abandon (1h), Cart/Checkout abandon (30 min), Post-purchase, Winback (people who bought exactly 90 days ago).
+- Welcome is 4 emails, a day apart: discount → story → 48h expiry + proof → a **plain-text note from the founder**.
+- **Smart Sending OFF** on flows.
+- Abandon emails link to `{{ event.URL }}`, and checkout abandon links to `/cart`.
+- Pop-up:
+  - Fires at **6s**. No exit-intent on mobile. Separate mobile and desktop forms.
+  - A one-tap quiz step first ("Shopping for?") that tags the profile, then email, then SMS.
+  - "Claim now" beats "Continue".
+  - Dollar-off when AOV is over $100, percent-off when under.
+  - Benchmark: 10%+ submit rate; the best are ~28%.
+  - **Rejected:** hidden or see-through close buttons and guilt-trip "No thanks, I'll pay full price" opt-outs. These are dark patterns that cost trust; use a clear close button and a neutral "No thanks".
+
 ---
 
 ## 7. Claude operating system (how I'll run this)
@@ -164,6 +227,12 @@ Location US · Age 18–35* · All genders · Advantage+ placements*
 | Test and scale together? | One CBO does both [66GBrizQebM, 10eQ39SCRN4] | Separate testing campaign, or winners eat the new ads' spend [QoGFOGEqijw 03:10, Antonio Ventre/Skaleit structure 4] | One CBO at launch (not enough budget to split). Add a separate test campaign once a proven winner takes >70% of spend |
 | CBO vs ABO | CBO always; ABO is "inefficient" under $300/day [daWXtGJmgls 04:52] | ABO for testing so every set gets spend [fSGnE6-yM4A 01:10, kfE5jYBymBI 09:54] | CBO, using the forced-impression method [rBD9xJswb5k] when fair tests matter |
 | Bid strategy | Highest volume [most] | Test "Highest value" for higher-AOV buyers [fSGnE6-yM4A 02:40] | Highest volume first. Test Highest value once there are 50+ purchases/week |
+| Retargeting | Built into broad campaigns; separate only for VIP offers [YZ_zNzXHOio] · 5–8% retention ABO [WpsFxcqNQrg] | Prospecting excludes warm audiences, plus a separate retargeting campaign at frequency 5–8/week [NTx5NxEfAqc 08:03, 18:08] | Hybrid (Ben Heath): it has primary data (a $79k breakdown) and avoids bidding against ourselves. Map Audience Segments to watch the split |
+| Minimum budget | $50/day floor [z4UAXut0kCA, jW1TLgpzrLA] | $10–20/day Advantage+ test, judged on CPM/CPC/ATC [YzTg8c5DnWI] | $50 if cash allows. If not, run the $10–20 micro-test on proxy metrics, but don't scale until purchases are real |
+| Advantage+ Sales vs manual | Advantage+ Sales from day 1 [YzTg8c5DnWI] | New pixel: run manual Sales first to feed the pixel, then switch [NTx5NxEfAqc 16:30] | Manual CBO first. Consider Advantage+ Sales after ~50 purchases |
+| Attribution | 7d click / 1d view, *not* engaged view [kfE5jYBymBI 11:39] | Keep the default including engaged view; changing it hides data [NTx5NxEfAqc 05:10] | Optimize on 7d click / 1d view. Add a reporting column with engaged view for comparison |
+| Ad destination | The product page itself [s1wGNE_2TX4, -h9OK0iuyWs] | A shoppable listicle or advertorial matched to the hook [aCkulCPAYzw 12:35] | PDP for product-led ads. Test a listicle only once a pillar is proven (fits ADVT's landing-page test, rBD9xJswb5k 15:00) |
+| Pre-made vs pre-order | Pre-made for new brands; people expect 3–5 day shipping [hRWOsZbsCD0 00:44] | Full-price pre-orders fund inventory [yny_Z-Zec0U] | First drop pre-made (50 pcs). Restocks of proven sell-outs as full-price pre-orders |
 | Interest ad set | 60/25/15 split broad / interests / retargeting [xZAJ9JBByxo 15:39] | Zero interests and zero retargeting [10eQ39SCRN4, 15Sgh3-xjRk] | Broad only. BitBranding's own newer videos dropped the interest set. |
 | Creative volume | 15–60 ads per ad set [WpsFxcqNQrg 03:41, 15Sgh3-xjRk 06:35] | 10–16 with forced spend on small budgets [rBD9xJswb5k] | Size the volume to budget: $10 per ad, and use rBD9xJswb5k's method under $100/day |
 | Paid ads at all? | Clipper army instead of Meta ads [kMlgNR-0djA] | Meta is the scaling channel (everyone else) | Meta as the scaling channel. Organic and clipping feed it proven creative and social proof. |
@@ -177,18 +246,23 @@ Location US · Age 18–35* · All genders · Advantage+ placements*
 3. [ ] Shopify FB & IG app → data sharing **Maximum** → confirm the Pixel ID matches. Fire a test purchase.
 4. [ ] Calculate break-even ROAS. Run the COE audit. Fix the top friction item.
 5. [ ] Install Microsoft Clarity (48h warm-up) for the weekly CRO loop.
+5b. [ ] Klaviyo: pop-up (6s, quiz → email → SMS) plus the 6 core flows, with Smart Sending off. Upload the customer list to Meta and map Audience Segments.
+5c. [ ] PDP pass on the hero product: model size line, size-guide pop-up, BNPL under price, answers to objections under the button, first 20 reviews.
 6. [ ] Build the avatar and brand-voice skill. Produce 3 concepts × 3 ads (≥20% different).
 7. [ ] Launch a $90/day CBO (or $50 with 5 ads) at midnight, Sales/Purchase, broad, enhancements off.
 8. [ ] Leave it alone for 72h. Then run the 3-day rolling routine, +5% scaling, and weekly Monday concept launches.
 
 ## Source reliability notes
 - Strongest evidence (live Ads Manager numbers shown): 66GBrizQebM ($150k/30d, $29.97 CPA), 10eQ39SCRN4 ($1.44M/yr Shopify), WpsFxcqNQrg ($77k → $491k), 15Sgh3-xjRk ($377k/30d at 3.34), mYtqeeW7NiU ($148k/mo).
-- Claims with no account data shown, treated as hypotheses: MzjvY4O9r-Q's "7.3× lower CPA" (Miro board only) and dK4kMQnaM5g's "AI beat humans" (the dashboard doesn't split AI and human ads).
+- Claims with no account data shown, treated as hypotheses:
+  - MzjvY4O9r-Q's "7.3× lower CPA": quoted as a Meta stat on a text slide; the full-model re-watch confirms no account data.
+  - dK4kMQnaM5g's "AI beat humans": the dashboard doesn't split AI and human ads.
+  - aCkulCPAYzw (Motion summit): no dashboards shown.
+  - fvO-wSLXck4: a concept talk only.
+- Strong primary data added in v3: YZ_zNzXHOio's audience-segment breakdown ($79k spend; warm CPA $60 vs cold $114).
 - BitBranding is 16 of 33 sources, so the consensus leans its way. Ben Heath, Antonio Ventre/Skaleit, Fraser Cottrell and Manel Gomez are the independent cross-checks.
 
 ## Open gaps (next study round)
-- Pixel/CAPI verification (partly closed: EMQ ≥ 9 target; setup walkthrough still queued: lDG8OnKYdp4, JhVTBCpo0wc)
-- Hooks deep-dive (queued: Dara Denney ×2, Tiana Asperjan)
-- Creative testing framework from the Motion team (queued: aCkulCPAYzw)
-- Drops and pre-orders (queued: hRWOsZbsCD0, yny_Z-Zec0U)
-- Not yet covered: Klaviyo flows for apparel, sizing/returns reduction, new-account warm-up and spending limits, how Advantage+ Sales campaigns compare with manual CBO for a brand-new pixel, TikTok as a second channel.
+- ✅ Closed in v3: hooks, the Motion creative-testing framework, drops and pre-orders, Klaviyo flows and pop-ups, Advantage+ Sales vs manual, retargeting.
+- ⏳ Re-watching with the full model (Lite notes set aside): pixel/CAPI setup and EMQ (lDG8OnKYdp4, JhVTBCpo0wc, VLFpeLyWXHg), Ben Heath small-budget plus structure (XLagiyzYYpE, 13s-G9Uj51A), Advantage+ Audience (_OSs0Jgv4L8), Claude + Ads Library (B7z0vcKS67k), Shopify CRO (A-7pTamjBIw), apparel operators (rnqKfnElMaM, 8TlUoRBmVJY).
+- Still uncovered: sizing and returns reduction (search found only low-quality app demos), new-account spending limits and warm-up, TikTok as a second channel, apparel photography direction for AI shoots, and the creative brief format for UGC creators.
