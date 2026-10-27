@@ -37,7 +37,7 @@ Prepared 27 Oct 2026 by Claude (advisor) for Jac. Built on 75 studied ad videos 
    > **US duties paid. No surprise fees at delivery.** Ships in 1–3 days · Most US orders arrive in 9 days · Free shipping over $100.
 
    Put the same line under the Add to Cart button. Every BitBranding offer audit ranks delivery and checkout friction ahead of creative. With duties paid and 1–3 day production, our "W" (wait time) score in the Clothing Offer Equation drops from ~7–8 to ~4 out of 10 once the page *says* so.
-3. **Real on-body photos.** ⚠ The product images look like rendered mockups: identical "TooCreative…png" filenames at 765×1070 across products. (Alt text ✅ added 27 Oct to all 106 product images + 13 homepage gallery photos.) The homepage hero is an AI-generated image (`ChatGPT_Image_Aug_30…`). You *do* have real photos (`IMG_0577`, `image00007`… in the homepage gallery); move the best on-body shots to the product pages. Per product you need:
+3. **Real on-body photos.** ⚠ The product images look like rendered mockups: identical "TooCreative…png" filenames (now renamed ✅) at 765×1070 across products. (Alt text ✅ added 27 Oct to all 106 product images + 13 homepage gallery photos.) The homepage hero is an AI-generated image (`ChatGPT_Image_Aug_30…`). You *do* have real photos (`IMG_0577`, `image00007`… in the homepage gallery); move the best on-body shots to the product pages. Per product you need:
    - front on body
    - back print on body
    - a close-up of print and fabric
@@ -65,9 +65,9 @@ Prepared 27 Oct 2026 by Claude (advisor) for Jac. Built on 75 studied ad videos 
    - a cart progress bar: "$X to free shipping" (already $100), then "$150 → free Aura gift"
    - bundles (§3)
 10. **Housekeeping:**
-    - Empty image alt text: hurts SEO and accessibility.
-    - Social links are blank in theme settings: add TikTok and IG.
-    - 10+ draft themes: archive them.
+    - ~~Empty image alt text~~ ✅ 27 Oct: alt text on 106 product images + 13 gallery photos; product image files renamed to SEO names (e.g. `aura-miami-consciousness-hoodie-black-back.png`). Gallery files keep their names because the theme links them by filename.
+    - ~~Social links blank~~ ✅ done by Jac (TikTok + IG).
+    - ~~10+ draft themes~~ ✅ archived by Jac.
     - "Five colorways" copy must match the live variants.
 11. **Klaviyo:**
     - Confirm the pop-up and the 6 core flows are live (playbook §6): Welcome ×4, browse 1h, cart 30m, checkout, post-purchase, winback.
