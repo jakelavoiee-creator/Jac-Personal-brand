@@ -21,7 +21,15 @@ Prepared 27 Oct 2026 by Claude (advisor) for Jac. Built on 75 studied ad videos 
 ---
 
 ## 1. Website and product-page audit: what's missing, ranked
-*Seen through the Admin API (theme files, products, policies). The live storefront and CDN images are blocked from my cloud session, so image notes are inferred from file names and dimensions and flagged ⚠.*
+*Seen through the Admin API (theme files, products, policies), plus mobile and desktop screenshots of the live site after aura-miami.ca was unblocked. Shopify's image CDN is still blocked from my session, so some below-the-fold images may not have rendered (⚠).*
+
+**Live-site check (27 Oct, mobile):**
+- ✅ **Hero is strong:** a real photo, someone on a pool float with a laptop in the AURA tee. It *is* the "too creative for 9–5" story. Keep it. (The theme file references an AI image, but the live hero shows this real photo.)
+- ✅ The product page already has accordions: **Product details, Size chart, Shipping, Care guide, Complete the fit**, plus a "Recommended" row. *The size chart exists, so §1.4 is reduced to adding a model-size line and a fit note.*
+- ⚠ **Product images are mockup renders**: floating garment + jeans, no person, no face, 10 per product. Fine as a consistent grid; **not enough to convert** cold traffic. Add on-body photos.
+- ⚠ **"Buy it now" is Shopify's default blue button**, off-brand next to the black and white UI. Restyle it to white-on-black or remove it (Add to Cart + drawer is enough).
+- ❌ **Nothing near the button builds trust**: no reviews, no pay-later option, no "free shipping over $100 · easy size exchanges" line.
+- ⚠ **Large blank area below the product row on the homepage.** Probably the gallery and letter sections whose images my session couldn't load; **check on your phone**.
 
 ### P0: fix before spending $1 on ads (this week)
 1. **Meta pixel + Conversions API.** Shopify → Facebook & Instagram app → Data sharing **Maximum** → connect the dataset → Events Manager "Send test traffic" → check with Pixel Helper → one real test purchase. *(Playbook §1)*
@@ -40,9 +48,8 @@ Prepared 27 Oct 2026 by Claude (advisor) for Jac. Built on 75 studied ad videos 
    - **one short clip of the fabric moving**
 
    AI lifestyle images (Higgsfield) are allowed only if the garment and print are exact (honesty rule).
-4. **Size confidence.** On each product page add:
-   - a **size chart** (tops; inches/cm)
-   - the line "Model is 6'0", 175 lb, wearing L"
+4. **Size confidence.** The size chart already exists (accordion). Add on each product page:
+   - the line "Model is 6'0", 175 lb, wearing L" directly under the size buttons
    - a **fit note**: "Oversized boxy fit, so size down for a regular fit"
 
    Returns in apparel run 20–40%, and fit is the #1 reason.
