@@ -1,0 +1,44 @@
+{
+ "name": "founder_A1",
+ "input": "footage/A1_raw.mp4",
+ "outdir": "out",
+ "cut": {
+  "noise_db": -35,
+  "min_silence": 0.35,
+  "pad": 0.08,
+  "punch": 1.12
+ },
+ "captions": {
+  "words": "footage/A1_words.json",
+  "upper": true,
+  "max_words": 3,
+  "emphasis": [
+   "brand",
+   "hoodie",
+   "nine",
+   "five"
+  ]
+ },
+ "sound": {
+  "music": "music/bed.mp3",
+  "music_db": -18,
+  "whoosh_on_cuts": true,
+  "sfx": [
+   {
+    "t": 0.0,
+    "file": "hit.wav",
+    "db": -6
+   }
+  ]
+ },
+ "hooks": [
+  "footage/hook_question.mp4",
+  "footage/hook_pattern_break.mp4"
+ ],
+ "ratios": [
+  "9:16",
+  "4:5"
+ ],
+ "safezone_preview": true,
+ "keep_work": true
+}

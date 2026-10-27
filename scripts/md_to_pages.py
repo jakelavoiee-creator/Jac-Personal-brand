@@ -183,6 +183,8 @@ if __name__ == "__main__":
     doc("training/clothing-brand-ads/PLAYBOOK-DRAFT.md", "meta-ads-playbook.html", "Meta Ads Playbook", "Aura Miami · Track A")
     doc("training/aura-brand-psychology/BRAND-PLAYBOOK.md", "brand-playbook.html", "Aura Brand Playbook", "Aura Miami · Track B")
     doc("training/aura-brand-psychology/web-notes.md", "brand-research.html", "Brand Research Notes", "Aura Miami · Track B sources")
+    doc("training/ad-editing/EDITING-PLAYBOOK.md", "editing-playbook.html", "Ad Editing Playbook", "Aura Miami · Track C")
+    doc("scripts/ad-edit/README.md", "ad-edit-toolkit.html", "Ad Edit Toolkit", "Aura Miami · Editing pipeline")
     library("notes-library.html")
     for p in sorted(OUT.glob("*.html")):
         print(p.name, p.stat().st_size)

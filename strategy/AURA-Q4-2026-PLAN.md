@@ -33,10 +33,7 @@ Prepared 27 Oct 2026 by Claude (advisor) for Jac. Built on 75 studied ad videos 
 
 ### P0: fix before spending $1 on ads (this week)
 1. **Meta pixel + Conversions API.** Shopify → Facebook & Instagram app → Data sharing **Maximum** → connect the dataset → Events Manager "Send test traffic" → check with Pixel Helper → one real test purchase. *(Playbook §1)*
-2. **Fix the duties copy (duties are already paid).** Replace "US customers pay duties at checkout" in the product-page shipping block (theme editor → product template; I can't write to your live theme) with:
-   > **US duties paid. No surprise fees at delivery.** Ships in 1–3 days · Most US orders arrive in 9 days · Free shipping over $100.
-
-   Put the same line under the Add to Cart button. Every BitBranding offer audit ranks delivery and checkout friction ahead of creative. With duties paid and 1–3 day production, our "W" (wait time) score in the Clothing Offer Equation drops from ~7–8 to ~4 out of 10 once the page *says* so.
+2. **Duties copy.** ✅ 27 Oct: the "US customers pay duties at checkout" line is removed (checked on the live page). The Shipping accordion now says "up to 3 business days for production, then up to 10 business days for shipping". **Still worth adding:** one positive line under Add to Cart, *"US duties paid. No surprise fees at delivery."*, because a fear removed is good and a fear answered is better. Also change "Free shipping over 100$ USD" to **"Free US shipping over $100"**, since American shoppers read "$100".
 3. **Real on-body photos.** ⚠ The product images look like rendered mockups: identical "TooCreative…png" filenames (now renamed ✅) at 765×1070 across products. (Alt text ✅ added 27 Oct to all 106 product images + 13 homepage gallery photos.) The homepage hero is an AI-generated image (`ChatGPT_Image_Aug_30…`). You *do* have real photos (`IMG_0577`, `image00007`… in the homepage gallery); move the best on-body shots to the product pages. Per product you need:
    - front on body
    - back print on body
@@ -111,7 +108,7 @@ Principles: **the core never goes on a flat sale**. Value comes from bundles, gi
 | **1–23 Nov: VIP build** | "Become an Aura Member: 48h early access to Black Friday + the Members-Only colourway." Email/SMS sign-up page | Commitment ladder + unity (BRAND-PLAYBOOK §2, §3) |
 | **24–26 Nov: Members' early access** | **Buy 2 save 20% · Buy 3+ save 30%** (auto-applied, tiered; the 30% tier is **Members-only**, since warm traffic costs almost nothing to reach) + **Members-Only colourway hoodie**, available **only** to Members and **retired 1 Dec** (true: the product is unpublished on 1 Dec) | Real scarcity with a real deadline. Insiders first |
 | **27–30 Nov: Black Friday → Cyber Monday (public)** | **Buy 2 save 20% · Buy 3+ save 25%** (the real-cost check below shows 30% is too thin for cold traffic). **Free Aura gift on orders over $150** (sticker pack + keychain, ~$3 cost). First 100 orders get a numbered Aura Members card (true, numbered by hand). Ends **Mon 30 Nov, 11:59pm ET**, and it *does* end | AOV push; loss aversion with a deadline we keep |
-| **1–3 Dec: Christmas shipping window** | "Order by **Thu 3 Dec** for Christmas delivery (US)." Production 1–3 days + 95% delivered within 14 days = 17 days, plus a holiday-carrier buffer. **Confirm with Tapstitch whether those are calendar or business days**; if business, the cutoff moves to ~Mon 30 Nov | The honest cutoff protects reviews and chargebacks; after it, gift cards take over |
+| **1–3 Dec: Christmas shipping window** | "Order by **Thu 3 Dec** for Christmas delivery (US)." The site promises up to 3 + 10 **business** days = 13 business days; Thu 3 Dec leaves 15 business days before 24 Dec, a 2-day buffer for holiday carriers (Tapstitch: 95% within 14 days) | The honest cutoff protects reviews and chargebacks; after it, gift cards take over |
 | **3–24 Dec: Gifting** | **Digital gift cards** (instant: the answer to the shipping cutoff) with **"Buy $100, get a $20 bonus card for January"**. Gift sets: "Gift the Look" (hoodie + tee) with a gift note | Captures late gifting *and* books January revenue |
 | **26 Dec–3 Jan: Boxing Day / New Year** | **"Capsule 01: Final Call"**: 2 designs **retired permanently** after 3 Jan (true), at the bundle tiers. Waitlist for Capsule 02 | Cheapest CPMs of the year (−42% in Q5); real retirement scarcity; sets up the January drop |
 
@@ -264,7 +261,7 @@ Versions are 9:16 (Reels/Stories/TikTok) plus a 4:5 feed cut, all inside Meta's 
 ---
 
 ## 9. Decisions I need from you (in order)
-1. ~~Real costs, supplier, shipping~~ ✅ 27 Oct: Tapstitch, one package per order, 1–3 day production, 80% in 9 days / 95% in 14 days. SKUs added in Shopify (`RT0005/RB0003/RU0118-DESIGN-COLOUR-SIZE`, all 265 variants). **Still open:** calendar or business days?
+1. ~~Real costs, supplier, shipping~~ ✅ 27 Oct: Tapstitch, one package per order, 1–3 day production, 80% in 9 days / 95% in 14 days. SKUs added in Shopify (`RT0005/RB0003/RU0118-DESIGN-COLOUR-SIZE`, all 265 variants). Business days (per the live Shipping text).
 2. ~~Duties~~ ✅ already paid. **Action for you:** change the duties line on the product template (P0 #2). The site stays open; the VIP list builds alongside it from 1 Nov.
 3. **Q4 ad budget:** I recommend ~$3,000 Nov–Dec.
 4. **Meta connector:** check whether your account has Meta's official Ads MCP; otherwise upgrade Adspirer.
