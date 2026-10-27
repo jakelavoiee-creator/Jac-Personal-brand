@@ -1,4 +1,6 @@
-# Clothing Brand Meta Ads Playbook (DRAFT v6)
+# Clothing Brand Meta Ads Playbook (DRAFT v7)
+
+v7 (16:00 UTC): §7b operating loop for running Jac's account through Claude (daily tracker, 4× anomaly checks, winner detection, approval-gated writes), plus Meta's official Ads MCP as an alternative to Adspirer.
 
 v6 (14:00 UTC): +5 videos. New **§12 Q4 / BFCM 2026 plan** (Black Friday is Fri 27 Nov), Meta's official fatigue guidance, BitBranding's case against retargeting, and returns cross-checked. 74 videos total; 6 failed (Gemini had no access).
 
@@ -298,6 +300,25 @@ Why one ad set: with ~20 purchases a week, 3 ad sets get ~7 each and none leaves
 - **Hook factory:** 10 hooks → rewrite "like a friend texting" → identity filter → one-job constraint → cold/retarget/past-buyer versions [dK4kMQnaM5g 09:50–10:15]. Generate identity, problem and proof variants and merge the best elements into a master ad [NzcjnNbjoZY 05:13–05:39].
 - **Weekly loops:** Monday CRO report (Clarity + Shopify → Ship this week / month / quarter) [IdQF3N8Donk 10:15]. Weekly "CFO read" on 30-day numbers [NzcjnNbjoZY 14:51]. Competitor gap analysis (social / offer / content → 30-day plan) [W-QZGhQWrP0 05:29–16:55].
 - **Human in the loop:** I draft; Jac approves anything that spends money or goes public.
+
+### 7b. Operating loop for Jac's account (v7)
+**Connector choice.**
+- Today: **Adspirer** (connected). Its free tier allows 15 calls/month, which is reporting-only.
+- Alternative: Meta's **official Ads MCP** connector (`https://mcp.facebookads.com/ads`), shown live in Sam Piliero's course. In that video it was enabled on 216 of 236 accounts in an agency Business Manager, and he says ~10–20% of ad accounts overall [0Z6Rgo6iiUA 04:28, 06:10–07:15]. *To verify:* whether Jac's account has it. If so, it removes the quota problem.
+- **Permissions on either:** read/insights = Always allow; **every write (budget, create, pause, edit) = Needs approval** [0Z6Rgo6iiUA 05:08–05:40].
+
+| Cadence | What I do (read-only unless noted) | What Jac sees |
+|---|---|---|
+| **Daily, 9am ET** | Month-to-date tracker: spend, revenue, ROAS/MER, CPA, CPM, CTR, CVR, frequency vs targets (non-promo floor, promo floor, blended month goal) [0Z6Rgo6iiUA 14:50–15:37] | One-screen digest + a live artifact |
+| **4× daily** | **Anomaly check**: any core metric (spend, ROAS, CPA) or CPM moving >2 standard deviations from its 3/7/14-day baseline [0Z6Rgo6iiUA 21:35–23:08] | Alert only when something trips |
+| **Daily** | **Winner detection**: ads with >5% of campaign spend and at/above target over the 3, 7 *and* 14-day windows, excluding promo spike days (≥5× baseline) [0Z6Rgo6iiUA 25:17–25:54] | Winners list with Ads Manager links |
+| **Monday** | Phase-1 budget rule (§4), kill list, return-reason and fatigue check (§4), audience-segment split (§2) | **Proposed changes → Jac approves → I execute** |
+| **Thursday** | 3 new concepts: winner → 2–4 briefs (brand skill) → Higgsfield images or creator brief → human review → launch | Briefs and previews for approval |
+| **Monthly** | CFO read, competitor gap, CRO report | Short memo |
+
+**Guardrails:**
+- Give the AI the margin and LTV context, or it will call a profitable 0.8× new-customer ROAS "unprofitable" [0Z6Rgo6iiUA 12:15–12:50].
+- **Never upload AI ads in bulk.** Account bloat splits budget into crumbs; every new ad passes a human filter first [0Z6Rgo6iiUA 50:34–51:28].
 
 ---
 
