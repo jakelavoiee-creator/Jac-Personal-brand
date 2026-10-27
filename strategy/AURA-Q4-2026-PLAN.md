@@ -81,19 +81,26 @@ Prepared 27 Oct 2026 by Claude (advisor) for Jac. Built on 75 studied ad videos 
 
 ---
 
-## 2. Unit economics (needs your real numbers ⚠)
-I don't have your POD costs. These are **typical POD ranges**, so replace them with your invoices:
+## 2. Unit economics (real costs from Jac, 27 Oct)
+Landed cost = product + US shipping, from your POD sheet. Payment fees are estimated at **2.9% + $0.30** (Shopify Payments, online). Add ~1.5% if USD orders settle in CAD. Contribution = price − landed cost − fees, **before ads**. Break-even ROAS = price ÷ contribution.
 
-| Item | Price | Est. POD cost + ship | Contribution | Break-even ROAS |
-|---|---|---|---|---|
-| Tee | $55 | ~$22–27 | ~$28–33 | ~1.7–2.0 |
-| Statement tee | $70 | ~$22–27 | ~$43–48 | ~1.5–1.6 |
-| Hoodie | $85 | ~$40–48 | ~$37–45 | ~1.9–2.3 |
-| Hoodie (9–5) | $100 | ~$40–48 | ~$52–60 | ~1.7–1.9 |
+| Item (SKU) | Price | Landed cost | Fees | Contribution | Margin | Break-even ROAS |
+|---|---|---|---|---|---|---|
+| French Terry Raw Edge Tee (RT0005) | $55 | $26.10 | $1.90 | **$27.00** | 49% | **2.04** |
+| Same tee, statement / Members ($70) | $70 | $26.10 | $2.33 | **$41.57** | 59% | **1.68** |
+| French Terry Boxy Tank (RB0003) | $55 | $30.44 ($25.44 + $5 ship) | $1.90 | **$22.66** | 41% | **2.43** |
+| Fleeced Boxy Hoodie (RU0118) | $85 | $39.28 | $2.77 | **$42.95** | 51% | **1.98** |
+| Same hoodie, statement / Members ($100) | $100 | $39.28 | $3.20 | **$57.52** | 58% | **1.74** |
 
-Rule from the playbook: **target ROAS = break-even + 10–20%**, so ~**2.2–2.5** blended. Cold Meta traffic for a brand-new store usually starts *below* that. Q4 profit comes from the warm list, creators and organic, not from cold ads alone.
+*Assumes the $70 tees and $100 hoodies use the same blanks as the $55/$85 ones. Free shipping over $100 is live, so landed cost is the worst case: under $100 the customer's shipping fee offsets part of it.*
 
----
+**What the real numbers say:**
+1. **Cold-ad heroes are the $100 hoodies and $70 tees** (break-even ~1.7). The extra $15 of price is almost pure margin. Lead cold ads with them.
+2. **The tank is the weakest unit** (41%, break-even 2.43). It's for bundles and summer, never a solo cold-ad hero.
+3. **Target ROAS = break-even + 10–20%:** ~**2.0–2.3** on single statement items, ~**2.6–2.9** on BFCM bundles (see §3).
+4. **Bundles at $120 are healthy:** the Full Look (hoodie + tee, $120) leaves **$50.84** (break-even 2.36), almost double a single tee.
+5. **Creator seeding cost is now exact:** a gifted hoodie costs **$39.28**, so 25 hoodies = **~$980**.
+6. *Housekeeping:* your Shopify variants have **no SKUs**. Adding RT0005 / RB0003 / RU0118 makes POD matching and the Meta catalog cleaner.
 
 ## 3. Offers: Black Friday, Cyber Monday, Christmas, Boxing Day
 Principles: **the core never goes on a flat sale**. Value comes from bundles, gifts and access. Every scarcity claim is true. Discounts **auto-apply** (no codes to type).
@@ -102,13 +109,24 @@ Principles: **the core never goes on a flat sale**. Value comes from bundles, gi
 |---|---|---|
 | **Now → 23 Nov** (evergreen) | **"The Full Look"**: any hoodie + any tee, save $20 (e.g. $85 + $55 = $140 → $120). Free shipping over $100 (already live) | Lifts AOV from ~$70 to $120 without discounting single items |
 | **1–23 Nov: VIP build** | "Become an Aura Member: 48h early access to Black Friday + the Members-Only colourway." Email/SMS sign-up page | Commitment ladder + unity (BRAND-PLAYBOOK §2, §3) |
-| **24–26 Nov: Members' early access** | **Buy 2 save 20% · Buy 3+ save 30%** (auto-applied, tiered) + **Members-Only colourway hoodie**, available **only** to Members and **retired 1 Dec** (true: the product is unpublished on 1 Dec) | Real scarcity with a real deadline. Insiders first |
-| **27–30 Nov: Black Friday → Cyber Monday (public)** | Same tiers. **Free Aura gift on orders over $150** (sticker pack + keychain, ~$3 cost). First 100 orders get a numbered Aura Members card (true, numbered by hand). Ends **Mon 30 Nov, 11:59pm ET**, and it *does* end | AOV push; loss aversion with a deadline we keep |
+| **24–26 Nov: Members' early access** | **Buy 2 save 20% · Buy 3+ save 30%** (auto-applied, tiered; the 30% tier is **Members-only**, since warm traffic costs almost nothing to reach) + **Members-Only colourway hoodie**, available **only** to Members and **retired 1 Dec** (true: the product is unpublished on 1 Dec) | Real scarcity with a real deadline. Insiders first |
+| **27–30 Nov: Black Friday → Cyber Monday (public)** | **Buy 2 save 20% · Buy 3+ save 25%** (the real-cost check below shows 30% is too thin for cold traffic). **Free Aura gift on orders over $150** (sticker pack + keychain, ~$3 cost). First 100 orders get a numbered Aura Members card (true, numbered by hand). Ends **Mon 30 Nov, 11:59pm ET**, and it *does* end | AOV push; loss aversion with a deadline we keep |
 | **1–2 Dec: Christmas shipping window** | "Order by **Wed 2 Dec** for Christmas delivery (US/CA)." That's 15 business days of production + shipping, **so don't promise later** | The honest cutoff protects reviews and chargebacks |
 | **3–24 Dec: Gifting** | **Digital gift cards** (instant: the answer to the shipping cutoff) with **"Buy $100, get a $20 bonus card for January"**. Gift sets: "Gift the Look" (hoodie + tee) with a gift note | Captures late gifting *and* books January revenue |
 | **26 Dec–3 Jan: Boxing Day / New Year** | **"Capsule 01: Final Call"**: 2 designs **retired permanently** after 3 Jan (true), at the bundle tiers. Waitlist for Capsule 02 | Cheapest CPMs of the year (−42% in Q5); real retirement scarcity; sets up the January drop |
 
-*Margin check (estimated):* a 3-item order (2 hoodies + tee = $225) at 30% off = $157.50, against an estimated cost of ~$100–120 incl. shipping and fees, leaves **~$40–55 contribution before ads**. Only viable with warm or cheap traffic. **Don't push cold ads hard on 30%-off bundles.**
+*Margin check (real costs, incl. fees and the ~$3 gift where it applies):*
+
+| Order | Price after offer | Contribution | Break-even ROAS |
+|---|---|---|---|
+| Full Look, hoodie + tee (evergreen) | $120.00 | $50.84 | 2.36 |
+| Buy 2 at 20%: hoodie + tee | $112.00 | $43.07 | 2.60 |
+| Buy 2 at 20%: 2 hoodies | $136.00 | $53.20 | 2.56 |
+| Buy 3 at 25%: 2 hoodies + tee (public) | $168.75 | $55.90 | 3.02 |
+| Buy 3 at 30%: 2 hoodies + tee (Members) | $157.50 | $44.97 | 3.50 |
+| Buy 3 at 30%: 3 tees | $115.50 | $33.55 | 3.44 |
+
+**So:** cold ads promote the **20% tier** (break-even ~2.6). The **30% tier stays a Members-only reward**, where the list costs almost nothing to reach. Never put cold spend behind 30% off.
 
 ---
 
@@ -246,10 +264,10 @@ Versions are 9:16 (Reels/Stories/TikTok) plus a 4:5 feed cut, all inside Meta's 
 ---
 
 ## 9. Decisions I need from you (in order)
-1. **Your POD partner and real costs** per item (so §2 and the offer margins are exact).
+1. ~~Real costs per item~~ ✅ received 27 Oct (§2). Still needed: **the POD partner's name**, and whether multi-item orders ship together (a cheaper second item would lift every bundle margin).
 2. **US fulfillment or DDP:** are you willing to switch POD partner or turn on duties-included pricing? (Biggest single lever.)
 3. **Q4 ad budget:** I recommend ~$3,000 Nov–Dec.
 4. **Meta connector:** check whether your account has Meta's official Ads MCP; otherwise upgrade Adspirer.
-5. **Creator budget:** ~20–30 gifted hoodies (POD cost) + ~$600–1,200 for paid posts.
+5. **Creator budget:** ~20–30 gifted hoodies ($39.28 each landed, so ~$790–1,180) + ~$600–1,200 for paid posts.
 6. **Approve the offer calendar (§3)** and the "Aura Members" concept.
 7. **Send the founder footage** and your editing example links.
