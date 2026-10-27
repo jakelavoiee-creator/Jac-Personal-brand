@@ -84,3 +84,12 @@ https://www.youtube.com/watch?v=-vZEjTgEX-0 | Solving creative fatigue with stra
 https://www.youtube.com/watch?v=2I_hbPWkouI | Why Clothing Stores Should Stop Doing Retargeting On Facebook | BitBranding | retargeting contradiction check
 https://www.youtube.com/watch?v=670wq3p5W0I | How To Run A Profitable Clothing Business & Make Money | Superline | apparel unit economics/pricing
 https://www.youtube.com/watch?v=Uss8Uv9PbHg | How to Reduce Return Rate On Your Fashion Ecommerce | Human B | returns (cross-check)
+# ---- self-directed round 6 (operating the account with Claude; catalog; value rules; store) ----
+https://www.youtube.com/watch?v=0Z6Rgo6iiUA | Claude + Facebook Ads (FULL COURSE) | Sam Piliero | how to operate Meta with Claude
+https://www.youtube.com/watch?v=fo8Sw7CMl-M | How I Automated Meta Ads With Claude Code | Chris Rudy | Claude agentic ad ops
+https://www.youtube.com/watch?v=mAD1zIs18wY | How I Use Claude to Automate Meta Ads Reporting [Complete Guide] | Markifact | Claude reporting loop
+https://www.youtube.com/watch?v=WGHAfwiObRo | How to Set Up Meta Catalog Ads in 2026 (Step-by-Step Tutorial) | Jamie Stenton | catalog/DPA setup
+https://www.youtube.com/watch?v=-ZEiSQ1zQwU | Meta Ads Value Rules Explained | Jamie Stenton | value rules
+https://www.youtube.com/watch?v=d-7ymfYBITI | My Shopify Clothing Store Was Failing Until I Found This Strategy | BitBranding | apparel store fixes
+https://www.youtube.com/watch?v=oM1yekPdzyY | The Biggest Shopify Updates for Clothing Brands in 2026 | BitBranding | 2026 Shopify features
+https://www.youtube.com/watch?v=tHeKd2xsNlI | 62 Minutes of Meta Ads Secrets from a $150M Media Buyer | Nick Fisher | senior media buyer cross-check
