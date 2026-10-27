@@ -1,5 +1,6 @@
-# Clothing Brand Meta Ads Playbook (DRAFT v3)
+# Clothing Brand Meta Ads Playbook (DRAFT v4)
 
+v4 (09:30 UTC): +15 videos, including all 11 re-watches with the full model. Small-budget structure revised (1 campaign / 1 ad set), weekly decision cadence for new accounts, tracking verification, UGC and creator partnerships, AI shoot locks, and a **Never-do list** (§10). 61 videos total.
 v3 (07:30 UTC): +13 videos covering hooks, retargeting, Advantage+ Sales, the product page, drops and pre-orders, and Klaviyo (46 total at full-model quality; 11 more are being re-watched).
 v2 (05:10 UTC): +6 videos on creative diversity, signal quality, and small-brand operators.
 Synthesis of 46 studied videos (notes in `notes/<id>.md`, cited as `[id mm:ss]`).
@@ -25,7 +26,18 @@ Every serious source puts these ahead of campaign settings. Ads amplify what alr
 
 1. **Tracking is live.** Business Manager with Page + Instagram + Ad Account + Dataset all cross-assigned. Shopify "Facebook & Instagram" app with data sharing set to **Maximum** (Pixel + Conversions API + Advanced Matching). Pixel ID in Shopify matches Business Settings [-h9OK0iuyWs 04:20–07:57].
    - In Events Manager: **Automatic Advanced Matching ON**, data freshness **Real time**, browser and server events deduplicated. Target **Event Match Quality ≥ 9/10 on Purchase**. Weak signal makes every CPM more expensive [O8Doria9dic 12:15–14:45].
+   - **Verify, don't assume:**
+     1. Events Manager → Settings → *Partner integration: Shopify* → **Send test traffic** until it shows Active.
+     2. Click through the store with the **Meta Pixel Helper** extension: PageView → ViewContent → AddToCart → InitiateCheckout.
+     3. Make one real test purchase [lDG8OnKYdp4 02:48–04:05].
+   - EMQ targets: **Purchase/AddToCart ≥ 8.5–9.3**. PageView at 5.6–6.7 is normal because there's no personal data at that point [VLFpeLyWXHg 01:28, 10:41]. High-value parameters: email and click ID (`fbc`), then phone, external ID and `fbp` [VLFpeLyWXHg 05:49].
+   - Browser and server events must share the same `event_id`, or purchases get double-counted [JhVTBCpo0wc 15:15].
+   - **Don't add address fields to pop-ups to raise EMQ.** That trades conversion rate for a vanity score; checkout already collects the full address [VLFpeLyWXHg 11:28].
+   - If the native Shopify integration leaves Purchase EMQ under 8.5, consider a server-side tracking tool. Native setups often drop `fbc`/`fbp` [VLFpeLyWXHg 02:15].
 2. **Unit economics known.** Break-even ROAS = price ÷ (price − COGS − shipping − fees − returns buffer). Worked example: $65 tee − $30 hard costs → $35 margin → **BE ROAS 1.86** [66GBrizQebM 03:26–04:36]. Target ~2.0+ for safety [daWXtGJmgls 18:21].
+   - Include **inbound freight** and net out shipping revenue. Jar Builds' sheet: $20 COGS + $10 inbound + $10 outbound − $5 shipping revenue + $2.40 fees = $37.40 delivered on an $80 MSRP → BE ROAS 1.88. Target is BE plus a 10–20% net margin [rnqKfnElMaM 09:25–10:37].
+   - **Hard floor:** the minimum daily spend whose gross profit covers fixed costs. When performance dips, cut to the floor, never below it, and fix creative or the site [rnqKfnElMaM 14:47–15:38].
+   - Judge site changes by **revenue and profit per visitor**, not conversion rate alone. Raising a price from $50 to $55 can lower CR and still win on profit [A-7pTamjBIw 01:45–06:47].
 3. **The offer passes the COE audit.** Score = (Style Aspiration × Quality/Fit confidence) ÷ (Wait time + Shopping friction + Price sensitivity). Fix the biggest denominator first. Scale only when the offer is strong [XFahxHZUS_c 01:46–07:41, Ng-tbllMb8g 15:11].
    - Fulfillment >5 business days → wait-time problem. Repeat rate <20% → fit/trust problem. >50% of orders on a code → price-sensitivity problem [XFahxHZUS_c 05:51, 21:16].
 4. **The store converts cold traffic.**
@@ -43,6 +55,8 @@ Every serious source puts these ahead of campaign settings. Ads amplify what alr
      - Details, FAQ and Shipping & returns in collapsible sections.
      - Customer photo reviews.
    - **The first 20 reviews:** contact the earliest customers personally and ask. Don't wait for reviews to arrive [gHAHjtfKJjQ 14:04].
+   - Cart and checkout: a **slide-out drawer cart**, express pay (Shop Pay / Apple Pay / Klarna), local currency via Shopify Markets, and returns and shipping times **directly under Add to Cart**. Review highlights framed as *"At first I thought X, but actually Y"*. Raw try-on UGC near the button [A-7pTamjBIw 10:34–16:47].
+   - Test one variable at a time, starting with the **offer** (price, bundles, upsells, guarantee), not button colours [A-7pTamjBIw 05:08–09:07].
 5. **The Instagram profile can close the sale.** Cold traffic checks the profile. Five highlights: About/Mission, Latest Drop, Customer Reviews, Shipping Proof, FAQ [rhP-S30Rmqo 03:13–05:30].
 
 ---
@@ -58,15 +72,22 @@ Every serious source puts these ahead of campaign settings. Ads amplify what alr
 - Turn **off** Advantage+ creative enhancements (music, touch-ups, text tweaks, catalog add-ons, animation) and **off** "Optimize website destination". Keep "Relevant comments" **on** [s1wGNE_2TX4 10:50–11:33, z4UAXut0kCA 08:24–09:25].
 - Link to the **specific product page**, never the homepage, for product-led ads [s1wGNE_2TX4 10:16]. Lifestyle/brand ads can go to a collection [WpsFxcqNQrg 19:12].
 
-**Starter structure for a new account (recommended for Jac):**
+**Starter structure for a new account (recommended for Jac; revised in v4):**
 ```
-CBO | Sales | Broad | <date>           $50–90/day  (= $10 × number of ads, $50 floor)  [z4UAXut0kCA 04:58–05:31]
- ├─ Ad set: Concept A (e.g. Us vs Them)       3 ads, distinct ≥20% variations
- ├─ Ad set: Concept B (e.g. flat-lay offer)   3 ads
- └─ Ad set: Concept C (e.g. founder/UGC)      3 ads
-Location US · Age 18–35* · All genders · Advantage+ placements*
+Sales | Broad | Hero product | <date>        $50–90/day   (≈ $10 × number of ads, $50 floor)
+ └─ ONE ad set: Advantage+ audience, US, Advantage+ placements
+     ├─ A1 Us-vs-Them static          ┐ ads named  <Concept>-<Format>-<Hook>-<date>
+     ├─ A2 Us-vs-Them carousel        │ so concepts stay readable without
+     ├─ B1 Flat-lay offer static      │ splitting the data
+     ├─ B2 Flat-lay offer video       │
+     ├─ C1 Founder story (name/title) │
+     └─ C2 UGC try-on (mid-action)    ┘ 6–10 diverse ads; up to 5 text options per ad
 ```
-\* See contradictions table: Instagram-only and 18–35 are the streetwear-specific override.
+Why one ad set: with ~20 purchases a week, 3 ad sets get ~7 each and none leaves learning [XLagiyzYYpE 26:15–27:06, 13s-G9Uj51A 05:35]. Advantage+ audience vs a hand-restricted audience made **no measurable difference** in a controlled $2.5k split test ($18.09 vs $17.78 CPA), and both versions retargeted ~27% automatically [_OSs0Jgv4L8 04:14–06:00].
+- Split concepts into their own ad sets **after** the account reaches about 50 purchases a week (the BitBranding concept-ad-set structure in the next bullet).
+- To steer age without hard limits, use **Value Rules** (e.g. −90% bid on non-target ages) rather than turning Advantage+ off [_OSs0Jgv4L8 03:25].
+- Separate campaigns only for different product **categories**, locations or offers, never for colour variants [13s-G9Uj51A 18:58].
+- Test copy using the **5 primary texts / 5 headlines** inside each ad, not by duplicating ads [13s-G9Uj51A 12:41].
 
 **Later additions, in order, as spend grows:**
 1. **DPA CBO**, segmented by product set (Best Sellers / New Arrivals / category). Show `product.name` + `product.price` in the headline. Never one "all products" DPA [10eQ39SCRN4 13:35–16:23, WpsFxcqNQrg 06:35].
@@ -102,7 +123,16 @@ Location US · Age 18–35* · All genders · Advantage+ placements*
 ---
 
 ## 4. Scaling and kill rules
-**Daily routine:** each morning, read the **last 3 complete days** (Monday reads Fri–Sun). Never act on one day or on intraday numbers [66GBrizQebM 09:45–12:25].
+**Phase 1: new account, under ~50 purchases a week (weekly cadence).** Small accounts suffer most from "helicopter parenting": every edit resets learning [XLagiyzYYpE 01:32–04:03].
+- **Monday only:** log last week, kill clear losers, and run the budget rule:
+  - 3-day *and* 7-day ROAS ≥ target → **+20%**.
+  - 3-day below but 7-day ≥ target → **hold** and launch new creative.
+  - Both below → **−20%**, never under the hard floor [rnqKfnElMaM 11:16–15:43].
+- **Thursday:** launch **3 high-conviction concepts**, each researched in organic feeds, mapped to a persona, awareness level and objection, and logged in the ad tracker [rnqKfnElMaM 01:10, 07:34, 11:50].
+- Before calling A beats B, check a significance calculator for **~90% confidence** [XLagiyzYYpE 05:11].
+- Don't kill a high-CPA **top-of-funnel** ad just for its own CPA if the cheap testimonial/BOF ads in the same ad set depend on it. Check the ad set total before and after [13s-G9Uj51A 18:00–18:31].
+
+**Phase 2: 50+ purchases a week (daily cadence).** Each morning, read the **last 3 complete days** (Monday reads Fri–Sun). Never act on one day or on intraday numbers [66GBrizQebM 09:45–12:25].
 
 | 3-day avg ROAS vs break-even | Action |
 |---|---|
@@ -150,6 +180,24 @@ Location US · Age 18–35* · All genders · Advantage+ placements*
 - UGC creators should be filmed **mid-action** (throwing on the jacket on the way out), not seated at a ring light [t-Xf12o4jt4 09:25].
 - Run creator and founder content as **Partnership ads** (ad-level toggle → identity) [t-Xf12o4jt4 08:43–09:13].
 
+**UGC and creator partnerships:**
+- **Briefs** [oBzZFFBwVC0 06:12–13:45]:
+  - Include 2–3 reference ads, product pain points and benefits from reviews, and brand values.
+  - Leave out shot-by-shot manuals and verbatim AI scripts, which sound robotic.
+  - Vet creators' organic content first.
+  - Contract: usage rights, 1–2 minor revision rounds, watermarked drafts until paid.
+- **Shape of a UGC ad:** on-camera, front-facing open that states the point in 0–3s. Information + emotion ("this solves X, and I love it because Y"). Cut every 1–3s, 30–60s total [oBzZFFBwVC0 16:25–18:44].
+- **Buy modular:** 4 hooks × 2 bodies × 2 CTAs = 16 ads from one shoot. A 20-clip "hook bank" costs about the same as one video [oBzZFFBwVC0 19:50–20:25].
+- **Rates:** $80–350 per video ($200 for an experienced creator), $400–800 for raw B-roll banks [oBzZFFBwVC0 09:25–10:58]. Retained winners get $500–1,500/month for one video a week plus a performance bonus. Unproven micro-creators: ≤$100–200 for access [vCR6t4gyEW8 03:21, 11:53].
+- **Pipeline:**
+  1. Run UGC from the brand account.
+  2. Winner → ask the creator for partnership access (gifted 30-day access, via Leadsie).
+  3. Partnership ad with **Dynamic identity**, tested 5–7 days, with 3 cuts per creator asset.
+  4. If it lifts → 1–3 month contract [q_PsIjZl6e4 09:28–09:59, vCR6t4gyEW8 05:44–09:37].
+- Only polished studio work runs on the brand page. Creator handles carry raw, mobile-shot content [q_PsIjZl6e4 07:50].
+- **Competitor research:** Ads Library ads that have been **active 6+ months** are the proven ones [XLagiyzYYpE 13:39, B7z0vcKS67k 02:14]. Use them for structure (format, pacing, hook type), never to clone the visuals or copy (§10).
+- **Iteration trigger:** any ad over **5% of spend** at or above target ROAS gets 2 new variations [B7z0vcKS67k 09:29, 11:29].
+
 **Copy rules (pooled):**
 - Hook in the first 3 seconds: *Pattern interrupt + identity signal + curiosity gap* [dK4kMQnaM5g 09:50].
 - 3-second retention: <20% is average, 30–40% good, >50% outlier [dK4kMQnaM5g 05:20].
@@ -163,7 +211,12 @@ Location US · Age 18–35* · All genders · Advantage+ placements*
 - 2 video bodies × 10 hooks = 20 variants without 20 shoots [onFwSud9C2Y 11:18].
 - Statics are cheap volume [NTmWqnPIb2s 00:06].
 - **Photo quality bar:** flat lays with no wrinkles, shadows or hangers. The background contrasts with the garment, never the same colour. Leave space for the CTA so it isn't cropped [kfE5jYBymBI 03:54–08:44]. References for the standard: Ditch, YoungLA.
-- AI lifestyle shoots: Claude + Higgsfield + Shopify via MCP. **Quality gate:** an AI image ships only if the garment, print and fit are indistinguishable from the real product. Visibly AI "slop" gets penalized and erodes trust [kfE5jYBymBI 08:26]. Outputs go to Shopify **Files** for human review, never straight onto live products [sOAYhPaLnZ4 06:29–11:49]. *(Jac already has the Higgsfield and Shopify connectors.)*
+- AI lifestyle shoots: Claude + Higgsfield + Shopify via MCP. **Quality gate:** an AI image ships only if the garment, print and fit are indistinguishable from the real product. Visibly AI "slop" gets penalized and erodes trust [kfE5jYBymBI 08:26].
+  - **Consistency locks** for multi-image sets [GumUlP6UiSU 04:55–10:12]:
+    - a *Subject lock* (the same model description) and a *Wardrobe lock* ("wearing the garment in image 2") repeated in every prompt
+    - small details (zip pull, label, boots) passed as a **separate reference image**
+    - an 8-pose set: relaxed ×2, dynamic, seated, profile, hands-on-garment, cropped, editorial
+  - **Honesty rule:** live product pages and ads show only garments that physically exist and match the render. Pre-sample renders are only for concept testing or clearly labelled pre-orders. Outputs go to Shopify **Files** for human review, never straight onto live products [sOAYhPaLnZ4 06:29–11:49]. *(Jac already has the Higgsfield and Shopify connectors.)*
 - Creative research: Meta Ads Library sorted by **highest impressions**, a burner IG account following 10–15 competitors [15Sgh3-xjRk 19:12, rhP-S30Rmqo 06:57].
 
 ---
@@ -232,6 +285,10 @@ Location US · Age 18–35* · All genders · Advantage+ placements*
 | Advantage+ Sales vs manual | Advantage+ Sales from day 1 [YzTg8c5DnWI] | New pixel: run manual Sales first to feed the pixel, then switch [NTx5NxEfAqc 16:30] | Manual CBO first. Consider Advantage+ Sales after ~50 purchases |
 | Attribution | 7d click / 1d view, *not* engaged view [kfE5jYBymBI 11:39] | Keep the default including engaged view; changing it hides data [NTx5NxEfAqc 05:10] | Optimize on 7d click / 1d view. Add a reporting column with engaged view for comparison |
 | Ad destination | The product page itself [s1wGNE_2TX4, -h9OK0iuyWs] | A shoppable listicle or advertorial matched to the hook [aCkulCPAYzw 12:35] | PDP for product-led ads. Test a listicle only once a pillar is proven (fits ADVT's landing-page test, rBD9xJswb5k 15:00) |
+| Ad sets at launch | One ad set per concept [66GBrizQebM, z4UAXut0kCA, mYtqeeW7NiU] | 1 campaign / 1 ad set / many ads [XLagiyzYYpE, 13s-G9Uj51A] | **1 ad set** below ~50 purchases/week (concepts tracked by ad name); split by concept above that. *(Changed in v4.)* |
+| Edit cadence | Daily +5% on a 3-day average [66GBrizQebM] | No edits for 7–10 days on small budgets [XLagiyzYYpE] · weekly ±20% with a 3d/7d check [rnqKfnElMaM] | Weekly (Monday) ±20% in phase 1; daily +5% in phase 2 |
+| Creative volume per week | Volume and diversity, 20–72 ads [MzjvY4O9r-Q, 13s-G9Uj51A] | 3 high-conviction concepts/week [rnqKfnElMaM] | 3 new concepts/week, each in 2–3 executions. Diversity comes from the concepts, volume from the executions |
+| Organic promo ratio | 70% value / 30% product [8tMm_XZA0HU] | 98% value / 2% promo, soft CTAs [8TlUoRBmVJY] | Organic feed ~80/20 with soft CTAs; paid ads can sell directly |
 | Pre-made vs pre-order | Pre-made for new brands; people expect 3–5 day shipping [hRWOsZbsCD0 00:44] | Full-price pre-orders fund inventory [yny_Z-Zec0U] | First drop pre-made (50 pcs). Restocks of proven sell-outs as full-price pre-orders |
 | Interest ad set | 60/25/15 split broad / interests / retargeting [xZAJ9JBByxo 15:39] | Zero interests and zero retargeting [10eQ39SCRN4, 15Sgh3-xjRk] | Broad only. BitBranding's own newer videos dropped the interest set. |
 | Creative volume | 15–60 ads per ad set [WpsFxcqNQrg 03:41, 15Sgh3-xjRk 06:35] | 10–16 with forced spend on small budgets [rBD9xJswb5k] | Size the volume to budget: $10 per ad, and use rBD9xJswb5k's method under $100/day |
@@ -240,7 +297,19 @@ Location US · Age 18–35* · All genders · Advantage+ placements*
 
 ---
 
-## 9. Day-0 launch checklist for Jac
+## 10. Never-do list (tactics found in the training videos and rejected)
+These came up in sources I studied. I won't use them on Jac's account, whatever a video claims:
+| Tactic | Source | Why it's out |
+|---|---|---|
+| Fake scarcity ("website shutting down in 24h", fake countdown timers, "only 3 left") | fSGnE6-yM4A 05:08; also condemned by A-7pTamjBIw 03:19 | Deceptive. Meta ad-policy and FTC risk, and it destroys repeat-customer trust |
+| Hidden or see-through pop-up close button; guilt-trip opt-outs | ikRu6fsPfA8 14:00–14:47 | Dark pattern. Accessibility and intrusive-pop-up problems, and it costs brand trust |
+| **Unpacked Chrome extension that "raises your spending limit"** | G5hAorYVS5M | It injects code into Meta Billing, which is exactly how ad-account takeovers happen. Spending limits rise on their own with clean payment history and spend; otherwise ask through Meta Business Support |
+| Fake persona or "editorial review" pages to disguise brand ads | q_PsIjZl6e4 08:29–08:54 | Breaks Meta's authenticity rules and the FTC endorsement guides. Use real creators via Partnership ads (both names are shown) |
+| Getting around "PROTECTED" watermarks, or cloning competitor ads with your product swapped in | B7z0vcKS67k 01:25, 03:00 | Copyright and trade-dress risk. Model the structure, never the assets |
+| AI avatars or voices posing as real customers giving testimonials | warned in oBzZFFBwVC0 26:12 | A fake endorsement under FTC rules. AI is fine for product visuals, never as a fake reviewer |
+| Selling from AI renders of a garment that doesn't exist yet, without saying so | (inferred risk from GumUlP6UiSU) | Misrepresentation. Label it as a pre-order or concept, and match it to the real sample |
+
+## 11. Day-0 launch checklist for Jac
 1. [ ] Share brand basics: name, URL, hero product(s), price, COGS, shipping cost, fulfillment time.
 2. [ ] Business Manager: Page + IG + Ad account + Dataset cross-assigned. Payment method added.
 3. [ ] Shopify FB & IG app → data sharing **Maximum** → confirm the Pixel ID matches. Fire a test purchase.
@@ -249,10 +318,11 @@ Location US · Age 18–35* · All genders · Advantage+ placements*
 5b. [ ] Klaviyo: pop-up (6s, quiz → email → SMS) plus the 6 core flows, with Smart Sending off. Upload the customer list to Meta and map Audience Segments.
 5c. [ ] PDP pass on the hero product: model size line, size-guide pop-up, BNPL under price, answers to objections under the button, first 20 reviews.
 6. [ ] Build the avatar and brand-voice skill. Produce 3 concepts × 3 ads (≥20% different).
-7. [ ] Launch a $90/day CBO (or $50 with 5 ads) at midnight, Sales/Purchase, broad, enhancements off.
-8. [ ] Leave it alone for 72h. Then run the 3-day rolling routine, +5% scaling, and weekly Monday concept launches.
+7. [ ] Launch **one Sales campaign with one ad set** ($50–90/day, 6–10 diverse ads named by concept) at midnight: Purchase, Advantage+ audience, enhancements off.
+8. [ ] Leave it alone for 7 days. Then run the phase-1 weekly cadence (Monday decisions ±20%, Thursday launches of 3 concepts) until ~50 purchases a week, then phase 2 (daily 3-day read, +5%).
+9. [ ] From week 2: brief 2–3 UGC creators (modular 4×2×2 packs), and move winners to Partnership ads.
 
-## Source reliability notes
+## 9. Source reliability notes
 - Strongest evidence (live Ads Manager numbers shown): 66GBrizQebM ($150k/30d, $29.97 CPA), 10eQ39SCRN4 ($1.44M/yr Shopify), WpsFxcqNQrg ($77k → $491k), 15Sgh3-xjRk ($377k/30d at 3.34), mYtqeeW7NiU ($148k/mo).
 - Claims with no account data shown, treated as hypotheses:
   - MzjvY4O9r-Q's "7.3× lower CPA": quoted as a Meta stat on a text slide; the full-model re-watch confirms no account data.
@@ -264,5 +334,7 @@ Location US · Age 18–35* · All genders · Advantage+ placements*
 
 ## Open gaps (next study round)
 - ✅ Closed in v3: hooks, the Motion creative-testing framework, drops and pre-orders, Klaviyo flows and pop-ups, Advantage+ Sales vs manual, retargeting.
-- ⏳ Re-watching with the full model (Lite notes set aside): pixel/CAPI setup and EMQ (lDG8OnKYdp4, JhVTBCpo0wc, VLFpeLyWXHg), Ben Heath small-budget plus structure (XLagiyzYYpE, 13s-G9Uj51A), Advantage+ Audience (_OSs0Jgv4L8), Claude + Ads Library (B7z0vcKS67k), Shopify CRO (A-7pTamjBIw), apparel operators (rnqKfnElMaM, 8TlUoRBmVJY).
-- Still uncovered: sizing and returns reduction (search found only low-quality app demos), new-account spending limits and warm-up, TikTok as a second channel, apparel photography direction for AI shoots, and the creative brief format for UGC creators.
+- ✅ Closed in v4: pixel/CAPI verification and EMQ, small-budget structure, Advantage+ audience, Claude + Ads Library, Shopify CRO, the operator cadence (Jar Builds), the organic flywheel, UGC briefs, partnership ads, and the AI shoot workflow. All 11 Lite notes were re-watched with the full model. The two Lite notes v2 had used (MzjvY4O9r-Q, kfE5jYBymBI) were confirmed: same numbers, and the 7.3× claim is still unbacked by account data.
+- ❌ Spending limits: the only video found (G5hAorYVS5M) was a suspicious extension, now on the Never-do list. Still open: the legitimate new-account limit and warm-up path.
+- ⏳ Queued: TikTok (ijeGs0XCwso, Oh4kY-GykvM) and returns (x9colvKlmhc, low authority).
+- Still uncovered: sizing and returns reduction from a credible source, and Meta's own Advantage+ Sales documentation.
