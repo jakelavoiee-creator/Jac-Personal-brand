@@ -14,3 +14,6 @@ server). The `watched_by` field in each note shows which model watched it. Notes
 - Meta ad account 1447739777174385 ("Jacob Lavoie"), connected via Adspirer
 - 0 campaigns, 0 pixels → pixel + Conversions API setup comes before any Sales campaign
 - Adspirer free tier: 15 tool calls/month (2 used). Not enough to manage live ads day to day.
+
+## Note quality
+- `notes/_lite/`: notes written by a Flash-Lite model after the free quota ran out. They're lower confidence and kept only for comparison. Each video is re-watched with full Flash into `notes/`.
