@@ -9,9 +9,9 @@ Prepared 27 Oct 2026 by Claude (advisor) for Jac. Built on 75 studied ad videos 
 |---|---|
 | **1 order ever** ($110, 12 Oct, "capsule 01") | We're launching, not scaling. Every projection starts at zero |
 | 14 products: tees and tank $55–70, hoodies $85–100, all black-led, back-print statement designs | Good, focused, AOV-friendly catalog. Hoodies carry Q4 |
-| Inventory 99,999+ per variant; "5 business days production"; orders "enter production" after 15 min | **Print-on-demand.** No stock risk, but slow delivery and thin margins |
-| Delivery promise: **up to 5 days production + up to 10 business days shipping** | ~3 weeks to the customer. This is the #1 conversion and Christmas problem |
-| **"US customers pay duties at checkout"** (product template) | A Canadian store charging Americans duties on top of the price. **The biggest silent killer for a US-focused brand** |
+| Supplier: **Tapstitch** (print-on-demand, no inventory). **Production 1–3 days**; a multi-item order ships **as one package** | No stock risk. One package per order means our bundle margins are conservative (§2 counts shipping per item) |
+| Delivery (Tapstitch, 27 Oct): **80% arrive within 9 days, 95% within 14 days** of shipping, so ~10–12 days door to door typically | Workable. Say it plainly on the product page; it also sets the Christmas cutoff (§3) |
+| **Duties are already paid** for US orders, but the product template says **"US customers pay duties at checkout"** | The site scares away US buyers over a cost they will never pay. **Fix the copy (P0 #2)**: it turns a fear into a selling point |
 | Meta ad account: **0 pixels, 0 campaigns** | Nothing can be optimized until the pixel and Conversions API are live |
 | Klaviyo app embed: enabled | Good base for the VIP list and flows |
 | Primary domain: aura-miami.ca | A **.ca** domain for a brand called *Miami* aiming at America. Consider a .com |
@@ -33,12 +33,10 @@ Prepared 27 Oct 2026 by Claude (advisor) for Jac. Built on 75 studied ad videos 
 
 ### P0: fix before spending $1 on ads (this week)
 1. **Meta pixel + Conversions API.** Shopify → Facebook & Instagram app → Data sharing **Maximum** → connect the dataset → Events Manager "Send test traffic" → check with Pixel Helper → one real test purchase. *(Playbook §1)*
-2. **US duties and delivery speed.** Options, best first:
-   - **(a)** move to a **US-based POD partner** (prints and ships inside the US: no duties, ~5–8 day delivery);
-   - **(b)** turn on **duties-included pricing (DDP)** at checkout so the price shown is the price paid;
-   - **(c)** at minimum, say "duties calculated at checkout" clearly on the product page.
+2. **Fix the duties copy (duties are already paid).** Replace "US customers pay duties at checkout" in the product-page shipping block (theme editor → product template; I can't write to your live theme) with:
+   > **US duties paid. No surprise fees at delivery.** Ships in 1–3 days · Most US orders arrive in 9 days · Free shipping over $100.
 
-   Every BitBranding offer audit ranks delivery time and checkout friction ahead of creative. Our "W" (wait time) score in the Clothing Offer Equation is currently a 7–8 out of 10, which is bad.
+   Put the same line under the Add to Cart button. Every BitBranding offer audit ranks delivery and checkout friction ahead of creative. With duties paid and 1–3 day production, our "W" (wait time) score in the Clothing Offer Equation drops from ~7–8 to ~4 out of 10 once the page *says* so.
 3. **Real on-body photos.** ⚠ The product images look like rendered mockups: identical "TooCreative…png" filenames at 765×1070 across products, no alt text. The homepage hero is an AI-generated image (`ChatGPT_Image_Aug_30…`). You *do* have real photos (`IMG_0577`, `image00007`… in the homepage gallery); move the best on-body shots to the product pages. Per product you need:
    - front on body
    - back print on body
@@ -82,6 +80,8 @@ Prepared 27 Oct 2026 by Claude (advisor) for Jac. Built on 75 studied ad videos 
 ---
 
 ## 2. Unit economics (real costs from Jac, 27 Oct)
+Supplier: **Tapstitch**. Multi-item orders ship as one package, so real bundle shipping is lower than this table assumes and bundle contributions are a floor.
+
 Landed cost = product + US shipping, from your POD sheet. Payment fees are estimated at **2.9% + $0.30** (Shopify Payments, online). Add ~1.5% if USD orders settle in CAD. Contribution = price − landed cost − fees, **before ads**. Break-even ROAS = price ÷ contribution.
 
 | Item (SKU) | Price | Landed cost | Fees | Contribution | Margin | Break-even ROAS |
@@ -111,7 +111,7 @@ Principles: **the core never goes on a flat sale**. Value comes from bundles, gi
 | **1–23 Nov: VIP build** | "Become an Aura Member: 48h early access to Black Friday + the Members-Only colourway." Email/SMS sign-up page | Commitment ladder + unity (BRAND-PLAYBOOK §2, §3) |
 | **24–26 Nov: Members' early access** | **Buy 2 save 20% · Buy 3+ save 30%** (auto-applied, tiered; the 30% tier is **Members-only**, since warm traffic costs almost nothing to reach) + **Members-Only colourway hoodie**, available **only** to Members and **retired 1 Dec** (true: the product is unpublished on 1 Dec) | Real scarcity with a real deadline. Insiders first |
 | **27–30 Nov: Black Friday → Cyber Monday (public)** | **Buy 2 save 20% · Buy 3+ save 25%** (the real-cost check below shows 30% is too thin for cold traffic). **Free Aura gift on orders over $150** (sticker pack + keychain, ~$3 cost). First 100 orders get a numbered Aura Members card (true, numbered by hand). Ends **Mon 30 Nov, 11:59pm ET**, and it *does* end | AOV push; loss aversion with a deadline we keep |
-| **1–2 Dec: Christmas shipping window** | "Order by **Wed 2 Dec** for Christmas delivery (US/CA)." That's 15 business days of production + shipping, **so don't promise later** | The honest cutoff protects reviews and chargebacks |
+| **1–3 Dec: Christmas shipping window** | "Order by **Thu 3 Dec** for Christmas delivery (US)." Production 1–3 days + 95% delivered within 14 days = 17 days, plus a holiday-carrier buffer. **Confirm with Tapstitch whether those are calendar or business days**; if business, the cutoff moves to ~Mon 30 Nov | The honest cutoff protects reviews and chargebacks; after it, gift cards take over |
 | **3–24 Dec: Gifting** | **Digital gift cards** (instant: the answer to the shipping cutoff) with **"Buy $100, get a $20 bonus card for January"**. Gift sets: "Gift the Look" (hoodie + tee) with a gift note | Captures late gifting *and* books January revenue |
 | **26 Dec–3 Jan: Boxing Day / New Year** | **"Capsule 01: Final Call"**: 2 designs **retired permanently** after 3 Jan (true), at the bundle tiers. Waitlist for Capsule 02 | Cheapest CPMs of the year (−42% in Q5); real retirement scarcity; sets up the January drop |
 
@@ -247,7 +247,7 @@ What the research says works for apparel organically: **niche relatability, low-
 | Dec | $180k | Gifting with fast US fulfillment |
 | **Total** | **$1.00M** | |
 
-**My honest read:** $1M is achievable only if four things happen by Q2: **US fulfillment or DDP**, **real photos and reviews**, **a monthly drop ritual with a growing list**, and **an ad account trained on hundreds of purchases**. A miss on any one of them makes $500–700k the realistic outcome. Everything in this plan is aimed at those four.
+**My honest read:** $1M is achievable only if four things happen by Q2: **duties-paid messaging on every page (and US fulfillment for speed later)**, **real photos and reviews**, **a monthly drop ritual with a growing list**, and **an ad account trained on hundreds of purchases**. A miss on any one of them makes $500–700k the realistic outcome. Everything in this plan is aimed at those four.
 
 ---
 
@@ -264,8 +264,8 @@ Versions are 9:16 (Reels/Stories/TikTok) plus a 4:5 feed cut, all inside Meta's 
 ---
 
 ## 9. Decisions I need from you (in order)
-1. ~~Real costs per item~~ ✅ received 27 Oct (§2). Still needed: **the POD partner's name**, and whether multi-item orders ship together (a cheaper second item would lift every bundle margin).
-2. **US fulfillment or DDP:** are you willing to switch POD partner or turn on duties-included pricing? (Biggest single lever.)
+1. ~~Real costs, supplier, shipping~~ ✅ 27 Oct: Tapstitch, one package per order, 1–3 day production, 80% in 9 days / 95% in 14 days. SKUs added in Shopify (`RT0005/RB0003/RU0118-DESIGN-COLOUR-SIZE`, all 265 variants). **Still open:** calendar or business days?
+2. ~~Duties~~ ✅ already paid. **Action for you:** change the duties line on the product template (P0 #2). The site stays open; the VIP list builds alongside it from 1 Nov.
 3. **Q4 ad budget:** I recommend ~$3,000 Nov–Dec.
 4. **Meta connector:** check whether your account has Meta's official Ads MCP; otherwise upgrade Adspirer.
 5. **Creator budget:** ~20–30 gifted hoodies ($39.28 each landed, so ~$790–1,180) + ~$600–1,200 for paid posts.
