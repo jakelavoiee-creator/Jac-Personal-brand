@@ -1,4 +1,6 @@
-# Clothing Brand Meta Ads Playbook (DRAFT v5)
+# Clothing Brand Meta Ads Playbook (DRAFT v6)
+
+v6 (14:00 UTC): +5 videos. New **§12 Q4 / BFCM 2026 plan** (Black Friday is Fri 27 Nov), Meta's official fatigue guidance, BitBranding's case against retargeting, and returns cross-checked. 74 videos total; 6 failed (Gemini had no access).
 
 v5 (11:50 UTC): +8 videos, including Meta for Business's official Advantage+ Sales guidance, the Advantage+ Sales vs Shopping changes, Andromeda/GEM mechanics, BitBranding's newest method, TikTok Shop as a UGC engine, returns economics, and an apparel retention case study. 69 videos total; 3 failed (Gemini had no access).
 
@@ -138,6 +140,10 @@ Why one ad set: with ~20 purchases a week, 3 ad sets get ~7 each and none leaves
 - Before calling A beats B, check a significance calculator for **~90% confidence** [XLagiyzYYpE 05:11].
 - Don't kill a high-CPA **top-of-funnel** ad just for its own CPA if the cheap testimonial/BOF ads in the same ad set depend on it. Check the ad set total before and after [13s-G9Uj51A 18:00–18:31].
 
+**Creative fatigue (Meta's own method)** [-vZEjTgEX-0 00:20–01:04]:
+- Top spenders fatigue first. Watch the **Opportunity score** column and the "Creative fatigue" delivery warning.
+- **Refresh, don't pause.** Add new ads beside the tired one that change one of these: (1) the benefit, (2) the use case or setting, (3) the point of view, (4) the people pictured.
+
 **Phase 2: 50+ purchases a week (daily cadence).** Each morning, read the **last 3 complete days** (Monday reads Fri–Sun). Never act on one day or on intraday numbers [66GBrizQebM 09:45–12:25].
 
 | 3-day avg ROAS vs break-even | Action |
@@ -243,7 +249,12 @@ Why one ad set: with ~20 purchases a week, 3 ad sets get ~7 each and none leaves
 - Add **fit notes** on every PDP ("runs small, size up", "oversized cut", "stretch fabric"), sizing videos, and review-based fit insight.
 - Analyse returns per SKU to catch bad materials or suppliers. Watch for **bracketing** (several sizes ordered, one kept).
 - **Never scale a garment until a physical sample is fit-verified.** A fit problem at scale becomes a mass-return event.
-- *(Still wanted: a stronger source with real apparel return data.)*
+- Cross-check [Uss8Uv9PbHg] puts the baseline at **20%+**:
+  - category-specific size charts (tops ≠ bottoms) plus a "how to measure yourself" guide
+  - on-body, near-360° shots and a clip of how the fabric moves
+  - "how and where to wear it" notes
+  - a **reason code on every return**. When one ad's buyers return for "not as expected", that hook is overpromising.
+- *(Still wanted: a source with real apparel return data. Both sources are low authority and cite third-party stats.)*
 
 **Retention before scale** [i5EdMV0g-2s]: Perfect White Tee lifted LTV about 60–70% through segmented Klaviyo flows, list hygiene (bots hitting the loyalty sign-up wrecked deliverability) and "reply-to-buy" SMS, and only *then* raised Meta spend. Their full-price months beat Black Friday on profit [i5EdMV0g-2s 02:30–13:58]. Verbal claims only; no dashboards shown.
 
@@ -301,6 +312,8 @@ Why one ad set: with ~20 purchases a week, 3 ad sets get ~7 each and none leaves
 | CBO vs ABO | CBO always; ABO is "inefficient" under $300/day [daWXtGJmgls 04:52] | ABO for testing so every set gets spend [fSGnE6-yM4A 01:10, kfE5jYBymBI 09:54] | CBO, using the forced-impression method [rBD9xJswb5k] when fair tests matter |
 | Bid strategy | Highest volume [most] | Test "Highest value" for higher-AOV buyers [fSGnE6-yM4A 02:40] | Highest volume first. Test Highest value once there are 50+ purchases/week |
 | Retargeting | Built into broad campaigns; separate only for VIP offers [YZ_zNzXHOio] · 5–8% retention ABO [WpsFxcqNQrg] | Prospecting excludes warm audiences, plus a separate retargeting campaign at frequency 5–8/week [NTx5NxEfAqc 08:03, 18:08] · **Meta's official advice:** exclude existing customers for net-new acquisition [-JHTDBW30_s 00:27] | Hybrid by default (primary data, no self-bidding). **Exclude existing customers during drops and peaks**, when the goal is new buyers and email/SMS reaches past buyers for free. Check *Breakdown → Audience segments* weekly; if more than ~30% of spend goes to existing customers, add the exclusion |
+| Retargeting on Meta at all? | None: 100% prospecting; email/SMS/live selling do the retargeting [2I_hbPWkouI 03:07–04:33] | BF week: **80% of the budget on retargeting** while CPMs run $30–35 [ryjf4hFI-DA 22:27] | Normal months: hybrid (above). **BF week: weight toward warm.** A hard-constrained warm ad set (visitors 30–90d, engagers, list), sized to the pool at a frequency of ≤5–8/week; the rest stays in evergreen. A new account's warm pool will be small, so the VIP email/SMS list carries most of BF (§12) |
+| Attribution window | 7d click / 1d view [most] | 1-day click plus blended MER during BFCM [AvVnjY_Zlsg 36:27] · 1d click once 30–50+ purchases/week [2I_hbPWkouI 10:10] | 7d/1d to optimize. During BFCM, *decide* on 1-day click plus same-day MER |
 | Funnel split | No funnel campaigns; Meta sequences on its own [10eQ39SCRN4, 13s-G9Uj51A] | Creative mix ~70–75% cold/entry, 10–15% social proof, ~5% hard CTA [XSLffs4nGmw 13:06] | Both hold: one campaign, but write the **creative mix** in roughly those proportions so Meta has an ad for every stage |
 | Minimum budget | $50/day floor [z4UAXut0kCA, jW1TLgpzrLA] | $10–20/day Advantage+ test, judged on CPM/CPC/ATC [YzTg8c5DnWI] | $50 if cash allows. If not, run the $10–20 micro-test on proxy metrics, but don't scale until purchases are real |
 | Advantage+ Sales vs manual | Advantage+ Sales from day 1 [YzTg8c5DnWI] | New pixel: run manual Sales first to feed the pixel, then switch [NTx5NxEfAqc 16:30] | Manual CBO first. Consider Advantage+ Sales after ~50 purchases |
@@ -330,6 +343,7 @@ These came up in sources I studied. I won't use them on Jac's account, whatever 
 | AI avatars or voices posing as real customers giving testimonials | warned in oBzZFFBwVC0 26:12 | A fake endorsement under FTC rules. AI is fine for product visuals, never as a fake reviewer |
 | Selling from AI renders of a garment that doesn't exist yet, without saying so | (inferred risk from GumUlP6UiSU) | Misrepresentation. Label it as a pre-order or concept, and match it to the real sample |
 | "Identity resolution" scripts that grab emails from shoppers who never submitted a form, then email them | XSLffs4nGmw 17:37 (Retention.com) | **Not without a legal and consent review** (CAN-SPAM/CASL, state privacy laws, Klaviyo terms). Default: only email people who opted in |
+| Fake "was" prices, or claims like "sold out last year by Sunday" that aren't true | promo-copy patterns in AvVnjY_Zlsg 31:36, ryjf4hFI-DA 25:27 (the tactics themselves are fine *only if true*) | Reference prices must be real recent selling prices (FTC rules on deceptive pricing; my addition, not a source's). Stock and sell-out claims must match real inventory |
 | Optimizing for link clicks or landing-page views to "fix" CPM or frequency | warned in XSLffs4nGmw 14:52 | Meta then finds clickers, not buyers. Always optimize for Purchase |
 
 ## 11. Day-0 launch checklist for Jac
@@ -344,6 +358,25 @@ These came up in sources I studied. I won't use them on Jac's account, whatever 
 7. [ ] Launch **one Sales campaign with one ad set** ($50–90/day, 6–10 diverse ads named by concept) at midnight: Purchase, Advantage+ audience, enhancements off.
 8. [ ] Leave it alone for 7 days. Then run the phase-1 weekly cadence (Monday decisions ±20%, Thursday launches of 3 concepts) until ~50 purchases a week, then phase 2 (daily 3-day read, +5%).
 9. [ ] From week 2: brief 2–3 UGC creators (modular 4×2×2 packs), and move winners to Partnership ads.
+
+## 12. Q4 / BFCM 2026 plan (account starting from zero)
+Key dates: **Thanksgiving Thu 26 Nov · Black Friday Fri 27 Nov · Cyber Monday Mon 30 Nov 2026**. Christmas shipping cutoff to be confirmed with the carrier (~21 Dec). "Q5" low-CPM window: 26 Dec–15 Jan.
+CPMs climb from early November, peak in BFCM week (+21% on one agency account, +65% on an industry chart vs October), ease through December, and drop about 42% in Q5 [AvVnjY_Zlsg 03:18–04:00]. One apparel creator quotes $8–10 before vs $30–35 during [ryjf4hFI-DA 19:52].
+
+**The north star for a brand-new account:** we can't out-spend big brands on cold traffic in BF week. We win on (1) a warm VIP list built in November, (2) an offer that raises AOV instead of cutting margin, and (3) creative made in advance.
+
+| Window | Meta | Owned channels | Offer and site |
+|---|---|---|---|
+| **Now → 8 Nov** | Fix tracking (§1) and launch the evergreen 1-ad-set campaign (§2). It gathers pixel data at normal CPMs, and **evergreen stays running and untouched through Q4** [AvVnjY_Zlsg 16:00] | Klaviyo pop-up + core flows live; start organic daily posting | Hero products chosen: **~80% proven sellers, ~20% new colourways** [ryjf4hFI-DA 01:25]. Inventory: plan 3–4× a normal month *if* there's a baseline; with no baseline, keep it lean and use clearly labelled pre-orders as the safety valve |
+| **1–23 Nov: VIP build** | Separate campaign sending traffic to a **short VIP landing page** (headline + benefit + form), not Meta's instant lead forms [AvVnjY_Zlsg 18:55, 27:06]. Optional early-bird bundle | Waitlist page + SMS opt-in | VIP promise: **48h early access**, not a deeper discount |
+| **9–20 Nov: production** | Batch-shoot **30–50 assets in 3–4 shoots over 4 days**. Nothing gets shot during BF week [ryjf4hFI-DA 18:32]. Formats: bold offer statics, founder-to-camera offer video, **evergreen winners with a promo badge**, benefit + offer overlays [AvVnjY_Zlsg 22:28–35:40] | Write and schedule all emails and SMS | Build automatic discounts (no code entry) and a cart progress bar (free shipping → gift) [AvVnjY_Zlsg 30:35, 36:20] |
+| **19 Nov onward** | Add new creatives every **5–7 days** (frequency climbs fast). Volume guide: ~5–10 per $100/day | | |
+| **24–26 Nov: VIP early access** | Promo campaign per offer; existing customers excluded from promo prospecting; retention campaign at 5–10% of promo spend [AvVnjY_Zlsg 17:48, 27:37] | VIP email + SMS: "early access is live" | |
+| **27–30 Nov: BFCM** | Weight toward warm (§8 row). Don't push cold prospecting hard against $30+ CPMs [ryjf4hFI-DA 20:17]. Decide on **1-day click + same-day MER**. Intraday "surf scaling" (2× budget every 1–2h in peak hours) only with live MER tracking and ≥$500/day; otherwise one +20–30% bump on Friday morning from Thursday's data | **5 emails over 4–5 days:** live → best sellers/low stock (if true) → push → ends tonight → 6h left. **3–4 SMS max** [ryjf4hFI-DA 25:16–27:26]. Answer DMs fast all weekend | **Buy more, save more** (Buy 2 save 25% / Buy 3 save 35%), "Build your outfit, save 25%", spend-threshold gifts [AvVnjY_Zlsg 28:45–31:10]. If running a % off, **tier it by margin** (40% / 20% / 10%) rather than flat sitewide [ryjf4hFI-DA 29:28]. Every scarcity claim must be true (§10) |
+| **1–21 Dec: gifting** | New promo campaign with gift framing ("Gift guide for him/her"). Test showing *Gifts for him* ads to women [AvVnjY_Zlsg 42:00]. Scale on weekends. **Hard stop at the shipping cutoff** | 1–2 messages a week: gift guide, last day for Christmas delivery, restocks [ryjf4hFI-DA 37:09] | Gift sets, "3 for Christmas" |
+| **26 Dec–15 Jan: Q5** | Cheapest CPMs of the year. NYE/"new year, new fit" prospecting + a retention campaign on *Highest value* [AvVnjY_Zlsg 45:15–47:31] | Winback to the BF cohort | Resolution or new-season bundles |
+
+Guardrails for Q4: never boost posts or run Engagement campaigns for sales [ryjf4hFI-DA 21:33]. Never pause evergreen for the promo. Never run gift campaigns past the shipping cutoff.
 
 ## 9. Source reliability notes
 - Strongest evidence (live Ads Manager numbers shown): 66GBrizQebM ($150k/30d, $29.97 CPA), 10eQ39SCRN4 ($1.44M/yr Shopify), WpsFxcqNQrg ($77k → $491k), 15Sgh3-xjRk ($377k/30d at 3.34), mYtqeeW7NiU ($148k/mo).
@@ -360,5 +393,6 @@ These came up in sources I studied. I won't use them on Jac's account, whatever 
 - ✅ Closed in v4: pixel/CAPI verification and EMQ, small-budget structure, Advantage+ audience, Claude + Ads Library, Shopify CRO, the operator cadence (Jar Builds), the organic flywheel, UGC briefs, partnership ads, and the AI shoot workflow. All 11 Lite notes were re-watched with the full model. The two Lite notes v2 had used (MzjvY4O9r-Q, kfE5jYBymBI) were confirmed: same numbers, and the 7.3× claim is still unbacked by account data.
 - ❌ Spending limits: the only video found (G5hAorYVS5M) was a suspicious extension, now on the Never-do list. Still open: the legitimate new-account limit and warm-up path.
 - ✅ Closed in v5: Advantage+ Sales (official plus practitioner), Andromeda/GEM mechanics, TikTok, returns (provisional), retention-before-scale.
-- ❌ Gemini had no access (403): a6-l6BD3dDg and bv8AsY0xkIk (Ben Heath), xl5a--Wuask (Marshall Crews). x1b4h42HTG8 was queued as Dara Denney, but the note names Savannah Sanchez on screen; the content is consistent with the topic, but treat its attribution as uncertain.
+- ✅ Closed in v6: Q4/BFCM (Marshall Crews + Antonio Ventre/Skaleit), creative fatigue (Meta official), the retargeting debate (BitBranding's no-retargeting view now in §8), returns cross-check.
+- ❌ Gemini had no access (403): a6-l6BD3dDg and bv8AsY0xkIk (Ben Heath), xl5a--Wuask (Marshall Crews), SLEUybEybFs (Meta Mayson BF), x-fNh05Yetk (Veicolo BF), 670wq3p5W0I (Superline economics). x1b4h42HTG8 was queued as Dara Denney, but the note names Savannah Sanchez on screen; the content is consistent with the topic, but treat its attribution as uncertain.
 - Still uncovered: sizing and returns reduction from a credible source, and Meta's own Advantage+ Sales documentation.
