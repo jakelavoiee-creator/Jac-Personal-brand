@@ -9,14 +9,14 @@ Prepared 27 Oct 2026 by Claude (advisor) for Jac. Built on 75 studied ad videos 
 |---|---|
 | **1 order ever** ($110, 12 Oct, "capsule 01") | We're launching, not scaling. Every projection starts at zero |
 | 14 products: tees and tank $55–70, hoodies $85–100, all black-led, back-print statement designs | Good, focused, AOV-friendly catalog. Hoodies carry Q4 |
-| Supplier: **Tapstitch** (print-on-demand, no inventory). **Production 1–3 days**; a multi-item order ships **as one package** | No stock risk. One package per order means our bundle margins are conservative (§2 counts shipping per item) |
-| Delivery (Tapstitch, 27 Oct): **80% arrive within 9 days, 95% within 14 days** of shipping, so ~10–12 days door to door typically | Workable. Say it plainly on the product page; it also sets the Christmas cutoff (§3) |
+| Supplier: **Tapstitch** (print-on-demand, no inventory). **Production 3 calendar days**; a multi-item order ships **as one package** | No stock risk. One package per order means our bundle margins are conservative (§2 counts shipping per item) |
+| Delivery (Jac, 27 Oct): **3 calendar days production + shipping within 10 calendar days = at the door within ~13 days** | A clear, fast-enough promise. Say it in calendar days on the product page; it also sets the Christmas cutoff (§3) |
 | **Duties are already paid** for US orders, but the product template says **"US customers pay duties at checkout"** | The site scares away US buyers over a cost they will never pay. **Fix the copy (P0 #2)**: it turns a fear into a selling point |
 | Meta ad account: **0 pixels, 0 campaigns** | Nothing can be optimized until the pixel and Conversions API are live |
-| Klaviyo app embed: enabled | Good base for the VIP list and flows |
+| Klaviyo app embed: enabled | Base for the **site pop-up** that builds the email list (P1 #11) |
 | Primary domain: aura-miami.ca | A **.ca** domain for a brand called *Miami* aiming at America. Consider a .com |
 
-**North star for Q4:** don't try to out-spend big brands in Black Friday week. Win with (1) a VIP list built in November, (2) bundles that raise order value, (3) creators and TikTok bringing in people who are already warm, and (4) a store that removes every reason not to buy.
+**North star for Q4:** don't try to out-spend big brands in Black Friday week. Win with (1) **one conversion campaign** fed by strong creative, (2) an **email list built by the site pop-up** from day one, (3) bundles that raise order value, (4) creators and TikTok bringing in people who are already warm, and (5) a store that removes every reason not to buy.
 
 ---
 
@@ -33,7 +33,7 @@ Prepared 27 Oct 2026 by Claude (advisor) for Jac. Built on 75 studied ad videos 
 
 ### P0: fix before spending $1 on ads (this week)
 1. **Meta pixel + Conversions API.** Shopify → Facebook & Instagram app → Data sharing **Maximum** → connect the dataset → Events Manager "Send test traffic" → check with Pixel Helper → one real test purchase. *(Playbook §1)*
-2. **Duties copy.** ✅ 27 Oct: the "US customers pay duties at checkout" line is removed (checked on the live page). The Shipping accordion now says "up to 3 business days for production, then up to 10 business days for shipping". **Still worth adding:** one positive line under Add to Cart, *"US duties paid. No surprise fees at delivery."*, because a fear removed is good and a fear answered is better. Also change "Free shipping over 100$ USD" to **"Free US shipping over $100"**, since American shoppers read "$100".
+2. **Duties copy.** ✅ 27 Oct: the "US customers pay duties at checkout" line is removed (checked on the live page). The Shipping accordion still says "up to 3 business days for production, then up to 10 business days for shipping"; **update it to the new calendar-day promise: "Made in 3 days. Delivered within 10 days of shipping."** (calendar days are a stronger, clearer promise). **Still worth adding:** one positive line under Add to Cart, *"US duties paid. No surprise fees at delivery."*, because a fear removed is good and a fear answered is better. Also change "Free shipping over 100$ USD" to **"Free US shipping over $100"**, since American shoppers read "$100".
 3. **Real on-body photos.** ⚠ The product images look like rendered mockups: identical "TooCreative…png" filenames (now renamed ✅) at 765×1070 across products. (Alt text ✅ added 27 Oct to all 106 product images + 13 homepage gallery photos.) The homepage hero is an AI-generated image (`ChatGPT_Image_Aug_30…`). You *do* have real photos (`IMG_0577`, `image00007`… in the homepage gallery); move the best on-body shots to the product pages. Per product you need:
    - front on body
    - back print on body
@@ -51,7 +51,7 @@ Prepared 27 Oct 2026 by Claude (advisor) for Jac. Built on 75 studied ad videos 
 5. **Reviews.** Install **Judge.me** (free). Ask your first buyers personally for reviews with photos. Gifted creators review with an honest "gifted" label. Zero reviews on cold traffic is a major conversion drag.
 
 ### P1: before Black Friday (by 20 Nov)
-6. **"Members Only" has to be real.** Products are titled "(Members Only)", but there's no membership. Make it true: **Aura Members = the VIP list**. Members get early access, a members-only colourway and a numbered card. (Truthful scarcity; FTC-safe.)
+6. **"Members Only": parked until 2027 (Jac, 27 Oct).** For now it is just the name of the print. Keep it as a design name, but **no ad, email or page may claim a membership or member perks that don't exist.** When there is a real program (2027), Members get early access, a members-only colourway and a numbered card.
 7. **Trust and policies:**
    - Contact is a personal Hotmail. Get `hello@` on your own domain.
    - Returns: 14 days, customer pays, unworn with tags. For the holidays, **extend returns to Jan 15 and offer free size exchanges**. It removes the gift-buyer's fear of getting the size wrong.
@@ -66,10 +66,18 @@ Prepared 27 Oct 2026 by Claude (advisor) for Jac. Built on 75 studied ad videos 
     - ~~Social links blank~~ ✅ done by Jac (TikTok + IG).
     - ~~10+ draft themes~~ ✅ archived by Jac.
     - "Five colorways" copy must match the live variants.
-11. **Klaviyo:**
-    - Confirm the pop-up and the 6 core flows are live (playbook §6): Welcome ×4, browse 1h, cart 30m, checkout, post-purchase, winback.
-    - Smart Sending **off** for flows.
-    - Pop-up: 6s delay → one-tap quiz ("Shopping for you or a gift?") → email → SMS.
+11. **Klaviyo: the pop-up that builds the list (this is the whole list strategy now).**
+    - **Form:** Klaviyo sign-up form, one design for mobile and desktop. Step 1 email, step 2 optional SMS (phone number).
+    - **When it shows:** after **8 s or 40% scroll**, whichever comes first; **exit intent** on desktop; never on /cart or /checkout; hide for existing subscribers; if closed, show again after **14 days**; a small "Get 10% off" tab stays on the side.
+    - **Copy (1 Nov to 25 Nov):**
+      > **Get Black Friday first.**
+      > Join the list: 24-hour early access on 26 Nov + 10% off your first order.
+      > [ I'm in ]   No thanks
+    - **Copy (from 1 Dec):** "**10% off your first order.** Plus first look at every drop." The decline button always says a plain "No thanks" (no guilt-trip wording).
+    - **Code:** a **unique single-use code from Klaviyo**, valid 7 days (real expiry), first order only, **not combinable** with the Black Friday tiers.
+    - **Flows (playbook §6):** Welcome ×4 (email 1 sends the code immediately), browse 1h, cart 30m, checkout, post-purchase, winback. Smart Sending **off** for flows.
+    - **Benchmark to beat:** 3–5% of visitors signing up *[commentary, unverified]*. Check after 7 days.
+    - *I can't build this one for you (no Klaviyo connection here); it's ~15 minutes in Klaviyo → Sign-up forms. Send me a screenshot and I'll review it.*
 
 ### P2: January
 12. A **.com** domain (`auramiami.com` or similar) if obtainable. Move off POD for hero items to small bulk runs, which gives better margins, faster delivery and *real* numbered drops.
@@ -105,11 +113,11 @@ Principles: **the core never goes on a flat sale**. Value comes from bundles, gi
 | Window | Offer | Why it works |
 |---|---|---|
 | **Now → 23 Nov** (evergreen) | **"The Full Look"**: any hoodie + any tee, save $20 (e.g. $85 + $55 = $140 → $120). Free shipping over $100 (already live) | Lifts AOV from ~$70 to $120 without discounting single items |
-| **1–23 Nov: VIP build** | "Become an Aura Member: 48h early access to Black Friday + the Members-Only colourway." Email/SMS sign-up page | Commitment ladder + unity (BRAND-PLAYBOOK §2, §3) |
-| **24–26 Nov: Members' early access** | **Buy 2 save 20% · Buy 3+ save 30%** (auto-applied, tiered; the 30% tier is **Members-only**, since warm traffic costs almost nothing to reach) + **Members-Only colourway hoodie**, available **only** to Members and **retired 1 Dec** (true: the product is unpublished on 1 Dec) | Real scarcity with a real deadline. Insiders first |
-| **27–30 Nov: Black Friday → Cyber Monday (public)** | **Buy 2 save 20% · Buy 3+ save 25%** (the real-cost check below shows 30% is too thin for cold traffic). **Free Aura gift on orders over $150** (sticker pack + keychain, ~$3 cost). First 100 orders get a numbered Aura Members card (true, numbered by hand). Ends **Mon 30 Nov, 11:59pm ET**, and it *does* end | AOV push; loss aversion with a deadline we keep |
-| **1–3 Dec: Christmas shipping window** | "Order by **Thu 3 Dec** for Christmas delivery (US)." The site promises up to 3 + 10 **business** days = 13 business days; Thu 3 Dec leaves 15 business days before 24 Dec, a 2-day buffer for holiday carriers (Tapstitch: 95% within 14 days) | The honest cutoff protects reviews and chargebacks; after it, gift cards take over |
-| **3–24 Dec: Gifting** | **Digital gift cards** (instant: the answer to the shipping cutoff) with **"Buy $100, get a $20 bonus card for January"**. Gift sets: "Gift the Look" (hoodie + tee) with a gift note | Captures late gifting *and* books January revenue |
+| **1–25 Nov: list build** | The site **pop-up** (P1 #11): "Get Black Friday first: 24h early access + 10% off your first order" | Every visitor from the conversion campaign who doesn't buy yet still joins the list |
+| **26 Nov (Thanksgiving): early access by email/SMS** | Subscribers get the Black Friday offer **24 h before everyone**: **Buy 2 save 20% · Buy 3+ save 25%** (auto-applied, tiered) | Real head start for people who signed up; same offer, no fake tiers |
+| **27–30 Nov: Black Friday → Cyber Monday (public)** | **Buy 2 save 20% · Buy 3+ save 25%** (the real-cost check below shows 30% is too thin). **Free Aura gift on orders over $150** (sticker pack + keychain, ~$3 cost). First 100 orders get a numbered card (true, numbered by hand). Ends **Mon 30 Nov, 11:59pm ET**, and it *does* end | AOV push; loss aversion with a deadline we keep |
+| **1–9 Dec: Christmas shipping window** | "Order by **Wed 9 Dec** for Christmas delivery (US)." 3 days to make + up to 10 days in transit = 13 calendar days; 9 Dec leaves 15 days before 24 Dec, a 2-day buffer for holiday carriers | The honest cutoff protects reviews and chargebacks; after it, gift cards take over |
+| **10–24 Dec: Gifting** | **Digital gift cards** (instant: the answer to the shipping cutoff) with **"Buy $100, get a $20 bonus card for January"**. Gift sets: "Gift the Look" (hoodie + tee) with a gift note | Captures late gifting *and* books January revenue |
 | **26 Dec–3 Jan: Boxing Day / New Year** | **"Capsule 01: Final Call"**: 2 designs **retired permanently** after 3 Jan (true), at the bundle tiers. Waitlist for Capsule 02 | Cheapest CPMs of the year (−42% in Q5); real retirement scarcity; sets up the January drop |
 
 *Margin check (real costs, incl. fees and the ~$3 gift where it applies):*
@@ -120,15 +128,15 @@ Principles: **the core never goes on a flat sale**. Value comes from bundles, gi
 | Buy 2 at 20%: hoodie + tee | $112.00 | $43.07 | 2.60 |
 | Buy 2 at 20%: 2 hoodies | $136.00 | $53.20 | 2.56 |
 | Buy 3 at 25%: 2 hoodies + tee (public) | $168.75 | $55.90 | 3.02 |
-| Buy 3 at 30%: 2 hoodies + tee (Members) | $157.50 | $44.97 | 3.50 |
+| *(not used)* Buy 3 at 30%: 2 hoodies + tee | $157.50 | $44.97 | 3.50 |
 | Buy 3 at 30%: 3 tees | $115.50 | $33.55 | 3.44 |
 
-**So:** cold ads promote the **20% tier** (break-even ~2.6). The **30% tier stays a Members-only reward**, where the list costs almost nothing to reach. Never put cold spend behind 30% off.
+**So:** the ads lead with the **20% tier** (break-even ~2.6); the 25% tier is the AOV stretch. **30% is out for 2026**; it can come back as a real Members reward in 2027.
 
 ---
 
 ## 4. Ads plan (Meta), tied to the playbook
-**Structure:** one Sales campaign → **one ad set** (Advantage+ audience, US + CA, Advantage+ placements) → 6–10 varied ads named `Concept-Format-Hook-Date`. $40–60/day from pixel go-live. Separate VIP-lead campaign 1–23 Nov (to the landing page, not instant forms). Promo campaign 24–30 Nov. Evergreen stays running and untouched. *(Playbook §2, §4, §12)*
+**Structure (Jac, 27 Oct): ONE conversion campaign, all of Q4.** Sales objective, optimising for **Purchase** → **one ad set** (Advantage+ audience, US + CA, Advantage+ placements) → 6–10 varied ads named `Concept-Format-Hook-Date`. $40–60/day from pixel go-live. **No separate lead or promo campaigns**: the email list is built by the site pop-up from the traffic this campaign sends, and Black Friday is handled *inside* the same ad set (add the BFCM ads on 26 Nov, pause them 1 Dec 00:00 ET) so the campaign never loses its learning. Budget moves only by the Monday rule (±20%). *(Playbook §2, §4, §12)*
 
 **Suggested Q4 budget:** Nov 1–23 ~$1,000 · BFCM week ~$800 · Dec ~$1,200 → **~$3,000**, adjusted weekly by the Monday rule (±20%).
 
@@ -139,7 +147,7 @@ Principles: **the core never goes on a flat sale**. Value comes from bundles, gi
 | B | **POV: too creative for a 9–5** | UGC / lo-fi phone video, back-print reveal | Text: "POV: you're still answering emails but your mind's in Miami" |
 | C | **The back print says it for you** | On-body back reveal + macro print close-up | Turn-around reveal, SFX hit on "TOO CREATIVE FOR NINE TO FIVE" |
 | D | **Us vs mall merch** | Static comparison | "Heavyweight fleece. Boxy fit. A message you'd actually wear." |
-| E | **Members early access** (Nov) | Founder + static | "Black Friday starts 3 days early, for Members only." |
+| E | **Black Friday bundles** (26–30 Nov, same ad set) | Founder + static | "Buy two, save 20%. Three or more, 25%. Ends Monday night." |
 | F | **Gift for the creative in your life** (Dec) | Gift-set flat lay + UGC | "If they've ever said 'I want to start my own thing', this is the gift." |
 
 ### Founder scripts (for the footage you'll send; I'll edit them)
@@ -148,11 +156,11 @@ Principles: **the core never goes on a flat sale**. Value comes from bundles, gi
 > [Beat] "Two years ago I was working a nine to five, designing at night. Everyone said get serious."
 > [Turn, show back print] "So I put it on the back. *Too creative for nine to five.* Not as a joke. As a reminder."
 > [Product] "Heavyweight fleece, boxy fit. Made for long nights."
-> [Unity + CTA] "If you know, you know. Join Aura Members and get early access before Black Friday." → *edit:* supers, back-print slam, SFX, CTA card.
+> [Unity + CTA] "If you know, you know. Tap below and check the back." → *edit:* supers, back-print slam, SFX, "Shop now" CTA card.
 *(Rewrite with your real story. The details must be true.)*
 
-**A2, "The note" (~20s, VIP push)**
-> "Black Friday at Aura starts on the 24th, but only for Members. Members get it first, plus a colourway that disappears on December 1st. Link's below. Become a Member."
+**A2, "Black Friday, straight" (~20s, runs 26–30 Nov)**
+> "Black Friday at Aura is simple. Buy two, save twenty percent. Three or more, twenty-five. Ends Monday at midnight, and it actually ends. Heavyweight fleece, made in three days, at your door in under two weeks. Link below."
 
 **A3, "Read the back" (~15s, pure product)**
 > [Back to camera] "Read it." [Turns] "If that's you, you're one of us." [CTA card]
@@ -217,12 +225,12 @@ What the research says works for apparel organically: **niche relatability, low-
 - AOV $95 now → **$120** with bundles in BFCM.
 - New-store conversion rate 1.0–1.8% (rising with photos and reviews).
 - Nov CPM $18–22 → BF week $28–35.
-- VIP list conversion during early access 5–8%.
+- Pop-up sign-up rate 3–5% of visitors; email list converts 5–8% during early access.
 
 | Q4 2026 (Nov–Dec) | Conservative | Base | Aggressive |
 |---|---|---|---|
 | Ad spend | $1,500 | $3,000 | $5,000 |
-| VIP list by 24 Nov | 150 | 400 | 1,200 (creator or TikTok spike) |
+| Email list by 25 Nov (pop-up) | 150 | 400 | 1,200 (creator or TikTok spike) |
 | Orders | 30–45 | 80–130 | 220–350 |
 | **Revenue** | **$3–5k** | **$9–15k** | **$25–40k** |
 | What decides it | Fixes not done; ads alone | P0 fixes done, creators post, 3/day TikTok | One viral clip or creator hit, plus everything in "Base" |
@@ -239,7 +247,7 @@ What the research says works for apparel organically: **niche relatability, low-
 | Jul | $80k | Collab drop; summer tees and tanks |
 | Aug | $90k | Back-to-school / "new chapter" angle |
 | Sep | $100k | Ads ~$30k/mo; returning-customer rate ≥25% |
-| Oct | $110k | Q4 build: VIP list ≥10k |
+| Oct | $110k | Q4 build: email list ≥10k; launch the real Members program |
 | Nov | $200k | BFCM on a warm list + a mature account |
 | Dec | $180k | Gifting with fast US fulfillment |
 | **Total** | **$1.00M** | |
@@ -261,10 +269,10 @@ Versions are 9:16 (Reels/Stories/TikTok) plus a 4:5 feed cut, all inside Meta's 
 ---
 
 ## 9. Decisions I need from you (in order)
-1. ~~Real costs, supplier, shipping~~ ✅ 27 Oct: Tapstitch, one package per order, 1–3 day production, 80% in 9 days / 95% in 14 days. SKUs added in Shopify (`RT0005/RB0003/RU0118-DESIGN-COLOUR-SIZE`, all 265 variants). Business days (per the live Shipping text).
-2. ~~Duties~~ ✅ already paid. **Action for you:** change the duties line on the product template (P0 #2). The site stays open; the VIP list builds alongside it from 1 Nov.
+1. ~~Real costs, supplier, shipping~~ ✅ 27 Oct: Tapstitch, one package per order, **3 calendar days production + within 10 calendar days shipping**. SKUs added in Shopify (`RT0005/RB0003/RU0118-DESIGN-COLOUR-SIZE`, all 265 variants). Calendar days (Jac, 27 Oct). **Update the product-page Shipping text to match.**
+2. ~~Duties~~ ✅ already paid. **Action for you:** change the duties line on the product template (P0 #2). The site stays open; the email list builds through the pop-up.
 3. **Q4 ad budget:** I recommend ~$3,000 Nov–Dec.
 4. **Meta connector:** check whether your account has Meta's official Ads MCP; otherwise upgrade Adspirer.
 5. **Creator budget:** ~20–30 gifted hoodies ($39.28 each landed, so ~$790–1,180) + ~$600–1,200 for paid posts.
-6. **Approve the offer calendar (§3)** and the "Aura Members" concept.
+6. **Approve the offer calendar (§3).** ~~"Aura Members"~~ parked until 2027. ✅ One conversion campaign + pop-up list (Jac, 27 Oct).
 7. **Send the founder footage** and your editing example links.

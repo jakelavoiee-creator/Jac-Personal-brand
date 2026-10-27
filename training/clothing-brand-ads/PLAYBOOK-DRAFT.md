@@ -381,6 +381,9 @@ These came up in sources I studied. I won't use them on Jac's account, whatever 
 9. [ ] From week 2: brief 2–3 UGC creators (modular 4×2×2 packs), and move winners to Partnership ads.
 
 ## 12. Q4 / BFCM 2026 plan (account starting from zero)
+
+> **Aura decision (Jac, 27 Oct 2026) overrides this section's campaign split:** run **one conversion campaign** (Sales → Purchase, one ad set) for all of Q4. No separate VIP-lead or promo campaigns; the email list comes from the **site pop-up**, and Black Friday ads go into the same ad set (26 Nov–30 Nov). The "Members"/VIP concept is parked until 2027. The calendar below stays as general knowledge; Aura's live plan is `strategy/AURA-Q4-2026-PLAN.md` §3–§4.
+
 Key dates: **Thanksgiving Thu 26 Nov · Black Friday Fri 27 Nov · Cyber Monday Mon 30 Nov 2026**. Christmas shipping cutoff to be confirmed with the carrier (~21 Dec). "Q5" low-CPM window: 26 Dec–15 Jan.
 CPMs climb from early November, peak in BFCM week (+21% on one agency account, +65% on an industry chart vs October), ease through December, and drop about 42% in Q5 [AvVnjY_Zlsg 03:18–04:00]. One apparel creator quotes $8–10 before vs $30–35 during [ryjf4hFI-DA 19:52].
 
