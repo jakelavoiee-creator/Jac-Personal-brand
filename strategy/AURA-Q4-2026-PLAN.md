@@ -65,6 +65,7 @@ Prepared 27 Oct 2026 by Claude (advisor) for Jac. Built on 75 studied ad videos 
     - ~~Empty image alt text~~ ✅ 27 Oct: alt text on 106 product images + 13 gallery photos; product image files renamed to SEO names (e.g. `aura-miami-consciousness-hoodie-black-back.png`). Gallery files keep their names because the theme links them by filename.
     - ~~Social links blank~~ ✅ done by Jac (TikTok + IG).
     - ~~10+ draft themes~~ ✅ archived by Jac.
+    - **Markets + shipping ✅ 27 Oct:** markets for US, Canada, UK, EU (+ AU/NZ, India) already show local currency with auto-conversion and rounding (a $100 hoodie = $100 USD / $141 CAD / £77 / €91.95). Shipping rebuilt per zone: **US $10, free ≥ $100 USD** (was free ≥ $70) · **Canada $15 CAD, free ≥ $140 CAD** · **UK £8, free ≥ £80** · **EU €10, free ≥ €95** · AU/NZ/India $15 CAD, free ≥ $140 CAD. **Still for Jac:** install Shopify's free **Geolocation** app (apps can't be installed through the API), and change the announcement bar's hard-coded "Free shipping over 100$ USD", which shows to every country, to wording that works everywhere, e.g. "Free shipping on orders over $100 USD / £80 / €95 / $140 CAD".
     - "Five colorways" copy must match the live variants.
 11. **Klaviyo: the pop-up that builds the list (this is the whole list strategy now).**
     - **Form:** Klaviyo sign-up form, one design for mobile and desktop. Step 1 email, step 2 optional SMS (phone number).
