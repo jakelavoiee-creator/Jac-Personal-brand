@@ -185,6 +185,8 @@ if __name__ == "__main__":
     doc("training/aura-brand-psychology/web-notes.md", "brand-research.html", "Brand Research Notes", "Aura Miami · Track B sources")
     doc("training/ad-editing/EDITING-PLAYBOOK.md", "editing-playbook.html", "Ad Editing Playbook", "Aura Miami · Track C")
     doc("scripts/ad-edit/README.md", "ad-edit-toolkit.html", "Ad Edit Toolkit", "Aura Miami · Editing pipeline")
+    doc("strategy/photoshoot/TEE-SHOOT-BIBLE.md", "tee-shoot-bible.html", "Tee Shoot Bible", "Aura Miami · Photoshoot")
+    doc("training/MORNING-REPORT.md", "morning-report.html", "Aura Morning Report", "Aura Miami · 28 Oct 2026")
     library("notes-library.html")
     for p in sorted(OUT.glob("*.html")):
         print(p.name, p.stat().st_size)
