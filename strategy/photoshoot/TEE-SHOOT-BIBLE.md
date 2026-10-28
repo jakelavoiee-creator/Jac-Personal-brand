@@ -113,3 +113,11 @@ editorial fashion photography, 85mm lens, natural skin texture, true-to-life col
   - Keep the jeans to a thin blurred strip, or the denim twill bleeds into the shirt.
 - **Flag:** the front-fit render shows **®** beside AURA. Until AURA MIAMI is registered, use ™ or no mark: ® on an unregistered mark is unlawful in the US and Canada. Check the real print artwork too.
 - **Next:** the white set, same set lock, new poses (back walk-away, front 3/4, hanger label, sleeve-edge macro).
+
+**28 Oct, PRINT PLACEMENT LOCK, Nine To Five back (measured on the white flat-lay mockup).**
+- **Measurements:**
+  - The top of "TOO CREATIVE" sits **45% of the way down** from collar to hem, just below the armpit line.
+  - "(MEMBERS ONLY)" ends **66% down**, level with the raw sleeve edges.
+  - Below the print to the hem is about a third of the shirt length.
+  - The text block is about 70% of the body width, between the armpits.
+- **Why:** the first white back render put it at 17–43%, too high. On a body the model drifts the print upward, so always state the armpit and sleeve-edge anchors.
