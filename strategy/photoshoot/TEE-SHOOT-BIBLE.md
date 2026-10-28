@@ -101,3 +101,15 @@ editorial fashion photography, 85mm lens, natural skin texture, true-to-life col
   - `aura-miami-nine-to-five-tee-black-back-hero-A.jpg` (pick)
   - `...-B.jpg` (backup)
   - Higgsfield jobs: 429e5311, 38a0192d
+
+**28 Oct, black set approved by Jac (4 finals): the SET LOCK reference for every later colour/design.**
+- **Back hero:** Jack 3/4 from behind, looking down over his right shoulder, sunglasses, hands in back/side pockets. Washed-black wide jeans.
+- **Front fit:** straight-on, hands in front pockets, small AURA chest logo.
+- **Neck label:** 3/4 overhead macro of the inside back neck. Black woven AURA MIAMI label + "L" size tab, black herringbone tape.
+- **Hem macro:** side-profile macro of the single-layer raw hem, trousers a blurred strip.
+- **Set:** light-grey seamless, soft even studio light, neutral grade.
+- **Hem lessons:**
+  - No hand touching the hem. A pinch makes the model invent a second layer.
+  - Keep the jeans to a thin blurred strip, or the denim twill bleeds into the shirt.
+- **Flag:** the front-fit render shows **®** beside AURA. Until AURA MIAMI is registered, use ™ or no mark: ® on an unregistered mark is unlawful in the US and Canada. Check the real print artwork too.
+- **Next:** the white set, same set lock, new poses (back walk-away, front 3/4, hanger label, sleeve-edge macro).
