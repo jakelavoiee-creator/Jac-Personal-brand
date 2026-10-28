@@ -180,3 +180,25 @@ Tone: **invite, don't attack.** Lead with love. "Proof" means history shows Jesu
 **Other formats:**
 - **Testimony** (30–45s to camera): before → the moment it changed → now. The most powerful format, and only you can make it.
 - **"Pray with me"** (30s): eyes closed, one short prayer for whoever is struggling right now. Caption: "type amen if you need this today."
+
+---
+
+## ✝ Coincidences series (for people who don't believe yet)
+Ending formula: `coincidence?` → 2s pause → **mmm.** Caption: "believer or not… how do you explain this? 👇" No mocking of non-believers.
+
+| # | Hook | 4 searches | Payoff |
+|---|---|---|---|
+| C1 | `written 1,000 years before.` | When was Psalm 22 written? · When was crucifixion invented? · What does Psalm 22 say about hands and feet? · What does Psalm 22:18 say about clothing? | Pierced hands and feet, lots cast for clothing (John 19:24). ⚠️ "pierced" translation debated |
+| C2 | `geologists found the earthquake.` | What does Matthew 27 say happened when Jesus died? · Did geologists find an earthquake in Dead Sea sediment from 33 AD? · What did the 2012 Dead Sea earthquake study find? · When was Jesus crucified? | Earthquake dated ~AD 31 (26–36) in Dead Sea sediment |
+| C3 ⭐ | `the moon turned red that night.` | Was there a lunar eclipse on April 3, 33 AD? · Could the eclipse be seen from Jerusalem? · What does Acts 2:20 say about the moon? · What date do historians think Jesus was crucified? | Lunar eclipse visible from Jerusalem (Humphreys & Waddington, Nature 1983) · "the moon into blood" |
+| C4 | `the price was written 500 years early.` | What does Zechariah 11:12 say? · When was the book of Zechariah written? · How much was Judas paid to betray Jesus? · What did Judas do with the silver? | 30 pieces, the potter's field (Zech 11:13, Matt 27) |
+| C5 ⭐ | `they sealed the gate he's coming back through.` | Why is the Eastern Gate in Jerusalem sealed? · Who sealed the Golden Gate in 1541? · What does Ezekiel 44:2 say about the gate? · Which gate did Jesus enter Jerusalem through? | Sealed by Suleiman in 1541 · Ezekiel 44:2 "this gate shall be shut" |
+| C6 | `he died on the day they killed the lambs.` | When was Jesus crucified during Passover? · Why were lambs sacrificed at Passover? · What did John the Baptist call Jesus? · Where were the Passover lambs raised? | "Behold the Lamb of God" (John 1:29). ⚠️ the Bethlehem lambs are tradition |
+| C7 | `the last letter was a cross.` | What did the ancient Hebrew letter tav look like? · What does the letter tav mean? · What does Ezekiel 9:4 say about a mark on the forehead? · What did early Christians mark on their foreheads? | Ancient tav = + / X · Ezekiel 9:4 mark |
+| C8 | `one man split history.` | Why is our calendar divided into BC and AD? · What does Anno Domini mean? · Who created the BC/AD system? · What year is it according to his birth? | "In the year of our Lord" |
+| P1 ⭐ | `scientists timed people's breathing during the rosary.` | What happens to your breathing when you pray the rosary? · Rosary prayer heart rate study BMJ 2001 · What is the ideal breathing rate for calming the body? · What does Philippians 4:7 say about peace? | ~6 breaths/min calms heart rate and blood pressure (Bernardi et al., BMJ 2001) |
+| P2 | `they scanned brains during prayer.` | What happens in the brain when you pray? · Andrew Newberg prayer brain scans · Does prayer lower anxiety? · What does Matthew 11:28 say? | "I will give you rest" |
+| A1 | `ancient churches were built to sound like this.` | Why do cathedrals echo so long? · How long is the reverberation time in a cathedral? · Why did monks sing Gregorian chant? · Does Gregorian chant lower stress? | Long cathedral shot with real chant audio |
+| A2 | `ancient sacred places all resonate at the same frequency.` | What frequency does the Hal Saflieni Hypogeum resonate at? · What does 110 Hz do to the brain? · Do ancient temples have the same resonance? · Why did ancient people build sacred spaces for sound? | ~110 Hz (Cook et al. 2008). ⚠️ small study: "researchers found" |
+
+**Film first:** C3 → C5 → P1
