@@ -43,7 +43,7 @@ Sources: Tapstitch close-ups (fabric, hem, collar) and Tapstitch's on-body photo
 | 1 | **Back hero**, the PDP's first image | Model's back to camera, head turned over the shoulder; the print fills the **centre third**; framed from crown to mid-thigh; neutral warm-grey studio wall, soft key light from 45° | Sells the design (the back is the product) |
 | 2 | **Front fit** | Full body facing camera, arms relaxed, feet shoulder-width; grey studio; the crop line at the waistband and the dropped shoulders clearly visible | Answers "how does it fit" |
 | 3 | **Miami lifestyle** | Golden hour on a rooftop, a marble terrace, a dark luxury garage or a palm-lined driveway; the model fills the left two-thirds and the scene the right third; the print or logo is readable | Brand world; also the ad-ready image |
-| 4 | **Detail** | Macro close-up: a raw-edge sleeve curling to show the terry loops, plus the print texture, at shallow depth of field | Proves quality and fabric |
+| 4 | **Detail** (its own shoot, Jac 28 Oct: never a crop or edit of the hero image) | Macro close-up: a raw-edge sleeve curling to show the terry loops, plus the print texture, at shallow depth of field | Proves quality and fabric |
 
 **Lighting:** studio light for images 1–2. Golden hour (Ava) or harsh-sun / flash (Jack) for 3, natural daylight for 4. These map to lighting sheets 6, 2, 4, 7 and 1.
 
@@ -51,6 +51,8 @@ Sources: Tapstitch close-ups (fabric, hem, collar) and Tapstitch's on-body photo
 - **Ava:** Born To Be A Star, Starborn, Consciousness (white).
 - **Jack:** Nine To Five, Created To Create, One Of None, Sex Is Cool.
 - **Both:** the black Consciousness tee, together in one lifestyle image, for the homepage.
+
+**Close-up rule (Jac, 28 Oct):** every close-up is a **separate generation with its own framing**, never a crop, zoom or edit of images 1–3. Refs for close-ups: the Tapstitch fabric close-ups (knit face, terry loops, raw hem, rib collar) + the real print artwork. Each one shows something the full-body shots can't: the hem curl, the rib collar, the print's ink on the knit.
 
 ## 5. Order of work (most valuable first)
 1. **Nine To Five (Members Only):** black + white (the flagship, and the gallery photos already feature it).
