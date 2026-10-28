@@ -1,4 +1,4 @@
-# Aura Miami Brand Playbook (v0.2)
+# Aura Miami Brand Playbook (v0.3)
 
 Advisor: Claude, for Jac. Track B of training week. Sources: `notes/<id>.md`, cited as `[id mm:ss]`.
 v0.2 (18:10 UTC): §3–§6 drafted from cited written sources (`web-notes.md`) while Gemini was out of quota: holiday psychology, pricing, the drop model, brand architecture, fragrance and artist-merch economics. v0.1: persuasion science (Cialdini ×2).
@@ -98,3 +98,77 @@ AURA (master brand: the identity, the distinctive assets)
 | Invented authority (fake certifications, actors posing as experts) | Fake authority is the Theranos pattern [cDREln_LrME 23:28]; legal liability |
 | Involuntary commitments (hidden subscriptions, pre-ticked boxes) | It breaks the consistency principle, and customers resent it |
 | Everything on Track A's never-do list | `../clothing-brand-ads/PLAYBOOK-DRAFT.md` §10 |
+
+---
+
+## 9. v0.3: what 17 more videos changed (28 Oct)
+Sources:
+- **Persuasion and pricing:** Rory Sutherland `lhlS-Wds02M`, Omar Eddaoudi `1kcxUhjuW_0`, Vanessa Van Edwards `gffPhK7ygJo`, Practical Psychology `zIfn7NKOk6c`, Adam Erhart `hYZG8qnS2T4`
+- **Supreme:** CNBC `g5VTZnhX5WU`, The Philosophy Of Marketing `w32JByAFmTQ`, Marshall Crews `9CTigCTKGDE`
+- **Corteiz:** Ashville `1yDhxRLMx3s`, Elijah Delporte `nZUdvo0cZMc`
+- **Building a brand:** Matt Gray `6V4y0AX69h4`, Fear of God `87Ag0UQupG0`, Virgil Abloh `DNZ5mPGW93Q` / `l5dWVKiKRSs`, Byron Sharp `G53MkkQ5dBo` / `akac_W-5N-4`, orenmeetsworld `dzq0nHoKtJ8`
+
+### 9.1 The big tension, resolved for a print-on-demand brand
+The hype brands (Supreme, Corteiz) win by **making less than demand** [g5VTZnhX5WU 02:26, 1yDhxRLMx3s 16:30]. Marketing science wins by **reach, ease of buying and light buyers** [G53MkkQ5dBo, akac_W-5N-4 02:16]. **Aura is print-on-demand: it can't sell out**, so "only 50 left" would be a lie.
+
+**Aura's answer: availability for the core, scarcity only through time.**
+
+| Layer | Rule | Why |
+|---|---|---|
+| **Core** (Nine To Five, Created To Create…) | Always available, always full price, everywhere the buyer is. Built for reach | Sharp: penetration and light buyers drive growth; easy to buy wins |
+| **Capsules** (new designs) | **Time-boxed:** "Capsule 02 closes Sun 23:59 ET; this design is retired forever." Then it really is gone | The only honest scarcity on print-on-demand. Supreme's loss aversion without a fake stock count |
+| **Numbered runs** | Only once a hero item moves to small bulk production (2027): "300 made", and the number is real | Real limited supply, real resale value [dzq0nHoKtJ8 08:02] |
+
+### 9.2 Distinctive assets: pick them and repeat them for years
+Sharp: be recognised, don't chase "brand love" [G53MkkQ5dBo]. Virgil: repeat one template [l5dWVKiKRSs 03:19, DNZ5mPGW93Q 05:03]. Matt Gray: take away everything that isn't essential [6V4y0AX69h4 14:49]. Aura's set (proposed, Jac to lock):
+1. The **AURA wordmark**.
+2. **Black, white and one gold accent.**
+3. **The back-print formula:** a statement in condensed caps with a small line beneath. This is what people recognise from across a room.
+4. **"Too creative for nine to five"** as the brand line.
+5. **The cross necklace** on Jack and Ava.
+
+Every ad, page and box uses the same set.
+
+### 9.3 The takeoff item
+Virgil: find the one product you're known for and perfect it [DNZ5mPGW93Q 00:01]. **Aura's is the Nine To Five tee and hoodie.** It's the flagship of ads, photos and the homepage, and all 4 shots of it get done first.
+
+### 9.4 Price framing and anxiety (Sutherland, Erhart)
+- **Relative framing:** show the full look ($140 → $120 bundle) next to a single tee, and lead collection pages with the $100 hoodie, so the core reads as the sensible choice [lhlS-Wds02M 15:14, hYZG8qnS2T4 08:35].
+- **Solve the anxiety, not the spec:** the purchase-killers are fit uncertainty, returns and "will this look right on me", so answer those on the page (model size line, size exchanges) [lhlS-Wds02M 06:53].
+- **Reverse benchmarking:** make the parts competitors ignore memorable. A handwritten note, a surprise in the box, a beautiful shipping email, painless size exchanges [lhlS-Wds02M 31:33]. This confirms §2 reciprocity.
+- **Explore/exploit:** spend about 80% of effort on the proven core and about 20% on bold experiments (a strange accessory, an unexpected collab) [lhlS-Wds02M 23:04, g5VTZnhX5WU 09:36].
+
+### 9.5 When people buy, so ads show up at those moments (Sharp)
+These are the moments someone decides to buy a piece like this:
+- **First big paycheck / first client**
+- **Quitting the 9–5**
+- **A Miami trip or a big night out**
+- **Starting a new chapter**
+- **A gift for someone ambitious**
+
+Map ad concepts to them [akac_W-5N-4]. The messaging stays broad enough for the whole category, not insider-only [akac_W-5N-4 04:32].
+
+### 9.6 Drops as rituals (truthful versions)
+- **Countdown sequence** on IG and email: 48h "coming" → 24h reveal → 3h → 1h early access for the list → live [9CTigCTKGDE 10:36]. **The site stays open** (Jac, 27 Oct); the email list gets the early hour.
+- **Hold back the full design** until 24h before release [9CTigCTKGDE 03:56].
+- **Let people help choose:** colourway polls and design votes build ownership and a commitment ladder [hYZG8qnS2T4 13:31].
+- **Show how it's made:** the samples, the misprints, the iterations. "Show the hard part" justifies the price [9CTigCTKGDE 05:30, 1kcxUhjuW_0 11:14].
+- **Film ambassadors where they actually live,** not in a studio [nZUdvo0cZMc 04:50].
+- Hand the first pieces to taste-makers in Miami; if friends don't wear it, the roots are weak [9CTigCTKGDE 01:52, DNZ5mPGW93Q 09:50].
+- **Before → after:** the customer before Aura vs who they become wearing it. That transformation is the core message [nZUdvo0cZMc 09:26].
+
+### 9.7 Brand extensions: confirmed
+- **Fear of God's barbell** (a top-tier line for prestige, a core line for scale, nothing muddy in between) confirms §6 [87Ag0UQupG0 00:50].
+- **Corteiz and Virgil both say artists carry the brand** better than paid influencer posts. This confirms **Aura for Artists as a collab line** [1yDhxRLMx3s 07:42, l5dWVKiKRSs 05:32, 87Ag0UQupG0 04:29].
+- **New action: trademarks.**
+  - Register AURA MIAMI (and "Too Creative For Nine To Five", which the print already marks ™) before scaling into the US and EU [87Ag0UQupG0 08:53, w32JByAFmTQ 04:37].
+  - Start with a USPTO knockout search in class 25 (clothing). *[Not legal advice. Confirm with a trademark attorney.]*
+
+### 9.8 Rejected from these sources (never-do)
+| Tactic | Source | Why it's out |
+|---|---|---|
+| "Publicly state limited quantities even if more are in stock" | 9CTigCTKGDE 07:47 | **The textbook counterfeit-scarcity lie.** FTC deception risk and Meta policy; on print-on-demand it's always false |
+| Live stock counters / "sell-out notifications" | zIfn7NKOk6c 01:11, 03:41 | Print-on-demand has no stock to count. Only real time deadlines (capsule closes) can be shown |
+| Making non-buyers feel shame or left out | zIfn7NKOk6c 00:20, gffPhK7ygJo (Shame driver) | Unity yes, shaming no. Aura invites people in, it doesn't mock |
+| Password-locking the store for 14 days before drops | 9CTigCTKGDE 08:15 | Jac decided the website stays open. The early hour goes to the email list instead |
+| Fake engagement / comment seeding | (see EDITING-PLAYBOOK §10) | Deceptive endorsement |

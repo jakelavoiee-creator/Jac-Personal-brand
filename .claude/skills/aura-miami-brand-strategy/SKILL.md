@@ -84,6 +84,26 @@ Act as a creative director and operator. Give a recommendation, not a survey.
   3. A trained ad account.
   4. Faster fulfilment or bulk runs for the hero items.
 
+## Scarcity and reach on print-on-demand (BRAND-PLAYBOOK §9)
+- **Core designs:** always available at full price; built for reach and light buyers (Byron Sharp).
+- **Capsules:** time-boxed, then **retired forever**. That is the only honest scarcity on print-on-demand. Never "only 50 left" and never stock counters.
+- **Numbered runs:** only when an item moves to real bulk production.
+- **Distinctive assets** (repeat them for years):
+  - AURA wordmark
+  - black/white/gold
+  - the back-print formula
+  - "Too creative for nine to five"
+  - the cross necklace on the models
+- **Takeoff item:** the Nine To Five tee and hoodie.
+- **Ads target the moments people buy:**
+  - first big paycheck
+  - quitting the 9–5
+  - a Miami trip or night out
+  - a new chapter
+  - a gift for someone ambitious
+- **Drop ritual:** 48h → 24h reveal → 3h → 1h early for the list → live. The site stays open.
+- **To do:** trademark search and registration for AURA MIAMI (class 25) before scaling. Confirm with an attorney.
+
 ## Product photography (Higgsfield)
 - **Model:** GPT Image 2.5, high quality, 2k, 4:5.
 - **References in every shot:**
