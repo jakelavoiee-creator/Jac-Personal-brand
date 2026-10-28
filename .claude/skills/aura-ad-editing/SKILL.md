@@ -52,6 +52,15 @@ description: Edit raw founder or UGC footage into finished Aura Miami ads for Me
   - Music bed at −18 dB, sidechain-ducked.
   - A soft whoosh on cuts and a hit on the hook and the offer reveal.
   - Licensed music only: Meta Sound Collection, TikTok Commercial Music Library, or a paid licence.
+- **v0.2 additions (12 tutorials, EDITING-PLAYBOOK §10):**
+  - Default length 15–25s.
+  - A visual change inside 0.5s; optionally a 2s payoff preview first.
+  - No talking-head shot runs over ~2s.
+  - Show-don't-tell B-roll on every feature mentioned.
+  - End on a hero shot of the fit.
+  - One gold accent word per caption line.
+  - Sound: whoosh into impact on product reveals; a low riser under the pain point; cut to silence for the reveal; a reverb tail under the CTA.
+- **Never say "before it sells out":** Aura is print-on-demand.
 - **Look:** premium and calm, black and white with one gold accent. Fast pacing in a quiet style, never chaotic.
 
 ## Known limits / next builds

@@ -1,4 +1,4 @@
-# Aura ad-editing playbook (v0.1, 27 Oct 2026)
+# Aura ad-editing playbook (v0.2, 28 Oct 2026)
 
 **How to read this.** This is the spec for turning Jac's founder footage into ads, with each rule mapped to the toolkit in `scripts/ad-edit/`. Rules are tagged by where they come from:
 - **[DD]** Dara Denney video note `notes/R1HQW38EcRA.md`
@@ -6,7 +6,7 @@
 - **[A]** the Meta ads playbook `../clothing-brand-ads/PLAYBOOK-DRAFT.md`
 - **[mine]** my own default, to be tested
 
-Still to come: 12 editing tutorials are queued for when the Gemini quota resets, and Jac's own example links go to the top of that queue.
+v0.2 adds 12 more tutorial notes (§10). Jac's own example links go to the top of the queue when he sends them.
 
 ## 1. North star for every Aura edit
 - **Look:** premium and calm, never chaotic. Fast pacing, quiet style: black and white, one gold accent, no rainbow emoji spam. [mine]
@@ -82,3 +82,62 @@ Still to come: 12 editing tutorials are queued for when the Gemini quota resets,
 - [cinerads](https://www.cinerads.com/blog/meta-ads-video-creative-best-practices)
 - [segwise](https://segwise.ai/blog/anatomy-top-performing-video-ad-frame-by-frame)
 - [quickframe](https://quickframe.mountain.com/meta-platform-expert/)
+
+## 10. v0.2: what 12 more tutorials changed (28 Oct)
+Sources:
+- **Meta creative:** Fraser Cottrell `gP-68LmgAQ4`, Jared Robinson `EaLQwio86Os` + `ooF7rNBYAog`
+- **Editing and retention:** Joseph Video Editing `R9Uu0JtvyMg`, Logan Smith `IPW-MF8Kp0I`
+- **Sound design:** Herman Huang `tzfzkTAQsnE`, Tim Runia `JOm_EqBoW0M`
+- **Captions and type:** Patrik Key `hjNH5JUVgEw`, Motion Nations `4vLwhXY0ZRw`, trikstr. `h5F3QM72PY0`
+- **UGC:** Sydney Mohni `ADvpe7eXYp8`, Brands Meet Creators `9xXzrmGVw6k`
+
+### Structure and pacing (overrides §2 where they conflict)
+- **Length:**
+  - Default **15–25 s**. Short ads that finish beat 40 s ads [9xXzrmGVw6k].
+  - Founder origin stories may run to 35 s if retention holds.
+- **Hook:**
+  - A visual change inside the **first 0.5 s** [ooF7rNBYAog].
+  - Optionally a **2-second preview of the payoff** (the finished look) before the talking head [4vLwhXY0ZRw 00:00].
+  - Open a loop the viewer needs closed ("We tested 5 heavyweight tees…") [gP-68LmgAQ4 07:43].
+- **Body:**
+  - No talking-head shot runs longer than **~2 s** without a cut, punch-in or B-roll [ADvpe7eXYp8, IPW-MF8Kp0I].
+  - **Show, don't tell:** every garment feature mentioned gets about a 1 s visual of that feature [R9Uu0JtvyMg].
+  - Use the angles that already won as statics [EaLQwio86Os].
+  - **Convert specs into benefits:** "heavyweight French terry" → "keeps its boxy shape wash after wash" [ADvpe7eXYp8].
+- **Tension words** keep people watching: *but*, *instead*, *until* [IPW-MF8Kp0I 03:53].
+- **End on payoff:** the last 3–5 s are a clean hero shot of the fit, then the CTA [IPW-MF8Kp0I].
+- **J/L overlaps** of 3–10 frames on every speech cut keep momentum [R9Uu0JtvyMg].
+- **Funnel fit** [gP-68LmgAQ4 10:36]:
+  - Cold: founder story, street/UGC.
+  - Mid: split-screen and fabric breakdown.
+  - Warm: static proof and offer.
+
+### Captions and type (refines §4)
+- **One accent word per line** in gold; everything else white with a 4 px black outline and a soft 70% shadow [hjNH5JUVgEw]. *(The toolkit's current style matches. Its gold is `&H0000D7FF` ≈ #FFD700; the tutorials use #FDA600.)*
+- Keep captions **above the chin and collar line** of the speaker, which is also inside the safe zone [hjNH5JUVgEw 02:05].
+- **Motion:** eased in, never linear; motion blur on fast moves [h5F3QM72PY0, 4vLwhXY0ZRw].
+- **Fonts:** one heavy sans for captions, plus at most one accent face. No neon or glassmorphism: it clashes with Aura's black, white and gold.
+- **On-screen checklists** are a strong pattern break, e.g. "✓ Boxy fit ✓ Raw edge ✓ Heavyweight terry" [ADvpe7eXYp8].
+
+### Sound (refines §6)
+- **A 4-bin palette only** [JOm_EqBoW0M]:
+  - whooshes
+  - risers
+  - impacts (sub booms)
+  - clicks (shutter)
+  The toolkit's built-in SFX already cover whoosh, riser, hit and pop.
+- **Aura's sound is dark and premium:** sub-booms, mechanical swooshes. No bright dings or vlog chimes [tzfzkTAQsnE].
+- **Whoosh into impact:** a whoosh on the last ~8 frames of the founder clip, landing on an impact the frame the product appears [JOm_EqBoW0M].
+- **A low riser at about −16 dB** under the founder's pain point (thin blanks, bad fit) [JOm_EqBoW0M].
+- **Cut to silence** for the reveal: build with a riser, then drop to silence on the clean garment shot [JOm_EqBoW0M].
+- **The CTA lands on a reverb tail:** cut the beat and let about 3 s of reverb ring under "Link below" [tzfzkTAQsnE].
+- **Carve space for the voice:** dip the music around 3 kHz under speech, as well as ducking it, so the voice cuts through [tzfzkTAQsnE]. ✅ Added to the toolkit (`mix`).
+- **Switch the music** when the section changes (founder → try-on) to reset attention [IPW-MF8Kp0I].
+
+### Rejected from these sources (never-do)
+| Tactic | Source | Why it's out |
+|---|---|---|
+| Commenting from an alternate account ("the detail at 0:22 is insane") to bait re-watches | IPW-MF8Kp0I | Fake engagement: a deceptive endorsement and against platform rules |
+| "Grab it before it sells out" / "limited restock" | ADvpe7eXYp8, JOm_EqBoW0M | **Aura is print-on-demand and never sells out.** Only use scarcity that is true: retired designs, real deadlines |
+| Borrowed proof stats ("45,000 shipped") or "30-day money-back" | EaLQwio86Os | Only Aura's real numbers and real policy (14-day returns today) |
+| Shopify revenue screenshots as social proof | JOm_EqBoW0M | Only if real and current. Never staged |

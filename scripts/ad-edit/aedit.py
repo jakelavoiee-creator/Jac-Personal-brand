@@ -258,7 +258,7 @@ def cmd_mix(a):
     if a.music:
         inputs += ["-stream_loop", "-1", "-i", a.music]
         chains.append(f"[{idx}:a]aformat=sample_rates=48000:channel_layouts=stereo,atrim=0:{vdur:.3f},"
-                      f"volume={a.music_db}dB,afade=t=in:d=0.4,afade=t=out:st={max(0, vdur - 1):.3f}:d=1[mus]")
+                      f"volume={a.music_db}dB,equalizer=f=3000:t=q:w=1:g=-6,afade=t=in:d=0.4,afade=t=out:st={max(0, vdur - 1):.3f}:d=1[mus]")
         # music ducks whenever the founder speaks
         chains.append("[mus][sc]sidechaincompress=threshold=0.03:ratio=3:attack=15:release=350:makeup=1[duck]")
         mixes.append("[duck]")
