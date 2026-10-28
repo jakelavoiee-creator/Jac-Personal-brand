@@ -54,6 +54,25 @@ Sources: Tapstitch close-ups (fabric, hem, collar) and Tapstitch's on-body photo
 - **Rotation:** every design is shot on one man and one woman. Each model leads roughly equal product pages, so no single face dominates.
 - **Honest use:** these are AI models. Never give them fake social accounts, reviews or "customer" framing.
 
+### Casting: one model per design (Jac, 28 Oct)
+A design's tee and hoodie use the same model.
+
+| Design | Model | Products |
+|---|---|---|
+| Nine To Five (Members Only) | **Jack** | tee, hoodie |
+| Created To Create | **Tristan** | tee, hoodie |
+| New Athlete | **Tristan** | tank |
+| One Of None | **Mattilo** | tee, hoodie |
+| Sex Is Cool | **Engie** | tee, hoodie |
+| Born To Be A Star | **Allana** | tee, hoodie |
+| Consciousness | **Ava** | tee, hoodie |
+| Starborn | **Ava** | tee |
+
+- **Balance:** 3 men and 3 women, each leading 2–3 products, 14 products in all.
+- **Hoodies (5 colours):**
+  - full 4-shot set on black
+  - 1 on-body front shot for each of the other 4 colours (Flower Gray, Gray Green, Creme Apricot, Dark Gray)
+
 ## 4. The shot list: 4 images per colour per design (4:5, 1600×2000)
 | # | Shot | Composition | Purpose |
 |---|---|---|---|
