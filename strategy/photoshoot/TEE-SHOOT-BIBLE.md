@@ -87,3 +87,15 @@ wearing the [black|white] Aura French Terry Raw Edge T-shirt [GARMENT LOCK §1],
 [SHOT §4: composition + framing], [LIGHT], styled with [STYLING §3],
 editorial fashion photography, 85mm lens, natural skin texture, true-to-life colour, 4:5
 ```
+
+## 10. Shoot log
+**28 Oct, Nine To Five (Members Only) black, back hero, Jack.** Model: GPT Image 2.5, high quality, 2k, 4:5, about 2.75 credits per image.
+- **Refs:** Jack's sheet, the Shopify back mockup, the Pinterest pose ref.
+- **Result:** 4 of 4 prints letter-perfect, pose and cut right.
+- **Fail:** the tee came out *washed charcoal* because the mockup itself is washed.
+- **Fix:** an edit pass on the best variant with a **frame from Tapstitch's on-body photos as the colour reference**, giving solid jet black with the print untouched.
+- **Lesson:** always attach a real Tapstitch photo of the blank as the colour/fabric reference, not only the mockup.
+- **Finals:**
+  - `aura-miami-nine-to-five-tee-black-back-hero-A.jpg` (pick)
+  - `...-B.jpg` (backup)
+  - Higgsfield jobs: 429e5311, 38a0192d
