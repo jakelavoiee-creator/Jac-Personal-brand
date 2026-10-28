@@ -37,6 +37,23 @@ Sources: Tapstitch close-ups (fabric, hem, collar) and Tapstitch's on-body photo
 - **Plain watch dials and plain sneakers**, so the Rolex crown and the New Balance "N" from the character sheets stay out of product images.
 - **Same face, same accessories, every image.** The cross necklace is the recurring signature.
 
+### Cast v2 (28 Oct): 6 models, added for diversity
+| | Look | Signature (lock in every image) |
+|---|---|---|
+| **Jack** | as above | thin silver cross necklace, steel watch |
+| **Ava** | as above | thin silver cross necklace |
+| **Tristan** | 6'4", athletic, light-brown skin (deeper), hazel-brown eyes, neat cornrows to the nape, thin moustache and chin beard | thin silver chain with a small cross, diamond stud earrings, thin silver bracelet |
+| **Mattilo** | 6'3", athletic, olive skin, green eyes, dark tight curls on top with a low taper fade | thin silver chain with a small cross, small silver hoop earrings |
+| **W3 (name TBC)** | slim, chin-length dark-brown bob, green eyes, freckles, light olive skin | layered silver necklaces, silver hoops and ear stack, silver bracelets and rings |
+| **W4 (name TBC)** | slim, deep-brown skin, long boho knotless braids worn half-up in a top bun, brown eyes | layered gold necklaces, gold hoops, gold bracelets and rings |
+
+**Rules for all six:**
+- **Cross:** a small silver or gold cross on every model (the distinctive asset), alongside each model's own jewellery.
+- **Clean frame:** plain sneakers and plain watch dials. No NB "N" or similar logos from the sheets.
+- **Set lock:** product images use the light-grey seamless set, whatever the backdrop on the character sheet.
+- **Rotation:** every design is shot on one man and one woman. Each model leads roughly equal product pages, so no single face dominates.
+- **Honest use:** these are AI models. Never give them fake social accounts, reviews or "customer" framing.
+
 ## 4. The shot list: 4 images per colour per design (4:5, 1600×2000)
 | # | Shot | Composition | Purpose |
 |---|---|---|---|
