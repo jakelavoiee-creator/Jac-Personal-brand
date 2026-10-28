@@ -158,3 +158,25 @@ Same opening each time, `what's touching your skin? part X`; same ending, `you d
 - [ ] Nothing stated as fact that's only a claim ("people are claiming…")
 - [ ] It ends with "mmm / you decide," not "they're lying to you"
 - [ ] Send the Insights 48h later: views, follows, shares, % non-followers
+
+---
+
+## ✝ Faith series: evidence, prayer, peace
+Tone: **invite, don't attack.** Lead with love. "Proof" means history shows Jesus lived and was crucified; the resurrection is where evidence meets faith.
+
+| # | Hook | 4 searches | Payoff / ending |
+|---|---|---|---|
+| F1 | `even his enemies wrote about him.` | Did any Roman historians write about Jesus? · What did Tacitus write about Christ? · What did the Jewish historian Josephus say about Jesus? · What did Pliny the Younger write about Christians? | `you don't write about someone who never existed.` |
+| F2 | `they found his name in stone.` | Was Pontius Pilate a real person? · What is the Pilate Stone? · Where was the Pilate inscription found? · What did Pilate do to Jesus? | Pilate Stone, Caesarea 1961 · `the man who washed his hands is real. so is the one he crucified.` |
+| F3 | `they found the tomb of the man who judged Jesus.` | Who was Caiaphas in the Bible? · Was the Caiaphas ossuary found? · Where was the Caiaphas ossuary discovered? · What did Caiaphas say about Jesus? | Ossuary found in Jerusalem, 1990 |
+| F4 | `written 700 years before he was born.` | What are the Dead Sea Scrolls? · How old is the Great Isaiah Scroll? · Does the Isaiah scroll match the modern Bible? · What does Isaiah 53 say? | Read Isaiah 53:5 slowly. Silence. |
+| F5 | `skeptics said it didn't exist.` | What is the Pool of Bethesda in the Bible? · Did archaeologists find the Pool of Bethesda? · How many porches did the Pool of Bethesda have? · What miracle did Jesus do at the Pool of Bethesda? | John 5, five porticoes, excavated |
+| F6 | `11 men. one story.` | What happened to the disciples after Jesus died? · How did Peter die? · What did Josephus write about James, the brother of Jesus? · Would someone die for something they knew was a lie? | `people die for what they believe is true. they don't die for what they know is a lie.` |
+| F7 | `the most studied cloth in history.` | What is the Shroud of Turin? · How was the image on the Shroud of Turin made? · What did the 1988 carbon dating of the shroud find? · Why do scientists still debate the Shroud of Turin? | Honest: dated 1260–1390, but disputed and unexplained. `you decide.` |
+| F8 | `scientists scanned people while they prayed.` | What happens in the brain during prayer? · Andrew Newberg brain scans praying nuns · Does prayer reduce stress and anxiety? · What does Philippians 4:6-7 say? | "the peace of God, which passeth all understanding" |
+| F9 | `Harvard studied people who go to church.` | Do people who attend church live longer? · What did the Harvard study find about religious service attendance? · Are religious people less likely to be depressed? · What did Jesus say about worry? | ~33% lower mortality (VanderWeele, JAMA Intern Med 2016) · Matthew 6:34 |
+| F10 | `the most recognized symbol on earth.` | How many Christians are there in the world? · Why was crucifixion the worst Roman punishment? · Why did a symbol of execution become a symbol of hope? · What does John 3:16 say? | `they meant it as the end. it became the beginning.` |
+
+**Other formats:**
+- **Testimony** (30–45s to camera): before → the moment it changed → now. The most powerful format, and only you can make it.
+- **"Pray with me"** (30s): eyes closed, one short prayer for whoever is struggling right now. Caption: "type amen if you need this today."
