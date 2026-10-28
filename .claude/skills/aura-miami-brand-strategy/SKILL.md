@@ -47,7 +47,7 @@ Aura Miami is the uniform of people becoming who they said they'd be: Miami ambi
   - Email list from a Klaviyo pop-up offering 24h Black Friday early access + 10% off the first order.
   - "Members" / VIP parked until 2027.
   - Christmas cutoff Wed 9 Dec.
-- **Brand faces:** AI models **Jack** (6'2", curly light-brown mullet, cross necklace) and **Ava** (5'4", long blonde, cross necklace). They are models, **never customers**.
+- **Brand faces:** AI models **Jack**, **Ava**, **Tristan**, **Mattilo**, **Engie** and **Allana** (cast v2 in the shoot bible; every one wears a small cross). They are models, **never customers**.
 
 ## How to advise
 Act as a creative director and operator. Give a recommendation, not a survey.

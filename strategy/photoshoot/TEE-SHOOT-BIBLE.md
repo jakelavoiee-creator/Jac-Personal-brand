@@ -44,8 +44,8 @@ Sources: Tapstitch close-ups (fabric, hem, collar) and Tapstitch's on-body photo
 | **Ava** | as above | thin silver cross necklace |
 | **Tristan** | 6'4", athletic, light-brown skin (deeper), hazel-brown eyes, neat cornrows to the nape, thin moustache and chin beard | thin silver chain with a small cross, diamond stud earrings, thin silver bracelet |
 | **Mattilo** | 6'3", athletic, olive skin, green eyes, dark tight curls on top with a low taper fade | thin silver chain with a small cross, small silver hoop earrings |
-| **W3 (name TBC)** | slim, chin-length dark-brown bob, green eyes, freckles, light olive skin | layered silver necklaces, silver hoops and ear stack, silver bracelets and rings |
-| **W4 (name TBC)** | slim, deep-brown skin, long boho knotless braids worn half-up in a top bun, brown eyes | layered gold necklaces, gold hoops, gold bracelets and rings |
+| **Engie** | slim, chin-length dark-brown bob, green eyes, freckles, light olive skin | layered silver necklaces, silver hoops and ear stack, silver bracelets and rings |
+| **Allana** | slim, deep-brown skin, long boho knotless braids worn half-up in a top bun, brown eyes | layered gold necklaces, gold hoops, gold bracelets and rings |
 
 **Rules for all six:**
 - **Cross:** a small silver or gold cross on every model (the distinctive asset), alongside each model's own jewellery.
