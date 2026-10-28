@@ -157,3 +157,14 @@ editorial fashion photography, 85mm lens, natural skin texture, true-to-life col
   - Below the print to the hem is about a third of the shirt length.
   - The text block is about 70% of the body width, between the armpits.
 - **Why:** the first white back render put it at 17–43%, too high. On a body the model drifts the print upward, so always state the armpit and sleeve-edge anchors.
+
+**28 Oct, HAND RULE (Tristan, Created To Create white back).**
+- **Problem:** "thumb hooked, fingers over the pocket" is vague, and the model merged the fingers into the pocket.
+- **Write pocket poses precisely:**
+  - The four fingers are hidden inside the pocket up to the knuckles.
+  - Only the back of the hand (knuckles to wrist) shows above the pocket edge.
+  - The thumb rests outside along the pocket edge.
+  - The wrist is straight; the elbow is bent about 100° and points out, with a gap between arm and torso.
+  - The pocket edge stays intact, with a slight bulge from the hand.
+- **Fix:** an edit pass on the hand only, so a good print is never regenerated.
+- **Fallback:** the arm hangs loose at the side.
