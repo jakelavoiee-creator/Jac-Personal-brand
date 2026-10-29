@@ -1,4 +1,4 @@
-# Aura Miami Brand Playbook (v0.3)
+# Aura Miami Brand Playbook (v0.4)
 
 Advisor: Claude, for Jac. Track B of training week. Sources: `notes/<id>.md`, cited as `[id mm:ss]`.
 v0.2 (18:10 UTC): §3–§6 drafted from cited written sources (`web-notes.md`) while Gemini was out of quota: holiday psychology, pricing, the drop model, brand architecture, fragrance and artist-merch economics. v0.1: persuasion science (Cialdini ×2).
@@ -172,3 +172,90 @@ Map ad concepts to them [akac_W-5N-4]. The messaging stays broad enough for the 
 | Making non-buyers feel shame or left out | zIfn7NKOk6c 00:20, gffPhK7ygJo (Shame driver) | Unity yes, shaming no. Aura invites people in, it doesn't mock |
 | Password-locking the store for 14 days before drops | 9CTigCTKGDE 08:15 | Jac decided the website stays open. The early hour goes to the email list instead |
 | Fake engagement / comment seeding | (see EDITING-PLAYBOOK §10) | Deceptive endorsement |
+
+
+---
+
+## 10. v0.4: what 14 more videos changed (29 Oct)
+**Sources:**
+- **Kith** (Ronnie Fieg) `zGWLlLP-TLs`
+- **Gentle Monster:** `Ro3hxj0a4e8`, `N6M6W9T2weM`
+- **Rick Owens / Michèle Lamy** `2qFgW1DjE0k`
+- **YoungLA** (Forbes) `FfrpDSE0wqc`
+- **HYP Miami** `Gf6cRfE1uGQ`
+- **Brand extensions:** best/worst `br-6-Pe6TwM`, fails `Ja5jhYej8nA`
+- **Eyewear:** Warby Parker `EyfbYU8dan0`, Luxottica `aBlCGpmqAC8`
+- **Fragrance:** `0IVNTzZnLMA`, `72zr8NaC3p0`, `VnS1h376F8U`, `mfC_kagdfgU`
+
+Every claim below was filtered through Aura's reality: print-on-demand, 1 order to date, one conversion campaign, and maximum desire with zero deception. The AI notes' "extrapolations" (invented price points, invented scent names) are **not** treated as evidence.
+
+### 10.1 Product architecture: three tiers (refines §9)
+Gentle Monster's three tiers [Ro3hxj0a4e8 06:53] and Rick Owens' "cult essentials" [2qFgW1DjE0k 05:37] point to the same structure:
+
+| Tier | Aura today | Rule |
+|---|---|---|
+| **1. Cult essentials:** the permanent core, which pays the bills | The boxy raw-edge tee + hoodie, plus the Nine To Five design | Never retired, never on a flat sale, the same silhouette for years |
+| **2. Capsules:** personality | Time-boxed designs, retired forever when the window closes | The drop ritual (§9); the only honest scarcity on print-on-demand |
+| **3. Halo:** prestige | *Not yet.* A first real bulk run with numbered pieces, or an artist collab | Only once a bulk run exists (§9: numbered runs need real bulk) |
+
+- **Kith's fit-problem rule** [zGWLlLP-TLs 15:11]: build pieces around a fit problem you actually have. **Our version:** the boxy cropped cut *is* the answer to "oversized tees look sloppy, fitted tees look basic". Say it in ads.
+- **The 10-year archive filter** [zGWLlLP-TLs 20:40]: only release designs you'd put in a 10-year retrospective book. Use it as the go/no-go question for every new capsule.
+
+### 10.2 Content and creative (feeds Track A and EDITING-PLAYBOOK)
+- **The 3-part process reel** [N6M6W9T2weM 17:11–17:34]:
+  1. A glimpse of the finished piece (hook).
+  2. The real process: print, fabric, raw edge.
+  3. The reveal on the body.
+  It maps onto our 15–25 s ad structure. **Real process footage only**; no staged "craft".
+- **"A media company that sells clothing"** [Gf6cRfE1uGQ 12:05] and YoungLA's creator-affiliate engine [FfrpDSE0wqc 01:16]:
+  - Organic content builds the audience the single paid campaign converts.
+  - Creator affiliates come in **2027**, with `#ad` disclosure always [FfrpDSE0wqc 01:20].
+- **Founder QA on camera** [FfrpDSE0wqc 00:35]: Jac checking fit, fabric and print up close. This is real authority, and it's what the founder footage is for.
+- **Build a world, not a feed** [N6M6W9T2weM 03:00]: every capsule gets a theme. The Miami nightlife, sunrise run and studio session settings in the photoshoot are the start.
+
+### 10.3 De-risking the purchase (feeds the Q4 plan)
+- **Warby Parker's lesson** [EyfbYU8dan0 04:14]: remove the risk of buying online, and conversion follows.
+  - **Aura action:** put the **size-exchange promise** (inside the existing 14-day policy) and the boxy-fit size guide ("size down for a closer fit") on every product page and in the ad CTA.
+- **Price for credibility** [EyfbYU8dan0 03:28]: too cheap reads as low quality.
+  - **This confirms our pricing:** $55/$70 tees and $85/$100 hoodies stay. Value comes from bundles, never a cheaper price.
+
+### 10.4 Brand extensions: the gate gets stricter (refines §6 and the 4-question test)
+- **Add a 5th question: the sensory match** [Ja5jhYej8nA 00:34, 03:22]. Does the new product *feel, smell and weigh* like Aura? A thin, cheap extension (the "Bic" trap [Ja5jhYej8nA 04:41]) poisons the core.
+- **Earn the right to extend** [br-6-Pe6TwM 05:36, 12:56]. No extension until the core has real equity: target **2027 H2 at the earliest**, after the $1M path milestones in §9.
+
+**Aura for Artists:**
+- Treat the artist as **guest creative director of a capsule world**, never as a logo on a blank [N6M6W9T2weM 13:23; Ro3hxj0a4e8 11:02].
+- Use a **profit-share** model, not upfront licensing [EyfbYU8dan0 10:02].
+- Disclose every seeded piece and paid post under FTC rules [Ro3hxj0a4e8 08:42].
+
+**Fragrance (when the time comes):**
+- **Launch range:** 3 scents maximum [VnS1h376F8U 08:36].
+- **Format:** start with 30 ml bottles, which ship under the "excepted quantities" exemption [VnS1h376F8U 06:21]. *Verify with the carrier.*
+- **Packaging:** stock luxury bottles with custom caps and boxes instead of a $10k+ custom mould [VnS1h376F8U 04:31].
+- **Compliance:** IFRA-compliant formulas and product liability insurance [VnS1h376F8U 05:19].
+- **Labelling:** "Marketed by AURA MIAMI / Manufactured by [partner]" [mfC_kagdfgU 08:10].
+- **Budget:** about $8–25k all-in [VnS1h376F8U]. The "$2.5k per 1,000 units" figure is India-specific [mfC_kagdfgU 04:54]. Get real quotes.
+
+**Eyewear:**
+- Start from stock acetate frames with custom hardware and packaging, not new moulds [VnS1h376F8U 04:38; 72zr8NaC3p0 05:36].
+- It needs a distinct cultural angle, or don't enter [br-6-Pe6TwM 11:40]. Gentle Monster won on fit and world-building, not frames [Ro3hxj0a4e8 04:14].
+
+**Trademarks:** before any extension, file class 25 (clothing) plus 3 (fragrance) and 9 (eyewear) [0IVNTzZnLMA 07:50; VnS1h376F8U 05:08]. *[Not legal advice. Confirm with a trademark attorney.]*
+
+### 10.5 Operator rules
+- **Reinvest everything in the foundation phase** [72zr8NaC3p0 06:50]. Every dollar taken out is ad spend and customers lost.
+- **Tunnel vision** [zGWLlLP-TLs 21:33]: don't copy other Miami or streetwear brands' drops.
+- **Ground it in Miami, not generic New York/Paris streetwear** [72zr8NaC3p0 03:02].
+- **Own the channel: DTC first, no wholesale** [zGWLlLP-TLs 17:40; Ro3hxj0a4e8 03:09].
+- **Physical retail later:** a Miami pop-up only once online demand is proven [FfrpDSE0wqc 01:52].
+
+### 10.6 Rejected from these sources (never-do)
+| Tactic | Source | Why it's out |
+|---|---|---|
+| "Weaponizing artificial scarcity"; claiming "50 pieces" then printing more | Gf6cRfE1uGQ (thesis, 22:25) | The counterfeit-scarcity lie (§8). On print-on-demand, only time-boxed retirement is honest |
+| Charging luxury prices for mediocre construction ("Chrome Hearts is pretty shit but sells") | Gf6cRfE1uGQ 09:20 | Brand equity is built on the product being as good as it looks. No provenance or quality claims we can't prove |
+| The "illusion of choice": sub-brands posing as independent competitors | aBlCGpmqAC8 08:42, 19:15 | Deliberately misleading about who makes what |
+| Copying a competitor's best-seller ("eerily reminiscent" models) | aBlCGpmqAC8 16:24 | IP risk, and it breaks the "never copy other brands' assets" rule |
+| Buy-one-give-one claims without audited delivery | EyfbYU8dan0 11:45 | Only adopt an impact model if it's real and verifiable |
+| Glorifying debt-fuelled status spending | Gf6cRfE1uGQ 26:50 | Aura's message is *earned* luxury: ambition and legacy, not flexing on credit |
+| Fortnightly drops at YoungLA's pace | FfrpDSE0wqc 01:06 | Not deceptive, but the wrong pace for a 1-order brand. **Monthly ritual first**; speed up only once the list asks for more |

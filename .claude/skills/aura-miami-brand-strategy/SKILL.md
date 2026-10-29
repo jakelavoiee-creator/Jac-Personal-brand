@@ -70,11 +70,13 @@ Act as a creative director and operator. Give a recommendation, not a survey.
   - Visible real competition.
   - **Fairness:** no bots, honest restocks.
   - **Gifting:** easy size exchanges, clear cutoffs, gift cards after the cutoff.
-- **Extensions must pass all 4:**
+- **Extensions must pass all 5:**
   1. Same identity?
   2. Natural to an Aura customer?
   3. Same quality bar?
   4. Makes the master brand more desirable?
+  5. **Sensory match:** does it feel, smell and weigh like Aura? (BRAND-PLAYBOOK §10.4)
+  - **Earn the right first:** no extension before 2027 H2. Trademark classes 25, then 3 and 9, before any launch.
   - Aura for Artists: start as a **collab line**; the B2B merch service comes later.
   - Fragrance: an indie or private-label launch first, licensing only at scale.
   - Eyewear: needs a brand world, not a commodity.
@@ -83,6 +85,13 @@ Act as a creative director and operator. Give a recommendation, not a survey.
   2. A monthly drop ritual with a growing list.
   3. A trained ad account.
   4. Faster fulfilment or bulk runs for the hero items.
+
+## Product tiers (BRAND-PLAYBOOK §10.1)
+- **Tier 1, cult essentials:** the boxy raw-edge tee and hoodie. Permanent, at full price.
+- **Tier 2, capsules:** time-boxed, then retired.
+- **Tier 3, halo:** only once a real bulk or numbered run exists.
+- **New-capsule filter:** would it go in a 10-year archive book?
+- **Ads:** use the 3-part process reel (glimpse → real process → reveal on body). Feature the size-exchange promise on product pages and in ads.
 
 ## Scarcity and reach on print-on-demand (BRAND-PLAYBOOK §9)
 - **Core designs:** always available at full price; built for reach and light buyers (Byron Sharp).
