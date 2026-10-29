@@ -168,3 +168,24 @@ editorial fashion photography, 85mm lens, natural skin texture, true-to-life col
   - The pocket edge stays intact, with a slight bulge from the hand.
 - **Fix:** an edit pass on the hand only, so a good print is never regenerated.
 - **Fallback:** the arm hangs loose at the side.
+
+**29 Oct, CASTING v3: built around the collection grid order (Jac).** This replaces the earlier one-model-per-design table.
+- **Grid:** 4 across on desktop, 2 across on mobile.
+- **Mobile layout (where most ad traffic lands):** a true man/woman checkerboard.
+- **Desktop layout:** every row has 2 men and 2 women.
+- **Repeat models:** no model sits directly above another appearance of themselves.
+
+| # | Design | Model |
+|---|---|---|
+| 1 | Nine To Five | Jack (M) |
+| 2 | Sex Is Cool | Engie (F) |
+| 3 | Starborn | Ava (F) |
+| 4 | Created To Create | Tristan (M) |
+| 5 | One Of None | Mattilo (M) |
+| 6 | Born To Be A Star | Allana (F) |
+| 7 | Consciousness | Engie (F) |
+| 8 | New Athlete tank | Jack (M) |
+
+- **Hoodies:** each hoodie uses the same model as its tee design.
+- **Order of work:** follow the grid order.
+- **Meta policy:** the Sex Is Cool back print contains profanity. Use the front or a non-print shot as the catalog/ad image for that product.
