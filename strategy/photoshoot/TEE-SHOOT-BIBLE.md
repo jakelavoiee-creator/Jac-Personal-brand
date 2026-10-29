@@ -240,3 +240,14 @@ editorial fashion photography, 85mm lens, natural skin texture, true-to-life col
   - no rim light, no coloured light
   - neutral 5500K grade, true blacks and clean whites
 - **Fix the outliers:** an edit pass on the Jack black front, and on any final whose corner samples drift by more than about ±10 levels from #8A8987.
+
+**29 Oct, EDGE REFERENCE RULE.** On-body renders kept losing the raw edges.
+- **Every on-body prompt** attaches the matching approved edge close-ups just before the set plate:
+  - **White shots:** the white hem macro and the white sleeve macro.
+  - **Black shots:** the black hem macro and the black sleeve macro.
+- **Every prompt includes an EDGES paragraph:**
+  - single layer, raw cut
+  - no folded hem, no stitching, no ribbed band
+  - 2–3 mm outward curl showing a thin terry line
+- **Standard image order:** model sheet → mockup → pose ref → hem ref → sleeve ref → SET PLATE (last).
+- **Fallback:** an edit pass on the edges only.
