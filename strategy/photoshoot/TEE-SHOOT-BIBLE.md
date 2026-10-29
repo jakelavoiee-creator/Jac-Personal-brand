@@ -218,3 +218,25 @@ editorial fashion photography, 85mm lens, natural skin texture, true-to-life col
 
 - **Rule:** each model's hoodie contrasts with their tee (dark tee → light hoodie and the reverse, where possible).
 - **Hoodie shoot:** the full 4-shot set in the LEAD colour, then 1 front shot in each other colour.
+
+**29 Oct, MASTER SET LOCK (Jac: every photo has the same studio background and light).**
+- **Drift measured on the approved finals:**
+
+  | Shot | Backdrop |
+  |---|---|
+  | Jack black back | #8B8A88 |
+  | Jack white back | #838383 |
+  | Tristan white back | #7F7F80 |
+  | Jack black front | #B8B7B6 to #C7C7C9 (outlier, much lighter) |
+
+- **Lock:** one master reference, the **SET PLATE**: an empty-studio image made from Jack's black back hero, with no person.
+  - Attach it as the **last image in every prompt**.
+  - Paste the SET LOCK paragraph (below) unchanged.
+- **Backdrop:** a seamless warm-neutral mid-grey, about #8A8987. Smooth and matte, no texture, no visible floor line. A gentle gradient, slightly lighter at the upper right.
+- **Light:**
+  - one large soft key from camera-left at about 45°, slightly above eye level
+  - soft fill from the right
+  - soft, short shadows
+  - no rim light, no coloured light
+  - neutral 5500K grade, true blacks and clean whites
+- **Fix the outliers:** an edit pass on the Jack black front, and on any final whose corner samples drift by more than about ±10 levels from #8A8987.
