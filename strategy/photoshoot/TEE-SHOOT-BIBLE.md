@@ -189,3 +189,32 @@ editorial fashion photography, 85mm lens, natural skin texture, true-to-life col
 - **Hoodies:** each hoodie uses the same model as its tee design.
 - **Order of work:** follow the grid order.
 - **Meta policy:** the Sex Is Cool back print contains profanity. Use the front or a non-print shot as the catalog/ad image for that product.
+
+**29 Oct, LEAD COLOUR PLAN.** The lead colour is the first image on a product, so it's what the collection grid shows. Apply it after the full shoot.
+
+**TEES** (grid order). Desktop is a black/white checkerboard. The colour pattern is offset from the gender pattern, so men aren't always in black.
+
+| # | Design | Model | Lead colour |
+|---|---|---|---|
+| 1 | Nine To Five | Jack | Black |
+| 2 | Sex Is Cool | Engie | White |
+| 3 | Starborn | Ava | Black |
+| 4 | Created To Create | Tristan | White |
+| 5 | One Of None | Mattilo | White |
+| 6 | Born To Be A Star | Allana | Black |
+| 7 | Consciousness | Engie | White |
+| 8 | New Athlete tank | Jack | Black |
+
+**HOODIES.** The recommended collection order fixes the gender layout (Jac to approve the reorder).
+
+| # | Design | Model | Lead colour |
+|---|---|---|---|
+| 1 | Nine To Five | Jack | Dark Gray |
+| 2 | Sex Is Cool | Engie | Creme Apricot |
+| 3 | Created To Create | Tristan | Black |
+| 4 | Born To Be A Star | Allana | Flower Gray |
+| 5 | One Of None | Mattilo | Gray Green |
+| 6 | Consciousness | Engie | Black |
+
+- **Rule:** each model's hoodie contrasts with their tee (dark tee → light hoodie and the reverse, where possible).
+- **Hoodie shoot:** the full 4-shot set in the LEAD colour, then 1 front shot in each other colour.
