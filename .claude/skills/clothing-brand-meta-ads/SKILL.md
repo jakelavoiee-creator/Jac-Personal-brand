@@ -67,7 +67,13 @@ description: Plan, launch, read and scale Meta (Facebook + Instagram) ads for a 
 - **Hook = 4 layers in second zero:** text, sound, visual, vibe. Write 3+ hooks per angle, structurally different.
 - **Copy:** under 125 words, the customer's own words, one CTA, no opening question, message match on the landing page.
 - **Creators:** modular buys (4 hooks × 2 bodies × 2 CTAs). Run winners as **Partnership ads** with dynamic identity.
-- **AI visuals:** allowed for product imagery, but only if garment, print, colour and fit match the real product. **Jack and Ava are brand models, never customers.** Apply Meta's AI disclosure where asked.
+- **AI visuals:** allowed for product imagery, but only if garment, print, colour and fit match the real product. **Jack, Ava, Tristan, Mattilo, Engie and Allana are brand models, never customers.** Apply Meta's AI disclosure where asked.
+
+- **Volume (PLAYBOOK §13):** use one flexible ad with 12–20 assets per ad set, not 2–6 hand-picked ads. Phone-quality, tightly edited footage beats studio polish.
+- **Catalog ad (§13.1):** Advantage+ catalog carousel inside the same Sales campaign, with Tees + tank and Hoodies product sets.
+  - The catalog uses each product's first image, so the lead-colour plan applies.
+  - Sex Is Cool leads with the front image.
+- **Value rules:** parked until about 50 purchases.
 
 ## Never
 - Fake scarcity, countdowns or stock claims.

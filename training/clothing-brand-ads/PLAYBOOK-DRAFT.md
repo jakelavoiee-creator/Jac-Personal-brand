@@ -1,4 +1,6 @@
-# Clothing Brand Meta Ads Playbook (DRAFT v7)
+# Clothing Brand Meta Ads Playbook (DRAFT v8)
+
+v8 (29 Oct): §13 adds catalog ads, flexible ads at volume, value rules (parked), homepage CRO and the Shopify Spring '26 features, from the last 5 queued videos. The Track A queue is now empty.
 
 v7 (16:00 UTC): §7b operating loop for running Jac's account through Claude (daily tracker, 4× anomaly checks, winner detection, approval-gated writes), plus Meta's official Ads MCP as an alternative to Adspirer.
 
@@ -420,3 +422,66 @@ Guardrails for Q4: never boost posts or run Engagement campaigns for sales [ryjf
 - ✅ Closed in v6: Q4/BFCM (Marshall Crews + Antonio Ventre/Skaleit), creative fatigue (Meta official), the retargeting debate (BitBranding's no-retargeting view now in §8), returns cross-check.
 - ❌ Gemini had no access (403): a6-l6BD3dDg and bv8AsY0xkIk (Ben Heath), xl5a--Wuask (Marshall Crews), SLEUybEybFs (Meta Mayson BF), x-fNh05Yetk (Veicolo BF), 670wq3p5W0I (Superline economics). x1b4h42HTG8 was queued as Dara Denney, but the note names Savannah Sanchez on screen; the content is consistent with the topic, but treat its attribution as uncertain.
 - Still uncovered: sizing and returns reduction from a credible source, and Meta's own Advantage+ Sales documentation.
+
+
+## 13. v8: the last 5 queued videos (29 Oct)
+**Sources:**
+- Jamie Stenton: catalog ads `WGHAfwiObRo`, value rules `-ZEiSQ1zQwU`
+- BitBranding: homepage CRO `d-7ymfYBITI`, Shopify Spring '26 `oM1yekPdzyY`
+- Caleb Kruse on Nick Fisher `tHeKd2xsNlI`
+
+### 13.1 Catalog ads: add them inside the one campaign
+- **Setup:**
+  - Connect the catalog through Shopify's **Facebook & Instagram channel** (not a CSV upload [WGHAfwiObRo 13:03]).
+  - The catalog must be **linked to the pixel**, or Meta can't match browsing to products [WGHAfwiObRo 06:17].
+  - Check Commerce Manager → "Fix issues" for blocked items [WGHAfwiObRo 07:34].
+- **Ad:**
+  - Turn on **Advantage+ catalog ads** with a Carousel format and **Advantage+ destination** (each card goes to its own product page) [WGHAfwiObRo 10:50, 11:53].
+  - Headlines use the `product.name` and `product.price` tags [WGHAfwiObRo 12:28].
+- **Product sets:**
+  - Start with **Tees + tank** and **Hoodies** [WGHAfwiObRo 03:34].
+  - Not men/women: the cut is unisex.
+- **How it fits our one-campaign decision:**
+  - Run the catalog ad as **one more ad inside the same Advantage+ Sales campaign**, not as a second campaign.
+  - It only becomes a separate retargeting-style unit once the pixel has history.
+- **Photoshoot dependency:** the catalog shows each product's **first image**, so the lead-colour plan (TEE-SHOOT-BIBLE, 29 Oct) *is* our catalog creative.
+  - **Sex Is Cool:** the front image must be first. The back print carries profanity, and Meta reviews catalog images.
+
+### 13.2 Creative volume: flexible ads (confirms §3–§5)
+- **Andromeda rewards variety:** put **12–20 assets per ad set** in one flexible ad, instead of 2–6 hand-picked ads [tHeKd2xsNlI 12:35, 14:30].
+- **The production trap:** studio-polish rarely beats tight-edited phone footage, and it costs a lot of testing speed [tHeKd2xsNlI 13:20].
+- **Aura's asset pool:**
+  - AI product photos (6 models × 8 designs)
+  - Jac's founder clips through `aedit.py` (3–5 hook variants each)
+  - fabric/process B-roll
+- **Budget behaviour** (per this source; check it in Ads Manager's help text before relying on it):
+  - Meta can spend up to 75% over the daily budget on a given day while keeping the weekly average [tHeKd2xsNlI 15:45].
+  - **Don't panic at a single high-spend day.**
+- **Asset-level breakdowns are shrinking** [tHeKd2xsNlI 15:55]. **Name every asset clearly** (`Concept-Format-Hook-Date`), and judge creative by ad-level results plus hold-out tests.
+
+### 13.3 Value rules: parked
+- **What they are:** bid more (e.g. +50%) for segments worth more, such as an age band, placement or device, instead of hard-excluding the rest [-ZEiSQ1zQwU 04:55, 04:35].
+- **Why parked:** they need real purchase-value data (we have 1 order), and cost per purchase rises when they're on [-ZEiSQ1zQwU 03:03].
+- **Revisit** after about 50 purchases, if Shopify shows a clear high-value segment (for example Instagram Reels buyers with a higher AOV).
+
+### 13.4 Store conversion (adds to the §6 CRO list)
+- **Hero:** say what we sell and why in **3 seconds**. One headline, one lifestyle image, one CTA [d-7ymfYBITI 01:06, 02:35].
+  - **Aura:** "Heavyweight boxy tees for people too creative for nine to five" over a photoshoot hero, with "Shop the drop".
+- **Homepage discovery:** best sellers and new arrivals on the homepage itself. The average visitor sees about 1.5 pages [d-7ymfYBITI 10:10]; *the 1.5 and 43% figures are the presenter's, unsourced.*
+- **Reviews:** hide star blocks until real reviews exist (never show "0.0") [d-7ymfYBITI 08:37].
+- **Shopify features worth turning on** [oM1yekPdzyY]:
+  - **Shopify Inbox AI** for sizing questions (it only works if product descriptions carry fit info) [06:32, 07:15]
+  - **Discounts by market** [14:16]
+  - **Stacking discounts** for Black Friday (Buy 2 / Buy 3 alongside the email offer) [14:34]
+  - **Rollouts** A/B theme tests once traffic exists [13:48]
+- **Skip for now:**
+  - **Smart Pricing A/B tests:** our pricing is a brand decision, and there's too little traffic to read a test.
+  - **Campaign Autopilot:** waitlist only; it learns slowly on small budgets [11:47] and takes control away from the one-campaign plan.
+
+### 13.5 Rejected from these sources (add to §10)
+| Tactic | Source | Why it's out |
+|---|---|---|
+| Quantified proof we don't have ("5 Million+ Happy Customers", "200k+ 5-Star Reviews") or press-logo strips without real press | d-7ymfYBITI 07:34, 06:31 | Only real numbers. Today that's founder story, fabric facts, the size-exchange promise, real reviews as they arrive |
+| Unverifiable impact micro-stories ("saves 2,000 gallons per pair") | d-7ymfYBITI 12:47 | Only facts we can prove (heavyweight French terry, raw edge, made to order in 3 days) |
+| Trust badges or certifications we don't hold (e.g. B-Corp) | d-7ymfYBITI 14:19 | Fake authority (BRAND-PLAYBOOK §8) |
+| Mass AI image variations that misstate the product (colours or prints that don't exist) | tHeKd2xsNlI 18:55 | Every AI image must show a real product, colour and print. AI models are never presented as customers |
