@@ -251,3 +251,10 @@ editorial fashion photography, 85mm lens, natural skin texture, true-to-life col
   - 2–3 mm outward curl showing a thin terry line
 - **Standard image order:** model sheet → mockup → pose ref → hem ref → sleeve ref → SET PLATE (last).
 - **Fallback:** an edit pass on the edges only.
+
+**29 Oct, Engie / Sex Is Cool fixes (Jac).**
+- **Styling:** Engie wears the same heather-grey wide-leg sweatpants in BOTH colour sets, black and white.
+- **Back poses:** the face never looks at the camera. Head in profile or turned away, eyes down or away.
+- **Black colour:** the black mockups are a washed black, and renders copy it. Every black prompt now says:
+  - "fresh, saturated, brand-new jet black"
+  - "image 2 is used for the print only; its faded tone is replaced"
