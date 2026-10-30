@@ -354,11 +354,13 @@ The mockup logo shows ® — **use ™ or no mark** until AURA is registered.
 | 2 | Sex Is Cool | Allana (F) | Creme Apricot |
 | 3 | Created To Create | Engie (F) | Black |
 | 4 | One Of None | Jack (M) | Gray Green |
-| 5 | Born To Be A Star | Mattilo (M) | Flower Gray |
-| 6 | Consciousness | Ava (F) | Black |
+| 5 | Born To Be A Star | Ava (F) | Flower Gray |
+| 6 | Consciousness | Mattilo (M) | Black |
 
 **Styling stays locked per model:**
 - Jack, Tristan, Mattilo: washed-black jeans
 - Allana: washed-black cargo jeans
 - Engie: heather-grey sweatpants
 - Ava: light vintage-blue jeans
+
+- **30 Oct (Jac):** swapped Born To Be A Star → Ava and Consciousness → Mattilo. Mobile rows are now Tristan/Allana, Engie/Jack, Ava/Mattilo, still a man/woman checkerboard with no repeated designs.
