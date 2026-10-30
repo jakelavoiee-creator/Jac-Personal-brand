@@ -408,3 +408,18 @@ Every shot stays on the Aura set plate.
 | **H12 Seated lounge, iced coffee** | Seated side-on on a cube, one knee up, leaning back. Both hands hold a clear iced-coffee cup at the waist, cuffs pushed to the wrists. Eyes down to the cup, a relaxed off-duty mood. The hood stands up high, and the chest print reads. | A lifestyle shot for the women. The seat is a plain light-grey cube on the set plate; no room interior. |
 
 **Props rule:** only plain, unbranded props (a clear glass, a clear cup with a plain straw). No coffee-chain logos, no visible text.
+
+### HOODIE QUALITY BLOCK (30 Oct, Jac: "people must feel the quality on the website"). Paste into EVERY hoodie prompt.
+```
+QUALITY YOU CAN FEEL: the hoodie is a 350gsm heavyweight brushed cotton fleece, and it must read as visibly thick, dense and expensive. The fabric has real body: it holds its own shape and stands away from the body instead of clinging. It forms deep, soft, rounded folds that look heavy, like thick felt, never thin creases or wrinkles. The hood is thick and double-layered and stands up on its own, keeping a full rounded shape around the neck, with its edge showing visible thickness. The sleeves keep a full, sculptural volume and stack in soft, heavy folds above the tall rib cuffs. The body blouses over the wide rib hem band. The surface is smooth, matte and slightly peachy, like brushed suede, absorbing light softly with no shine. Soft side light rakes across the fleece so its dense texture and the depth of every fold are clearly visible. The overall impression is a premium, heavyweight garment you can almost feel through the screen.
+```
+
+**How the shots sell quality:**
+- **Light:** the key always rakes from the side (never flat front light), so the folds show depth.
+- **Fold language:** "deep, soft, rounded, heavy" folds. Never "wrinkled" or "creased".
+- **Hood:** standing and rounded; the hood edge shows its thickness.
+- **Cuffs:** the sleeve fabric stacks above tall rib cuffs.
+- **Every product page gets one QUALITY DETAIL shot:**
+  - Q1, hood-edge thickness: fingers pinching the double-layer hood edge
+  - Q2, the inside brushed fleece revealed: the hem folded up
+  - Q3, cuff stack on the wrist
