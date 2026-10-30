@@ -258,3 +258,7 @@ editorial fashion photography, 85mm lens, natural skin texture, true-to-life col
 - **Black colour:** the black mockups are a washed black, and renders copy it. Every black prompt now says:
   - "fresh, saturated, brand-new jet black"
   - "image 2 is used for the print only; its faded tone is replaced"
+
+**30 Oct, COLOUR WORDING RULE (Jac).** The shirt is ONE colour throughout: body, rib, edges, curl and terry are all the same black (or the same white).
+- **Never write** "charcoal highlights", "grey edges" or similar. The model renders them as a second colour.
+- **Use instead:** "the same jet black throughout; light shows only as soft natural shading on the folds."
