@@ -266,3 +266,8 @@ editorial fashion photography, 85mm lens, natural skin texture, true-to-life col
 **30 Oct, CROSS RULE (Jac).** The cross pendant hangs at the FRONT of the chest. It's visible only in front views.
 - **In back views,** write: "only the thin silver chain shows at the back of the neck; the cross pendant hangs at the front, out of view."
 - **Never describe** a "cross necklace" in a back shot without that line.
+
+**30 Oct, STANDARD ORDER v2 (Jac: the black must look like the close-ups).**
+- **Upload order:** model sheet → hem close-up → sleeve close-up → print/logo artwork PNG → pose ref (if any) → SET PLATE (last).
+- **The close-ups define the whole shirt's colour, material and texture,** written as a "THE SHIRT IS MADE FROM THE FABRIC IN IMAGES 2 AND 3" block.
+- **Drop the mockup** whenever the artwork PNG is attached. The washed mockup tone was overriding the close-ups; placement is written as measurements instead.
