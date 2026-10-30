@@ -202,3 +202,26 @@ Ending formula: `coincidence?` → 2s pause → **mmm.** Caption: "believer or n
 | A2 | `ancient sacred places all resonate at the same frequency.` | What frequency does the Hal Saflieni Hypogeum resonate at? · What does 110 Hz do to the brain? · Do ancient temples have the same resonance? · Why did ancient people build sacred spaces for sound? | ~110 Hz (Cook et al. 2008). ⚠️ small study: "researchers found" |
 
 **Film first:** C3 → C5 → P1
+
+---
+
+## 🎯 Mission (in Jac's words, tightened)
+> You weren't made to settle. Heal what's behind you, understand what shapes you, and go live the bigger life. I'm 24 and still figuring it out too.
+
+**Weekly balance:** 2 polarizing (search chains / AI questions) · 3 helpful (stitches / explainers) · 1 personal (what you're working through right now)
+
+## 🧩 Stitch series: "what you were never told"
+Format (~20s): "most people think ___" → what the clip shows → what it means for you. Use Instagram Remix, or credit `footage: @creator`; their clip 5–8s, your part is the main content.
+
+| # | Clip to stitch | Your point | Back-up |
+|---|---|---|---|
+| S1 ⭐ | Elephant tied to a small post | Beliefs from childhood hold you even when you could break free | Learned helplessness (Seligman, 1967) |
+| S2 ⭐ | Kids at school / home footage | Hard childhood experiences raise adult risk of heart disease, depression, even cancer. Unhealed stuff lives in the body | ACE study, 17,000 adults (Felitti et al., 1998) |
+| S3 | Animal trembling after a chase | Animals shake off stress; humans hold it for years | Peter Levine, *Waking the Tiger* ("one trauma expert believes") |
+| S4 | Crabs pulling each other back in a bucket | Who pulls you back when you try to leave your 9-to-5? | (metaphor) |
+| S5 ⭐ | Someone breathing / your face | 2 inhales through the nose + 1 long exhale, 5 min/day, improved mood more than meditation | Cyclic sighing (Balban et al., Cell Reports Medicine, 2023) |
+| S6 | London taxi / city streets | Taxi drivers' brains physically grew. You can rewire yourself at any age | Maguire et al., 2000 |
+| S7 | Hotel housekeeper | Maids told their work was exercise lost weight and lowered blood pressure. Belief changes the body | Crum & Langer, 2007 |
+| S8 | Marshmallow test footage | The re-run showed it mostly came down to upbringing. Discipline isn't fixed | Watts et al., 2018 |
+| S9 | Office crowd / traffic | ~90,000 hours of your life at work, a third of your life, building someone else's dream | (commonly cited estimate) |
+| S10 | No stitch, to camera | "I'm 24. I don't have it figured out. But here's one thing I finally understood this year…" | your real story |
