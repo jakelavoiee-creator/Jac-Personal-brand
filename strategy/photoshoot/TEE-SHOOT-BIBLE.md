@@ -276,3 +276,8 @@ editorial fashion photography, 85mm lens, natural skin texture, true-to-life col
 - **Pocket poses:** the ENTIRE hand is in the pocket, wrist-deep. No fingers and no thumb visible.
 - **What shows:** only the wrist and forearm above the pocket, with a smooth natural bulge and the pocket edge and stitching intact.
 - **Fix:** an edit pass on the hand only.
+
+**30 Oct, SLEEVE RULE (Jac: the sleeves aren't oversized enough).** Use this standard wording in every GARMENT block:
+- **Shoulders:** "shoulder seams drop about 10–12 cm below the top of the shoulders; the shoulder line runs wide and almost flat."
+- **Sleeves:** "very wide boxy sleeves standing away from the arm, with a clear 6–8 cm gap between fabric and skin all around; they hang like short wide tubes and end at the elbow, with soft heavy vertical folds."
+- **Fix on an existing final:** an edit pass on the shoulders and sleeves only.
