@@ -295,3 +295,30 @@ editorial fashion photography, 85mm lens, natural skin texture, true-to-life col
   - The body is a straight wide rectangle with no taper.
   - The hem sits at the waistband (approved).
   - Use Jac's on-body fit photos (back and front) as fit-only references.
+
+## 11. Hoodie shoot (started 30 Oct)
+**Garment** (Tapstitch RU0118, from the store mockups, to confirm with real photos):
+- 350gsm heavyweight fleece, boxy and cropped, dropped shoulders.
+- Double-layer hood with no drawstrings. No kangaroo pocket.
+- Long sleeves bunching into 1x1 rib cuffs; a 1x1 rib hem band sitting at the waistband.
+- **Edges are RIBBED, not raw.**
+
+**Colour lock** (measured from the mockups; the names are misleading):
+
+| Colour | Hex | What it actually looks like |
+|---|---|---|
+| Black | #181818 | black |
+| Dark Gray | #57564A | olive-charcoal, a green-grey |
+| Gray Green | #C4B699 | khaki sand-sage |
+| Flower Gray | #D4D4D6 | light heather grey |
+| Creme Apricot | #F6E7D4 | warm cream |
+
+**Front logo:** the AURA wordmark centred on the chest, about 30% down. Ink colour per colourway:
+- Black and Dark Gray: white
+- Creme Apricot: black
+- Flower Gray: dark green
+- Gray Green: white
+
+The mockup logo shows ® — **use ™ or no mark** until AURA is registered.
+
+**Lead colours and models:** see the lead-colour plan (29 Oct). Each hoodie gets a full 4-shot set in its lead colour plus 1 front shot in each other colour.
