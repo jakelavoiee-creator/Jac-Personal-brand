@@ -289,3 +289,9 @@ editorial fashion photography, 85mm lens, natural skin texture, true-to-life col
 - **Hem:** raw, with a curl and no stitching.
 - **References:** the 4 real tank photos (collar, armhole, fabric, flat back) replace the tee close-ups for tank shots.
 - **Print:** tonal grey, left-aligned, starting below the diagonal seams.
+- **30 Oct, tank fit (Jac):**
+  - Shoulders extend about 5–7 cm past the natural shoulder point like a square cut-off cap.
+  - The armhole drops straight down to mid-ribcage.
+  - The body is a straight wide rectangle with no taper.
+  - The hem sits at the waistband (approved).
+  - Use Jac's on-body fit photos (back and front) as fit-only references.
