@@ -1,0 +1,65 @@
+{
+ "sheets": {
+  "tristan": "f8e930cf-6ff7-4e1b-8b7b-3204b68e589d",
+  "jack": "fd739a35-96cb-4ac8-ab16-8259ab8f6da0",
+  "ava": "a2ae8e1a-ae9f-4711-9dde-25972d069913",
+  "engie": "4f258e78-ef39-4ccd-9784-b50f130bbbbb",
+  "mattilo": "e60403b8-3326-4170-b8b9-19db60b5fb9b",
+  "allana": "8846ee0d-9f2c-4ef7-b71f-df6e2f9fd188"
+ },
+ "blanks": {
+  "black": "5db4bd19-af67-43dd-8529-fe0f85490164",
+  "creme": "baf3b0ca-ed6f-4297-b72a-24bbf1abeb28",
+  "darkgray": "8b498592-0cb0-4f33-ad75-4953718bee17",
+  "flowergray": "2dbc5297-63aa-41b3-9023-962f95bae44b",
+  "graygreen": "853ad2e7-79ee-409b-93db-1aa3d4449c58"
+ },
+ "construction": {
+  "shoulder": "11f71043-9263-43ab-ac8e-bc1a93efa75a",
+  "cuff": "1ba5af86-dd4a-43f5-ae7c-1d5cba925594",
+  "hem": "8956dad4-8b45-42ef-9e77-2fc7759f4215",
+  "hood": "c39d2c81-363b-4516-9469-8187e392ef90",
+  "setplate": "de455f27-85a8-42fe-bdd3-b5b61d7696eb",
+  "ntf_front_v5": "40142b5d-1ff3-4ded-9654-c4719f4588ad",
+  "ntf_back": "d99ed057-4b12-4a1d-98fc-c9b54f9ceae2",
+  "necktag_v4_job": "090534c9-418d-42a0-8dff-5770bd8d5226",
+  "real_label": "505a511e-d4a3-4ea5-8a82-3c6dba063aec"
+ },
+ "sic": {
+  "creme_back": "2799bcf2-2ff1-4de5-b00c-23eb040ea739",
+  "creme_front": "04b8c996-922e-4c06-91af-3e394723a4bc",
+  "black_back": "497b1d83-5302-4c0c-80b7-0ab7443c145d",
+  "black_front": "a21e1129-fa7c-4234-8bba-215695b4eab4",
+  "darkgray_back": "42bfc2da-b71a-4b83-b8a6-fa50d7143313",
+  "darkgray_front": "fe5202dd-c4cc-4772-8884-dceb07df0070",
+  "flowergray_back": "e9fcb8bc-8a47-4939-9668-dc3c4e1231ad",
+  "flowergray_front": "c83b5371-4f55-4489-bf4c-e3aadd2b1949",
+  "graygreen_back": "e5927436-6054-44ac-8fbd-1017cc1f7cc5",
+  "graygreen_front": "d6386ea3-b403-4a5e-9e53-c55c6e3ada26"
+ },
+ "mockup_url_pattern": "https://cdn.shopify.com/s/files/1/0751/2860/2755/files/aura-miami-{design}-hoodie-{color}-{side}.png",
+ "ctc": {
+  "black_back": "53f5210b-1536-4058-845c-55805e8bc0db",
+  "black_front": "6af446c8-d54e-441b-9b58-ba7db86c34df",
+  "creme_back": "b31ea9b3-7736-4c26-b933-4642be3ba5cf",
+  "creme_front": "becc588a-e977-41cb-abc4-f2e0f91232e8",
+  "darkgray_back": "0368a35e-e6a2-415f-9131-d53fc2e729cb",
+  "darkgray_front": "4baf1a51-87e2-4c52-95df-50301b2c2eec",
+  "flowergray_back": "c953dde5-3511-4966-8846-5326dd9556f8",
+  "flowergray_front": "25c1a251-d533-42ce-b26c-ad813d7eda0c",
+  "graygreen_back": "b49e5cdc-332b-446c-95a2-f45f0fea5496",
+  "graygreen_front": "806eebaf-6623-4a82-a5ca-0b0bb68da2a8"
+ },
+ "oon": {
+  "graygreen_back": "e16a6ab3-f4c1-4d7e-a31b-f0a842f14aa7",
+  "graygreen_front": "d0669f8b-7fbb-4884-94f5-d21e7c88bf20",
+  "black_back": "dd4474e3-ecb5-436d-b03d-3145ba38cc6e",
+  "black_front": "080e01f9-1020-4f55-ac81-44dd3ee18dbd",
+  "creme_back": "fb213f1b-8585-4163-96c3-d41d2c7e5ce1",
+  "creme_front": "053fc913-8844-4d0e-b764-1982239fa15b",
+  "darkgray_back": "413cf142-3dca-49ee-aabc-0c7354b2b24f",
+  "darkgray_front": "3edf821a-4372-4f81-9a1d-87d0f2747dfa",
+  "flowergray_back": "1e8c1599-d90d-4a6a-b947-0df35b48e56f",
+  "flowergray_front": "c1f5ff7d-19ac-4ef1-b653-10ff3e924515"
+ }
+}
