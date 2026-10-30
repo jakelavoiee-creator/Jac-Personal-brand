@@ -471,3 +471,5 @@ This replaces the earlier "4:5 / 2k / high" notes.
 - **Poses change from colour to colour.** The 4 extra colours are fresh generations, each with its own front and back pose from H1 to H10, never a colour-swap edit of the lead image. Model, set, light, framing scale and garment locks stay the same.
 - **Front wordmark source:** Jac's black AURA/miami logo (images/84.png). The ® is removed per the mark rule, and it is recoloured to each hoodie's ink and rendered on a swatch of that hoodie colour so the "miami" knockout reads correctly.
 - **Nine To Five, Dark Gray, approved back** = H5 (renders/ntf-hoodie-darkgray-back-v1.png). Front v1 = H2.
+- **30 Oct (Jac): NO cross necklace on any hoodie shot.** It overrides the cast rule for hoodies only: no cross pendant, no chain, front or back.
+- **30 Oct (Jac): the front AURA wordmark is SMALL.** About 12 cm wide, roughly 15% of the hoodie width, narrower than the model's face. Centred, about 20% down from the base of the V-neck to the hem band. Reference: images/85.webp. Never the 30% chest-width size.
