@@ -364,3 +364,20 @@ The mockup logo shows ® — **use ™ or no mark** until AURA is registered.
 - Ava: light vintage-blue jeans
 
 - **30 Oct (Jac):** swapped Born To Be A Star → Ava and Consciousness → Mattilo. Mobile rows are now Tristan/Allana, Engie/Jack, Ava/Mattilo, still a man/woman checkerboard with no repeated designs.
+
+### Hoodie pose library (30 Oct, from Jac's 5 references; written descriptions only, never uploaded to Higgsfield)
+| Code | Pose (in words) | Use for |
+|---|---|---|
+| **H1 Over-shoulder back** | 3/4 back view turned about 30°. Hood UP-standing behind the head in a tall rounded peak. Head turned to profile, looking down past the shoulder (sunglasses optional). One hand fully in the trouser pocket, so the sleeve volume shows at the side. | Back hero when the print sits LOW on the back (the hood hides the upper back) |
+| **H2 Square front, arms down** | Straight-on and square, feet hip-width. Arms hang straight with the sleeves billowing into the rib cuffs at the wrists, hands relaxed. Hood down, framing the neck in its crossover. Chin level, sunglasses optional. | Front fit; the default for the 4 extra-colour fronts |
+| **H3 Hood up, hand at hood** | 3/4 side angle. Hood UP over the head. One hand raised to the hood's front edge at the cheek, holding it lightly (fingers on the fabric edge). Other hand fully in the trouser pocket. Gaze off-camera. | Lifestyle / mood shot |
+| **H4 Arms behind back** | Standing tall, body turned slightly. Both hands clasped behind the back, out of view. The sleeves curve back in wide arcs, so the full balloon volume shows. Calm, direct, editorial. Hood down. | Front fit alternative, especially for older or elegant energy |
+| **H5 Head bowed, back view** | Back view, slight 3/4. Head bowed forward toward the chest, so the hood rises up behind the neck. Both arms bent in front of the body, hands out of view. The sleeves balloon outward at the sides; the rib hem band sits at the waistband. | Back hero for prints in the MIDDLE of the back |
+
+**Fit cues from these references (put into every hoodie prompt):**
+- Sleeves balloon with real volume between the shoulder and the cuff.
+- The hood is thick enough to stand up on its own.
+- The body blouses over the rib hem band.
+- The shoulder seam sits well down the arm.
+
+**Never copy from the references:** the kangaroo pocket (ref 3), the embroidery, the matching sweatpants sets or any other brand detail. Our hoodie has NO pocket.
