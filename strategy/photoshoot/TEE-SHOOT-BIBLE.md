@@ -345,3 +345,20 @@ The mockup logo shows ® — **use ™ or no mark** until AURA is registered.
 **Nine To Five hoodie back print:**
 - Light-grey ink: "TOO CREATIVE™ / FOR NINE TO FIVE" in condensed caps, mid-back, about 70% of the back width. No "(MEMBERS ONLY)".
 - A small AURA wordmark just above the hem band.
+
+**30 Oct, HOODIE CASTING v2 (Jac: no model wears the same design twice).** Each model gets exactly one hoodie. The current HOODIES collection order already gives a man/woman checkerboard on mobile, so no reorder is needed.
+
+| # | Hoodie | Model | Lead colour |
+|---|---|---|---|
+| 1 | Nine To Five | Tristan (M) | Dark Gray |
+| 2 | Sex Is Cool | Allana (F) | Creme Apricot |
+| 3 | Created To Create | Engie (F) | Black |
+| 4 | One Of None | Jack (M) | Gray Green |
+| 5 | Born To Be A Star | Mattilo (M) | Flower Gray |
+| 6 | Consciousness | Ava (F) | Black |
+
+**Styling stays locked per model:**
+- Jack, Tristan, Mattilo: washed-black jeans
+- Allana: washed-black cargo jeans
+- Engie: heather-grey sweatpants
+- Ava: light vintage-blue jeans
