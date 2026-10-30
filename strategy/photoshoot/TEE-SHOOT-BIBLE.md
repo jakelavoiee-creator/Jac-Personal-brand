@@ -281,3 +281,11 @@ editorial fashion photography, 85mm lens, natural skin texture, true-to-life col
 - **Shoulders:** "shoulder seams drop about 10–12 cm below the top of the shoulders; the shoulder line runs wide and almost flat."
 - **Sleeves:** "very wide boxy sleeves standing away from the arm, with a clear 6–8 cm gap between fabric and skin all around; they hang like short wide tubes and end at the elbow, with soft heavy vertical folds."
 - **Fix on an existing final:** an edit pass on the shoulders and sleeves only.
+
+**30 Oct, TANK LOCK (New Athlete, from Jac's real Tapstitch tank photos).**
+- **Armholes:** a clean raw-cut edge with ONE topstitch line about 1.5 cm in, following the curve. NOT frayed; the mockup is misleading here.
+- **Back:** two short diagonal stitched seams run from the collar edges out toward each shoulder, mirrored.
+- **Neck:** a 1x1 rib crew neck with a topstitch at its base.
+- **Hem:** raw, with a curl and no stitching.
+- **References:** the 4 real tank photos (collar, armhole, fabric, flat back) replace the tee close-ups for tank shots.
+- **Print:** tonal grey, left-aligned, starting below the diagonal seams.
