@@ -399,3 +399,12 @@ The mockup logo shows ® — **use ™ or no mark** until AURA is registered.
 - other brands' logos
 
 Every shot stays on the Aura set plate.
+
+**Hoodie pose library, part 3 (30 Oct, 2 more references; written descriptions only):**
+
+| Code | Pose (in words) | Use for |
+|---|---|---|
+| **H11 Crop with glass** | A tight crop from the lips to mid-torso, the face cut at the lips. One hand raises a clear glass near the chin, the sleeve gathered at the rib cuff, gold or silver hoops showing. The chest logo is sharp and centre-right; the hood is folded thick around the neck. | Logo/fabric detail shot with life in it. A strong close-up for front-logo designs and an ad thumbnail. |
+| **H12 Seated lounge, iced coffee** | Seated side-on on a cube, one knee up, leaning back. Both hands hold a clear iced-coffee cup at the waist, cuffs pushed to the wrists. Eyes down to the cup, a relaxed off-duty mood. The hood stands up high, and the chest print reads. | A lifestyle shot for the women. The seat is a plain light-grey cube on the set plate; no room interior. |
+
+**Props rule:** only plain, unbranded props (a clear glass, a clear cup with a plain straw). No coffee-chain logos, no visible text.
