@@ -483,3 +483,9 @@ This replaces the earlier "4:5 / 2k / high" notes.
   - The garment pixels stay untouched. Use this on every front where the face reads as AI.
 - **30 Oct (Jac): hoodie close-ups.** One of the 2 close-ups MUST be a focused shot of the front print, so the AURA wordmark and the small "miami" inside the last A read clearly.
 - **30 Oct (Jac): NO separate face-fix pass. It wastes credits.** The full retoucher wording goes INSIDE the main prompt: matte skin with zero shine as the top priority, one even tone, fine pores, real braids with flyaways, a soft barber line-up, real faded sides, matte lips. One generation per shot. Use the head-crop method only if Jac rejects a face.
+- **30 Oct (Jac): HOODIE NECK TAG close-up, one per design.**
+  - Shot in the design's LEAD colour, worn by that design's model.
+  - The size printed on the tag matches the size that model realistically wears.
+  - Heights: men (Jack, Tristan, Mattilo) 6'2"–6'4"; women (Ava, Engie, Allana) 5'5".
+  - Default for the boxy, oversized fit: **men L, women S**, unless Jac's size chart says otherwise.
+  - The 2 hoodie close-ups per design are therefore: (1) front-print focus (AURA + "miami" readable) and (2) the neck tag in the model's size.
