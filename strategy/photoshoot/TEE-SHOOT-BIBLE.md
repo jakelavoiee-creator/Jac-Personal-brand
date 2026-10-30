@@ -322,3 +322,26 @@ editorial fashion photography, 85mm lens, natural skin texture, true-to-life col
 The mockup logo shows ® — **use ™ or no mark** until AURA is registered.
 
 **Lead colours and models:** see the lead-colour plan (29 Oct). Each hoodie gets a full 4-shot set in its lead colour plus 1 front shot in each other colour.
+
+**30 Oct, HOODIE LOCK v2 (from Jac's real Tapstitch blanks; replaces the mockup-based hex values).**
+
+**Colour lock:**
+
+| Colour | Hex | What it actually looks like |
+|---|---|---|
+| Black | #212023 | black |
+| Dark Gray | #828075 | warm taupe-grey stone, lighter and warmer than the mockups |
+| Gray Green | #C6C1A3 | pale sage-khaki |
+| Flower Gray | #D7D8DC | light heather grey with visible marl |
+| Creme Apricot | #F4EBDA | soft butter-cream |
+
+**Construction:**
+- Double-layer hood with a CROSSOVER V neckline (the hood's front edges overlap at the throat) and a centre seam.
+- NO drawstrings, NO eyelets, NO front pocket.
+- Dropped shoulders; full, voluminous long sleeves gathering into tall 1x1 rib cuffs.
+- A wide 1x1 rib hem band that draws the boxy cropped body in slightly at the waistband.
+- Thick brushed-back cotton fleece with a matte, peachy surface. Holds its shape; the hood stands up.
+
+**Nine To Five hoodie back print:**
+- Light-grey ink: "TOO CREATIVE™ / FOR NINE TO FIVE" in condensed caps, mid-back, about 70% of the back width. No "(MEMBERS ONLY)".
+- A small AURA wordmark just above the hem band.
