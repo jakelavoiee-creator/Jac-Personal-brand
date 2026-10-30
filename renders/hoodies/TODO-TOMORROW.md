@@ -21,7 +21,7 @@ Reply with the file names to redo and what's wrong.
 
 ## 2. Known issues to check first
 - [ ] **Sex Is Cool, Gray Green back:** the Higgsfield filter blocked it 3 times because of the "FUCKED THE SYSTEM" text. The version in the zip is a recolour of the approved Dark Gray back, so it has the SAME pose (arms up, fixing the bun). That breaks the "new pose per colour" rule. Options: keep it, or I composite the real print onto a fresh pose.
-- [ ] **Neck-tag label text:** at full size, check the small script line "Feel Miami's Aura" on the generated neck tags. The AI sometimes garbles small script. If so, I'll paste the real label photo in with an edit pass.
+- [x] **Neck tags:** all 6 regenerated with your real label artwork + label photo as references; they read "AURA MIAMI / Feel Miami's Aura" correctly. Size tab hidden by the hood.
 - [ ] **Shoes:** a few shots show sneakers. Check for any brand marks (the rule is plain shoes only).
 - [ ] **Background grey:** the whole set runs a touch darker than #8A8987. One batch colour-match before upload would make the site perfectly even (about 10 minutes for me).
 
