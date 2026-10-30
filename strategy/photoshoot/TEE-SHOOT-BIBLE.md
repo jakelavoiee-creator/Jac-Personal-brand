@@ -487,5 +487,5 @@ This replaces the earlier "4:5 / 2k / high" notes.
   - Shot in the design's LEAD colour, worn by that design's model.
   - The size printed on the tag matches the size that model realistically wears.
   - Heights: men (Jack, Tristan, Mattilo) 6'2"–6'4"; women (Ava, Engie, Allana) 5'5".
-  - Default for the boxy, oversized fit: **men L, women S**, unless Jac's size chart says otherwise.
+  - **Locked by Jac: men wear XL, women wear S.**
   - The 2 hoodie close-ups per design are therefore: (1) front-print focus (AURA + "miami" readable) and (2) the neck tag in the model's size.
