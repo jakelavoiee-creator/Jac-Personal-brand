@@ -489,3 +489,8 @@ This replaces the earlier "4:5 / 2k / high" notes.
   - Heights: men (Jack, Tristan, Mattilo) 6'2"–6'4"; women (Ava, Engie, Allana) 5'5".
   - **Locked by Jac: men wear XL, women wear S.**
   - The 2 hoodie close-ups per design are therefore: (1) front-print focus (AURA + "miami" readable) and (2) the neck tag in the model's size.
+- **30 Oct (Jac): HOODIE NECK CONSTRUCTION, the real build (images/87.jpg, images/88.jpg).**
+  - NO ribbed collar band. The hood is sewn straight onto the body at the neckline.
+  - Inside the back neck, the hood seam is covered by a herringbone tape in the hoodie colour.
+  - The black woven AURA MIAMI label is stitched on that seam, with the size tab folded at its right end.
+  - Never render a crewneck rib collar on a hoodie.
