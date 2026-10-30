@@ -381,3 +381,21 @@ The mockup logo shows ® — **use ™ or no mark** until AURA is registered.
 - The shoulder seam sits well down the arm.
 
 **Never copy from the references:** the kangaroo pocket (ref 3), the embroidery, the matching sweatpants sets or any other brand detail. Our hoodie has NO pocket.
+
+**Hoodie pose library, part 2 (30 Oct, Jac's 5 references, mostly women; written descriptions only):**
+
+| Code | Pose (in words) | Use for |
+|---|---|---|
+| **H6 Seated floor, knee up** | Seated low on the seamless floor, one knee raised, the forearm resting across it, the sleeve pooling over the hand at the cuff. Hood down, bunched high around the neck. Direct, cool gaze into the lens, lips relaxed. | Lifestyle for the women (Allana, Engie, Ava) |
+| **H7 Seated, hand to temple** | Seated, upper body square. One hand raised to the temple with the fingers lightly at the hair (nails visible, relaxed), elbow out. Other hand resting in the lap, sleeve gathered at the cuff. Hood standing up behind the neck. Soft confident look into the lens. | Front-logo shots: chest clear, the logo reads (Allana / Creme) |
+| **H8 Close lounge** | Waist-up close crop. Body slightly turned and leaning on one forearm, the shoulder rising toward the camera. Hood thick and folded high around the neck. Hair slicked back, intense direct gaze. Light raking across the fleece. | Fabric-quality hero: the heavyweight fleece and hood read big (Engie / Black) |
+| **H9 Over-shoulder 3/4 back** | 3/4 back view. Head turned over the shoulder in profile, chin level, face clear. Arms down, the sleeves billowing. Hood standing tall. The back print reads across the upper back beside the hood. | Back hero when the print sits HIGH; a dark-set feel but on our grey set |
+| **H10 Standing, weight on hip** | Standing 3/4, weight on one hip, head tilted, direct gaze. Arms hang; one hand just peeks from the long sleeve. Hood down and wide. | Front fit for the women |
+
+**From these references, never copy:**
+- kangaroo pockets (refs 1 and 5)
+- the long dress-length body (ours is CROPPED, with the hem band at the waistband)
+- matching sets, car or room interiors
+- other brands' logos
+
+Every shot stays on the Aura set plate.
