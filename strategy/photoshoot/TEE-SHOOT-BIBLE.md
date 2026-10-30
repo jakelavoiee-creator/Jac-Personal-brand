@@ -423,3 +423,21 @@ QUALITY YOU CAN FEEL: the hoodie is a 350gsm heavyweight brushed cotton fleece, 
   - Q1, hood-edge thickness: fingers pinching the double-layer hood edge
   - Q2, the inside brushed fleece revealed: the hem folded up
   - Q3, cuff stack on the wrist
+
+### HOODIE SHOT LIST v2 (30 Oct, Jac). Replaces all hoodie lifestyle plans.
+**Shots per colour, every hoodie:**
+1. Front
+2. Back
+3. Neck-tag collar close-up
+4. Sleeve/side texture close-up
+
+**Rules:**
+- **No lifestyle.** Every shot is on the Aura set plate grey (#8A8987), so all website colours match the tees.
+- **Shared shots:** the neck-tag and sleeve close-ups carry no print, so they are made ONCE per colour (5 + 5 = 10) and reused across all 6 hoodie pages.
+- **On-body:** front and back for 6 designs × 5 colours = 60.
+- **Total:** 70 images.
+- **Consistency method:**
+  - Generate the lead colour's front and back first.
+  - Make the other 4 colours as COLOUR-SWAP EDIT PASSES on the approved lead image. Model, pose and print stay identical; only the fleece colour (and print ink where it changes) differs.
+  - Result: switching colours on the product page looks like a true colour change.
+- **Poses:** one front pose and one back pose per design, kept across all its colours (from H1–H12; front/back poses only).
