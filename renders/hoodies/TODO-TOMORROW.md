@@ -28,8 +28,8 @@ Reply with the file names to redo and what's wrong.
 ## 3. After approval (Claude)
 - [ ] Redo any rejected images, one at a time, with the same refs (IDs are in `higgsfield-refs.json`; every job is in `jobs.tsv`).
 - [ ] Batch colour-match backgrounds to #8A8987 and export 2000×2667 webp for Shopify.
-- [ ] Upload to Shopify per product and per colour variant, with alt text. **Needs your OK first: it's a Shopify write.**
-- [ ] Image order per product: lead colour front, back, close-ups, then the other colours.
+- [x] Uploaded to Shopify (30 Oct): 73 images, 2000 px JPG, alt text on every image, each colour variant linked to its own on-model front. The old flat mockups are still on each product, placed after the on-model shots (keep or delete: Jac to decide).
+- [x] Image order per product: lead colour front, back, close-ups, then the other colours.
 - [ ] Update the 6 hoodie descriptions around 350gsm heavyweight fleece, the boxy fit and the in-person feel (draft first).
 
 ## 4. Open questions for Jac
