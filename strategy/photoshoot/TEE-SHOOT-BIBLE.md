@@ -497,3 +497,8 @@ This replaces the earlier "4:5 / 2k / high" notes.
 - **31 Oct (Jac): NECK LABEL = the real artwork only. Always attach images/27.png (artwork, Higgsfield 19a944f2-94fd-44fe-8448-56a96ac964c1) + the real label photo (505a511e-d4a3-4ea5-8a82-3c6dba063aec) as refs and quote the text exactly. With these refs it renders correctly; without them the AI invents slogans ("Feel Different, Wear").
 - **31 Oct (Jac): a side-profile close-up must show the chest logo.** Shoot from the wearer's LEFT side (the logo is on the left chest).
 - **31 Oct (Jac): fewer seated poses.** He replaced 3 seated shots (OON black front, CONS creme front, CONS flower gray back) with standing ones, e.g. pulling the hood over the head, or walking.
+
+**30 Oct, FIT REFERENCE LOCK (Jac).** Every product description ends with the model's height and size.
+- **Men wear XL** (tees, tank and hoodies): Jack 6'2" (188 cm), Mattilo 6'3" (191 cm), Tristan 6'4" (193 cm).
+- **Women wear M** (tees and hoodies): Engie, Ava and Allana, all 5'5" (165 cm).
+- **Any visible size tab must match:** XL on men, M on women. The white "S" neck-label close-up was removed from the store for this reason. Replaces the earlier "women S" neck-tag rule.
