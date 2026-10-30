@@ -466,3 +466,8 @@ This replaces the earlier "4:5 / 2k / high" notes.
   | Gray Green | white |
 
 - **Source of truth:** the live store mockups (zip sent to Jac on 30 Oct).
+
+**30 Oct (Jac): HOODIE POSE ROTATION + front wordmark.**
+- **Poses change from colour to colour.** The 4 extra colours are fresh generations, each with its own front and back pose from H1 to H10, never a colour-swap edit of the lead image. Model, set, light, framing scale and garment locks stay the same.
+- **Front wordmark source:** Jac's black AURA/miami logo (images/84.png). The ® is removed per the mark rule, and it is recoloured to each hoodie's ink and rendered on a swatch of that hoodie colour so the "miami" knockout reads correctly.
+- **Nine To Five, Dark Gray, approved back** = H5 (renders/ntf-hoodie-darkgray-back-v1.png). Front v1 = H2.
