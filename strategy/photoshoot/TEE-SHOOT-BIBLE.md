@@ -262,3 +262,7 @@ editorial fashion photography, 85mm lens, natural skin texture, true-to-life col
 **30 Oct, COLOUR WORDING RULE (Jac).** The shirt is ONE colour throughout: body, rib, edges, curl and terry are all the same black (or the same white).
 - **Never write** "charcoal highlights", "grey edges" or similar. The model renders them as a second colour.
 - **Use instead:** "the same jet black throughout; light shows only as soft natural shading on the folds."
+
+**30 Oct, CROSS RULE (Jac).** The cross pendant hangs at the FRONT of the chest. It's visible only in front views.
+- **In back views,** write: "only the thin silver chain shows at the back of the neck; the cross pendant hangs at the front, out of view."
+- **Never describe** a "cross necklace" in a back shot without that line.
