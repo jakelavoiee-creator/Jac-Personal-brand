@@ -450,3 +450,19 @@ QUALITY YOU CAN FEEL: the hoodie is a 350gsm heavyweight brushed cotton fleece, 
 - About 7 credits per image
 
 This replaces the earlier "4:5 / 2k / high" notes.
+
+**30 Oct, NINE TO FIVE HOODIE PRINT LOCK (verified against the live store product "Nine To Five Hoodie (Members Only)").**
+- **Back:** "TOO CREATIVE™ / FOR NINE TO FIVE" plus a small "(MEMBERS ONLY)" line. NO small AURA logo above the hem band.
+  - The older "-model" mockups with a hem AURA are orphan files and are NOT used.
+- **Front:** a small AURA wordmark centred on the chest, about 25% down.
+- **Ink by colour (front and back):**
+
+  | Hoodie | Ink |
+  |---|---|
+  | Black | white |
+  | Creme Apricot | dark chocolate brown |
+  | Dark Gray | warm cream / off-white |
+  | Flower Gray | dark forest green |
+  | Gray Green | white |
+
+- **Source of truth:** the live store mockups (zip sent to Jac on 30 Oct).
