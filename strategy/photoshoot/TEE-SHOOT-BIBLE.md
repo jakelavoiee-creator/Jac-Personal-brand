@@ -441,3 +441,12 @@ QUALITY YOU CAN FEEL: the hoodie is a 350gsm heavyweight brushed cotton fleece, 
   - Make the other 4 colours as COLOUR-SWAP EDIT PASSES on the approved lead image. Model, pose and print stay identical; only the fleece colour (and print ink where it changes) differs.
   - Result: switching colours on the product page looks like a true colour change.
 - **Poses:** one front pose and one back pose per design, kept across all its colours (from H1–H12; front/back poses only).
+
+**30 Oct, GENERATION SETTINGS LOCK (Jac's actual tee settings).** Use the same settings for every product image, tees and hoodies:
+- GPT Image 2.5, **Sunburst** variant
+- Quality **Extra High**
+- Resolution **4K**
+- Aspect ratio **3:4**
+- About 7 credits per image
+
+This replaces the earlier "4:5 / 2k / high" notes.
