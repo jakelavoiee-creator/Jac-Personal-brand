@@ -61,5 +61,29 @@
   "darkgray_front": "3edf821a-4372-4f81-9a1d-87d0f2747dfa",
   "flowergray_back": "1e8c1599-d90d-4a6a-b947-0df35b48e56f",
   "flowergray_front": "c1f5ff7d-19ac-4ef1-b653-10ff3e924515"
+ },
+ "btbas": {
+  "flowergray_back": "5e075490-26b5-446c-9ee5-6dba86603976",
+  "flowergray_front": "175918be-bc27-44d9-8161-71ae68317429",
+  "black_back": "eb2b33cd-4863-4fab-b994-ec16b7ebe1ee",
+  "black_front": "36f270f1-9f04-4c20-9cb4-1686e0552829",
+  "creme_back": "e1a0c050-3ff1-4d36-8775-0f3d93f327b7",
+  "creme_front": "b9b03d4d-c8f8-4748-bb44-6c2ed70f7ff3",
+  "darkgray_back": "be987a02-020d-4f18-8264-b899c3524ee3",
+  "darkgray_front": "dfcc9aa5-88aa-4eaa-aeee-e229f6cbea6b",
+  "graygreen_back": "4a4d70d4-b609-428f-b3c8-4f8610bbbe65",
+  "graygreen_front": "0ad29c99-6950-432b-b62e-317081131e88"
+ },
+ "cons": {
+  "black_back": "96ad086a-581b-40dc-b18e-f795976425df",
+  "black_front": "b873f5a9-f22f-4330-852a-c23d115dd5b6",
+  "creme_back": "47c9bbfb-0c1c-47da-a39f-30fec3879dc1",
+  "creme_front": "8f625e71-606e-47e0-acd2-703dad2624a7",
+  "darkgray_back": "6e34fbe6-b4ec-4cf3-a2b0-ea52d75489b0",
+  "darkgray_front": "df225312-c68b-45b1-a93c-824bd56162b7",
+  "flowergray_back": "8aeabdc1-185e-4fdb-a7b5-207ac42a909b",
+  "flowergray_front": "cfd103c4-416e-435c-bc65-900526f387b0",
+  "graygreen_back": "1395351e-883c-4485-8ba3-c50b8c072a09",
+  "graygreen_front": "b091338d-2016-4d44-b317-faf6be5cf644"
  }
 }
