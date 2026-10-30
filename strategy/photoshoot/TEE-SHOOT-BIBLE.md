@@ -481,3 +481,5 @@ This replaces the earlier "4:5 / 2k / high" notes.
   2. Edit the crop at 1:1 with the retoucher prompt: matte, non-reflective skin as the top priority, one even tone, fine pores, real braids with flyaways, a soft barber line-up, real faded sides.
   3. Blend the fix back with a feathered ellipse.
   - The garment pixels stay untouched. Use this on every front where the face reads as AI.
+- **30 Oct (Jac): hoodie close-ups.** One of the 2 close-ups MUST be a focused shot of the front print, so the AURA wordmark and the small "miami" inside the last A read clearly.
+- **30 Oct (Jac): NO separate face-fix pass. It wastes credits.** The full retoucher wording goes INSIDE the main prompt: matte skin with zero shine as the top priority, one even tone, fine pores, real braids with flyaways, a soft barber line-up, real faded sides, matte lips. One generation per shot. Use the head-crop method only if Jac rejects a face.
