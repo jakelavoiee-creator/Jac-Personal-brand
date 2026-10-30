@@ -271,3 +271,8 @@ editorial fashion photography, 85mm lens, natural skin texture, true-to-life col
 - **Upload order:** model sheet → hem close-up → sleeve close-up → print/logo artwork PNG → pose ref (if any) → SET PLATE (last).
 - **The close-ups define the whole shirt's colour, material and texture,** written as a "THE SHIRT IS MADE FROM THE FABRIC IN IMAGES 2 AND 3" block.
 - **Drop the mockup** whenever the artwork PNG is attached. The washed mockup tone was overriding the close-ups; placement is written as measurements instead.
+
+**30 Oct, HAND RULE v2 (Jac: the half-in-pocket hand reads as AI slop).** Replaces the 28 Oct hand rule.
+- **Pocket poses:** the ENTIRE hand is in the pocket, wrist-deep. No fingers and no thumb visible.
+- **What shows:** only the wrist and forearm above the pocket, with a smooth natural bulge and the pocket edge and stitching intact.
+- **Fix:** an edit pass on the hand only.
