@@ -277,3 +277,11 @@ Versions are 9:16 (Reels/Stories/TikTok) plus a 4:5 feed cut, all inside Meta's 
 5. **Creator budget:** ~20–30 gifted hoodies ($39.28 each landed, so ~$790–1,180) + ~$600–1,200 for paid posts.
 6. **Approve the offer calendar (§3).** ~~"Aura Members"~~ parked until 2027. ✅ One conversion campaign + pop-up list (Jac, 27 Oct).
 7. **Send the founder footage** and your editing example links.
+
+## Live account log
+**31 Oct 2026: Q4 campaign built, all PAUSED.**
+- Ad account `1447739777174385` (USD) · Page Aura Miami `1347341888470683` · Instagram @aura.miamii · Pixel/dataset `1542826880939280` (Conversions API on, via the Shopify Facebook & Instagram app, "Shop and ads").
+- Campaign `AURA-Q4-Sales-Purchase` `52548665896460`: Sales objective, optimising for Purchase.
+- Ad set `Broad-USCA-AdvPlus` `52548665901860`: US + CA, 18–65, Advantage+ audience and placements, $50/day (ad-set budget).
+- Starter ad `Hoodie-Static-NineToFive-20261031` `52548665908260`: Nine To Five hoodie Dark Gray back, 4:5, Shop Now, UTMs `utm_source=meta&utm_medium=paid_social&utm_campaign=aura-q4-sales&utm_content={{ad.name}}`. Meta generative creative features opted out.
+- Jac adds his ads in the same ad set, named `Concept-Format-Hook-Date`.
