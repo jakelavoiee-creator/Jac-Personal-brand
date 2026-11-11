@@ -10,3 +10,5 @@
 - I used to think tired was normal.
 - Who decided this is how we live?
 - I lost friends when I woke up.
+- You are not your body. You are light.
+- Business got easy when I understood energy.

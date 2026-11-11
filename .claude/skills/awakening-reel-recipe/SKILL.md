@@ -7,6 +7,9 @@ description: Edit Jacob's 15-30 s relatable awakening talking videos with a rete
 
 For Jacob's personal brand: 15 to 30 s talking videos about relatable realisations and awakening. Sits on top of `reel-director`, `reel-type-and-layout` and `reel-sound-and-transitions`. Load all three. Numbers are starting values.
 
+## Signature (locked system)
+Fonts, caption look, SFX, intro, outro and transitions follow `SIGNATURE.md` exactly. Only the script and the b-roll change between reels. B-roll visual world: the soul as light in a vast universe (`BRAND.md`). Jac supplies the b-roll; place it by the vibe of each line, with the strongest clip on the felt line.
+
 ## North star
 Calm, cinematic, intimate, with a new visual or sound beat arriving constantly underneath. Warm grade, grain, one accent color, black-and-white b-roll for abstract ideas, full color for concrete ones. Default caption style: Editorial Mix.
 

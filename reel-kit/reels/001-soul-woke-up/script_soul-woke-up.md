@@ -14,10 +14,10 @@
 |---|---|---|---|
 | 0.0–1.4 | [TALK] Hook | **"In 2020… my soul decided to wake up."** | Punch-in on "wake", impact hit. Small top text: *Day 1 of finding awakened souls* |
 | 1.4–5.5 | [TALK] Recognition | "The world stopped. And for the first time… I actually had time to think." | Slow push-in. Hero word: **think** |
-| 5.5–7.0 | [BROLL: stillness, empty street] | (voice continues) | B&W, drift, sub drop at the first cut |
-| 7.0–12.5 | [BROLL fast: questioning] | "Why am I always tired? / Why's my food in a box? / Whose life am I even chasing?" | One image per question, ~1.4 s each, B&W, whoosh per cut, riser builds |
+| 5.5–7.0 | [BROLL: stillness, one light in deep space] | (voice continues) | Soul-eject transition into space, sub drop |
+| 7.0–12.5 | [BROLL fast: questioning] | "Why am I always tired? / Why's my food in a box? / Whose life am I even chasing?" | One soul/light clip per question, ~1.4 s each, cut on the beat, riser builds |
 | 12.5–13.3 | breath | *(silence. Let it hang.)* | Black frame or a dip in the music |
-| 13.3–19.5 | [BROLL felt line: loneliness → warmth] | **"The hardest part wasn't the truth. It was sitting at the dinner table… the only one who saw it."** | Strongest image. Starts B&W, color returns on "saw it". Glow, slow push. Music drop. |
+| 13.3–19.5 | [BROLL felt line: loneliness → warmth] | **"The hardest part wasn't the truth. It was sitting at the dinner table… the only one who saw it."** | Strongest clip: soul leaving the body. Bloom swells on "saw it". Music drop. |
 | 19.5–26.0 | [TALK] Invitation + loop | "If you felt that… you're not alone. Comment *awake*. Your soul decided to wake up too." | Final hero card: **wake up** (accent red) → loops into the hook |
 
 ## How to shoot it today
@@ -29,19 +29,18 @@
 - **Do 3 takes:** one calm, one slower, one more raw. Then record 5 seconds of silence for room tone.
 - **Audio:** phone close, or a lav mic. No music while you record.
 
-## B-roll to save from Pinterest (6 images, vertical, high-res)
-1. **Empty city street, 2020 lockdown feel:** stillness, B&W.
-2. **Man lying awake, staring at the ceiling, dim blue light:** tired.
-3. **Grocery aisle of boxed food under fluorescent light:** the system, cold.
-4. **Commuters in suits, motion blur, one man standing still:** whose life?
-5. **★ Dinner table, warm lamp, family blurred, one person in focus looking away:** the felt line. This is the most important image.
-6. **People on a hill at dawn, or lanterns rising in the dark:** belonging, the others.
+## B-roll: the soul, not the world
+Jac sends the b-roll. Claude places each clip by the vibe of the line. The world in the script ("tired", "food in a box", "dinner table") is said out loud, but the picture always shows the soul. Vibe per section:
+- **"The world stopped… time to think":** stillness in deep space, one small light in the dark.
+- **The three questions:** light pressing against the body, a glowing figure dimmed or trapped, flickering energy.
+- **★ Felt line ("the only one who saw it"):** the soul leaving the body, a light figure rising out of a sitting silhouette into a vast universe. This is the most important clip.
+- **Invitation ("you're not alone"):** many lights appearing across the cosmos, reaching for each other.
 
-Drop them in `reel-kit/input/images/` named `01.jpg` … `06.jpg`. Note who made each one so we can credit them.
+Drop clips or images in `reel-kit/input/images/`, in any order and with any names.
 
 ## QA
 - Only Jac could say this: yes, 2020 is your story and the dinner table is your moment.
-- One concrete example: yes, the dinner table.
+- One concrete example: yes, the dinner table (spoken; the visual stays cosmic).
 - Hook is 8 words: yes.
 - The felt line has a breath before it: yes.
 - 72 words fits 15–30 s: yes.
