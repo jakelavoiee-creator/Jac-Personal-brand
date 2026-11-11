@@ -7,3 +7,5 @@ reel-kit/output/*
 !reel-kit/output/.gitkeep
 reel-kit/assets/music/*
 !reel-kit/assets/music/.gitkeep
+reel-kit/reels/*/broll/*.mp4
+reel-kit/input/images/**/*_tight.png
