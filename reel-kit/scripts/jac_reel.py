@@ -22,13 +22,13 @@ KIT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SANS = "/usr/share/fonts/opentype/inter/Inter-Black.otf"
 SERIF = os.path.join(KIT, "assets/fonts/instrumentserif/InstrumentSerif-Italic.ttf")
 SFX = os.path.join(KIT, "assets/sfx/jac")
-SANS_PX, SERIF_PX = 66, 150
+SANS_PX, SERIF_PX = 84, 176
 WHITE, CREAM = (255, 255, 255), (255, 236, 200)
 ENTER = 0.20      # blur-in seconds per word
-MAX_W = 820       # block width limit (keeps right 12% clear)
+MAX_W = 760       # block width limit (keeps right 12% clear)
 # Scatter slots: (x anchor, y top, align). Upper band = above the head, lower band = chest.
-SLOTS = [(90, 150, "l"), (990, 1180, "r"), (540, 230, "c"), (90, 1230, "l"),
-         (990, 170, "r"), (540, 1160, "c"), (120, 280, "l"), (960, 1260, "r")]
+SLOTS = [(80, 250, "l"), (940, 1170, "r"), (520, 270, "c"), (80, 1220, "l"),
+         (940, 250, "r"), (520, 1180, "c"), (110, 290, "l"), (920, 1240, "r")]
 
 def ease(t): t = min(max(t, 0), 1); return t * t * (3 - 2 * t)
 
@@ -138,7 +138,7 @@ def main(raw, words_p, plan_p, out):
         labels.append(f"[s{k}]")
     af.append("".join(labels) + f"amix=inputs={len(labels)}:normalize=0:duration=first,atrim=0:{total:.3f},loudnorm=I=-14:TP=-1.5:LRA=11[a]")
     cmd += ["-filter_complex", vf + ";" + ";".join(af), "-map", "[v]", "-map", "[a]",
-            "-c:v", "libx264", "-crf", "18", "-preset", "medium", "-c:a", "aac", "-b:a", "192k",
+            "-c:v", "libx264", "-crf", "20", "-preset", "medium", "-c:a", "aac", "-b:a", "192k",
             "-t", f"{total:.3f}", "-movflags", "+faststart", out]
     proc = subprocess.Popen(cmd, stdin=subprocess.PIPE)
     yy, xx = np.mgrid[0:H, 0:W].astype(np.float32)
