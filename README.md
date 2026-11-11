@@ -43,3 +43,8 @@ python3 $S/clips.py extract "https://www.youtube.com/watch?v=uL2ztWv70wE" \
   --start 11:17 --end 12:01 --preview                              # clean clip + captions
 ```
 Options: `--frame original` keeps source framing; `--no-captions` gives the raw cut.
+
+### Reel kit: Jac's awakening reels
+
+Brand mission: `reel-kit/BRAND.md`. Voice profile: `reel-kit/voice/voice.md`. Full pipeline: `reel-kit/CLAUDE.md`.
+How it works: script → shoot → Pinterest images to `reel-kit/input/images/` → motion b-roll → music sync → final edit in `reel-kit/output/`.

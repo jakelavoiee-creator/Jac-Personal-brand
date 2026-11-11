@@ -1,0 +1,33 @@
+{
+  "slug": "soul-woke-up",
+  "reel": 1,
+  "pillar": "the-awakening",
+  "runtime_est_s": 26,
+  "word_count": 72,
+  "audio_mode": "publish-attached",
+  "accent": "#9B2226",
+  "on_screen_title": "Day 1 of finding awakened souls",
+  "phrases": [
+    {"start": 0.0, "beat": "talk", "text": "In 2020, my soul decided to wake up.", "hero": "wake", "sfx": "impact", "effect": "punch-in 6%"},
+    {"start": 1.4, "beat": "talk", "text": "The world stopped.", "hero": "stopped", "sfx": "caption_tick"},
+    {"start": 3.0, "beat": "talk", "text": "And for the first time, I actually had time to think.", "hero": "think", "effect": "slow push 100-108%"},
+    {"start": 5.5, "beat": "broll", "text": null, "broll": 1, "sfx": "sub_drop", "music": "build starts"},
+    {"start": 7.0, "beat": "broll", "text": "Why am I always tired?", "hero": "tired", "broll": 2, "sfx": "whoosh_short"},
+    {"start": 8.8, "beat": "broll", "text": "Why's my food in a box?", "hero": "box", "broll": 3, "sfx": "whoosh_short"},
+    {"start": 10.6, "beat": "broll", "text": "Whose life am I even chasing?", "hero": "chasing", "broll": 4, "sfx": "riser (ends 1 frame before 13.3)"},
+    {"start": 12.5, "beat": "breath", "text": null, "effect": "dip to near-black", "music": "dip / silence"},
+    {"start": 13.3, "beat": "broll-felt", "text": "The hardest part wasn't the truth.", "hero": "truth", "broll": 5, "sfx": "magic_shimmer", "music": "drop"},
+    {"start": 16.0, "beat": "broll-felt", "text": "It was sitting at the dinner table, the only one who saw it.", "hero": "saw", "broll": 5, "effect": "desat 0.6 -> color on 'saw'", "sfx": "soft_pop"},
+    {"start": 19.5, "beat": "talk", "text": "If you felt that, you're not alone.", "hero": "alone", "broll_after": 6},
+    {"start": 22.0, "beat": "talk", "text": "Comment awake.", "hero": "awake", "effect": "text card", "sfx": "caption_tick"},
+    {"start": 23.5, "beat": "talk", "text": "Your soul decided to wake up too.", "hero": "wake up", "effect": "hero card in accent, loops to frame 1"}
+  ],
+  "broll_brief": [
+    {"id": 1, "subject": "empty city street, lockdown stillness", "emotion": "stillness", "recipe": "drift", "dur": 1.5, "desat": 1.0, "glow": 0.3},
+    {"id": 2, "subject": "man awake in bed staring at ceiling, dim blue light", "emotion": "tired", "recipe": "push", "dur": 1.4, "desat": 1.0},
+    {"id": 3, "subject": "grocery aisle of boxed food, fluorescent light", "emotion": "cold system", "recipe": "push", "dur": 1.4, "desat": 1.0},
+    {"id": 4, "subject": "commuters in suits, motion blur, one man still", "emotion": "lost", "recipe": "drift", "dur": 1.6, "desat": 1.0, "leak": 0.3},
+    {"id": 5, "subject": "dinner table, warm lamp, family blurred, one person in focus looking away", "emotion": "loneliness -> release", "recipe": "push", "dur": 2.4, "desat": 0.6, "glow": 0.4, "strongest": true},
+    {"id": 6, "subject": "people on a hill at dawn / lanterns rising in the dark", "emotion": "unity, belonging", "recipe": "push", "dur": 2.0, "particles": 60, "leak": 0.2}
+  ]
+}

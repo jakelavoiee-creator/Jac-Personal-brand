@@ -1,0 +1,48 @@
+# Reel 001: "My soul woke up" (series opener)
+
+**Pillar:** The awakening · **Emotion arc:** stillness → questioning → loneliness → belonging
+**Words:** 72 · **Runtime:** about 26 s · **Music:** cinematic organ or strings build (Interstellar-style), drop on the felt line
+
+## Hook options (8 words or fewer)
+1. **In 2020, my soul decided to wake up.** ← chosen. It's your origin line, in your own words, and it sets up the loop.
+2. Nobody warns you how lonely waking up is.
+3. Day 1 of finding awakened souls. (use as on-screen title over hook 1)
+
+## The script
+
+| Time | Beat | Line (say it like this) | On screen |
+|---|---|---|---|
+| 0.0–1.4 | [TALK] Hook | **"In 2020… my soul decided to wake up."** | Punch-in on "wake", impact hit. Small top text: *Day 1 of finding awakened souls* |
+| 1.4–5.5 | [TALK] Recognition | "The world stopped. And for the first time… I actually had time to think." | Slow push-in. Hero word: **think** |
+| 5.5–7.0 | [BROLL: stillness, empty street] | (voice continues) | B&W, drift, sub drop at the first cut |
+| 7.0–12.5 | [BROLL fast: questioning] | "Why am I always tired? / Why's my food in a box? / Whose life am I even chasing?" | One image per question, ~1.4 s each, B&W, whoosh per cut, riser builds |
+| 12.5–13.3 | breath | *(silence. Let it hang.)* | Black frame or a dip in the music |
+| 13.3–19.5 | [BROLL felt line: loneliness → warmth] | **"The hardest part wasn't the truth. It was sitting at the dinner table… the only one who saw it."** | Strongest image. Starts B&W, color returns on "saw it". Glow, slow push. Music drop. |
+| 19.5–26.0 | [TALK] Invitation + loop | "If you felt that… you're not alone. Comment *awake*. Your soul decided to wake up too." | Final hero card: **wake up** (accent red) → loops into the hook |
+
+## How to shoot it today
+- **Frame:** vertical 9:16, 4K or 1080p, 30 fps. Eyes on the top third. Keep your face out of the bottom 20% (captions go there).
+- **Light:** sit facing a window, with a warm lamp behind you if you have one. Plain, darker background.
+- **Delivery:** low and close, like you're telling one person a secret. No "hey guys". The first word is the first frame.
+- **Say the whole script on camera**, b-roll lines included. I'll lay the images over your voice.
+- **Pause for a full second** before "The hardest part…". That pause is where the music drops.
+- **Do 3 takes:** one calm, one slower, one more raw. Then record 5 seconds of silence for room tone.
+- **Audio:** phone close, or a lav mic. No music while you record.
+
+## B-roll to save from Pinterest (6 images, vertical, high-res)
+1. **Empty city street, 2020 lockdown feel:** stillness, B&W.
+2. **Man lying awake, staring at the ceiling, dim blue light:** tired.
+3. **Grocery aisle of boxed food under fluorescent light:** the system, cold.
+4. **Commuters in suits, motion blur, one man standing still:** whose life?
+5. **★ Dinner table, warm lamp, family blurred, one person in focus looking away:** the felt line. This is the most important image.
+6. **People on a hill at dawn, or lanterns rising in the dark:** belonging, the others.
+
+Drop them in `reel-kit/input/images/` named `01.jpg` … `06.jpg`. Note who made each one so we can credit them.
+
+## QA
+- Only Jac could say this: yes, 2020 is your story and the dinner table is your moment.
+- One concrete example: yes, the dinner table.
+- Hook is 8 words: yes.
+- The felt line has a breath before it: yes.
+- 72 words fits 15–30 s: yes.
+- The ending loops: "wake up too" leads straight into "my soul decided to wake up".

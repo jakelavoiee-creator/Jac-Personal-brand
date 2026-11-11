@@ -1,3 +1,9 @@
 yt-watch/
 __pycache__/
 aura-clips/
+reel-kit/input/*.mp4
+reel-kit/input/*.mov
+reel-kit/output/*
+!reel-kit/output/.gitkeep
+reel-kit/assets/music/*
+!reel-kit/assets/music/.gitkeep
