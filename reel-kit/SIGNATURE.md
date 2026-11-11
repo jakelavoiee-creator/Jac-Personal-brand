@@ -5,7 +5,7 @@ Status per element: **OPEN** (waiting on Jac's references or files) → **PROPOS
 
 | Element | Status | Spec |
 |---|---|---|
-| Caption font + aesthetic | **LOCKED rule:** one font, always. **OPEN:** which font (from Jac's reference videos) | The font never changes. The placement does: captions move around the frame in an aesthetic, slightly messy layout (offset, staggered, different sizes) so every new line is its own spike. They stay out of the bottom 20% and right 12% and never cover the eyes. One font family, one look. Proposed until then: Editorial Mix, with sentences in Inter Medium and the hero word in Instrument Serif Italic in the accent color, 2 lines max, 62–68% down the frame. |
+| Caption font + aesthetic | **LOCKED rule:** one font, always. **OPEN:** which font (from Jac's reference videos) | The font never changes. The placement does: captions move around the frame in an aesthetic, slightly messy layout (offset, staggered, different sizes) so every new line is its own spike. They stay out of the bottom 20% and right 12% and never cover the eyes. Hero words get the same font, just bigger, with a glow and the accent color. |
 | Hero word treatment | PROPOSED | 1 hero word per phrase, 1.4x size, soft glow (light = soul), 220 ms fade-up with caption_tick. |
 | Intro (0–1.4 s) | PROPOSED | First frame is the face, mid-sentence. A punch-in on the hook word plus a light flare across the frame, on an impact hit. A small top line: series title. |
 | A-roll → b-roll | PROPOSED | **"Soul eject":** a white-gold bloom swells from the face and fades into the b-roll on a whoosh_long. Used on every switch to b-roll. |
