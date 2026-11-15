@@ -34,7 +34,8 @@ Recurring words: black sheep, the herd, the script, default settings, wake up, t
 ## Daily routine: 3 carousels per day
 - One of each format: A (Method, 7 slides), B (3 standalone tweets), C (numbered list, 7 slides).
 - Number folders after the highest existing one: carousels/NNN-slug/tweet_spec.json + slides/. Include "caption" and "format" in the spec.
-- Never repeat a topic, method name or quote already used in carousels/*/tweet_spec.json.
-- Covers for A and C use one image from carousels/images/ (rotate; prefer the least used). Jac can drop new images there.
+- Topics come from carousels/CALENDAR.md: take the first row not marked ✅ (A, B and C cells), then mark it ✅. Each topic serves the journey in carousels/TOPICS.md (see the patterns → understand myself → live consciously → wake others).
+- Never repeat a method name or quote already used in carousels/*/tweet_spec.json.
+- Covers for A and C need an image that matches what the slide says. If Jac sent pin links, download them: python3 reel-kit/scripts/pin_fetch.py PIN_URL name (saves to carousels/images/ and logs the source in SOURCES.md). Otherwise use the best match already in carousels/images/.
 - QA: no slide content below y=1250 (shrink "size" on the slide or trim the text), quotes must be real and correctly attributed.
 - Add each day's three to carousels/LOG.md: date, folders, captions.
