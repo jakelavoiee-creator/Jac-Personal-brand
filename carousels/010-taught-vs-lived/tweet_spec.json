@@ -1,0 +1,26 @@
+{
+  "name": "Jac",
+  "handle": "@jac_lavoiee",
+  "avatar": "carousels/avatar.png",
+  "verified": false,
+  "size": [
+    1080,
+    1350
+  ],
+  "text_size": 50,
+  "top": 170,
+  "format": "B",
+  "topic": 1,
+  "caption": "Trust your experience over your programming. 🐑",
+  "slides": [
+    {
+      "text": "This might sound crazy,\n\nbut most of us were taught what life is supposed to feel like before we ever got to feel it for ourselves."
+    },
+    {
+      "text": "They told you\n• work hard and you'll be happy\n• buy the thing and you'll be enough\n• stay in line and you'll be safe\n\nThen you lived it.\n\nAnd your experience told a different story."
+    },
+    {
+      "text": "If you ever feel like the life you were promised doesn't match the life you're living,\n\nyou're not broken.\n\nYou're just finally trusting what you EXPERIENCE over what you were TOLD."
+    }
+  ]
+}
