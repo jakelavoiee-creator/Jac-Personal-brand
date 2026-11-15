@@ -1,0 +1,37 @@
+{
+  "name": "Jac",
+  "handle": "@yourhandle",
+  "avatar": "carousels/avatar.png",
+  "verified": false,
+  "size": [
+    1080,
+    1350
+  ],
+  "caption": "If you've ever felt like the only one awake in the room, this one's for you. Comment \"awake\" 🤍",
+  "slides": [
+    {
+      "text": "Nobody warns you how lonely waking up is.\n\n(For the ones who see it.)",
+      "image": "reel-kit/input/images/001/2.jpg",
+      "image_ratio": 0.56,
+      "focus_y": 0.45,
+      "size": 58
+    },
+    {
+      "text": "In 2020, the world stopped.\n\nFor the first time in my life, I actually had time to think.\n\nSo I started asking questions nobody around me was asking."
+    },
+    {
+      "text": "Why am I always tired?\n\nWhy does all my food come in a box?\n\nWhose life am I even chasing?\n\nAnd once you start seeing it… you can't stop."
+    },
+    {
+      "text": "The hardest part wasn't the truth.\n\nIt was sitting at the dinner table with the people I love most, and being the only one who saw it.\n\nNot angry. Just alone in the room."
+    },
+    {
+      "text": "But here's what nobody tells you either:\n\nYou were never alone.\n\nThere are others. Quiet. Questioning. Connecting the same dots you are.\n\nYou're not crazy. You're awake."
+    },
+    {
+      "text": "I'm building a home for the others.\n\nIf you felt this, follow along.\n\nComment \"awake\" so we can find each other."
+    }
+  ],
+  "text_size": 56,
+  "top": 200
+}
