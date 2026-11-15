@@ -23,3 +23,18 @@ Cover with an image, one sign per slide, then "If 3 or more felt familiar…" an
 - 1–2 CAPS words per slide for emphasis. Bullets with •. Short paragraphs.
 - Point the punch at the reader's growth, not at "sleepers" or "society". No contested claims stated as fact, no medical or money promises.
 - The awakened-soul thread runs through everything: light, energy, the observer, taking back time, freedom and peace.
+
+## Brand angle: THE BLACK SHEEP (locked 2026-11-15)
+Jac is the black sheep who stepped off the default script and shows a different perspective so others wake up.
+Every carousel questions one "normal" thing (work, time, food, phones, school, money, success, comfort, the herd's opinion)
+and hands the reader a new lens or a practice. The punch points at the script, never at people. Ask questions instead of
+stating contested claims as fact. No medical, legal or money promises. The reader should finish feeling seen, not lectured.
+Recurring words: black sheep, the herd, the script, default settings, wake up, the others, time / freedom / peace, energy, the observer, light.
+
+## Daily routine: 3 carousels per day
+- One of each format: A (Method, 7 slides), B (3 standalone tweets), C (numbered list, 7 slides).
+- Number folders after the highest existing one: carousels/NNN-slug/tweet_spec.json + slides/. Include "caption" and "format" in the spec.
+- Never repeat a topic, method name or quote already used in carousels/*/tweet_spec.json.
+- Covers for A and C use one image from carousels/images/ (rotate; prefer the least used). Jac can drop new images there.
+- QA: no slide content below y=1250 (shrink "size" on the slide or trim the text), quotes must be real and correctly attributed.
+- Add each day's three to carousels/LOG.md: date, folders, captions.

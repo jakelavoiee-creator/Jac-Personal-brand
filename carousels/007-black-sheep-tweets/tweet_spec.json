@@ -1,0 +1,25 @@
+{
+  "name": "Jac",
+  "handle": "@jac_lavoiee",
+  "avatar": "carousels/avatar.png",
+  "verified": false,
+  "size": [
+    1080,
+    1350
+  ],
+  "text_size": 50,
+  "top": 170,
+  "format": "B",
+  "caption": "Not to be dramatic but the black sheep might be the only ones awake. 🐑",
+  "slides": [
+    {
+      "text": "This might sound crazy,\n\nbut being called “too much” or “weird” by the herd is usually the first sign you're thinking for yourself."
+    },
+    {
+      "text": "If you ever feel guilty for not wanting the life everyone told you to want,\n\nremember this:\n\nYou're not ungrateful. You're awake.\n\nAnd that's something worth holding on to."
+    },
+    {
+      "text": "We were taught to trade 40 years of our time for a few weekends of freedom.\n\nThen we called it “normal.”\n\nThe black sheep just asked: why?"
+    }
+  ]
+}

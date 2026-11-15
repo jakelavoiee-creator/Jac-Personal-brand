@@ -1,0 +1,41 @@
+{
+  "name": "Jac",
+  "handle": "@jac_lavoiee",
+  "avatar": "carousels/avatar.png",
+  "verified": false,
+  "size": [
+    1080,
+    1350
+  ],
+  "text_size": 50,
+  "top": 170,
+  "format": "C",
+  "caption": "Which one did you stop first? Comment the number 👇",
+  "slides": [
+    {
+      "text": "5 things the black sheep stopped doing\n\n(that changed everything)",
+      "image": "carousels/images/2.jpg",
+      "image_ratio": 0.55,
+      "focus_y": 0.45,
+      "size": 56
+    },
+    {
+      "text": "1. Asking permission to live differently\n\nYour life doesn't need a vote.\n\nThe people who love you will catch up. The rest were never meant to."
+    },
+    {
+      "text": "2. Explaining themselves to everyone\n\nNot everyone is ready to hear it.\n\nThe ones who are meant to understand, WILL."
+    },
+    {
+      "text": "3. Consuming before creating\n\nThe first hour of the day used to belong to the feed.\n\nNow it belongs to them."
+    },
+    {
+      "text": "4. Choosing comfort over truth\n\nAt some point, the comfortable lies stopped feeling comfortable.\n\nThat's when everything started to change."
+    },
+    {
+      "text": "5. Waiting for the herd\n\nThey stopped waiting for everyone to wake up first.\n\nThey just WALK. And the right ones follow."
+    },
+    {
+      "text": "If you've stopped even one of these,\n\nyou're already the black sheep.\n\nFollow @jac_lavoiee. There are more of us than you think."
+    }
+  ]
+}
