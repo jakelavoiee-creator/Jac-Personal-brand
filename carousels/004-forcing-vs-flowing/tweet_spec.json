@@ -1,0 +1,34 @@
+{
+  "name": "Jac Lavoie",
+  "handle": "@jac_lavoiee",
+  "avatar": "carousels/avatar.png",
+  "verified": false,
+  "size": [
+    1080,
+    1350
+  ],
+  "text_size": 54,
+  "top": 200,
+  "caption": "Forcing feels productive. Flowing actually is. 🌊",
+  "slides": [
+    {
+      "text": "You're not stuck because you lack discipline.\n\nYou're stuck because you're trying to create from fear.",
+      "image": "reel-kit/input/images/001/2.jpg",
+      "image_ratio": 0.56,
+      "focus_y": 0.45,
+      "size": 58
+    },
+    {
+      "text": "Fear energy sounds like:\n\n\"I need this to work.\"\n\"What if I fail?\"\n\"I'm running out of time.\"\n\nIt grips. It chases. It pushes everything away."
+    },
+    {
+      "text": "Creating energy sounds like:\n\n\"This is already on its way.\"\n\"I get to build this.\"\n\"I'm exactly where I need to be.\"\n\nIt opens. It receives. It moves."
+    },
+    {
+      "text": "Same goal. Same person. Same 24 hours.\n\nDifferent energy.\n\nThat's the whole difference between forcing and flowing."
+    },
+    {
+      "text": "So before you work on your goal today:\n\nSit for 2 minutes.\nBreathe out the rush.\nThen move from calm, not panic.\n\nThat's it. That's the shift."
+    }
+  ]
+}

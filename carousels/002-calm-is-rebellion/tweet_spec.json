@@ -1,0 +1,24 @@
+{
+  "name": "Jac Lavoie",
+  "handle": "@jac_lavoiee",
+  "avatar": "carousels/avatar.png",
+  "verified": false,
+  "size": [
+    1080,
+    1350
+  ],
+  "text_size": 54,
+  "top": 200,
+  "caption": "Your nervous system isn't broken. It's protesting. 🕊️",
+  "slides": [
+    {
+      "text": "This might sound crazy,\n\nbut the most rebellious thing you can do right now is stay calm.\n\nA calm mind can't be rushed, scared, or sold to."
+    },
+    {
+      "text": "If the news, the noise, and the constant urgency leave you exhausted,\n\nthat's not weakness.\n\nThat's your soul refusing to live at a speed it was never built for."
+    },
+    {
+      "text": "Just hope the next viral trend is silence, sunlight, real food, deep conversations, and putting your phone down when someone is talking to you."
+    }
+  ]
+}

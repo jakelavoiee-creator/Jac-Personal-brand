@@ -1,0 +1,40 @@
+{
+  "name": "Jac Lavoie",
+  "handle": "@jac_lavoiee",
+  "avatar": "carousels/avatar.png",
+  "verified": false,
+  "size": [
+    1080,
+    1350
+  ],
+  "text_size": 54,
+  "top": 200,
+  "caption": "Which one hit you the hardest? Comment the number 👇",
+  "slides": [
+    {
+      "text": "5 signs your soul is waking up\n\n(and why it feels so lonely at first)",
+      "image": "reel-kit/input/images/001/1.jpg",
+      "image_ratio": 0.62,
+      "focus_y": 0.5,
+      "size": 58
+    },
+    {
+      "text": "1. The noise gets louder\n\nThings you used to scroll past now feel loud. The news. The gossip. The endless urgency.\n\nYou're not getting sensitive. You're getting honest."
+    },
+    {
+      "text": "2. Small talk feels empty\n\nYou still love the people around you.\n\nYou just can't talk about nothing anymore."
+    },
+    {
+      "text": "3. You question everything\n\nThe food. The 9 to 5. The \"that's just how it is.\"\n\nNot to be difficult. Because something in you knows there's more."
+    },
+    {
+      "text": "4. You notice the signs\n\nThe right book at the right time. The right person. The same numbers again and again.\n\nYou start seeing what was always there."
+    },
+    {
+      "text": "5. You crave real over easy\n\nReal food. Real sleep. Real people. Real silence.\n\nThe fake stuff starts tasting like plastic."
+    },
+    {
+      "text": "If 3 or more of these felt familiar,\n\nyou're not lost.\n\nYou're waking up.\n\nFollow @jac_lavoiee. We're finding each other."
+    }
+  ]
+}
