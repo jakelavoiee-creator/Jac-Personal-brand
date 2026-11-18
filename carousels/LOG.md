@@ -13,4 +13,4 @@
 ## 2026-11-17 (Calendar day 2)
 - 012-unlearning-method (A, #47): "You were graded for 12 years. Now you're still waiting for someone to tell you you're doing good."
 - 013-success-backwards (B, #271): "You've been conditioned to chase more. What if the goal was to need less?"
-- 014-status-vs-worth (C, #55): "You've been conditioned to confuse your status with your worth."
+- 014-status-vs-worth (C, #55, rewritten to Jac's angle): "Your social status will never set you free. Your self-worth will."
