@@ -53,14 +53,18 @@ def prep():
     for key, (pfx, clips) in NEW.items():
         src = rec(pfx)
         for cid, s, e, _ in clips:
+            pad = max(0.0, 0.55 - (e - s))   # very fast swipes: hold the last frame so every swipe is >= 0.55s
             F.run(['ffmpeg','-v','error','-y','-ss',f'{s}','-to',f'{e}','-i',src,
-                   '-vf',CROP+'fps=30,scale=1080:1920:flags=lanczos,setsar=1',
-                   '-af','aresample=48000,aformat=channel_layouts=stereo',
+                   '-vf',CROP+f'fps=30,scale=1080:1920:flags=lanczos,setsar=1,tpad=stop_mode=clone:stop_duration={pad:.3f}',
+                   '-af',f'aresample=48000,aformat=channel_layouts=stereo,apad=pad_dur={pad:.3f}',
                    '-c:v','libx264','-crf','16','-preset','veryfast','-pix_fmt','yuv420p','-c:a','pcm_s16le',f'{F.LIB}/{cid}.mov'])
     print('new clips ready:', sum(len(c) for _, c in NEW.values()))
 
 def build(ids, name, label):
     os.makedirs(OUT2, exist_ok=True)
+    mf = f'{OUT2}/manifest.jsonl'
+    if os.path.exists(mf) and any(json.loads(l)['video'] == name + '.mp4' for l in open(mf)):
+        print('skip', name, flush=True); return
     F.OUT = OUT2
     files = [f'{F.LIB}/{i}.mov' for i in ids] + [F.PRODUCT]
     durs = [F.dur(f) for f in files]
@@ -77,8 +81,8 @@ def build(ids, name, label):
         ms = int(c * 1000); fc.append(f'[c{j}]adelay={ms}|{ms}[cd{j}]')
     fc.append(f'{alast}' + ''.join(f'[cd{j}]' for j in range(n)) + f'amix=inputs={n+1}:normalize=0,loudnorm=I=-14:TP=-1.5:LRA=11,aresample=48000[aout]')
     path = f'{OUT2}/{name}.mp4'
-    F.run(['ffmpeg','-v','error','-y',*inputs,'-filter_complex',';'.join(fc),'-map',vlast,'-map','[aout]',
-           '-c:v','libx264','-crf','23','-preset','veryfast','-pix_fmt','yuv420p','-c:a','aac','-b:a','160k','-movflags','+faststart',path])
+    subprocess.run(['ffmpeg','-v','error','-y',*inputs,'-filter_complex',';'.join(fc),'-map',vlast,'-map','[aout]',
+           '-c:v','libx264','-crf','23','-preset','superfast','-pix_fmt','yuv420p','-c:a','aac','-b:a','160k','-movflags','+faststart',path], check=True, timeout=300)
     r = {'video': name + '.mp4', 'type': label, 'swipes': len(ids), 'hook_seconds': round(cuts[-1], 2),
          'clips': ids, 'total_seconds': round(F.dur(path), 2)}
     with open(f'{OUT2}/manifest.jsonl', 'a') as fh: fh.write(json.dumps(r) + '\n')
