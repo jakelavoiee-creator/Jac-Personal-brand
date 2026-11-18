@@ -24,12 +24,15 @@ Cover with an image, one sign per slide, then "If 3 or more felt familiar…" an
 - Point the punch at the reader's growth, not at "sleepers" or "society". No contested claims stated as fact, no medical or money promises.
 - The awakened-soul thread runs through everything: light, energy, the observer, taking back time, freedom and peace.
 
-## Brand angle: THE BLACK SHEEP (locked 2026-11-15)
-Jac is the black sheep who stepped off the default script and shows a different perspective so others wake up.
-Every carousel questions one "normal" thing (work, time, food, phones, school, money, success, comfort, the herd's opinion)
-and hands the reader a new lens or a practice. The punch points at the script, never at people. Ask questions instead of
-stating contested claims as fact. No medical, legal or money promises. The reader should finish feeling seen, not lectured.
-Recurring words: black sheep, the herd, the script, default settings, wake up, the others, time / freedom / peace, energy, the observer, light.
+## Brand angle (updated 2026-11-18): NO TITLES
+Jac questions the default script and shows a different perspective so people look inward and set themselves free.
+Every carousel questions one "normal" thing (work, time, food, phones, school, money, success, status, comfort, other people's opinions)
+and gives the reader a new lens or a practice. The core message: freedom comes from within, not from labels, titles or status.
+NEVER use identity labels or group titles: no "black sheep", "the herd", "sheep", "sleepers", "the awakened", "us vs. them".
+Talk to the reader directly ("you"), point at the conditioning, never at people. Ask questions instead of stating contested
+claims as fact. No medical, legal or money promises. The reader should finish feeling seen and free, not lectured.
+Captions: open with the hook line, end with the question CTA, then "Follow @jac_lavoiee" and 5 hashtags (no #blacksheep).
+Recurring words: conditioning, default settings, the script, look inward, wake up, time / freedom / peace, energy, the observer, light, worth.
 
 ## Daily routine: 3 carousels per day
 - One of each format: A (Method, 7 slides), B (3 standalone tweets), C (numbered list, 7 slides).
