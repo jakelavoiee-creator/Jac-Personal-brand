@@ -9,3 +9,23 @@
 {"video": "recC-04swipes.mp4", "type": "recording C in order", "swipes": 4, "hook_seconds": 5.78, "clips": ["C1", "C3", "C4", "C6"], "total_seconds": 42.6}
 {"video": "recC-05swipes.mp4", "type": "recording C in order", "swipes": 5, "hook_seconds": 5.9, "clips": ["C1", "C3", "C4", "C6", "C7"], "total_seconds": 42.7}
 {"video": "recC-06swipes.mp4", "type": "recording C in order", "swipes": 6, "hook_seconds": 6.02, "clips": ["C1", "C3", "C4", "C6", "C7", "C8"], "total_seconds": 42.8}
+{"video": "recC-07swipes.mp4", "type": "recording C in order", "swipes": 7, "hook_seconds": 7.17, "clips": ["C1", "C3", "C4", "C6", "C7", "C8", "C9"], "total_seconds": 43.93}
+{"video": "recC-08swipes.mp4", "type": "recording C in order", "swipes": 8, "hook_seconds": 7.56, "clips": ["C1", "C3", "C4", "C6", "C7", "C8", "C9", "C10"], "total_seconds": 44.3}
+{"video": "recC-09swipes.mp4", "type": "recording C in order", "swipes": 9, "hook_seconds": 7.95, "clips": ["C1", "C3", "C4", "C6", "C7", "C8", "C9", "C10", "C12"], "total_seconds": 44.7}
+{"video": "recC-10swipes.mp4", "type": "recording C in order", "swipes": 10, "hook_seconds": 8.33, "clips": ["C1", "C3", "C4", "C6", "C7", "C8", "C9", "C10", "C12", "C14"], "total_seconds": 45.07}
+{"video": "recD-04swipes.mp4", "type": "recording D in order", "swipes": 4, "hook_seconds": 9.41, "clips": ["D1", "D2", "D3", "D4"], "total_seconds": 46.2}
+{"video": "recD-05swipes.mp4", "type": "recording D in order", "swipes": 5, "hook_seconds": 10.3, "clips": ["D1", "D2", "D3", "D4", "D5"], "total_seconds": 47.1}
+{"video": "recD-06swipes.mp4", "type": "recording D in order", "swipes": 6, "hook_seconds": 10.79, "clips": ["D1", "D2", "D3", "D4", "D5", "D6"], "total_seconds": 47.6}
+{"video": "recD-07swipes.mp4", "type": "recording D in order", "swipes": 7, "hook_seconds": 11.21, "clips": ["D1", "D2", "D3", "D4", "D5", "D6", "D7"], "total_seconds": 48.0}
+{"video": "recD-08swipes.mp4", "type": "recording D in order", "swipes": 8, "hook_seconds": 11.59, "clips": ["D1", "D2", "D3", "D4", "D5", "D6", "D7", "D8"], "total_seconds": 48.4}
+{"video": "recD-09swipes.mp4", "type": "recording D in order", "swipes": 9, "hook_seconds": 11.98, "clips": ["D1", "D2", "D3", "D4", "D5", "D6", "D7", "D8", "D9"], "total_seconds": 48.73}
+{"video": "mix-001.mp4", "type": "mixed old + new", "swipes": 4, "hook_seconds": 7.78, "clips": ["B1", "B6", "C9", "D8"], "total_seconds": 44.6}
+{"video": "mix-002.mp4", "type": "mixed old + new", "swipes": 5, "hook_seconds": 7.53, "clips": ["C1", "B4", "L06", "L04", "C6"], "total_seconds": 44.3}
+{"video": "mix-003.mp4", "type": "mixed old + new", "swipes": 6, "hook_seconds": 3.89, "clips": ["L02", "C7", "B6", "D6", "C6", "D8"], "total_seconds": 40.7}
+{"video": "mix-004.mp4", "type": "mixed old + new", "swipes": 7, "hook_seconds": 8.37, "clips": ["L03", "B5", "B9", "L12", "D3", "B4", "L07"], "total_seconds": 45.2}
+{"video": "mix-005.mp4", "type": "mixed old + new", "swipes": 8, "hook_seconds": 7.56, "clips": ["L02", "A4", "L07", "A5", "C10", "D3", "B9", "B5"], "total_seconds": 44.3}
+{"video": "mix-006.mp4", "type": "mixed old + new", "swipes": 9, "hook_seconds": 13.01, "clips": ["L02", "L13", "L09", "D4", "A2", "A3", "C3", "B2", "L04"], "total_seconds": 49.8}
+{"video": "mix-007.mp4", "type": "mixed old + new", "swipes": 4, "hook_seconds": 3.01, "clips": ["L02", "C3", "D9", "D4"], "total_seconds": 39.8}
+{"video": "mix-008.mp4", "type": "mixed old + new", "swipes": 5, "hook_seconds": 4.77, "clips": ["L01", "D9", "A2", "B6", "B3"], "total_seconds": 41.53}
+{"video": "mix-009.mp4", "type": "mixed old + new", "swipes": 6, "hook_seconds": 9.75, "clips": ["B1", "B8", "B3", "D5", "D6", "C3"], "total_seconds": 46.5}
+{"video": "mix-010.mp4", "type": "mixed old + new", "swipes": 7, "hook_seconds": 5.67, "clips": ["L03", "L04", "C10", "A5", "B2", "B9", "D8"], "total_seconds": 42.5}
