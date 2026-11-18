@@ -6,7 +6,7 @@ Bracketed notes = turn the topic into that format. Mark a row ✅ when it's post
 | Day | Date | A: Method (7 slides) | B: 3 standalone tweets | C: list (7 slides) |
 |---|---|---|---|---|
 | 1 ✅ | 2026-11-16 | #7 How society programs you without you noticing | #1 The reality you were taught vs. the reality you experience | #12 The things everyone believes simply because everyone believes them |
-| 2 | 2026-11-17 | #47 How school conditions your definition of success | #271 What if everything you were taught about success was backwards? | #55 Why people confuse social status with self-worth [as a list: 7 reasons] |
+| 2 ✅ | 2026-11-17 | #47 How school conditions your definition of success | #271 What if everything you were taught about success was backwards? | #55 Why people confuse social status with self-worth [as a list: 7 reasons] |
 | 3 | 2026-11-18 | #208 Digital detox as a consciousness experiment | #46 Childhood programming | #17 The stages of awakening |
 | 4 | 2026-11-19 | #36 Learning to observe your thoughts | #16 What it actually means to "wake up" | #209 Why boredom can be powerful [as a list: 7 reasons] |
 | 5 | 2026-11-20 | #218 Stop postponing your life | #31 Who are you without your name? | #286 10 truths nobody tells you about becoming successful |
