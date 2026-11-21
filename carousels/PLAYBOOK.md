@@ -32,6 +32,7 @@ NEVER use identity labels or group titles: no "black sheep", "the herd", "sheep"
 Talk to the reader directly ("you"), point at the conditioning, never at people. Ask questions instead of stating contested
 claims as fact. No medical, legal or money promises. The reader should finish feeling seen and free, not lectured.
 Captions: open with the hook line, end with the question CTA, then "Follow @jac_lavoiee" and 5 hashtags (no #blacksheep).
+VOICE: write like Jac talks (reel-kit/voice/voice.md): casual, direct, "straight up", "pretty much", "right?", "gotta", threes, max one swear at the peak. No polished quote-page lines, no numbered lecture lists unless the format needs it.
 Recurring words: conditioning, default settings, the script, look inward, wake up, time / freedom / peace, energy, the observer, light, worth.
 
 ## Daily routine: 3 carousels per day
