@@ -43,3 +43,16 @@ python3 $S/clips.py extract "https://www.youtube.com/watch?v=uL2ztWv70wE" \
   --start 11:17 --end 12:01 --preview                              # clean clip + captions
 ```
 Options: `--frame original` keeps source framing; `--no-captions` gives the raw cut.
+
+## Apps
+
+### `verso/` — Verso Studio (creative design platform)
+
+A browser-based design studio: multi-page canvas editor, typography, shapes, image upload and crop,
+layers, guides, snapping, autosave, and PNG/JPG/WEBP/transparent exports. See
+[`verso/README.md`](verso/README.md) and the development checklist in
+[`verso/CHECKLIST.md`](verso/CHECKLIST.md).
+
+```bash
+cd verso && npm install && npm run dev
+```
