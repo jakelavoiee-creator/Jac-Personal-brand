@@ -488,6 +488,10 @@ export class Engine {
     ctx.rect(0, 0, width, height);
     ctx.fillStyle = 'rgba(17,17,17,0.78)';
     ctx.fill('evenodd');
+    // hairline page edge so dark or transparent pages stay legible against the workspace
+    ctx.strokeStyle = 'rgba(255,255,255,0.12)';
+    ctx.lineWidth = 1 / z;
+    ctx.strokeRect(0, 0, width, height);
 
     const { showGrid, gridSize } = get();
     if (showGrid && gridSize * z >= 4) {
@@ -836,7 +840,8 @@ export class Engine {
       textAlign: (preset.align as any) ?? 'center',
       charSpacing: preset.letterSpacing ?? 0,
       lineHeight: 1.1,
-      width: Math.min(W * 0.8, Math.max(fontSize * preset.text.length * 0.62, fontSize * 2)),
+      // estimate the single-line width, including tracking, so short lines don't wrap
+      width: Math.min(W * 0.9, Math.max(fontSize * preset.text.length * (0.62 + (preset.letterSpacing ?? 0) / 1000), fontSize * 2)),
       splitByGrapheme: false,
     });
     return this.addObject(t, { at, fit: 0.9, name: preset.name ?? (preset.size >= 80 ? 'Heading' : preset.size >= 40 ? 'Subheading' : 'Text') });
