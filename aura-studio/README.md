@@ -7,6 +7,14 @@ freedom, Photoshop/Illustrator precision, and real AI tools — in one workspace
 Free-first: the editor and the on-device AI tools run locally in the browser with no account.
 Paid AI (generation, generative fill, the design assistant) only runs with keys you add.
 
+## Use it on your laptop
+
+1. Install **Node.js** (LTS) from nodejs.org — once.
+2. Download this project (GitHub → branch → Code → Download ZIP) and unzip it.
+3. Double-click **Start Aura (Mac).command** or **Start Aura (Windows).bat** in the project folder.
+   The first start installs Aura (a few minutes); after that it opens in seconds at http://localhost:5173.
+4. Keep that window open while you work; close it to stop Aura. Your designs stay saved in your browser on this laptop.
+
 ## Run it
 
 ```bash
