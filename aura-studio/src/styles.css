@@ -657,3 +657,28 @@ textarea.input { height: auto; padding: 8px 10px; line-height: 1.45; resize: ver
 .placements div { display: flex; justify-content: space-between; padding: 6px 8px; background: var(--bg-2); border-radius: var(--r-1); }
 .placements b { font-weight: 500; }
 @media (max-width: 860px) { .product-body { grid-template-columns: 1fr; } }
+
+/* ---------- Mockups panel ---------- */
+.mockups-panel { display: flex; flex-direction: column; gap: 12px; }
+.garment-mockups, .tryon { display: flex; flex-direction: column; gap: 10px; }
+.garment-mockups .field, .tryon .field { margin-bottom: 0; }
+.mk-head { display: flex; gap: 10px; align-items: flex-start; }
+.mk-head > svg { margin-top: 2px; color: var(--text-2); flex: none; }
+.mk-head b { display: block; font-size: 12.5px; font-weight: 600; line-height: 1.35; }
+.mk-main { aspect-ratio: 1; border-radius: var(--r-2); background: #f2f2f2; overflow: hidden; display: grid; place-items: center; color: #888; }
+.mk-main img { width: 100%; height: 100%; object-fit: contain; display: block; }
+.mk-pieces { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 6px; }
+.mk-pieces button { padding: 0; border: 1px solid var(--line); border-radius: var(--r-1); background: var(--bg-2); cursor: pointer; overflow: hidden; display: flex; flex-direction: column; color: var(--text-2); }
+.mk-pieces button.on { border-color: var(--accent); color: var(--text); }
+.mk-pieces img, .mk-pieces span { width: 100%; aspect-ratio: 1; object-fit: cover; display: block; background: #eee; }
+.mk-pieces small { font-size: 10px; padding: 3px 2px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.mockups-panel .prop-row { display: grid; grid-template-columns: 84px minmax(0, 1fr); align-items: center; gap: 8px; font-size: 12px; color: var(--text-2); }
+.search-sm { position: relative; }
+.search-sm svg { position: absolute; left: 9px; top: 50%; transform: translateY(-50%); color: var(--text-3); }
+.search-sm .input { padding-left: 28px; width: 100%; }
+.tryon-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 6px; max-height: 460px; overflow: auto; }
+.tryon-grid button { padding: 0; border: 1px solid var(--line); border-radius: var(--r-2); background: var(--bg-2); color: var(--text-2); cursor: pointer; overflow: hidden; text-align: left; }
+.tryon-grid button:hover { border-color: #4a4a4a; }
+.tryon-grid img { width: 100%; aspect-ratio: 1; object-fit: cover; display: block; background: #f2f2f2; }
+.tryon-grid small { display: block; font-size: 10.5px; padding: 5px 6px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.mk-other { border-top: 1px solid var(--line-soft); padding-top: 4px; }

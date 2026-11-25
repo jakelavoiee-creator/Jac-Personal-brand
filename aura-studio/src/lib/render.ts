@@ -69,6 +69,23 @@ export async function renderPage(project: Pick<Project, 'width' | 'height'>, pag
   return { blob, width: w, height: h };
 }
 
+/** Render a page to a canvas (transparent background unless the page has one). */
+export async function renderPageCanvas(project: Pick<Project, 'width' | 'height'>, page: PageData, scale: number) {
+  const w = Math.max(1, Math.round(project.width * scale));
+  const h = Math.max(1, Math.round(project.height * scale));
+  const sc = new StaticCanvas(document.createElement('canvas'), { width: w, height: h, enableRetinaScaling: false, renderOnAddRemove: false });
+  (await enliven(page.objects)).forEach((o) => sc.add(o));
+  sc.setViewportTransform([scale, 0, 0, scale, 0, 0]);
+  sc.backgroundColor = page.background ?? '';
+  sc.renderAll();
+  const out = document.createElement('canvas');
+  out.width = w;
+  out.height = h;
+  out.getContext('2d')!.drawImage(sc.lowerCanvasEl, 0, 0);
+  sc.dispose();
+  return out;
+}
+
 export async function renderThumb(project: Pick<Project, 'width' | 'height'>, page: PageData, max = 320) {
   const scale = max / Math.max(project.width, project.height);
   const { blob } = await renderPage(project, page, { scale, format: 'webp', quality: 0.8 });

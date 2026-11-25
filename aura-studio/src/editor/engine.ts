@@ -43,6 +43,7 @@ export interface PhotoState {
 import { warpPath, type Warp } from '../lib/warp';
 import type { BoolOp } from '../lib/vector';
 import type { AssistantAction } from '../lib/ai/assistant';
+import { renderPiece } from '../lib/garment';
 
 interface PenPt {
   x: number;
@@ -182,6 +183,8 @@ export class Engine {
   private history = new Map<string, History>();
   private restoring = false;
   private clipboard: any[] = [];
+  /** rendered Tapstitch garment behind the artwork (garment projects) */
+  private backdrop: { key: string; canvas: HTMLCanvasElement | null } | null = null;
   private pasteCount = 0;
   private saveTimer: number | undefined;
   private thumbTimers = new Map<string, number>();
@@ -516,7 +519,10 @@ export class Engine {
     ctx.fillStyle = bg ?? '#fff';
     ctx.fillRect(0, 0, width, height);
     ctx.shadowColor = 'transparent';
-    if (!bg) {
+    const garment = this.garmentBackdrop();
+    if (garment) {
+      ctx.drawImage(garment, 0, 0, width, height);
+    } else if (!bg) {
       // checkerboard drawn in screen pixels so it stays crisp at any zoom
       ctx.save();
       ctx.beginPath();
@@ -528,6 +534,89 @@ export class Engine {
       ctx.restore();
     }
     ctx.restore();
+  }
+
+  /* ---------------- garment projects ---------------- */
+
+  /** The current page's garment piece (garment projects only). */
+  garmentPiece() {
+    const g = this.project?.garment;
+    if (!g) return null;
+    const piece = g.pages[this.page.id];
+    return piece ? g.catalog.print_areas.find((a) => a.piece === piece) ?? null : null;
+  }
+
+  private garmentBackdrop() {
+    const g = this.project?.garment;
+    const area = this.garmentPiece();
+    if (!g || !area) return null;
+    const key = `${g.productId}|${area.piece}|${g.colorId}`;
+    if (this.backdrop?.key !== key) {
+      const slot: { key: string; canvas: HTMLCanvasElement | null } = { key, canvas: this.backdrop?.canvas ?? null };
+      this.backdrop = slot;
+      renderPiece(g.catalog, area.piece, g.colorId, null, { size: 1400, noArt: true })
+        .then((c) => {
+          if (this.backdrop !== slot) return;
+          slot.canvas = c;
+          this.canvas.requestRenderAll();
+        })
+        .catch(() => {
+          /* offline: plain artboard */
+        });
+    }
+    return this.backdrop.canvas;
+  }
+
+  /** Dashed print areas with labels; the garment outside them is dimmed (it won't be printed). */
+  private drawPlacements(ctx: CanvasRenderingContext2D, z: number) {
+    const area = this.garmentPiece();
+    if (!area) return;
+    const k = this.project.width / this.project.garment!.catalog.canvas.width;
+    const trace = (b: { left: number; top: number; width: number; height: number; angle: number }) => {
+      const cx = (b.left + b.width / 2) * k, cy = (b.top + b.height / 2) * k, a = ((b.angle || 0) * Math.PI) / 180;
+      const pts = [[-1, -1], [1, -1], [1, 1], [-1, 1]].map(([sx, sy]) => {
+        const x = (sx * b.width * k) / 2, y = (sy * b.height * k) / 2;
+        return [cx + x * Math.cos(a) - y * Math.sin(a), cy + x * Math.sin(a) + y * Math.cos(a)];
+      });
+      ctx.moveTo(pts[0][0], pts[0][1]);
+      pts.slice(1).forEach((p) => ctx.lineTo(p[0], p[1]));
+      ctx.closePath();
+    };
+    ctx.save();
+    ctx.beginPath();
+    ctx.rect(0, 0, this.project.width, this.project.height);
+    area.placements.forEach((p) => trace(p.design_area));
+    ctx.fillStyle = 'rgba(17,17,17,0.28)';
+    ctx.fill('evenodd');
+    ctx.beginPath();
+    area.placements.forEach((p) => trace(p.design_area));
+    ctx.setLineDash([6 / z, 5 / z]);
+    ctx.lineWidth = 1.5 / z;
+    ctx.strokeStyle = '#8b6cff';
+    ctx.stroke();
+    ctx.setLineDash([]);
+    ctx.font = `600 ${11 / z}px Inter, system-ui, sans-serif`;
+    ctx.fillStyle = '#8b6cff';
+    area.placements.forEach((p) => ctx.fillText(p.title, p.design_area.left * k, p.design_area.top * k - 6 / z));
+    ctx.restore();
+  }
+
+  /** Change garment colour / realism; saved with the project. */
+  setGarment(patch: Partial<Pick<NonNullable<Project['garment']>, 'colorId' | 'realism'>>) {
+    const g = this.project.garment;
+    if (!g) return;
+    Object.assign(g, patch);
+    set({ project: { ...this.project } });
+    this.canvas.requestRenderAll();
+    this.scheduleSave();
+    this.bump();
+  }
+
+  /** Current page rendered as a canvas (for mockups / print files). */
+  async pageCanvas(i = this.pageIndex, scale = 1) {
+    this.syncPage();
+    const { renderPageCanvas } = await import('../lib/render');
+    return renderPageCanvas(this.project, this.project.pages[i], scale);
   }
 
   drawOverlay(ctx: CanvasRenderingContext2D) {
@@ -544,6 +633,7 @@ export class Engine {
     ctx.rect(0, 0, width, height);
     ctx.fillStyle = 'rgba(17,17,17,0.78)';
     ctx.fill('evenodd');
+    this.drawPlacements(ctx, z);
     // hairline page edge so dark or transparent pages stay legible against the workspace
     ctx.strokeStyle = 'rgba(255,255,255,0.12)';
     ctx.lineWidth = 1 / z;

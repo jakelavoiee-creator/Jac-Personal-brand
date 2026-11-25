@@ -35,6 +35,7 @@ import BrandPanel from './BrandPanel';
 import TemplatesPanel from './TemplatesPanel';
 import PhotosPanel from './PhotosPanel';
 import AIPanel from './AIPanel';
+import MockupsPanel from './MockupsPanel';
 import { isDark, useEditor } from '../engine';
 import { SHAPES, shapePath } from '../shapes';
 import { ensureFont } from '../../lib/fonts';
@@ -77,12 +78,11 @@ const RAIL: { id: PanelId; label: string; icon: any; soon?: string }[] = [
   { id: 'backgrounds', label: 'Backgr.', icon: PaintBucket },
   { id: 'textures', label: 'Textures', icon: Grip },
   { id: 'ai', label: 'AI Tools', icon: Wand2 },
-  { id: 'mockups', label: 'Mockups', icon: Shirt, soon: 'Stage 5' },
+  { id: 'mockups', label: 'Mockups', icon: Shirt },
   { id: 'layers', label: 'Layers', icon: LayersIcon },
 ];
 
 const SOON: Record<string, { title: string; body: string; items: string[] }> = {
-  mockups: { title: 'Mockup studio', body: 'Stage 5: garment templates (front/back), packaging and lifestyle mockups.', items: ['T-shirts, hoodies, caps', 'Packaging & posters', 'Your own product photos'] },
 };
 
 export default function LeftPanel() {
@@ -122,6 +122,7 @@ export default function LeftPanel() {
               {open === 'templates' && <TemplatesPanel />}
               {open === 'photos' && <PhotosPanel />}
               {open === 'ai' && <AIPanel />}
+              {open === 'mockups' && <MockupsPanel />}
               {open === 'graphics' && <GraphicsPanel />}
               {open === 'illustrations' && <GraphicsPanel illustrations />}
               {SOON[open] && <SoonPanel id={open} stage={RAIL.find((r) => r.id === open)!.soon!} />}
