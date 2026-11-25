@@ -210,7 +210,7 @@ zero runtime errors.
 - ✅ Fixed: FX Lab CPU duotone rendered black; kaleidoscope sampled background instead of the subject
 - ✅ Fixed: studio dialogs ignored Escape; photo action buttons overflowed the panel; stale "Stage 2" hint
 
-### Verified by tests/e2e-tools2.mjs (22 checks, pixel-level) plus all earlier suites
+### Verified by tests/e2e-tools2.mjs (22 checks, pixel-level); all seven suites green on the production build — 194 checks
 
 ### Not added (yet)
 - 🟡 Pixel selections (marquee / lasso / magic wand) — use shape masks, AI subject/background selection, brushes and the magic eraser instead
