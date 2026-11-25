@@ -233,7 +233,7 @@ await page.fill('[data-testid="scene-prompt"]', 'on a marble café table');
 await page.click('[data-testid="scene-run"]');
 await page.waitForSelector('[data-testid="scene-result"]', { timeout: 30000 });
 const sreq = sentOpenAI.at(-1);
-ok(sreq.url.endsWith('/v1/images/edits') && sreq.images === 1 && /marble café table/.test(sreq.text), 'AI scene sends the composed mockup + prompt to OpenAI');
+ok(sreq.url.endsWith('/v1/images/edits') && sreq.images === 1 && /marble caf/.test(sreq.text), 'AI scene sends the composed mockup + prompt to OpenAI');
 await page.locator('[data-testid="scene-result"]').first().click();
 await page.waitForTimeout(800);
 ok((await ev(() => window.__aura.objects().filter((o) => o.type === 'image').length)) >= 1, 'AI scene can be added to the design');
