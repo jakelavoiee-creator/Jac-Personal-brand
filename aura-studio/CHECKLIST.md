@@ -160,9 +160,29 @@ zero runtime errors.
 - 🟡 Production hosting must send `Cross-Origin-Opener-Policy: same-origin` and `Cross-Origin-Embedder-Policy: credentialless` (provided in `public/_headers` for Netlify / Cloudflare Pages). Without them everything still works, but the on-device models run single-threaded (slower).
 - 🟡 API keys are stored in this browser's localStorage and sent directly from the browser to the provider — use keys with spending limits.
 
-## Stage 5 — Apparel & mockups
-- ⏳ Garment templates (front/back/sleeves/labels), placement guides, realistic mockups, packaging, lifestyle scenes
-- 🔌 AI-generated lifestyle scenes (paid inference)
+## Stage 5 — Apparel & mockup studio ✅
+
+### Apparel library — Tapstitch (official Open Platform API, your Tapstitch token)
+- ✅ Apparel page: the live Tapstitch catalogue (1,403 active garments: tees, hoodies, zip-ups, sweatshirts, tanks, pants, shorts, jackets, polos, activewear, kids, caps & bags) with search, 13 categories, DTG/DTF filter, International / USA fulfilment
+- ✅ Product sheet: Tapstitch photos, colours, sizes, blank price, techniques, every print area and placement with its print price, live garment preview with placement outlines, link to the product on Tapstitch
+- ✅ Garment projects: one transparent 7000 px page per print area (front, back, sleeves…); the real Tapstitch garment in your chosen colour sits behind the artwork (never exported); dashed, labelled print placements; anything outside them is dimmed because it won't print
+- ✅ Mockups panel: live mockup of every piece from Tapstitch's own mockup layers + your artwork clipped to the rotated placement boxes / masks; colour switcher; fabric realism (garment folds and lighting shade the print)
+- ✅ Exports: mockup PNG (2000 px) per piece, or a ZIP with all mockups + one transparent print file per printed placement (10× Tapstitch design-area size, e.g. 2600×3270 for a tee front; empty placements skipped) + README
+- ✅ Try on: preview any non-garment design on any Tapstitch garment / colour / placement with size and height, download the mockup, or turn it into a garment design
+- ✅ Same-origin relay for the API (it does not allow browser CORS): Vite dev/preview middleware, `functions/tapstitch/[[path]].js` (Cloudflare Pages) and `public/_redirects` (Netlify)
+
+### Other mockups (Aura's own tools)
+- ✅ Place on a photo: packaging, boxes, posters, labels, bags, screens — your own photo, 4-corner perspective (true homography), printed (multiply) or opaque blending, photo-lighting transfer, full-resolution download / save / add to design
+- ✅ AI lifestyle scene from the finished mockup (paid, your OpenAI key)
+
+### Verified by tests/e2e-stage5.mjs — live Tapstitch API through the relay, OpenAI mocked
+
+## Stage 5 — notes / awaiting setup
+- 🔌 Needs a Tapstitch account token (Settings → Tapstitch API token). Free to create at tapstitch.com/developers/tokens.
+- 🔌 Production hosting must provide the `/tapstitch` relay (Cloudflare Pages Function and Netlify rule included). Static hosting without it cannot reach the API.
+- 🟡 Tapstitch's terms prohibit scraping or copying their site, so nothing is downloaded or bundled: product data, photos and mockup layers load live from their official API and CDN, and stay Tapstitch's property.
+- 🟡 Sending designs to Tapstitch to order (their API's create-design endpoint) needs the artwork at a public HTTPS URL, i.e. image hosting — not wired yet. Download the print files and upload them on tapstitch.com.
+- 🟡 Tapstitch's mockup layers are flat studio shots, so fabric realism is subtle on most garments.
 
 ## Known limitations / bugs
 - Effects render through an offscreen layer capped at 4096 px per object side; a single effected object wider than that on a very large document exports slightly softer.

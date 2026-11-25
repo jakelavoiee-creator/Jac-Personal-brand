@@ -26,6 +26,7 @@ npm test                      # all five suites
 #   tests/e2e-stage2.mjs  effects, textures, transforms, fonts, vectors, graphics, migration
 #   tests/e2e-stage3.mjs  templates, brand kits, smart resize, SVG/PDF export, PDF import, photos
 #   tests/e2e-stage4.mjs  photo studio, on-device AI (real models), provider AI + assistant (mocked APIs)
+#   tests/e2e-stage5.mjs  Tapstitch apparel (live API; needs TAPSTITCH_TOKEN), mockups, print files, perspective
 ```
 
 The tests drive the real UI and verify exported files at the byte level (PNG/JPEG headers,
@@ -51,6 +52,8 @@ dimensions, alpha channel, ZIP structure).
 | Stock photos | Wikimedia Commons · Openverse | Commercial-use licences only, attribution stored with each photo. Openverse needs a free API key (Settings). |
 | Photo filters | Custom fabric filter `AuraAdjust` (`src/lib/photoFilter.ts`) | One WebGL pass for all adjustments + presets, identical CPU fallback, serialised with the design. |
 | On-device AI | transformers.js 4 + ONNX Runtime Web (Apache-2.0/MIT) | Background removal (ORMBG Apache-2.0 · BiRefNet-lite 512 MIT · MODNet Apache-2.0), inpainting (LaMa Apache-2.0), super-resolution (Swin2SR Apache-2.0). Weights download from Hugging Face on first use and are cached by the browser; the ONNX Runtime wasm is served by Aura itself (`public/ort`, copied at build). WebGPU fp16 where supported, otherwise multi-threaded WebAssembly (needs the COOP/COEP headers in `public/_headers`). |
+| Apparel library | Tapstitch Open Platform API | Live catalogue, print areas and mockup layers with the user's own Tapstitch token, through a same-origin relay (`/tapstitch` → openapi.tapstitch.com; the API has no browser CORS). Garment projects use Tapstitch's 700 px design canvas at 10×; print files are cut per placement. |
+| Perspective mockups | `src/lib/perspective.ts` | 4-point homography with bilinear inverse mapping and photo-lighting transfer. |
 | Provider AI | OpenAI Images API · Anthropic SDK (Claude) | Called from the browser with the user's own keys (stored locally). Generative edits paste back only the masked pixels at full resolution. The assistant returns structured edits (zod schema) that the engine applies as one undoable step. |
 
 The editor and Fabric.js are code-split: the dashboard loads ~66 KB gzipped, the editor chunk
@@ -96,3 +99,10 @@ Exports re-render each page off-screen at the target scale (no screenshotting of
 
 See **[CHECKLIST.md](CHECKLIST.md)** for what's done, what's next, and what depends on
 external services.
+
+## Hosting
+
+Aura is a static app plus one tiny relay:
+
+- **Headers** — `public/_headers` sets `Cross-Origin-Opener-Policy: same-origin` and `Cross-Origin-Embedder-Policy: credentialless` (multi-threaded on-device AI).
+- **Tapstitch relay** — `/tapstitch/v1/*` must forward to `https://openapi.tapstitch.com/v1/*` with the `Authorization` header. Included: `functions/tapstitch/[[path]].js` (Cloudflare Pages) and `public/_redirects` (Netlify). `npm run dev` / `vite preview` provide it automatically.
