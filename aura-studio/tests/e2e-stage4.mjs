@@ -291,7 +291,7 @@ const userContent = aReq.body.messages.at(-1).content;
 ok(aReq.body.model === 'claude-opus-5-5' && aReq.body.output_config?.format?.type === 'json_schema', 'assistant uses Claude with structured output');
 ok(aReq.body.fallbacks === 'default' && /server-side-fallback-2026-07-01/.test(aReq.headers['anthropic-beta'] || ''), 'refusal fallbacks enabled');
 ok(userContent.some((b) => b.type === 'image') && userContent.some((b) => b.type === 'text' && b.text.includes(headId)), 'assistant sees a rendered snapshot and the layer list');
-ok(aReq.headers['x-api-key'] === 'sk-ant-test' && !sent.openai.some((r) => r.auth?.includes('sk-ant')), `each key goes only to its own provider (anthropic headers: ${Object.keys(aReq.headers).filter((k) => /key|auth/i.test(k)).map((k) => k + '=' + String(aReq.headers[k]).slice(0, 12)).join(', ')}; openai auth: ${[...new Set(sent.openai.map((r) => r.auth))].join(', ')})`);
+ok((aReq.headers['x-api-key'] === 'sk-ant-test' || aReq.headers['authorization'] === 'Bearer sk-ant-test') && !sent.anthropic.some((r) => JSON.stringify(r.headers).includes('sk-test-openai')) && !sent.openai.some((r) => r.auth?.includes('sk-ant')), `each key goes only to its own provider (anthropic headers: ${Object.keys(aReq.headers).filter((k) => /key|auth/i.test(k)).map((k) => k + '=' + String(aReq.headers[k]).slice(0, 12)).join(', ')}; openai auth: ${[...new Set(sent.openai.map((r) => r.auth))].join(', ')})`);
 await shot('assistant');
 await page.click('[data-testid="apply-actions"]');
 await page.waitForTimeout(800);
