@@ -37,6 +37,7 @@ const image = () =>
     const c = o.getCenterPoint();
     return { asset: o.assetId, orig: o.originalAssetId ?? null, nat: o.getOriginalSize(), w: Math.round(o.getScaledWidth()), h: Math.round(o.getScaledHeight()), cx: Math.round(c.x), cy: Math.round(c.y) };
   });
+const selectImage = () => ev(() => window.__aura.select([window.__aura.objects().find((x) => x.type === 'image')]));
 const assetPixel = (id, x, y) =>
   ev(
     async ([id, x, y]) => {
@@ -100,7 +101,7 @@ ok((await page.locator('.ai-key-note').count()) >= 1, 'missing-key note explains
 await shot('ai-studio-nokey');
 await page.click('.nav-item:has-text("Settings")');
 ok((await page.locator('input[placeholder="https://…"]').count()) === 0 && !(await page.content()).includes('Replicate'), 'Settings lists only keys that are actually used');
-ok((await page.locator('tr:has-text("Background removal") >> text=Available').count()) === 1, 'capability table marks background removal available');
+ok(/Available/.test(await page.locator('tr', { hasText: 'Background removal' }).innerText()), 'capability table marks background removal available');
 
 /* set keys */
 await ev(() => {
@@ -125,6 +126,7 @@ const start = await image();
 ok(start.nat.width === 360, `photo placed (${start.nat.width}×${start.nat.height})`);
 
 /* 3. Background removal — real on-device model */
+await selectImage();
 await page.click('[data-testid="remove-bg"]');
 await page.waitForSelector('.modal.studio');
 await page.click('[data-testid="detect"]');
@@ -158,6 +160,7 @@ await page.waitForTimeout(500);
 ok((await image()).asset === cut.asset, 'undo re-applies the cutout');
 
 /* 5. Magic eraser — quick fill (no download) */
+await selectImage();
 await page.click('[data-testid="magic-erase"]');
 await page.waitForSelector('.modal.studio');
 await page.click('[data-mode="quick"]');
@@ -181,6 +184,7 @@ await ev(() => {
   window.__aura.applyCrop(o, { x: 140, y: 150, w: 80, h: 60 });
 });
 const beforeEnh = await image();
+await selectImage();
 await page.click('[data-testid="enhance"]');
 await page.waitForSelector('.modal.studio');
 await page.click('[data-model="fast"]');
@@ -205,6 +209,7 @@ await ev(() => {
 /* 7. Generative fill (mocked OpenAI) */
 await page.click('.rail button:has-text("AI Tools")');
 await page.click('.ai-panel .seg button:has-text("Image")');
+await selectImage();
 await page.click('[data-testid="tool-genfill"]');
 await page.waitForSelector('.modal.studio');
 const cv3 = await page.locator('[data-testid="mask-canvas"]').boundingBox();
@@ -229,6 +234,7 @@ ok(!(outFill[1] > 150 && outFill[0] < 80), 'pixels outside the painted area are 
 /* 8. Expand (mocked OpenAI) */
 mockColor = [40, 90, 220];
 const preExpand = await image();
+await selectImage();
 await page.click('[data-testid="tool-expand"]');
 await page.waitForSelector('.modal.studio');
 await page.click('.modal.studio .chip:text-is("1:1")');
