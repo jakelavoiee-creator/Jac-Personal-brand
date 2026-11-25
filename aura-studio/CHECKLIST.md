@@ -175,7 +175,7 @@ zero runtime errors.
 - ✅ Place on a photo: packaging, boxes, posters, labels, bags, screens — your own photo, 4-corner perspective (true homography), printed (multiply) or opaque blending, photo-lighting transfer, full-resolution download / save / add to design
 - ✅ AI lifestyle scene from the finished mockup (paid, your OpenAI key)
 
-### Verified by tests/e2e-stage5.mjs — live Tapstitch API through the relay, OpenAI mocked
+### Verified by tests/e2e-stage5.mjs (26 checks) — live Tapstitch API through the relay, OpenAI mocked; Stage 1–4 suites (147) still green — 173 checks in total
 
 ## Stage 5 — notes / awaiting setup
 - 🔌 Needs a Tapstitch account token (Settings → Tapstitch API token). Free to create at tapstitch.com/developers/tokens.
