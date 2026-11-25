@@ -209,3 +209,27 @@ export function hasInk(page: HTMLCanvasElement, p: TsPlacement, scale: number) {
   for (let i = 3; i < d.length; i += 16) if (d[i] > 8) return true;
   return false;
 }
+
+/* ---------------- garment projects ---------------- */
+
+import { createProject } from './projects';
+import { putProject } from './db';
+import type { Project } from './types';
+import type { TsProduct } from './tapstitch';
+
+/** A project with one transparent 7000 px page per printable garment piece. */
+export async function createGarmentProject(p: TsProduct, cat: TsCatalog, colorId: string): Promise<Project> {
+  const side = cat.canvas.width * GARMENT_SCALE;
+  const proj = await createProject({ title: p.title, width: side, height: side, transparent: true, pages: cat.print_areas.length, dpi: 300 });
+  const pages: Record<string, string> = {};
+  cat.print_areas.forEach((a, i) => (pages[proj.pages[i].id] = a.piece));
+  proj.garment = { provider: 'tapstitch', productId: p.id, styleCode: p.style_code, title: p.title, technique: cat.technique, colorId, realism: 0.7, catalog: cat, pages };
+  await putProject(proj);
+  return proj;
+}
+
+export const pieceOf = (proj: Project, pageId: string) => {
+  const g = proj.garment!;
+  const piece = g.pages[pageId];
+  return g.catalog.print_areas.find((a) => a.piece === piece);
+};

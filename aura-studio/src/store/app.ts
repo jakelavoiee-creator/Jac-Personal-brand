@@ -6,6 +6,7 @@ export type Route =
   | { name: 'templates' }
   | { name: 'discover' }
   | { name: 'ai' }
+  | { name: 'apparel' }
   | { name: 'brands' }
   | { name: 'assets' }
   | { name: 'favorites' }
@@ -16,7 +17,7 @@ export type Route =
 export function parseHash(hash: string): Route {
   const parts = hash.replace(/^#\/?/, '').split('/');
   if (parts[0] === 'editor' && parts[1]) return { name: 'editor', id: parts[1] };
-  const simple = ['home', 'projects', 'templates', 'discover', 'ai', 'brands', 'assets', 'favorites', 'trash', 'settings'];
+  const simple = ['home', 'projects', 'templates', 'discover', 'ai', 'apparel', 'brands', 'assets', 'favorites', 'trash', 'settings'];
   if (simple.includes(parts[0])) return { name: parts[0] } as Route;
   return { name: 'home' };
 }

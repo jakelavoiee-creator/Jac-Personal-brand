@@ -23,9 +23,11 @@ import {
   FileUp,
   Folder as FolderIcon,
   X,
+  Shirt,
 } from 'lucide-react';
 import { navigate, toast, type Route } from '../store/app';
 import AIStudioView from './AIStudio';
+import ApparelView from './Apparel';
 import { CATEGORIES, FORMATS, type Format } from '../lib/formats';
 import {
   deleteAsset,
@@ -56,6 +58,7 @@ const NAV: { id: Route['name']; label: string; icon: any; stage?: string }[] = [
   { id: 'projects', label: 'Projects', icon: Shapes },
   { id: 'templates', label: 'Templates', icon: LayoutTemplate },
   { id: 'discover', label: 'Discover', icon: Compass },
+  { id: 'apparel', label: 'Apparel', icon: Shirt },
   { id: 'ai', label: 'AI Studio', icon: Bot },
   { id: 'brands', label: 'Brand Kits', icon: Palette },
   { id: 'assets', label: 'Assets', icon: ImageIcon },
@@ -197,6 +200,9 @@ export default function Dashboard({ route }: { route: Route }) {
       break;
     case 'ai':
       body = <AIStudioView />;
+      break;
+    case 'apparel':
+      body = <ApparelView />;
       break;
     default:
       body = <Roadmap kind={route.name} />;

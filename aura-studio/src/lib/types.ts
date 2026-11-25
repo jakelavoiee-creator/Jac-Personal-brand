@@ -28,6 +28,23 @@ export interface Project {
   createdAt: number;
   updatedAt: number;
   guides?: Guides;
+  /** garment project: designs on a Tapstitch product (one page per printable piece) */
+  garment?: GarmentSpec;
+}
+
+export interface GarmentSpec {
+  provider: 'tapstitch';
+  productId: string;
+  styleCode: string;
+  title: string;
+  technique: string;
+  colorId: string;
+  /** 0–1 fabric shading strength for mockups */
+  realism: number;
+  /** snapshot of the Tapstitch design areas, so the project works offline */
+  catalog: import('./tapstitch').TsCatalog;
+  /** pageId → garment piece (front, back, left_sleeve, …) */
+  pages: Record<string, string>;
 }
 
 export interface Asset {
