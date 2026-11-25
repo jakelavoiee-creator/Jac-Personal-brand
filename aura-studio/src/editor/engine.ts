@@ -11,6 +11,7 @@ import {
   Polygon,
   Polyline,
   Rect,
+  Ellipse,
   controlsUtils,
   Shadow,
   Textbox,
@@ -22,13 +23,23 @@ import {
 import { create } from 'zustand';
 import { putProject } from '../lib/db';
 import { uid, clamp } from '../lib/ids';
-import { assetURL } from '../lib/assets';
+import { assetURL, assetURLById } from '../lib/assets';
+import { getAsset } from '../lib/db';
 import { ensureFont } from '../lib/fonts';
 import { CUSTOM_PROPS, applyLock, enliven, renderThumb } from '../lib/render';
 import { newPage } from '../lib/projects';
 import type { Asset, BrandFont, BrandKit, PageData, Project } from '../lib/types';
 import { makeShape, type ShapeKind } from './shapes';
 import type { FX } from '../lib/fx';
+import { AuraAdjust, NEUTRAL, type Adjust } from '../lib/photoFilter';
+
+export interface PhotoState {
+  adjust: Adjust;
+  preset: string | null;
+  amount: number;
+  sharpness: number;
+  blur: number;
+}
 import { warpPath, type Warp } from '../lib/warp';
 import type { BoolOp } from '../lib/vector';
 
@@ -61,6 +72,8 @@ export interface EditorState {
   thumbs: Record<string, string>;
   menu: { x: number; y: number } | null;
   cropping: FabricImage | null;
+  /** full-screen AI image tool (background remover, magic eraser, enhance) */
+  imageTool: { kind: ImageToolKind; img: FabricImage } | null;
   /** open left-rail panel */
   panel: string | null;
   /** typography comparison studio */
@@ -72,6 +85,8 @@ export interface EditorState {
   nodeEditing: boolean;
   busy: string | null;
 }
+
+export type ImageToolKind = 'cutout' | 'erase' | 'enhance';
 
 export const useEditor = create<EditorState>(() => ({
   project: null,
@@ -89,6 +104,7 @@ export const useEditor = create<EditorState>(() => ({
   thumbs: {},
   menu: null,
   cropping: null,
+  imageTool: null,
   panel: typeof innerWidth !== 'undefined' && innerWidth < 900 ? null : 'elements',
   compare: null,
   tool: 'select',
@@ -1867,28 +1883,69 @@ export class Engine {
 
   /* ---------------- image adjustments (non-destructive) ---------------- */
 
-  imageAdjust(img: FabricImage) {
-    const out = { brightness: 0, contrast: 0, saturation: 0, blur: 0 };
-    for (const f of img.filters as any[]) {
-      if (f?.type === 'Brightness') out.brightness = f.brightness;
-      if (f?.type === 'Contrast') out.contrast = f.contrast;
-      if (f?.type === 'Saturation') out.saturation = f.saturation;
-      if (f?.type === 'Blur') out.blur = f.blur;
+  /** Full photo state of an image (reads legacy Stage 1 filters too). */
+  photoState(img: FabricImage): PhotoState {
+    const st: PhotoState = { adjust: { ...NEUTRAL }, preset: null, amount: 1, sharpness: 0, blur: 0 };
+    for (const f of (img.filters ?? []) as any[]) {
+      if (!f) continue;
+      if (f.type === 'AuraAdjust') {
+        st.adjust = { ...NEUTRAL, ...f.adjust };
+        st.preset = f.preset ?? null;
+        st.amount = f.amount ?? 1;
+      } else if (f.type === 'Convolute' && isSharpenKernel(f.matrix)) st.sharpness = (f.matrix[4] - 1) / 4;
+      else if (f.type === 'Blur') st.blur = f.blur;
+      // Stage 1 filters map onto the new model
+      else if (f.type === 'Brightness') st.adjust.exposure = f.brightness * 2;
+      else if (f.type === 'Contrast') st.adjust.contrast = f.contrast;
+      else if (f.type === 'Saturation') st.adjust.saturation = f.saturation;
     }
-    return out;
+    return st;
   }
 
-  setImageAdjust(img: FabricImage, adj: { brightness: number; contrast: number; saturation: number; blur: number }) {
-    const list: any[] = [];
-    if (adj.brightness) list.push(new filters.Brightness({ brightness: adj.brightness }));
-    if (adj.contrast) list.push(new filters.Contrast({ contrast: adj.contrast }));
-    if (adj.saturation) list.push(new filters.Saturation({ saturation: adj.saturation }));
-    if (adj.blur) list.push(new filters.Blur({ blur: adj.blur }));
-    img.filters = list;
+  setPhoto(img: FabricImage, st: PhotoState, live = false) {
+    img.filters = photoFilters(st);
     img.applyFilters();
+    (img as any).__fxCache = undefined;
     this.canvas.requestRenderAll();
     this.bump();
-    this.commitSoon();
+    if (live) this.commitSoon();
+    else this.commit();
+  }
+
+  /** Temporarily show the unedited image (before/after compare). */
+  comparePhoto(img: FabricImage, showOriginal: boolean) {
+    if (showOriginal) {
+      (img as any).__savedFilters = img.filters;
+      img.filters = [];
+    } else if ((img as any).__savedFilters) {
+      img.filters = (img as any).__savedFilters;
+      (img as any).__savedFilters = undefined;
+    }
+    img.applyFilters();
+    this.canvas.requestRenderAll();
+  }
+
+  /** Clip an image to a shape (non-destructive mask). null removes it. */
+  maskImage(img: FabricImage, kind: ShapeKind | 'ellipse' | null) {
+    if (!kind) {
+      img.set({ clipPath: undefined } as any);
+    } else {
+      const w = img.width;
+      const h = img.height;
+      let clip: FabricObject;
+      if (kind === 'ellipse') clip = new Ellipse({ rx: w / 2, ry: h / 2 });
+      else {
+        clip = makeShape(kind as ShapeKind, 100);
+        clip.set({ scaleX: w / clip.width, scaleY: h / clip.height });
+      }
+      clip.set({ originX: 'center', originY: 'center', left: 0, top: 0, fill: '#000' } as any);
+      (img as any).maskKind = kind;
+      img.set({ clipPath: clip } as any);
+    }
+    if (!kind) (img as any).maskKind = undefined;
+    img.dirty = true;
+    this.canvas.requestRenderAll();
+    this.commit();
   }
 
   /** Apply a crop expressed in source-image pixels, keeping the visible region in place. */
@@ -2032,6 +2089,137 @@ export class Engine {
     const o = this.active();
     if (o instanceof FabricImage) set({ cropping: o });
   }
+
+  /* ---------------- AI image tools ---------------- */
+
+  openImageTool(kind: ImageToolKind, img = this.active()) {
+    if (img instanceof FabricImage) set({ imageTool: { kind, img } });
+  }
+
+  /**
+   * Pixels the AI tools should work from. For an image that already had its
+   * background removed this is the untouched original plus the current cutout
+   * alpha, so refining is always non-destructive.
+   */
+  async imageSources(img: FabricImage): Promise<{ source: HTMLImageElement; current: HTMLImageElement; originalAssetId?: string; assetId?: string; name: string }> {
+    const load = (src: string) =>
+      new Promise<HTMLImageElement>((res, rej) => {
+        const el = new Image();
+        el.crossOrigin = 'anonymous';
+        el.onload = () => res(el);
+        el.onerror = () => rej(new Error('Could not read this image.'));
+        el.src = src;
+      });
+    const assetId = (img as any).assetId as string | undefined;
+    const originalAssetId = (img as any).originalAssetId as string | undefined;
+    const curURL = (assetId && (await assetURLById(assetId))) || img.getSrc();
+    const current = await load(curURL);
+    const origURL = originalAssetId ? await assetURLById(originalAssetId) : null;
+    const source = origURL ? await load(origURL) : current;
+    const name = (assetId && (await getAsset(assetId))?.name) || (img as any).name || 'Image';
+    return { source, current, originalAssetId: origURL ? originalAssetId : undefined, assetId, name };
+  }
+
+  /**
+   * Point an image layer at different pixels of the same size (a cutout or an
+   * edit). Crop, filters, mask and transform are kept.
+   */
+  async swapImageAsset(img: FabricImage, asset: Asset, originalAssetId?: string | null) {
+    const keep = { cropX: img.cropX, cropY: img.cropY, width: img.width, height: img.height };
+    const sameSize = asset.width === img.getOriginalSize().width && asset.height === img.getOriginalSize().height;
+    await img.setSrc(assetURL(asset));
+    if (sameSize) img.set(keep);
+    (img as any).assetId = asset.id;
+    if (originalAssetId !== undefined) (img as any).originalAssetId = originalAssetId ?? undefined;
+    if (img.filters?.length) img.applyFilters();
+    img.dirty = true;
+    img.setCoords();
+    this.canvas.requestRenderAll();
+    this.commit();
+    this.bump();
+  }
+
+  /** Swap to a higher-resolution version of the same picture, keeping its crop and on-canvas size. */
+  async swapImageUpscaled(img: FabricImage, asset: Asset, factor: number) {
+    const keep = { cropX: (img.cropX ?? 0) * factor, cropY: (img.cropY ?? 0) * factor, width: img.width * factor, height: img.height * factor, scaleX: (img.scaleX ?? 1) / factor, scaleY: (img.scaleY ?? 1) / factor };
+    const center = img.getCenterPoint();
+    await img.setSrc(assetURL(asset));
+    img.set(keep);
+    if (img.clipPath) img.clipPath.set({ scaleX: (img.clipPath.scaleX ?? 1) * factor, scaleY: (img.clipPath.scaleY ?? 1) * factor });
+    (img as any).assetId = asset.id;
+    if (img.filters?.length) img.applyFilters();
+    img.setPositionByOrigin(center, 'center', 'center');
+    img.dirty = true;
+    img.setCoords();
+    this.canvas.requestRenderAll();
+    this.commit();
+    this.bump();
+  }
+
+  /** Put the original pixels back (undo a background removal / edit). */
+  async restoreOriginalImage(img: FabricImage) {
+    const id = (img as any).originalAssetId as string | undefined;
+    const a = id ? await getAsset(id) : null;
+    if (!a) return;
+    await this.swapImageAsset(img, a, null);
+  }
+
+  /** Insert a new layer directly beneath `img`, matching its on-canvas bounds. */
+  async addBehind(img: FabricImage, layer: { kind: 'color'; color: string } | { kind: 'blur'; amount: number } | { kind: 'asset'; asset: Asset }) {
+    let o: FabricObject;
+    const w = img.getScaledWidth();
+    const h = img.getScaledHeight();
+    if (layer.kind === 'color') {
+      o = new Rect({ width: w, height: h, fill: layer.color, angle: img.angle ?? 0 });
+      (o as any).name = 'Background colour';
+    } else if (layer.kind === 'blur') {
+      const orig = ((img as any).originalAssetId && (await assetURLById((img as any).originalAssetId))) || img.getSrc();
+      const copy = await FabricImage.fromURL(orig);
+      copy.set({ cropX: img.cropX, cropY: img.cropY, width: img.width, height: img.height, scaleX: img.scaleX, scaleY: img.scaleY, angle: img.angle ?? 0, flipX: img.flipX, flipY: img.flipY });
+      if (img.clipPath) copy.set({ clipPath: await img.clipPath.clone() } as any);
+      (copy as any).assetId = (img as any).originalAssetId ?? (img as any).assetId;
+      copy.filters = photoFilters({ ...this.photoState(img), blur: layer.amount });
+      copy.applyFilters();
+      (copy as any).name = 'Blurred background';
+      o = copy;
+    } else {
+      const bg = await FabricImage.fromURL(assetURL(layer.asset));
+      const s = Math.max(w / bg.width, h / bg.height);
+      const cw = w / s;
+      const ch = h / s;
+      bg.set({ cropX: (bg.width - cw) / 2, cropY: (bg.height - ch) / 2, width: cw, height: ch, scaleX: s, scaleY: s, angle: img.angle ?? 0 });
+      (bg as any).assetId = layer.asset.id;
+      (bg as any).name = 'Background photo';
+      o = bg;
+    }
+    (o as any).id = uid('o_');
+    o.setPositionByOrigin(img.getCenterPoint(), 'center', 'center');
+    o.setCoords();
+    const idx = this.canvas.getObjects().indexOf(img);
+    this.canvas.insertAt(Math.max(0, idx), o);
+    this.canvas.requestRenderAll();
+    this.commit();
+    this.bump();
+    return o;
+  }
+}
+
+/** Fabric filter list for a photo state: adjust → sharpen → blur. */
+function photoFilters(st: PhotoState): any[] {
+  const list: any[] = [];
+  const neutral = !st.preset && Object.values(st.adjust).every((v) => v === 0);
+  if (!neutral) list.push(new AuraAdjust({ adjust: { ...st.adjust }, preset: st.preset, amount: st.amount }));
+  if (st.sharpness > 0) {
+    const a = st.sharpness;
+    list.push(new filters.Convolute({ matrix: [0, -a, 0, -a, 1 + 4 * a, -a, 0, -a, 0] }));
+  }
+  if (st.blur > 0) list.push(new filters.Blur({ blur: st.blur }));
+  return list;
+}
+
+/** Our sharpen kernel: zero corners, equal negative edges, centre 1 + 4a (survives save/load). */
+function isSharpenKernel(m: number[]) {
+  return Array.isArray(m) && m.length === 9 && m[0] === 0 && m[2] === 0 && m[6] === 0 && m[8] === 0 && m[1] < 0 && m[1] === m[3] && m[3] === m[5] && m[5] === m[7] && Math.abs(m[4] - (1 - 4 * m[1])) < 1e-6;
 }
 
 export function isDark(color: string) {

@@ -2,10 +2,11 @@ import { FabricObject, StaticCanvas, cache, util } from 'fabric';
 import { resolveAssetSources } from './assets';
 import { ensureFontsForObjects, setFontLoadedHook } from './fonts';
 import { installEffects } from './fx';
+import './photoFilter'; // registers the AuraAdjust filter for loading saved designs
 import type { PageData, Project } from './types';
 
 /** Extra properties persisted with every object. */
-export const CUSTOM_PROPS = ['id', 'name', 'locked', 'assetId', 'shapeKind', 'fx', 'warp', 'placeholder'];
+export const CUSTOM_PROPS = ['id', 'name', 'locked', 'assetId', 'shapeKind', 'fx', 'warp', 'placeholder', 'maskKind', 'originalAssetId'];
 FabricObject.customProperties = CUSTOM_PROPS;
 installEffects();
 setFontLoadedHook((family) => cache.clearFontCache(family));

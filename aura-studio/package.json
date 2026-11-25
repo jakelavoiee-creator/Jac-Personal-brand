@@ -9,9 +9,12 @@
     "typecheck": "tsc",
     "test": "node tests/e2e.mjs && node tests/e2e-tools.mjs && node tests/e2e-stage2.mjs && node tests/e2e-stage3.mjs",
     "fonts:build": "node scripts/build-font-catalog.mjs",
-    "templates:thumbs": "node scripts/build-template-thumbs.mjs"
+    "templates:thumbs": "node scripts/build-template-thumbs.mjs",
+    "predev": "node scripts/copy-ort.mjs",
+    "prebuild": "node scripts/copy-ort.mjs"
   },
   "dependencies": {
+    "@huggingface/transformers": "^4.3.2",
     "fabric": "^7.4.0",
     "idb": "^8.0.4",
     "jspdf": "^4.2.1",

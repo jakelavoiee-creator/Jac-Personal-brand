@@ -1,4 +1,5 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
+import { NEUTRAL, PRESETS, presetPreview, type Adjust } from '../lib/photoFilter';
 import { getAsset } from '../lib/db';
 import { creditLine } from '../lib/stock';
 import type { Asset } from '../lib/types';
@@ -38,11 +39,12 @@ import {
   RotateCcw,
   Scaling,
   Columns3,
+  Scissors,
 } from 'lucide-react';
 import { ActiveSelection, FabricImage, Group, Path, Polygon, Polyline, Rect, Shadow, IText, type FabricObject } from 'fabric';
 import { toast } from '../store/app';
 import { useEngine } from './Editor';
-import { useEditor, type AlignKind } from './engine';
+import { useEditor, type AlignKind, type PhotoState } from './engine';
 import { WARPS, type Warp } from '../lib/warp';
 import { weightsFor } from '../lib/fonts';
 import { ColorField, NumberField, RangeField, Toggle } from '../ui/controls';
@@ -504,22 +506,81 @@ function ShapeProps({ o }: { o: FabricObject }) {
   );
 }
 
+const LIGHT: [keyof Adjust, string, number, number][] = [
+  ['exposure', 'Exposure', -2, 2],
+  ['contrast', 'Contrast', -1, 1],
+  ['highlights', 'Highlights', -1, 1],
+  ['shadows', 'Shadows', -1, 1],
+  ['whites', 'Whites', -1, 1],
+  ['blacks', 'Blacks', -1, 1],
+];
+const COLOR: [keyof Adjust, string, number, number][] = [
+  ['temperature', 'Temperature', -1, 1],
+  ['tint', 'Tint', -1, 1],
+  ['saturation', 'Saturation', -1, 1],
+  ['vibrance', 'Vibrance', -1, 1],
+];
+const DETAIL: [keyof Adjust, string, number, number][] = [
+  ['clarity', 'Clarity', -1, 1],
+  ['vignette', 'Vignette', -1, 1],
+  ['grain', 'Grain', 0, 1],
+];
+const MASKS: { kind: any; label: string }[] = [
+  { kind: null, label: 'None' },
+  { kind: 'ellipse', label: 'Oval' },
+  { kind: 'rounded', label: 'Rounded' },
+  { kind: 'arch', label: 'Arch' },
+  { kind: 'star', label: 'Star' },
+  { kind: 'heart', label: 'Heart' },
+  { kind: 'hexagon', label: 'Hexagon' },
+  { kind: 'diamond', label: 'Diamond' },
+];
+
 function ImageProps({ img }: { img: FabricImage }) {
   const engine = useEngine();
-  const adj = engine.imageAdjust(img);
-  const set = (k: keyof typeof adj, v: number) => engine.setImageAdjust(img, { ...adj, [k]: v });
-  const el = img.getElement() as HTMLImageElement;
-  const natural = { w: el?.naturalWidth || img.width, h: el?.naturalHeight || img.height };
+  const st = engine.photoState(img);
+  const [tab, setTab] = useState<'adjust' | 'filters' | 'mask'>('adjust');
+  const set = (patch: Partial<PhotoState>, live = false) => engine.setPhoto(img, { ...st, ...patch }, live);
+  const setAdj = (k: keyof Adjust, v: number, live: boolean) => set({ adjust: { ...st.adjust, [k]: v } }, live);
+  const orig = (img as any)._originalElement ?? img.getElement();
+  const natural = { w: orig?.naturalWidth || orig?.width || img.width, h: orig?.naturalHeight || orig?.height || img.height };
   const cropped = (img.cropX ?? 0) > 0 || (img.cropY ?? 0) > 0 || img.width < natural.w - 0.5 || img.height < natural.h - 0.5;
+  const edited = !!st.preset || st.sharpness > 0 || st.blur > 0 || Object.values(st.adjust).some((v) => v !== 0);
+  const previews = useMemo(() => {
+    const out: Record<string, string> = {};
+    if (!orig) return out;
+    try {
+      for (const p of [{ id: '' }, ...PRESETS]) out[p.id] = presetPreview(orig, natural.w, natural.h, p.id || null);
+    } catch {
+      /* cross-origin or unloaded image */
+    }
+    return out;
+  }, [orig]); // eslint-disable-line react-hooks/exhaustive-deps
+  const slider = ([k, label, min, max]: [keyof Adjust, string, number, number]) => (
+    <div key={k} className="prop-row">
+      <span>{label}</span>
+      <RangeField value={Math.round(st.adjust[k] * 100)} min={min * 100} max={max * 100} onChange={(v, live) => setAdj(k, v / 100, live)} />
+    </div>
+  );
   return (
     <div className="props-section">
       <h6>
-        Image
+        Photo
         <span className="tag" style={{ textTransform: 'none', letterSpacing: 0 }}>
           Non-destructive
         </span>
       </h6>
-      <div className="row" style={{ marginBottom: 12 }}>
+      <div className="row" style={{ marginBottom: 8 }}>
+        <button className="btn sm ai" style={{ flex: 1 }} onClick={() => engine.openImageTool('cutout', img)} disabled={(img as any).locked} data-testid="remove-bg">
+          <Scissors size={13} /> {(img as any).originalAssetId ? 'Refine cutout' : 'Remove background'}
+        </button>
+        {(img as any).originalAssetId && (
+          <button className="btn sm" onClick={() => engine.restoreOriginalImage(img)} title="Put the original pixels back">
+            Restore original
+          </button>
+        )}
+      </div>
+      <div className="row" style={{ marginBottom: 10 }}>
         <button className="btn sm" style={{ flex: 1 }} onClick={() => engine.openCrop()} disabled={(img as any).locked}>
           <Crop size={13} /> Crop
         </button>
@@ -528,31 +589,82 @@ function ImageProps({ img }: { img: FabricImage }) {
             Reset crop
           </button>
         )}
+        {edited && (
+          <button
+            className="btn sm"
+            title="Hold to see the original"
+            onPointerDown={() => engine.comparePhoto(img, true)}
+            onPointerUp={() => engine.comparePhoto(img, false)}
+            onPointerLeave={() => engine.comparePhoto(img, false)}
+          >
+            Before
+          </button>
+        )}
       </div>
-      <div className="prop-row">
-        <span>Brightness</span>
-        <RangeField value={adj.brightness} min={-1} max={1} step={0.01} precision={2} onChange={(v) => set('brightness', v)} />
+      <div className="seg" style={{ marginBottom: 10 }}>
+        <button className={tab === 'adjust' ? 'on' : ''} onClick={() => setTab('adjust')}>
+          Adjust
+        </button>
+        <button className={tab === 'filters' ? 'on' : ''} onClick={() => setTab('filters')}>
+          Filters
+        </button>
+        <button className={tab === 'mask' ? 'on' : ''} onClick={() => setTab('mask')}>
+          Mask
+        </button>
       </div>
-      <div className="prop-row">
-        <span>Contrast</span>
-        <RangeField value={adj.contrast} min={-1} max={1} step={0.01} precision={2} onChange={(v) => set('contrast', v)} />
-      </div>
-      <div className="prop-row">
-        <span>Saturation</span>
-        <RangeField value={adj.saturation} min={-1} max={1} step={0.01} precision={2} onChange={(v) => set('saturation', v)} />
-      </div>
-      <div className="prop-row">
-        <span>Blur</span>
-        <RangeField value={adj.blur} min={0} max={1} step={0.01} precision={2} onChange={(v) => set('blur', v)} />
-      </div>
-      {(adj.brightness || adj.contrast || adj.saturation || adj.blur) !== 0 && (
-        <button className="btn ghost sm" onClick={() => engine.setImageAdjust(img, { brightness: 0, contrast: 0, saturation: 0, blur: 0 })}>
-          <RotateCcw size={13} /> Reset adjustments
+      {tab === 'adjust' && (
+        <>
+          <div className="subhead">Light</div>
+          {LIGHT.map(slider)}
+          <div className="subhead">Colour</div>
+          {COLOR.map(slider)}
+          <div className="subhead">Detail & effects</div>
+          {DETAIL.map(slider)}
+          <div className="prop-row">
+            <span>Sharpness</span>
+            <RangeField value={Math.round(st.sharpness * 100)} min={0} max={100} onChange={(v, live) => set({ sharpness: v / 100 }, live)} />
+          </div>
+          <div className="prop-row">
+            <span>Blur</span>
+            <RangeField value={Math.round(st.blur * 100)} min={0} max={100} onChange={(v, live) => set({ blur: v / 100 }, live)} />
+          </div>
+        </>
+      )}
+      {tab === 'filters' && (
+        <>
+          <div className="filter-grid">
+            {[{ id: '', label: 'Original' }, ...PRESETS].map((p) => (
+              <button key={p.id} className={(st.preset ?? '') === p.id ? 'on' : ''} onClick={() => set({ preset: p.id || null, amount: st.preset ? st.amount : 1 })}>
+                {previews[p.id] ? <img src={previews[p.id]} alt="" /> : <span className="filter-ph" />}
+                <small>{p.label}</small>
+              </button>
+            ))}
+          </div>
+          {st.preset && (
+            <div className="prop-row" style={{ marginTop: 10 }}>
+              <span>Intensity</span>
+              <RangeField value={Math.round(st.amount * 100)} min={0} max={100} unit="%" onChange={(v, live) => set({ amount: v / 100 }, live)} />
+            </div>
+          )}
+        </>
+      )}
+      {tab === 'mask' && (
+        <div className="seg" style={{ flexWrap: 'wrap' }}>
+          {MASKS.map((m) => (
+            <button key={m.label} className={((img as any).maskKind ?? null) === m.kind ? 'on' : ''} style={{ flex: '1 0 30%' }} onClick={() => engine.maskImage(img, m.kind)}>
+              {m.label}
+            </button>
+          ))}
+        </div>
+      )}
+      {edited && (
+        <button className="btn ghost sm" style={{ marginTop: 8 }} onClick={() => engine.setPhoto(img, { adjust: { ...NEUTRAL }, preset: null, amount: 1, sharpness: 0, blur: 0 })}>
+          <RotateCcw size={13} /> Reset all edits
         </button>
       )}
       <PhotoCredit assetId={(img as any).assetId} />
       <p className="faint" style={{ fontSize: 11.5, margin: '8px 0 0' }}>
-        Source {natural.w}×{natural.h}. Full photo studio (exposure, curves, filters, masks) and AI tools: Stage 4.
+        Source {natural.w}×{natural.h}. Edits are stored as instructions — the original photo is never altered.
       </p>
     </div>
   );
