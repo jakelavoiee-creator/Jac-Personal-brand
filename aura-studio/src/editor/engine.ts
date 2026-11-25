@@ -160,8 +160,9 @@ interface SnapLine {
 }
 
 const HISTORY_LIMIT = 120;
-const ACCENT = '#6E8BFF';
-const GUIDE = '#FF4FA3';
+// monochrome UI from the logo: mid silver reads on both white and black artboards
+const ACCENT = '#9a9a9a';
+const GUIDE = '#d6d6d6';
 
 let checker: CanvasPattern | null = null;
 function checkerPattern(ctx: CanvasRenderingContext2D) {
@@ -224,7 +225,7 @@ export class Engine {
       controlsAboveOverlay: true,
       fireRightClick: true,
       stopContextMenu: true,
-      selectionColor: 'rgba(110,139,255,0.08)',
+      selectionColor: 'rgba(160,160,160,0.10)',
       selectionBorderColor: ACCENT,
       selectionLineWidth: 1,
       targetFindTolerance: 4,
@@ -600,14 +601,23 @@ export class Engine {
     ctx.fill('evenodd');
     ctx.beginPath();
     area.placements.forEach((p) => trace(p.design_area));
+    // dark keyline + white dashes: visible on any garment colour
+    ctx.lineWidth = 3 / z;
+    ctx.strokeStyle = 'rgba(0,0,0,.55)';
+    ctx.stroke();
     ctx.setLineDash([6 / z, 5 / z]);
     ctx.lineWidth = 1.5 / z;
-    ctx.strokeStyle = '#8b6cff';
+    ctx.strokeStyle = '#ffffff';
     ctx.stroke();
     ctx.setLineDash([]);
     ctx.font = `600 ${11 / z}px Inter, system-ui, sans-serif`;
-    ctx.fillStyle = '#8b6cff';
-    area.placements.forEach((p) => ctx.fillText(p.title, p.design_area.left * k, p.design_area.top * k - 6 / z));
+    ctx.lineWidth = 3 / z;
+    ctx.strokeStyle = 'rgba(0,0,0,.7)';
+    ctx.fillStyle = '#ffffff';
+    area.placements.forEach((p) => {
+      ctx.strokeText(p.title, p.design_area.left * k, p.design_area.top * k - 6 / z);
+      ctx.fillText(p.title, p.design_area.left * k, p.design_area.top * k - 6 / z);
+    });
     ctx.restore();
   }
 
@@ -660,7 +670,7 @@ export class Engine {
         ctx.moveTo(0, y);
         ctx.lineTo(width, y);
       }
-      ctx.strokeStyle = 'rgba(110,139,255,0.35)';
+      ctx.strokeStyle = 'rgba(160,160,160,0.35)';
       ctx.lineWidth = 1 / z;
       ctx.stroke();
     }
@@ -712,14 +722,18 @@ export class Engine {
       ctx.save();
       ctx.lineWidth = 1.2 / z;
       pts.forEach((q, i) => {
-        ctx.strokeStyle = i ? 'rgba(139,108,255,.55)' : '#ffffff';
         ctx.beginPath();
         ctx.arc(q.x, q.y, r, 0, Math.PI * 2);
+        ctx.lineWidth = 3 / z;
+        ctx.strokeStyle = 'rgba(0,0,0,.5)';
+        ctx.stroke();
+        ctx.lineWidth = 1.2 / z;
+        ctx.strokeStyle = i ? 'rgba(255,255,255,.5)' : '#ffffff';
         ctx.stroke();
       });
       if (st.symmetry !== 'none') {
         ctx.setLineDash([6 / z, 6 / z]);
-        ctx.strokeStyle = 'rgba(139,108,255,.6)';
+        ctx.strokeStyle = 'rgba(200,200,200,.6)';
         ctx.beginPath();
         if (st.symmetry === 'x' || st.symmetry === 'quad' || st.symmetry === 'radial') (ctx.moveTo(cx, 0), ctx.lineTo(cx, this.project.height));
         if (st.symmetry === 'y' || st.symmetry === 'quad' || st.symmetry === 'radial') (ctx.moveTo(0, cy), ctx.lineTo(this.project.width, cy));
@@ -782,6 +796,13 @@ export class Engine {
           ctx.lineTo(l.to, l.pos);
         }
       }
+      // dark keyline under the silver guide so it shows on white and black pages
+      const lw = ctx.lineWidth;
+      ctx.lineWidth = lw * 3;
+      ctx.strokeStyle = 'rgba(0,0,0,.45)';
+      ctx.stroke();
+      ctx.lineWidth = lw;
+      ctx.strokeStyle = GUIDE;
       ctx.stroke();
     }
     ctx.restore();

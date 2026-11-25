@@ -21,7 +21,8 @@ import { getAsset, putAsset } from '../../lib/db';
 import { uid } from '../../lib/ids';
 import type { Asset } from '../../lib/types';
 
-const PAINT = '#7c5cff';
+// mask overlay = Photoshop quick-mask red (marks the area that will change)
+const PAINT = '#ff3d5f';
 type Box = { x: number; y: number; w: number; h: number };
 
 const canvasOf = (w: number, h: number) => {
@@ -147,7 +148,10 @@ export default function GenEditDialog() {
       x.drawImage(f, ox + (W - ox * 2 - f.width) / 2, oy + (H - oy * 2 - f.height) / 2);
     } else x.drawImage(current(), ox, oy);
     if (kind === 'expand' && ox + oy > 0) {
-      x.strokeStyle = 'rgba(124,92,255,.9)';
+      x.lineWidth = Math.max(4, W / 220);
+      x.strokeStyle = 'rgba(0,0,0,.5)';
+      x.strokeRect(ox, oy, size.w, size.h);
+      x.strokeStyle = '#ffffff';
       x.lineWidth = Math.max(2, W / 400);
       x.setLineDash([W / 80, W / 120]);
       x.strokeRect(ox, oy, size.w, size.h);
@@ -182,7 +186,7 @@ export default function GenEditDialog() {
       const m = await predictMask(current(), 'general');
       const ctx = strokes.current.getContext('2d')!;
       const d = ctx.createImageData(size.w, size.h);
-      const [r, g, b] = [124, 92, 255];
+      const [r, g, b] = [255, 61, 95];
       for (let i = 0; i < size.w * size.h; i++) {
         const a = m.data[i * 4 + 3];
         const v = part === 'background' ? 255 - a : a;

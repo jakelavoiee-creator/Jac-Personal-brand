@@ -151,12 +151,17 @@ export async function renderPiece(cat: TsCatalog, piece: string, colorId: string
 
   if (o.outlines) {
     ctx.save();
-    ctx.setLineDash([S / 120, S / 160]);
-    ctx.lineWidth = Math.max(1.5, S / 500);
-    ctx.strokeStyle = 'rgba(124,92,255,.95)';
+    // dark keyline + white dashes (monochrome UI, visible on any garment colour)
     placements.forEach((p) => {
       ctx.beginPath();
       boxPath(ctx, p.design_area, k);
+      ctx.setLineDash([]);
+      ctx.lineWidth = Math.max(3, S / 260);
+      ctx.strokeStyle = 'rgba(0,0,0,.5)';
+      ctx.stroke();
+      ctx.setLineDash([S / 120, S / 160]);
+      ctx.lineWidth = Math.max(1.5, S / 500);
+      ctx.strokeStyle = '#ffffff';
       ctx.stroke();
     });
     ctx.restore();
