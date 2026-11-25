@@ -207,6 +207,14 @@ function ObjectProps({ o }: { o: FabricObject }) {
         {locked && <p className="faint" style={{ fontSize: 11.5, margin: '8px 0 0' }}>Locked — unlock to move or edit.</p>}
       </div>
 
+      {!multi && (o as any).placeholder && (
+        <div className="props-section">
+          <h6>Photo frame</h6>
+          <p className="faint" style={{ fontSize: 12, margin: 0 }}>
+            With this frame selected, click any image in Uploads or Photos — it fills the frame (cover-cropped). Re-crop it anytime.
+          </p>
+        </div>
+      )}
       {!multi && <Geometry o={o} disabled={locked} />}
       <Arrange multi={multi} count={objs.length} />
       {texts.length > 0 && <TextProps t={texts[0]} multi={multi} />}

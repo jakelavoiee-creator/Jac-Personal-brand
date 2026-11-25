@@ -1,10 +1,12 @@
 import { openDB, type DBSchema, type IDBPDatabase } from 'idb';
-import type { Asset, Folder, Project } from './types';
+import type { Asset, BrandKit, Folder, Project, UserTemplate } from './types';
 
 interface AuraDB extends DBSchema {
   projects: { key: string; value: Project; indexes: { updatedAt: number } };
   assets: { key: string; value: Asset; indexes: { createdAt: number } };
   folders: { key: string; value: Folder };
+  templates: { key: string; value: UserTemplate };
+  brands: { key: string; value: BrandKit };
 }
 
 let dbp: Promise<IDBPDatabase<AuraDB>> | null = null;
@@ -14,14 +16,21 @@ const LEGACY_DB = 'verso-studio'; // the app's pre-rename database
 export function db() {
   if (!dbp) {
     let fresh = false;
-    dbp = openDB<AuraDB>('aura-studio', 1, {
-      upgrade(d) {
-        fresh = true;
-        const p = d.createObjectStore('projects', { keyPath: 'id' });
-        p.createIndex('updatedAt', 'updatedAt');
-        const a = d.createObjectStore('assets', { keyPath: 'id' });
-        a.createIndex('createdAt', 'createdAt');
-        d.createObjectStore('folders', { keyPath: 'id' });
+    dbp = openDB<AuraDB>('aura-studio', 2, {
+      upgrade(d, oldVersion) {
+        if (oldVersion < 1) {
+          fresh = true;
+          const p = d.createObjectStore('projects', { keyPath: 'id' });
+          p.createIndex('updatedAt', 'updatedAt');
+          const a = d.createObjectStore('assets', { keyPath: 'id' });
+          a.createIndex('createdAt', 'createdAt');
+          d.createObjectStore('folders', { keyPath: 'id' });
+        }
+        if (oldVersion < 2) {
+          // Stage 3: saved templates and brand kits
+          d.createObjectStore('templates', { keyPath: 'id' });
+          d.createObjectStore('brands', { keyPath: 'id' });
+        }
       },
     }).then(async (d) => {
       if (fresh) await migrateLegacy(d).catch((e) => console.warn('legacy migration skipped', e));
@@ -96,4 +105,29 @@ export async function putFolder(f: Folder) {
 }
 export async function deleteFolder(id: string) {
   await (await db()).delete('folders', id);
+}
+
+/* ---------- user templates ---------- */
+export async function listUserTemplates(): Promise<UserTemplate[]> {
+  return (await (await db()).getAll('templates')).sort((a, b) => b.createdAt - a.createdAt);
+}
+export async function putUserTemplate(t: UserTemplate) {
+  await (await db()).put('templates', t);
+}
+export async function deleteUserTemplate(id: string) {
+  await (await db()).delete('templates', id);
+}
+
+/* ---------- brand kits ---------- */
+export async function listBrands(): Promise<BrandKit[]> {
+  return (await (await db()).getAll('brands')).sort((a, b) => a.createdAt - b.createdAt);
+}
+export async function getBrand(id: string) {
+  return (await db()).get('brands', id);
+}
+export async function putBrand(b: BrandKit) {
+  await (await db()).put('brands', { ...b, updatedAt: Date.now() });
+}
+export async function deleteBrand(id: string) {
+  await (await db()).delete('brands', id);
 }

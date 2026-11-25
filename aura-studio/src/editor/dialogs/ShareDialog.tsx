@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { ClipboardCopy, FileDown, Link } from 'lucide-react';
+import { ClipboardCopy, FileDown, LayoutTemplate, Link } from 'lucide-react';
 import { useEngine } from '../Editor';
 import { useEditor } from '../engine';
 import { renderPage } from '../../lib/render';
@@ -52,6 +52,22 @@ export default function ShareDialog({ onClose }: { onClose: () => void }) {
         </button>
         <button className="btn block" style={{ justifyContent: 'flex-start', height: 44 }} onClick={projectFile} disabled={busy}>
           <FileDown size={15} /> Download editable project file (.aura.json, images embedded)
+        </button>
+        <button
+          className="btn block"
+          style={{ justifyContent: 'flex-start', height: 44 }}
+          disabled={busy}
+          onClick={async () => {
+            const name = prompt('Template name', project.title);
+            if (!name) return;
+            await engine.saveNow();
+            const { saveProjectAsTemplate } = await import('../../templates');
+            await saveProjectAsTemplate(engine.project, name);
+            toast(`Saved “${name}” to My templates`, 'success');
+            onClose();
+          }}
+        >
+          <LayoutTemplate size={15} /> Save as reusable template
         </button>
         <button className="btn block" style={{ justifyContent: 'flex-start', height: 44 }} disabled title="Requires optional cloud sync">
           <Link size={15} /> Share link <span className="tag soon" style={{ marginLeft: 'auto' }}>Stage 3 · optional Supabase sync</span>

@@ -50,7 +50,11 @@ export class UploadError extends Error {}
 export async function importFile(file: File): Promise<Asset> {
   const isSvg = file.type === 'image/svg+xml' || file.name.toLowerCase().endsWith('.svg');
   if (file.type === 'application/pdf' || file.name.toLowerCase().endsWith('.pdf')) {
-    throw new UploadError(`${file.name}: PDF import arrives in Stage 3 (needs the pdf.js renderer).`);
+    // each page becomes its own image asset; the first is returned
+    const { importPdf } = await import('./pdf');
+    const pages = await importPdf(file);
+    if (!pages.length) throw new UploadError(`${file.name}: this PDF has no pages.`);
+    return pages[0];
   }
   if (!isSvg && !/^image\/(png|jpe?g|webp|gif)$/.test(file.type)) {
     throw new UploadError(`${file.name}: unsupported type. Use PNG, JPG, WEBP, GIF or SVG.`);

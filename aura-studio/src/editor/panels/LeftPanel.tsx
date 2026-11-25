@@ -24,12 +24,15 @@ import {
   Square,
   Group as GroupIcon,
   PenTool,
+  Palette,
   Pencil,
 } from 'lucide-react';
 import { ActiveSelection, FabricImage, Group, IText, type FabricObject } from 'fabric';
 import { useEngine } from '../Editor';
 import FontsPanel from './FontsPanel';
 import GraphicsPanel from './GraphicsPanel';
+import BrandPanel from './BrandPanel';
+import TemplatesPanel from './TemplatesPanel';
 import { isDark, useEditor } from '../engine';
 import { SHAPES, shapePath } from '../shapes';
 import { ensureFont } from '../../lib/fonts';
@@ -56,10 +59,12 @@ type PanelId =
   | 'textures'
   | 'ai'
   | 'mockups'
-  | 'layers';
+  | 'layers'
+  | 'brand';
 
 const RAIL: { id: PanelId; label: string; icon: any; soon?: string }[] = [
-  { id: 'templates', label: 'Templates', icon: LayoutTemplate, soon: 'Stage 3' },
+  { id: 'templates', label: 'Templates', icon: LayoutTemplate },
+  { id: 'brand', label: 'Brand', icon: Palette },
   { id: 'elements', label: 'Elements', icon: Shapes },
   { id: 'text', label: 'Text', icon: Type },
   { id: 'fonts', label: 'Fonts', icon: CaseSensitive },
@@ -75,7 +80,6 @@ const RAIL: { id: PanelId; label: string; icon: any; soon?: string }[] = [
 ];
 
 const SOON: Record<string, { title: string; body: string; items: string[] }> = {
-  templates: { title: 'Editable templates', body: 'Layered, fully editable compositions arrive in Stage 3, along with “save as template”.', items: ['Streetwear & apparel', 'Vintage typography', 'Editorial posters & album covers', 'Social carousels & ads'] },
   photos: { title: 'Stock photos', body: 'A free stock photo search (openly licensed sources) arrives in Stage 3. Upload your own photos today.', items: ['Search by keyword', 'License info per photo'] },
   ai: { title: 'AI tools', body: 'Stage 4. Background removal will run locally in the browser (free); generation & generative fill will use provider keys from Settings. Nothing here is simulated.', items: ['Background remover (local ONNX)', 'Magic eraser', 'Generative fill & expand', 'Text-to-image'] },
   mockups: { title: 'Mockup studio', body: 'Stage 5: garment templates (front/back), packaging and lifestyle mockups.', items: ['T-shirts, hoodies, caps', 'Packaging & posters', 'Your own product photos'] },
@@ -114,6 +118,8 @@ export default function LeftPanel() {
               {open === 'backgrounds' && <BackgroundsPanel />}
               {open === 'layers' && <LayersPanel />}
               {open === 'textures' && <TexturesPanel />}
+              {open === 'brand' && <BrandPanel />}
+              {open === 'templates' && <TemplatesPanel />}
               {open === 'graphics' && <GraphicsPanel />}
               {open === 'illustrations' && <GraphicsPanel illustrations />}
               {SOON[open] && <SoonPanel id={open} stage={RAIL.find((r) => r.id === open)!.soon!} />}

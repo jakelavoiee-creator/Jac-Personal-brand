@@ -45,14 +45,17 @@ import { timeAgo, uid } from '../lib/ids';
 import type { Asset, Folder, Project } from '../lib/types';
 import { Modal, PopMenu, type MenuItem } from '../ui/controls';
 import SettingsView from './Settings';
+import BrandsView from './Brands';
+import TemplatesView from './Templates';
+import { TEMPLATES, templateThumb, projectFromTemplate } from '../templates';
 
 const NAV: { id: Route['name']; label: string; icon: any; stage?: string }[] = [
   { id: 'home', label: 'Home', icon: HomeIcon },
   { id: 'projects', label: 'Projects', icon: Shapes },
-  { id: 'templates', label: 'Templates', icon: LayoutTemplate, stage: 'S3' },
+  { id: 'templates', label: 'Templates', icon: LayoutTemplate },
   { id: 'discover', label: 'Discover', icon: Compass, stage: 'S3' },
   { id: 'ai', label: 'AI Studio', icon: Bot, stage: 'S4' },
-  { id: 'brands', label: 'Brand Kits', icon: Palette, stage: 'S3' },
+  { id: 'brands', label: 'Brand Kits', icon: Palette },
   { id: 'assets', label: 'Assets', icon: ImageIcon },
   { id: 'favorites', label: 'Favorites', icon: Star },
   { id: 'trash', label: 'Trash', icon: Trash2 },
@@ -180,6 +183,12 @@ export default function Dashboard({ route }: { route: Route }) {
       break;
     case 'settings':
       body = <SettingsView />;
+      break;
+    case 'brands':
+      body = <BrandsView />;
+      break;
+    case 'templates':
+      body = <TemplatesView query={q} />;
       break;
     default:
       body = <Roadmap kind={route.name} />;
@@ -319,6 +328,8 @@ function Home(props: {
         </section>
       )}
 
+      {!props.query && <TemplateTeaser />}
+
       <section className="section">
         <div className="section-head">
           <h2>{props.query ? `Results for “${props.query}”` : 'Recent designs'}</h2>
@@ -374,6 +385,15 @@ function ProjectGrid(props: { projects: Project[]; folders: Folder[]; onOpen: (p
     },
     { label: p.favorite ? 'Remove from favorites' : 'Add to favorites', icon: <Star size={14} />, onClick: () => update(p, { favorite: !p.favorite }) },
     { label: 'Move to folder…', icon: <FolderInput size={14} />, onClick: () => setMoving(p) },
+    {
+      label: 'Save as template',
+      icon: <LayoutTemplate size={14} />,
+      onClick: async () => {
+        const { saveProjectAsTemplate } = await import('../templates');
+        await saveProjectAsTemplate(p, p.title);
+        toast(`Saved “${p.title}” to My templates`, 'success');
+      },
+    },
     { sep: true },
     {
       label: 'Move to trash',
@@ -620,19 +640,31 @@ function TrashView({ projects, refresh }: { projects: Project[]; refresh: () => 
 
 function AssetsView({ query, onUpload }: { query: string; onUpload: () => void }) {
   const [assets, setAssets] = useState<Asset[]>([]);
-  const [filter, setFilter] = useState<'all' | 'fav' | 'svg'>('all');
+  const [folders, setFolders] = useState<Folder[]>([]);
+  const [filter, setFilter] = useState<string>('all');
   const [renaming, setRenaming] = useState<Asset | null>(null);
-  const refresh = () => listAssets().then((l) => setAssets(l.filter((a) => a.type.startsWith('image/'))));
+  const [moving, setMoving] = useState<Asset | null>(null);
+  const [creating, setCreating] = useState(false);
+  const refresh = async () => {
+    const [a, f] = await Promise.all([listAssets(), listFolders('asset')]);
+    setAssets(a.filter((x) => x.type.startsWith('image/')));
+    setFolders(f);
+  };
   useEffect(() => {
     refresh();
     const t = setInterval(refresh, 1500); // picks up uploads dropped onto the page
     return () => clearInterval(t);
   }, []);
+  const week = Date.now() - 7 * 864e5;
   let list = assets;
   if (query) list = list.filter((a) => a.name.toLowerCase().includes(query));
-  if (filter === 'fav') list = list.filter((a) => a.favorite);
-  if (filter === 'svg') list = list.filter((a) => a.type === 'image/svg+xml');
+  if (filter === 'recent') list = list.filter((a) => a.createdAt > week);
+  else if (filter === 'fav') list = list.filter((a) => a.favorite);
+  else if (filter === 'svg') list = list.filter((a) => a.type === 'image/svg+xml');
+  else if (filter === 'stock') list = list.filter((a) => a.credit);
+  else if (filter.startsWith('f_')) list = list.filter((a) => a.folderId === filter);
   const total = assets.reduce((s, a) => s + a.size, 0);
+  const folder = folders.find((f) => f.id === filter);
   return (
     <>
       <div className="section-head">
@@ -642,18 +674,47 @@ function AssetsView({ query, onUpload }: { query: string; onUpload: () => void }
         </span>
       </div>
       <div className="folder-chips">
-        {(['all', 'fav', 'svg'] as const).map((f) => (
-          <button key={f} className={`tab ${filter === f ? 'on' : ''}`} onClick={() => setFilter(f)}>
-            {f === 'all' ? 'All uploads' : f === 'fav' ? 'Favorites' : 'Vectors (SVG)'}
+        {[
+          ['all', 'All uploads'],
+          ['recent', 'Recently uploaded'],
+          ['fav', 'Favorites'],
+          ['svg', 'Vectors (SVG)'],
+          ['stock', 'Stock photos'],
+        ].map(([id, label]) => (
+          <button key={id} className={`tab ${filter === id ? 'on' : ''}`} onClick={() => setFilter(id)}>
+            {label}
           </button>
         ))}
+        {folders.map((f) => (
+          <button key={f.id} className={`tab ${filter === f.id ? 'on' : ''}`} onClick={() => setFilter(f.id)}>
+            <FolderIcon size={12} style={{ marginRight: 5, verticalAlign: -1 }} />
+            {f.name}
+          </button>
+        ))}
+        {folder && (
+          <button
+            className="icon-btn sm"
+            title="Delete folder (files are kept)"
+            onClick={async () => {
+              for (const a of assets.filter((a) => a.folderId === folder.id)) await putAsset({ ...a, folderId: null });
+              await deleteFolder(folder.id);
+              setFilter('all');
+              refresh();
+            }}
+          >
+            <X size={13} />
+          </button>
+        )}
+        <button className="btn ghost sm" onClick={() => setCreating(true)}>
+          <FolderPlus size={14} /> New folder
+        </button>
         <button className="btn ghost sm" onClick={onUpload}>
           <Upload size={14} /> Upload
         </button>
       </div>
       {!list.length ? (
         <div className="empty">
-          <b>No assets.</b>Upload PNG, JPG, WEBP, GIF or SVG files — or drop them anywhere on this page. They’re reusable in every design.
+          <b>No assets here.</b>Upload PNG, JPG, WEBP, GIF, SVG or PDF files — or drop them anywhere on this page. They’re reusable in every design.
         </div>
       ) : (
         <div className="cards" style={{ gridTemplateColumns: 'repeat(auto-fill, minmax(160px, 1fr))' }}>
@@ -668,13 +729,26 @@ function AssetsView({ query, onUpload }: { query: string; onUpload: () => void }
               <div className="card-meta">
                 <div style={{ minWidth: 0 }}>
                   <b>{a.name}</b>
-                  <small>
-                    {a.width}×{a.height} · {a.type.split('/')[1].replace('svg+xml', 'svg').toUpperCase()}
+                  <small title={a.credit ? `${a.credit.author ?? 'Unknown'} · ${a.credit.license} · ${a.credit.source}` : undefined}>
+                    {a.width}×{a.height} · {a.credit ? a.credit.license : a.type.split('/')[1].replace('svg+xml', 'svg').toUpperCase()}
                   </small>
                 </div>
                 <div className="row" style={{ gap: 0 }}>
                   <button className="icon-btn sm" title="Rename" onClick={() => setRenaming(a)}>
                     <Pencil size={13} />
+                  </button>
+                  <button className="icon-btn sm" title="Move to folder" onClick={() => setMoving(a)}>
+                    <FolderInput size={13} />
+                  </button>
+                  <button
+                    className="icon-btn sm"
+                    title="Duplicate"
+                    onClick={async () => {
+                      await putAsset({ ...a, id: uid('a_'), name: `${a.name} copy`, createdAt: Date.now() });
+                      refresh();
+                    }}
+                  >
+                    <Copy size={13} />
                   </button>
                   <button
                     className="icon-btn sm"
@@ -705,6 +779,34 @@ function AssetsView({ query, onUpload }: { query: string; onUpload: () => void }
             refresh();
           }}
         />
+      )}
+      {creating && (
+        <PromptDialog
+          title="New asset folder"
+          initial=""
+          placeholder="Folder name"
+          onClose={() => setCreating(false)}
+          onSubmit={async (v) => {
+            if (v) await putFolder({ id: uid('f_'), name: v, kind: 'asset', createdAt: Date.now() });
+            setCreating(false);
+            refresh();
+          }}
+        />
+      )}
+      {moving && (
+        <Modal title="Move to folder" onClose={() => setMoving(null)}>
+          <div style={{ display: 'grid', gap: 4 }}>
+            <button className={`nav-item ${!moving.folderId ? 'on' : ''}`} onClick={async () => (await putAsset({ ...moving, folderId: null }), setMoving(null), refresh())}>
+              <ImageIcon size={15} /> No folder
+            </button>
+            {folders.map((f) => (
+              <button key={f.id} className={`nav-item ${moving.folderId === f.id ? 'on' : ''}`} onClick={async () => (await putAsset({ ...moving, folderId: f.id }), setMoving(null), refresh())}>
+                <FolderIcon size={15} /> {f.name}
+              </button>
+            ))}
+            {!folders.length && <p className="muted">No folders yet — create one with “New folder”.</p>}
+          </div>
+        </Modal>
       )}
     </>
   );
@@ -875,5 +977,43 @@ function NewDesignDialog(props: { onClose: () => void; onCreate: (o: { title: st
         {valid && mp > 60 ? ' — very large; editing and export may be slow on some devices.' : ''}
       </p>
     </Modal>
+  );
+}
+
+const FEATURED = ['sw-winged-crest', 'lx-monogram', 'ed-swiss', 'al-midnight-drive', 'rt-diner', 'so-story-sale', 'vt-garage', 'mb-brand-board'];
+
+function TemplateTeaser() {
+  const [busy, setBusy] = useState<string | null>(null);
+  return (
+    <section className="section">
+      <div className="section-head">
+        <h2>Start from a template</h2>
+        <button className="btn ghost sm" onClick={() => navigate({ name: 'templates' })}>
+          Browse all {TEMPLATES.length}
+        </button>
+      </div>
+      <div className="tpl-strip">
+        {FEATURED.map((id) => TEMPLATES.find((t) => t.id === id)!).map((t) => (
+          <button
+            key={t.id}
+            className="tpl-strip-item"
+            title={t.name}
+            disabled={!!busy}
+            onClick={async () => {
+              setBusy(t.id);
+              try {
+                navigate({ name: 'editor', id: (await projectFromTemplate(t)).id });
+              } catch (e: any) {
+                toast(e?.message ?? 'Could not open template', 'error');
+                setBusy(null);
+              }
+            }}
+          >
+            <img src={templateThumb(t)} alt={t.name} loading="lazy" />
+            <small>{busy === t.id ? 'Opening…' : t.name}</small>
+          </button>
+        ))}
+      </div>
+    </section>
   );
 }

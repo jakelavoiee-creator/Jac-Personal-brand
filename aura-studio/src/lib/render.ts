@@ -5,7 +5,7 @@ import { installEffects } from './fx';
 import type { PageData, Project } from './types';
 
 /** Extra properties persisted with every object. */
-export const CUSTOM_PROPS = ['id', 'name', 'locked', 'assetId', 'shapeKind', 'fx', 'warp'];
+export const CUSTOM_PROPS = ['id', 'name', 'locked', 'assetId', 'shapeKind', 'fx', 'warp', 'placeholder'];
 FabricObject.customProperties = CUSTOM_PROPS;
 installEffects();
 setFontLoadedHook((family) => cache.clearFontCache(family));
@@ -38,6 +38,8 @@ export interface RenderOptions {
   format: RasterFormat;
   quality?: number;
   transparent?: boolean;
+  /** extra artwork area around the page, in document px (print bleed) */
+  bleed?: number;
 }
 
 /**
@@ -45,13 +47,14 @@ export interface RenderOptions {
  * final size only (no oversized intermediate), so large print docs stay cheap.
  */
 export async function renderPage(project: Pick<Project, 'width' | 'height'>, page: PageData, opts: RenderOptions) {
-  const w = Math.max(1, Math.round(project.width * opts.scale));
-  const h = Math.max(1, Math.round(project.height * opts.scale));
+  const b = opts.bleed ?? 0;
+  const w = Math.max(1, Math.round((project.width + b * 2) * opts.scale));
+  const h = Math.max(1, Math.round((project.height + b * 2) * opts.scale));
   const el = document.createElement('canvas');
   const sc = new StaticCanvas(el, { width: w, height: h, enableRetinaScaling: false, renderOnAddRemove: false });
   const objs = await enliven(page.objects);
   objs.forEach((o) => sc.add(o));
-  sc.setViewportTransform([opts.scale, 0, 0, opts.scale, 0, 0]);
+  sc.setViewportTransform([opts.scale, 0, 0, opts.scale, b * opts.scale, b * opts.scale]);
   const keepAlpha = opts.transparent && opts.format !== 'jpeg';
   const bg = page.background;
   if (!keepAlpha) sc.backgroundColor = bg ?? (opts.format === 'jpeg' ? '#ffffff' : '');

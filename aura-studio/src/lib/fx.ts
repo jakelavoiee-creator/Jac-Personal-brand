@@ -75,6 +75,12 @@ function anyFx(g: Group): boolean {
 
 const rad = (d: number) => (d * Math.PI) / 180;
 
+/** How far (local units) an object's effects can reach beyond its own bounds. */
+export function fxPad(o: any) {
+  if (!hasFx(o)) return 0;
+  return extent(o.fx) + (o.path ? o.fontSize * (o.lineHeight ?? 1.16) * 1.2 : 0);
+}
+
 function extent(fx: FX) {
   let e = 2;
   const add = (v: number) => (e = Math.max(e, v));

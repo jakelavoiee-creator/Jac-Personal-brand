@@ -10,6 +10,7 @@ import {
   Point,
   Polygon,
   Polyline,
+  Rect,
   controlsUtils,
   Shadow,
   Textbox,
@@ -25,7 +26,7 @@ import { assetURL } from '../lib/assets';
 import { ensureFont } from '../lib/fonts';
 import { CUSTOM_PROPS, applyLock, enliven, renderThumb } from '../lib/render';
 import { newPage } from '../lib/projects';
-import type { Asset, PageData, Project } from '../lib/types';
+import type { Asset, BrandFont, BrandKit, PageData, Project } from '../lib/types';
 import { makeShape, type ShapeKind } from './shapes';
 import type { FX } from '../lib/fx';
 import { warpPath, type Warp } from '../lib/warp';
@@ -967,10 +968,14 @@ export class Engine {
       textAlign: (preset.align as any) ?? 'center',
       charSpacing: preset.letterSpacing ?? 0,
       lineHeight: 1.1,
-      // estimate the single-line width, including tracking, so short lines don't wrap
-      width: Math.min(W * 0.9, Math.max(fontSize * preset.text.length * (0.62 + (preset.letterSpacing ?? 0) / 1000), fontSize * 2)),
+      width: W * 0.9,
       splitByGrapheme: false,
     });
+    // size the box to the real rendered line (with tracking) so single lines never wrap
+    t.initDimensions();
+    const natural = Math.max(...(t as any)._textLines.map((_: any, i: number) => t.getLineWidth(i)));
+    t.set({ width: Math.min(W * 0.9, Math.max(natural + fontSize * 0.1, fontSize * 2)) });
+    t.initDimensions();
     return this.addObject(t, { at, fit: 0.9, name: preset.name ?? (preset.size >= 80 ? 'Heading' : preset.size >= 40 ? 'Subheading' : 'Text') });
   }
 
@@ -987,6 +992,81 @@ export class Engine {
     if (!valid.length) throw new Error('This SVG contains no drawable shapes.');
     const g = util.groupSVGElements(valid, options);
     return this.addObject(g, { at, name, fit });
+  }
+
+  /* ---------------- brand kits ---------------- */
+
+  /** Text role by relative size: top tier → heading, middle → subheading, rest → body. */
+  private textRoles() {
+    const texts = this.canvas.getObjects().filter((o) => o instanceof IText) as IText[];
+    const size = (t: IText) => t.fontSize * Math.max(t.scaleX ?? 1, t.scaleY ?? 1);
+    const max = Math.max(0, ...texts.map(size));
+    return texts.map((t) => ({ t, role: (size(t) >= max * 0.6 ? 'heading' : size(t) >= max * 0.32 ? 'subheading' : 'body') as 'heading' | 'subheading' | 'body' }));
+  }
+
+  private async fontProps(f: BrandFont, t?: IText) {
+    const { findFont, closestWeight } = await import('../lib/fontCatalog');
+    const w = closestWeight(findFont(f.family)?.weights ?? [f.weight], f.weight);
+    await ensureFont(f.family, w);
+    const props: Record<string, any> = { fontFamily: f.family, fontWeight: w };
+    if (f.tracking !== undefined) props.charSpacing = f.tracking;
+    if (t && f.caps) props.text = t.text.toUpperCase();
+    return props;
+  }
+
+  async applyBrandFonts(brand: BrandKit, scope: 'selection' | 'design' = 'design') {
+    const sel = new Set(this.canvas.getActiveObjects());
+    const roles = this.textRoles().filter(({ t }) => scope === 'design' || sel.has(t));
+    if (!roles.length) return 0;
+    for (const { t, role } of roles) {
+      const wasSingle = t instanceof Textbox && (t as any)._textLines?.length === 1 && !String(t.text).includes('\n');
+      t.set(await this.fontProps(brand.fonts[role], t));
+      if ((t as any).warp) this.applyWarp(t);
+      else t.initDimensions();
+      if (wasSingle) this.refitSingleLine(t as Textbox);
+      t.setCoords();
+    }
+    this.canvas.requestRenderAll();
+    this.commit();
+    return roles.length;
+  }
+
+  async addBrandText(brand: BrandKit, role: 'heading' | 'subheading' | 'body') {
+    const f = brand.fonts[role];
+    const sample = { heading: brand.name, subheading: 'Subheading', body: 'Body copy in your brand voice.' }[role];
+    const primary = brand.colors.find((c) => c.role === 'primary')?.hex;
+    await this.addText({ text: f.caps ? sample.toUpperCase() : sample, fontFamily: f.family, fontWeight: f.weight, size: role === 'heading' ? 110 : role === 'subheading' ? 48 : 30, letterSpacing: f.tracking, fill: primary, name: role[0].toUpperCase() + role.slice(1) });
+  }
+
+  /** Map the design's colours (by prominence) onto the brand palette (by role order). */
+  applyBrandColors(brand: BrandKit) {
+    const order = ['primary', 'secondary', 'accent', 'neutral'];
+    const palette = [...brand.colors].sort((a, b) => order.indexOf(a.role) - order.indexOf(b.role)).map((c) => c.hex.toLowerCase());
+    if (!palette.length) return 0;
+    const counts = new Map<string, number>();
+    const objs = this.canvas.getObjects();
+    for (const o of objs) {
+      const area = Math.max(1, o.getScaledWidth() * o.getScaledHeight());
+      for (const c of this.colorsOf(o)) counts.set(c, (counts.get(c) ?? 0) + area);
+    }
+    const ranked = [...counts.entries()].sort((a, b) => b[1] - a[1]).map(([c]) => c);
+    const neutral = brand.colors.find((c) => c.role === 'neutral')?.hex;
+    const map = new Map(ranked.map((c, i) => [c, palette[i % palette.length]]));
+    // one lookup per colour value — sequential replacement would cascade (A→B, then B→C)
+    const walk = (x: FabricObject) => {
+      if (x instanceof Group) return x.getObjects().forEach(walk);
+      for (const k of ['fill', 'stroke'] as const) {
+        const v = (x as any)[k];
+        if (typeof v === 'string' && map.has(v.toLowerCase())) x.set(k, map.get(v.toLowerCase()));
+      }
+      (x as any).__fxCache = undefined;
+      x.dirty = true;
+    };
+    objs.forEach(walk);
+    if (this.page.background && neutral) this.page.background = neutral;
+    this.canvas.requestRenderAll();
+    this.commit();
+    return map.size;
   }
 
   /** Every distinct solid fill/stroke colour inside an object (recursing into groups). */
@@ -1029,7 +1109,34 @@ export class Engine {
     if (asset.type === 'image/svg+xml') return this.addSVG(await asset.blob.text(), asset.name, at);
     const img = await FabricImage.fromURL(assetURL(asset));
     (img as any).assetId = asset.id;
+    const frame = this.active();
+    if (!at && frame && (frame as any).placeholder) return this.fillFrame(frame, img, asset.name);
     return this.addObject(img, { at, fit: 0.8, name: asset.name });
+  }
+
+  /** Fill a template photo frame: cover-crop the image to the frame and take its place. */
+  private fillFrame(frame: FabricObject, img: FabricImage, name: string) {
+    const fw = frame.getScaledWidth();
+    const fh = frame.getScaledHeight();
+    const iw = img.width;
+    const ih = img.height;
+    const s = Math.max(fw / iw, fh / ih);
+    const cw = fw / s;
+    const ch = fh / s;
+    img.set({ cropX: (iw - cw) / 2, cropY: (ih - ch) / 2, width: cw, height: ch, scaleX: s, scaleY: s, angle: frame.angle ?? 0 });
+    if ((frame as any).rx) img.set({ clipPath: new Rect({ width: cw, height: ch, rx: (frame as any).rx / s, ry: (frame as any).ry / s, originX: 'center', originY: 'center' }) } as any);
+    (img as any).id = uid('o_');
+    (img as any).name = name;
+    img.setPositionByOrigin(frame.getCenterPoint(), 'center', 'center');
+    img.setCoords();
+    const idx = this.canvas.getObjects().indexOf(frame);
+    this.canvas.discardActiveObject();
+    this.canvas.remove(frame);
+    this.canvas.insertAt(Math.max(0, idx), img);
+    this.canvas.setActiveObject(img);
+    this.canvas.requestRenderAll();
+    this.commit();
+    return img;
   }
 
   /* ---------------- selection operations ---------------- */
@@ -1302,11 +1409,14 @@ export class Engine {
     const o = opts.target ?? this.active();
     if (!o) return;
     const targets = o instanceof ActiveSelection ? o.getObjects() : [o];
+    const typo = ['fontFamily', 'fontWeight', 'fontSize', 'charSpacing', 'fontStyle', 'text'].some((k) => k in props);
     for (const t of targets) {
+      const wasSingle = t instanceof Textbox && (t as any)._textLines?.length === 1 && !String(t.text).includes('\n');
       t.set(props);
       if (t instanceof IText) {
         if ((t as any).warp) this.applyWarp(t);
         else t.initDimensions();
+        if (typo && wasSingle) this.refitSingleLine(t as Textbox);
       }
       t.setCoords();
     }
@@ -1315,6 +1425,18 @@ export class Engine {
     this.bump();
     if (opts.live) this.commitSoon();
     else this.commit();
+  }
+
+  /** A one-line text that a font/size change made wrap is widened back to one line (centre kept). */
+  private refitSingleLine(t: Textbox) {
+    if ((t as any)._textLines.length <= 1) return;
+    const c = t.getCenterPoint();
+    t.set({ width: 1e5 });
+    t.initDimensions();
+    const natural = t.getLineWidth(0);
+    t.set({ width: Math.min(this.project.width * 0.95, natural + t.fontSize * 0.1) });
+    t.initDimensions();
+    t.setPositionByOrigin(c, 'center', 'center');
   }
 
   async setFont(family: string, weight?: number) {
@@ -1810,6 +1932,23 @@ export class Engine {
     this.queueThumb(this.pageIndex);
   }
 
+  /** Insert ready-made pages (templates) after the current one, smart-resizing if sizes differ. */
+  async insertPages(pages: PageData[], w: number, h: number) {
+    this.syncPage();
+    let ready = pages;
+    if (w !== this.project.width || h !== this.project.height) {
+      const { smartResizePages } = await import('../lib/smartResize');
+      ready = await smartResizePages(pages, w, h, this.project.width, this.project.height);
+    }
+    ready = ready.map((p) => ({ ...p, id: uid('pg_'), thumb: undefined }));
+    const at = this.pageIndex + 1;
+    this.project.pages.splice(at, 0, ...ready);
+    set({ project: { ...this.project } });
+    await this.showPage(at);
+    this.scheduleSave();
+    ready.forEach((_, i) => this.queueThumb(at + i, 200 + i * 60));
+  }
+
   async duplicatePage(i = this.pageIndex) {
     this.syncPage();
     const src = this.project.pages[i];
@@ -1856,21 +1995,26 @@ export class Engine {
    * 'keep' preserves object sizes and keeps the composition centred.
    * (Element-aware smart resize ships with Stage 3.)
    */
-  async resizeDocument(width: number, height: number, mode: 'scale' | 'keep') {
+  async resizeDocument(width: number, height: number, mode: 'smart' | 'scale' | 'keep') {
     this.syncPage();
     const W = this.project.width;
     const H = this.project.height;
-    const s = mode === 'scale' ? Math.min(width / W, height / H) : 1;
-    const dx = (width - W * s) / 2;
-    const dy = (height - H * s) / 2;
-    for (const page of this.project.pages) {
-      page.objects = page.objects.map((o) => ({
-        ...o,
-        left: o.left * s + dx,
-        top: o.top * s + dy,
-        scaleX: (o.scaleX ?? 1) * s,
-        scaleY: (o.scaleY ?? 1) * s,
-      }));
+    if (mode === 'smart') {
+      const { smartResizePages } = await import('../lib/smartResize');
+      this.project.pages = await smartResizePages(this.project.pages, W, H, width, height);
+    } else {
+      const s = mode === 'scale' ? Math.min(width / W, height / H) : 1;
+      const dx = (width - W * s) / 2;
+      const dy = (height - H * s) / 2;
+      for (const page of this.project.pages) {
+        page.objects = page.objects.map((o) => ({
+          ...o,
+          left: o.left * s + dx,
+          top: o.top * s + dy,
+          scaleX: (o.scaleX ?? 1) * s,
+          scaleY: (o.scaleY ?? 1) * s,
+        }));
+      }
     }
     this.project.width = Math.round(width);
     this.project.height = Math.round(height);

@@ -40,6 +40,9 @@ export interface Asset {
   size: number;
   favorite: boolean;
   createdAt: number;
+  folderId?: string | null;
+  /** attribution for stock media (licence, author, source page) */
+  credit?: { title?: string; author?: string; license: string; licenseUrl?: string; source: string; sourceUrl: string };
 }
 
 export interface Folder {
@@ -47,4 +50,41 @@ export interface Folder {
   name: string;
   kind: 'project' | 'asset';
   createdAt: number;
+}
+
+/** A reusable composition saved by the user (built-in templates live in code). */
+export interface UserTemplate {
+  id: string;
+  name: string;
+  category: string;
+  width: number;
+  height: number;
+  pages: PageData[];
+  thumbnail?: string;
+  createdAt: number;
+}
+
+export interface BrandColor {
+  name: string;
+  hex: string;
+  role: 'primary' | 'secondary' | 'accent' | 'neutral';
+}
+
+export interface BrandFont {
+  family: string;
+  weight: number;
+  tracking?: number;
+  caps?: boolean;
+}
+
+export interface BrandKit {
+  id: string;
+  name: string;
+  colors: BrandColor[];
+  fonts: { heading: BrandFont; subheading: BrandFont; body: BrandFont };
+  logos: string[]; // asset ids
+  assets: string[]; // asset ids
+  guidelines: string;
+  createdAt: number;
+  updatedAt: number;
 }
