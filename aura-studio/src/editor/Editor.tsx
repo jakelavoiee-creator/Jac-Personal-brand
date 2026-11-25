@@ -214,6 +214,7 @@ function TopBar({ onDialog }: { onDialog: (d: any) => void }) {
       <button className="icon-btn" title="Back to dashboard" onClick={() => navigate({ name: 'home' })}>
         <ArrowLeft size={17} />
       </button>
+      <img className="topbar-logo" src="/brand/aurastudio-icon-512.png" alt="aurastudio" />
       <input
         className="title"
         value={title}

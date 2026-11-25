@@ -155,7 +155,10 @@ input[type=range]::-moz-range-thumb { width: 12px; height: 12px; border-radius: 
 /* ---------- dashboard ---------- */
 .dash { display: grid; grid-template-columns: 232px 1fr; height: 100%; }
 .dash-nav { background: var(--bg-1); border-right: 1px solid var(--line-soft); display: flex; flex-direction: column; padding: 16px 10px; gap: 2px; overflow: auto; }
-.brand { display: flex; align-items: center; gap: 10px; padding: 4px 10px 18px; }
+.brand { display: flex; align-items: center; gap: 10px; padding: 6px 10px 20px; }
+.app-logo { height: 26px; width: auto; display: block; }
+.app-icon { display: none; width: 28px; height: 28px; }
+.topbar-logo { width: 22px; height: 22px; border-radius: 5px; margin: 0 2px 0 -2px; }
 .brand-mark { width: 26px; height: 26px; border-radius: 6px; background: #fff; color: #111; display: grid; place-items: center; font-weight: 800; font-size: 14px; letter-spacing: -.04em; }
 .brand-name { font-weight: 700; letter-spacing: .14em; font-size: 12.5px; }
 .brand-name small { display: block; font-weight: 500; letter-spacing: .02em; color: var(--text-3); font-size: 10.5px; }
@@ -334,7 +337,8 @@ input[type=range]::-moz-range-thumb { width: 12px; height: 12px; border-radius: 
   .dash { grid-template-columns: 1fr; grid-template-rows: auto 1fr; }
   .dash-nav { flex-direction: row; padding: 8px; overflow-x: auto; border-right: 0; border-bottom: 1px solid var(--line-soft); }
   .dash-nav .brand { padding: 0 10px 0 4px; }
-  .dash-nav .brand-name, .nav-sep, .nav-item .tag { display: none; }
+  .dash-nav .brand-name, .dash-nav .app-logo, .nav-sep, .nav-item .tag { display: none; }
+  .dash-nav .app-icon { display: block; }
   .nav-item { width: auto; flex: none; }
   .dash-inner { padding: 20px 16px 48px; }
   .dash-top { flex-wrap: wrap; }

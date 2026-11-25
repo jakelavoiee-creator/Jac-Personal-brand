@@ -211,11 +211,9 @@ export default function Dashboard({ route }: { route: Route }) {
   return (
     <div className="dash">
       <nav className="dash-nav">
-        <div className="brand">
-          <div className="brand-mark">A</div>
-          <div className="brand-name">
-            AURA<small>Creative Studio</small>
-          </div>
+        <div className="brand" title="aurastudio">
+          <img className="app-logo" src="/brand/aurastudio-wordmark.png" alt="aurastudio" />
+          <img className="app-icon" src="/brand/aurastudio-icon-512.png" alt="aurastudio" />
         </div>
         {NAV.map((n) => (
           <button key={n.id} className={`nav-item ${route.name === n.id ? 'on' : ''}`} onClick={() => navigate({ name: n.id } as Route)}>
@@ -286,9 +284,6 @@ function Home(props: {
     <>
       {!props.query && (
         <div className="hero">
-          <div className="faint" style={{ fontSize: 11.5, letterSpacing: '.08em', textTransform: 'uppercase', fontWeight: 600 }}>
-            Aura Studio
-          </div>
           <h1>What are we making today?</h1>
           <p>Typography, apparel, social, print — one workspace. Everything saves locally in your browser.</p>
           <div className="quick">
