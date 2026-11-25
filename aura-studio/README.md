@@ -15,7 +15,7 @@ npm install
 npm run dev          # http://localhost:5173
 ```
 
-Production build + end-to-end tests (Chromium via Playwright):
+Production build + end-to-end tests (Chromium via Playwright); `npm run lint` checks for bugs:
 
 ```bash
 npm run build
@@ -23,6 +23,7 @@ npx vite preview --port 4173 &
 npm test                      # all five suites
 #   tests/e2e.mjs         core workflow: create → edit → export → reload
 #   tests/e2e-tools.mjs   tools: text editing, crop, guides, SVG, layers, pages, trash
+#   tests/e2e-tools2.mjs  FX Lab, levels/curves, turn into image, merge visible, brushes + symmetry
 #   tests/e2e-stage2.mjs  effects, textures, transforms, fonts, vectors, graphics, migration
 #   tests/e2e-stage3.mjs  templates, brand kits, smart resize, SVG/PDF export, PDF import, photos
 #   tests/e2e-stage4.mjs  photo studio, on-device AI (real models), provider AI + assistant (mocked APIs)
@@ -53,6 +54,8 @@ dimensions, alpha channel, ZIP structure).
 | Photo filters | Custom fabric filter `AuraAdjust` (`src/lib/photoFilter.ts`) | One WebGL pass for all adjustments + presets, identical CPU fallback, serialised with the design. |
 | On-device AI | transformers.js 4 + ONNX Runtime Web (Apache-2.0/MIT) | Background removal (ORMBG Apache-2.0 · BiRefNet-lite 512 MIT · MODNet Apache-2.0), inpainting (LaMa Apache-2.0), super-resolution (Swin2SR Apache-2.0). Weights download from Hugging Face on first use and are cached by the browser; the ONNX Runtime wasm is served by Aura itself (`public/ort`, copied at build). WebGPU fp16 where supported, otherwise multi-threaded WebAssembly (needs the COOP/COEP headers in `public/_headers`). |
 | Apparel library | Tapstitch Open Platform API | Live catalogue, print areas and mockup layers with the user's own Tapstitch token, through a same-origin relay (`/tapstitch` → openapi.tapstitch.com; the API has no browser CORS). Garment projects use Tapstitch's 700 px design canvas at 10×; print files are cut per placement. |
+| FX Lab | `src/lib/fxlab.ts` | 26 effects as one custom fabric filter class (`AuraFX`): per-effect GLSL program + identical CPU mirror; stackable passes, serialized with the design. |
+| Brush studio | `src/editor/brush.ts` | Raster paint layers drawn into a live canvas; symmetry around the page centre; strokes persisted as hidden internal assets for per-stroke undo. |
 | Perspective mockups | `src/lib/perspective.ts` | 4-point homography with bilinear inverse mapping and photo-lighting transfer. |
 | Provider AI | OpenAI Images API · Anthropic SDK (Claude) | Called from the browser with the user's own keys (stored locally). Generative edits paste back only the masked pixels at full resolution. The assistant returns structured edits (zod schema) that the engine applies as one undoable step. |
 

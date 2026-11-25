@@ -713,3 +713,5 @@ textarea.input { height: auto; padding: 8px 10px; line-height: 1.45; resize: ver
 .brush-grid small { font-size: 10.5px; }
 .swatch-row .sw.on { outline: 2px solid var(--text); outline-offset: 2px; }
 .swatch-row .sw.rainbow { background: conic-gradient(#ff2bd6, #ffe66d, #00ffa3, #3cf2ff, #7c5cff, #ff2bd6); }
+.props-section .row > .btn.sm { min-width: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.curve-editor { width: 100%; aspect-ratio: 1; background: #141414; border: 1px solid var(--line); border-radius: var(--r-1); overflow: visible; touch-action: none; }

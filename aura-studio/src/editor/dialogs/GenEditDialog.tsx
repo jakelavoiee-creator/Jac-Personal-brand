@@ -10,7 +10,7 @@ import { useEffect, useRef, useState } from 'react';
 import { Brush, Check, Eraser, KeyRound, Loader2, Maximize2, Redo2, ScanLine, Sparkles, Trash2, Undo2, UserRound } from 'lucide-react';
 import { useEngine } from '../Editor';
 import { useEditor } from '../engine';
-import { RangeField } from '../../ui/controls';
+import { RangeField, useEscape } from '../../ui/controls';
 import { toast } from '../../store/app';
 import { MaskStage, paintDab, type StrokePoint } from './MaskStage';
 import { editImages, hasOpenAI, openaiModel, sizeFor, type Quality } from '../../lib/ai/openai';
@@ -68,6 +68,7 @@ export default function GenEditDialog() {
   const img = tool && (tool.kind === 'genfill' || tool.kind === 'expand') ? tool.img : null;
   const kind = tool?.kind;
   const close = () => useEditor.setState({ imageTool: null });
+  useEscape(!!img, () => !document.querySelector('.studio-busy') && close());
 
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const meta = useRef<{ name: string; assetId?: string; prev?: Asset } | null>(null);

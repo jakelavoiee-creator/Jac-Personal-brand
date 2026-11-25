@@ -580,7 +580,7 @@ function ImageProps({ img }: { img: FabricImage }) {
       </h6>
       <div className="row" style={{ marginBottom: 8 }}>
         <button className="btn sm ai" style={{ flex: 1 }} onClick={() => engine.openImageTool('cutout', img)} disabled={(img as any).locked} data-testid="remove-bg">
-          <Scissors size={13} /> {(img as any).originalAssetId ? 'Refine cutout' : 'Remove background'}
+          <Scissors size={13} /> {(img as any).originalAssetId ? 'Refine cutout' : 'Remove BG'}
         </button>
         <button className="btn sm ai" style={{ flex: 1 }} onClick={() => engine.openImageTool('erase', img)} disabled={(img as any).locked} data-testid="magic-erase">
           <Wand2 size={13} /> Magic eraser

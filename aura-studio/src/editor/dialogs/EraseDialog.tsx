@@ -7,7 +7,7 @@ import { useEffect, useRef, useState } from 'react';
 import { Check, Cpu, Eraser, Redo2, Trash2, Undo2, Wand2 } from 'lucide-react';
 import { useEngine } from '../Editor';
 import { useEditor } from '../engine';
-import { RangeField, Toggle } from '../../ui/controls';
+import { RangeField, Toggle, useEscape } from '../../ui/controls';
 import { toast } from '../../store/app';
 import { MaskStage, paintDab, type StrokePoint } from './MaskStage';
 import { inpaint, isCached, LAMA, type InpaintMode } from '../../lib/ai/inpaint';
@@ -25,6 +25,7 @@ export default function EraseDialog() {
   const tool = useEditor((s) => s.imageTool);
   const img = tool?.kind === 'erase' ? tool.img : null;
   const close = () => useEditor.setState({ imageTool: null });
+  useEscape(!!img, () => !document.querySelector('.studio-busy') && close());
 
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const meta = useRef<{ name: string; assetId?: string; originalAssetId?: string; original: HTMLCanvasElement } | null>(null);

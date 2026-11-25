@@ -184,6 +184,38 @@ zero runtime errors.
 - 🟡 Sending designs to Tapstitch to order (their API's create-design endpoint) needs the artwork at a public HTTPS URL, i.e. image hosting — not wired yet. Download the print files and upload them on tapstitch.com.
 - 🟡 Tapstitch's mockup layers are flat studio shots, so fabric realism is subtle on most garments.
 
+## Creative tools pass — Photoshop-style tools for "crazy artwork easily" ✅
+
+### FX Lab (any image layer; stackable, non-destructive, saved with the design)
+- ✅ 26 effects, each a WebGL shader with an identical CPU fallback (large images / no WebGL):
+  Colour — Levels, Curves (5-point editor, RGB/R/G/B), Duotone, Acid colours, Thermal, Posterize, Threshold, Solarize, Invert ·
+  Stylize — Halftone, Pixelate, Dither, Neon edges, Emboss, VHS/scanlines, Glitch, Chromatic aberration, Grain ·
+  Distort — Twirl, Bulge/pinch, Wave, Ripple, Kaleidoscope, Mirror ·
+  Blur — Motion, Zoom
+- ✅ 14 one-click looks with live previews (Acid trip, VHS tape, Riso print, Comic halftone, Neon noir, Vaporwave, Mandala, Retro pixel, Game Boy, Thermal cam, Liquid, Rubber stamp, Speed, Warp zoom) and "Surprise me"
+- ✅ Per-effect strength, settings, colours, reorder, remove, reroll; photo adjustments and FX coexist
+- ✅ Turn into image: any text/shape/group becomes an image layer for FX (original kept, hidden)
+- ✅ Merge visible to new layer (Photoshop "stamp visible") — FX the whole artwork
+
+### Brush studio
+- ✅ Paint layers (move, blend, mask or FX them like any layer); 12 brushes: round, airbrush, spray can, chalk, marker, neon, calligraphy, stars, confetti, bubbles, smudge, eraser
+- ✅ Rainbow colour flow, size / opacity / hardness / spacing / jitter, pen-tablet pressure
+- ✅ Symmetry: mirror, flip, quad, mandala (2–16 segments) with live guides and mirrored cursors
+- ✅ Per-stroke undo; strokes saved as hidden internal assets (never inline data URLs, never cluttering Uploads)
+
+### Bug sweep
+- ✅ ESLint (correctness + React hooks rules) added — codebase clean; strict TypeScript clean; full UI smoke sweep (every page, panel, dialog, object type) with no console errors
+- ✅ Fixed: duplicating a garment project or page lost its Tapstitch garment link
+- ✅ Fixed: resizing a garment project would break print-area geometry (now explained and blocked)
+- ✅ Fixed: FX Lab CPU duotone rendered black; kaleidoscope sampled background instead of the subject
+- ✅ Fixed: studio dialogs ignored Escape; photo action buttons overflowed the panel; stale "Stage 2" hint
+
+### Verified by tests/e2e-tools2.mjs (22 checks, pixel-level) plus all earlier suites
+
+### Not added (yet)
+- 🟡 Pixel selections (marquee / lasso / magic wand) — use shape masks, AI subject/background selection, brushes and the magic eraser instead
+- 🟡 Liquify brush (use Twirl / Bulge / Wave / Ripple in FX Lab), clone stamp (use Magic eraser), smart objects, adjustment layers that affect layers below
+
 ## Known limitations / bugs
 - Effects render through an offscreen layer capped at 4096 px per object side; a single effected object wider than that on a very large document exports slightly softer.
 - Page add / delete / reorder and document resize are not undoable (object edits are). Resize clears undo history.

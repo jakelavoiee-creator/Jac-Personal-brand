@@ -8,7 +8,7 @@ import { useEffect, useRef, useState } from 'react';
 import { Check, Download, ImagePlus, KeyRound, Loader2, Package, RotateCcw, Sparkles, Upload } from 'lucide-react';
 import { useEngine } from '../Editor';
 import { useEditor } from '../engine';
-import { RangeField } from '../../ui/controls';
+import { RangeField, useEscape } from '../../ui/controls';
 import { defaultQuad, warpOnto, type Quad } from '../../lib/perspective';
 import { listAssets } from '../../lib/db';
 import { assetURL, importFile, ACCEPTED_UPLOADS } from '../../lib/assets';
@@ -32,6 +32,7 @@ export default function PerspectiveDialog() {
   const engine = useEngine();
   const open = useEditor((s) => s.perspective);
   const close = () => useEditor.setState({ perspective: false });
+  useEscape(open, () => !document.querySelector('.studio-busy') && close());
   const [photos, setPhotos] = useState<Asset[]>([]);
   const [photo, setPhoto] = useState<{ asset: Asset; img: HTMLImageElement } | null>(null);
   const [art, setArt] = useState<HTMLCanvasElement | null>(null);

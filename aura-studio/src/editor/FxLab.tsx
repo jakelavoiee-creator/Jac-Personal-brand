@@ -9,7 +9,7 @@ import { FabricImage, type FabricObject } from 'fabric';
 import { useEngine } from './Editor';
 import { useEditor } from './engine';
 import { ColorField, RangeField } from '../ui/controls';
-import { FX, FX_BY_ID, LOOKS, fxDefaults, randomStack, type FxOpts } from '../lib/fxlab';
+import { FX, FX_BY_ID, LOOKS, curveAt, fxDefaults, randomStack, type FxOpts } from '../lib/fxlab';
 
 const THUMB = 76;
 
@@ -30,7 +30,7 @@ function previewStack(base: HTMLCanvasElement, stack: Partial<FxOpts>[]) {
     const d = FX_BY_ID[o.effect];
     const src = new Uint8ClampedArray(img.data);
     // previews are tiny; scale pixel-size effects to the thumbnail
-    d.cpu({ src, dst: img.data, w: c.width, h: c.height, p1: o.p1, p2: o.p2, amount: o.amount, c1: hex(o.c1), c2: hex(o.c2), seed: o.seed });
+    d.cpu({ src, dst: img.data, w: c.width, h: c.height, p1: o.p1, p2: o.p2, p3: o.p3, curve: o.curve, amount: o.amount, c1: hex(o.c1), c2: hex(o.c2), seed: o.seed });
     if (!d.strength && o.amount < 1) for (let i = 0; i < img.data.length; i++) img.data[i] = src[i] + (img.data[i] - src[i]) * o.amount;
   }
   x.putImageData(img, 0, 0);
@@ -152,7 +152,19 @@ function FxStack({ img }: { img: FabricImage }) {
               <span>{d.strength ? 'Strength' : 'Mix'}</span>
               <RangeField value={Math.round(s.amount * 100)} min={0} max={100} unit="%" onChange={(v, live) => patch(i, { amount: v / 100 }, live)} />
             </div>
-            {d.params.map((p) => (
+            {s.effect === 'curves' && (
+              <>
+                <div className="seg compact">
+                  {['RGB', 'R', 'G', 'B'].map((l, k) => (
+                    <button key={l} className={Math.round(s.p1) === k ? 'on' : ''} onClick={() => patch(i, { p1: k })}>
+                      {l}
+                    </button>
+                  ))}
+                </div>
+                <CurveEditor value={s.curve} channel={Math.round(s.p1)} onChange={(curve, live) => patch(i, { curve }, live)} />
+              </>
+            )}
+            {d.params.filter((p) => s.effect !== 'curves').map((p) => (
               <div key={p.key} className="prop-row">
                 <span>{p.label}</span>
                 <RangeField value={s[p.key]} min={p.min} max={p.max} step={p.step ?? 0.01} precision={(p.step ?? 0.01) < 1 ? 2 : 0} onChange={(v, live) => patch(i, { [p.key]: v }, live)} />
@@ -179,5 +191,49 @@ function FxStack({ img }: { img: FabricImage }) {
         </button>
       )}
     </div>
+  );
+}
+
+/** Five-point curve editor (inputs 0, .25, .5, .75, 1; drag outputs). */
+function CurveEditor({ value, channel, onChange }: { value: number[]; channel: number; onChange: (v: number[], live: boolean) => void }) {
+  const S = 188;
+  const color = ['#e9e9e9', '#ff5d5d', '#4fd18b', '#6e8bff'][channel] ?? '#e9e9e9';
+  const path = Array.from({ length: 65 }, (_, k) => {
+    const x = k / 64;
+    return `${k ? 'L' : 'M'}${(x * S).toFixed(1)} ${((1 - curveAt(value, x)) * S).toFixed(1)}`;
+  }).join(' ');
+  const drag = (i: number) => (e: React.PointerEvent) => {
+    const svg = (e.currentTarget as Element).closest('svg')!;
+    (e.target as Element).setPointerCapture(e.pointerId);
+    const move = (ev: PointerEvent) => {
+      const r = svg.getBoundingClientRect();
+      const y = Math.min(1, Math.max(0, 1 - (ev.clientY - r.top) / r.height));
+      onChange(value.map((v, k) => (k === i ? Math.round(y * 100) / 100 : v)), true);
+    };
+    const up = (ev: PointerEvent) => {
+      move(ev);
+      window.removeEventListener('pointermove', move);
+      window.removeEventListener('pointerup', up);
+      const r = svg.getBoundingClientRect();
+      const y = Math.min(1, Math.max(0, 1 - (ev.clientY - r.top) / r.height));
+      onChange(value.map((v, k) => (k === i ? Math.round(y * 100) / 100 : v)), false);
+    };
+    window.addEventListener('pointermove', move);
+    window.addEventListener('pointerup', up);
+  };
+  return (
+    <svg className="curve-editor" viewBox={`0 0 ${S} ${S}`} data-testid="curve-editor">
+      {[0.25, 0.5, 0.75].map((g) => (
+        <g key={g} stroke="rgba(255,255,255,.08)">
+          <line x1={g * S} y1={0} x2={g * S} y2={S} />
+          <line x1={0} y1={g * S} x2={S} y2={g * S} />
+        </g>
+      ))}
+      <line x1={0} y1={S} x2={S} y2={0} stroke="rgba(255,255,255,.15)" strokeDasharray="3 3" />
+      <path d={path} stroke={color} strokeWidth={2} fill="none" />
+      {value.map((v, i) => (
+        <circle key={i} cx={(i / 4) * S} cy={(1 - v) * S} r={6} fill="#111" stroke={color} strokeWidth={2} style={{ cursor: 'ns-resize' }} onPointerDown={drag(i)} data-testid={`curve-pt-${i}`} />
+      ))}
+    </svg>
   );
 }

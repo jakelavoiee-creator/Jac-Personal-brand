@@ -11,7 +11,7 @@
 import { classRegistry, filters } from 'fabric';
 
 export interface FxParam {
-  key: 'p1' | 'p2';
+  key: 'p1' | 'p2' | 'p3';
   label: string;
   min: number;
   max: number;
@@ -38,6 +38,8 @@ interface CpuCtx {
   h: number;
   p1: number;
   p2: number;
+  p3: number;
+  curve: number[];
   amount: number;
   c1: number[];
   c2: number[];
@@ -95,7 +97,40 @@ const px = (c: CpuCtx) => Math.max(c.w, c.h) / 1000; // effect sizes are authore
 /* ---------------- effect definitions ---------------- */
 // GLSL bodies define `vec4 effect(vec2 uv)`; helpers: src(), lum(), rand(), hsv2rgb(), uSize (px), uP1, uP2, uC1, uC2, uAmount, uSeed
 
+/** Smooth curve through 5 points at x = 0, .25, .5, .75, 1 (Catmull-Rom), clamped 0–1. */
+export function curveAt(c: number[], x: number) {
+  const t = Math.min(0.9999, Math.max(0, x)) * 4, i = Math.floor(t), f = t - i;
+  const p = (k: number) => c[Math.min(4, Math.max(0, k))];
+  const p0 = p(i - 1), p1 = p(i), p2 = p(i + 1), p3 = p(i + 2);
+  const v = 0.5 * (2 * p1 + (-p0 + p2) * f + (2 * p0 - 5 * p1 + 4 * p2 - p3) * f * f + (-p0 + 3 * p1 - 3 * p2 + p3) * f * f * f);
+  return Math.min(1, Math.max(0, v));
+}
+export const CURVE_IDENTITY = [0, 0.25, 0.5, 0.75, 1];
+
 export const FX: FxDef[] = [
+  {
+    id: 'levels',
+    label: 'Levels',
+    group: 'Colour',
+    params: [
+      { key: 'p1', label: 'Black', min: 0, max: 0.9, step: 0.01, def: 0.08 },
+      { key: 'p2', label: 'White', min: 0.1, max: 1, step: 0.01, def: 0.92 },
+      { key: 'p3', label: 'Gamma', min: 0.2, max: 3, step: 0.01, def: 1 },
+    ],
+    glsl: `vec4 effect(vec2 uv){ vec4 c=src(uv); vec3 v=clamp((c.rgb-uP1)/max(uP2-uP1,1e-3),0.,1.); return vec4(pow(v,vec3(1./uP3)),c.a); }`,
+    cpu: (c) => perPixel(c, (r, g, b) => [r, g, b].map((v) => Math.pow(Math.min(1, Math.max(0, (v / 255 - c.p1) / Math.max(c.p2 - c.p1, 1e-3))), 1 / c.p3) * 255)),
+  },
+  {
+    id: 'curves',
+    label: 'Curves',
+    group: 'Colour',
+    params: [{ key: 'p1', label: 'Channel', min: 0, max: 3, step: 1, def: 0 }],
+    glsl: `float cv(float x){ float t=clamp(x,0.,.9999)*4.; float i=floor(t), f=t-i; float p0=uCurve[0],p1=uCurve[0],p2=uCurve[0],p3=uCurve[0];
+  for(int k=0;k<5;k++){ float fk=float(k); if(fk==clamp(i-1.,0.,4.)) p0=uCurve[k]; if(fk==i) p1=uCurve[k]; if(fk==clamp(i+1.,0.,4.)) p2=uCurve[k]; if(fk==clamp(i+2.,0.,4.)) p3=uCurve[k]; }
+  return clamp(.5*(2.*p1+(-p0+p2)*f+(2.*p0-5.*p1+4.*p2-p3)*f*f+(-p0+3.*p1-3.*p2+p3)*f*f*f),0.,1.); }
+vec4 effect(vec2 uv){ vec4 c=src(uv); vec3 o=c.rgb; if(uP1<.5) o=vec3(cv(o.r),cv(o.g),cv(o.b)); else if(uP1<1.5) o.r=cv(o.r); else if(uP1<2.5) o.g=cv(o.g); else o.b=cv(o.b); return vec4(o,c.a); }`,
+    cpu: (c) => perPixel(c, (r, g, b) => { const f = (v: number) => curveAt(c.curve, v / 255) * 255; const ch = Math.round(c.p1); return ch === 0 ? [f(r), f(g), f(b)] : ch === 1 ? [f(r), g, b] : ch === 2 ? [r, f(g), b] : [r, g, f(b)]; }),
+  },
   {
     id: 'duotone',
     label: 'Duotone',
@@ -404,7 +439,8 @@ export const FX_BY_ID = Object.fromEntries(FX.map((f) => [f.id, f]));
 const HEADER = `precision highp float;
 uniform sampler2D uTexture;
 varying vec2 vTexCoord;
-uniform float uAmount, uP1, uP2, uSeed;
+uniform float uAmount, uP1, uP2, uP3, uSeed;
+uniform float uCurve[5];
 uniform vec2 uSize;
 uniform vec3 uC1, uC2;
 vec4 src(vec2 p){ return texture2D(uTexture, clamp(p, 0., 1.)); }
@@ -425,6 +461,9 @@ export interface FxOpts {
   amount: number;
   p1: number;
   p2: number;
+  p3: number;
+  /** Curves: 5 output values at inputs 0, .25, .5, .75, 1 */
+  curve: number[];
   c1: string;
   c2: string;
   seed: number;
@@ -432,18 +471,20 @@ export interface FxOpts {
 
 export function fxDefaults(id: string): FxOpts {
   const d = FX_BY_ID[id];
-  const v = (k: 'p1' | 'p2') => d.params.find((p) => p.key === k)?.def ?? 0;
-  return { effect: id, amount: 1, p1: v('p1'), p2: v('p2'), c1: d.colors?.[0] ?? '#000000', c2: d.colors?.[1] ?? '#ffffff', seed: Math.round(Math.random() * 1000) };
+  const v = (k: 'p1' | 'p2' | 'p3') => d.params.find((p) => p.key === k)?.def ?? (k === 'p3' ? 1 : 0);
+  return { effect: id, amount: 1, p1: v('p1'), p2: v('p2'), p3: v('p3'), curve: id === 'curves' ? [0, 0.18, 0.5, 0.82, 1] : [...CURVE_IDENTITY], c1: d.colors?.[0] ?? '#000000', c2: d.colors?.[1] ?? '#ffffff', seed: Math.round(Math.random() * 1000) };
 }
 
 export class AuraFX extends (filters.BaseFilter as any) {
   static type = 'AuraFX';
-  static defaults = { effect: 'duotone', amount: 1, p1: 0, p2: 0, c1: '#000000', c2: '#ffffff', seed: 1 };
-  static uniformLocations = ['uAmount', 'uP1', 'uP2', 'uSeed', 'uSize', 'uC1', 'uC2'];
+  static defaults = { effect: 'duotone', amount: 1, p1: 0, p2: 0, p3: 1, curve: CURVE_IDENTITY, c1: '#000000', c2: '#ffffff', seed: 1 };
+  static uniformLocations = ['uAmount', 'uP1', 'uP2', 'uP3', 'uCurve', 'uSeed', 'uSize', 'uC1', 'uC2'];
   declare effect: string;
   declare amount: number;
   declare p1: number;
   declare p2: number;
+  declare p3: number;
+  declare curve: number[];
   declare c1: string;
   declare c2: string;
   declare seed: number;
@@ -451,6 +492,8 @@ export class AuraFX extends (filters.BaseFilter as any) {
 
   constructor(opts: Partial<FxOpts> = {}) {
     super(opts);
+    this.curve = [...(opts.curve ?? CURVE_IDENTITY)]; // never share the defaults array
+    if (opts.p3 === undefined) this.p3 = 1;
   }
   /** one compiled program per effect */
   getCacheKey() {
@@ -475,20 +518,22 @@ void main(){ vec4 o=src(vTexCoord); vec4 e=effect(vTexCoord); gl_FragColor=${d.s
     const src = new Uint8ClampedArray(imageData.data);
     const dst = imageData.data;
     // CPU sizes are authored per 1000 px of the long side, like the shaders
-    d.cpu({ src, dst, w, h, p1: this.p1, p2: this.p2, amount: this.amount, c1: hex(this.c1), c2: hex(this.c2), seed: this.seed });
+    d.cpu({ src, dst, w, h, p1: this.p1, p2: this.p2, p3: this.p3, curve: this.curve, amount: this.amount, c1: hex(this.c1), c2: hex(this.c2), seed: this.seed });
     if (!d.strength && this.amount < 1) for (let i = 0; i < dst.length; i++) dst[i] = src[i] + (dst[i] - src[i]) * this.amount;
   }
   sendUniformData(gl: WebGLRenderingContext, u: Record<string, WebGLUniformLocation>) {
     gl.uniform1f(u.uAmount, this.amount);
     gl.uniform1f(u.uP1, this.p1);
     gl.uniform1f(u.uP2, this.p2);
+    gl.uniform1f(u.uP3, this.p3);
+    gl.uniform1fv(u.uCurve, this.curve);
     gl.uniform1f(u.uSeed, this.seed);
     gl.uniform2fv(u.uSize, this.size);
     gl.uniform3fv(u.uC1, hex(this.c1));
     gl.uniform3fv(u.uC2, hex(this.c2));
   }
   toObject() {
-    return { type: 'AuraFX', effect: this.effect, amount: this.amount, p1: this.p1, p2: this.p2, c1: this.c1, c2: this.c2, seed: this.seed };
+    return { type: 'AuraFX', effect: this.effect, amount: this.amount, p1: this.p1, p2: this.p2, p3: this.p3, curve: [...this.curve], c1: this.c1, c2: this.c2, seed: this.seed };
   }
   static async fromObject({ type: _t, ...opts }: any) {
     return new AuraFX(opts);
@@ -518,7 +563,7 @@ export const LOOKS: { id: string; label: string; stack: Partial<FxOpts>[] }[] = 
 /** A random stack of 2–3 effects with random settings — "Surprise me". */
 export function randomStack(): FxOpts[] {
   const pick = <T,>(a: T[]) => a[Math.floor(Math.random() * a.length)];
-  const groups = [FX.filter((f) => f.group === 'Distort'), FX.filter((f) => f.group === 'Colour'), FX.filter((f) => f.group === 'Stylize')];
+  const groups = [FX.filter((f) => f.group === 'Distort'), FX.filter((f) => f.group === 'Colour' && f.id !== 'levels' && f.id !== 'curves'), FX.filter((f) => f.group === 'Stylize')];
   const n = 2 + Math.floor(Math.random() * 2);
   const palette = ['#ff2bd6', '#3cf2ff', '#ffe66d', '#2d3a8c', '#ff6f61', '#0f380f', '#9bbc0f', '#111111', '#f4efe6', '#7c5cff', '#00ffa3'];
   return groups.slice(0, n).map((g) => {

@@ -5,6 +5,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { Check, Cpu, Sparkles } from 'lucide-react';
 import { useEngine } from '../Editor';
+import { useEscape } from '../../ui/controls';
 import { useEditor } from '../engine';
 import { toast } from '../../store/app';
 import { MaskStage } from './MaskStage';
@@ -19,6 +20,7 @@ export default function EnhanceDialog() {
   const tool = useEditor((s) => s.imageTool);
   const img = tool?.kind === 'enhance' ? tool.img : null;
   const close = () => useEditor.setState({ imageTool: null });
+  useEscape(!!img, () => !document.querySelector('.studio-busy') && close());
 
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const src = useRef<{ el: HTMLImageElement; name: string; assetId?: string } | null>(null);

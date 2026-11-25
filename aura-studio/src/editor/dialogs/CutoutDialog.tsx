@@ -8,7 +8,7 @@ import { useEffect, useMemo, useRef, useState } from 'react';
 import { Brush, Eraser, Redo2, Undo2, Cpu, Check, Sparkles } from 'lucide-react';
 import { useEngine } from '../Editor';
 import { useEditor } from '../engine';
-import { RangeField, ColorField, Toggle } from '../../ui/controls';
+import { RangeField, ColorField, Toggle, useEscape } from '../../ui/controls';
 import { toast } from '../../store/app';
 import { MaskStage, paintDab, type StrokePoint } from './MaskStage';
 import { SEG_MODELS, MODEL_LICENSES, predictMask, segDevice, segDownloadSize, type SegModel } from '../../lib/ai/segment';
@@ -27,6 +27,7 @@ export default function CutoutDialog() {
   const tool = useEditor((s) => s.imageTool);
   const img = tool?.kind === 'cutout' ? tool.img : null;
   const close = () => useEditor.setState({ imageTool: null });
+  useEscape(!!img, () => !document.querySelector('.studio-busy') && close());
 
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const src = useRef<{ source: HTMLImageElement; name: string; assetId?: string; originalAssetId?: string } | null>(null);

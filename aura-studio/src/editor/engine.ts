@@ -2087,7 +2087,7 @@ export class Engine {
   /* ---------------- FX Lab ---------------- */
 
   fxStackOf(img: FabricImage): FxOpts[] {
-    return ((img.filters ?? []) as any[]).filter((f) => f?.type === 'AuraFX').map((f) => ({ effect: f.effect, amount: f.amount, p1: f.p1, p2: f.p2, c1: f.c1, c2: f.c2, seed: f.seed }));
+    return ((img.filters ?? []) as any[]).filter((f) => f?.type === 'AuraFX').map((f) => ({ effect: f.effect, amount: f.amount, p1: f.p1, p2: f.p2, p3: f.p3 ?? 1, curve: [...(f.curve ?? [0, 0.25, 0.5, 0.75, 1])], c1: f.c1, c2: f.c2, seed: f.seed }));
   }
 
   /** Replace the FX Lab stack (photo adjustments stay first). */
