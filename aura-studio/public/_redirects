@@ -1,0 +1,2 @@
+# Netlify: same-origin relay for the Tapstitch API (no browser CORS upstream)
+/tapstitch/v1/*  https://openapi.tapstitch.com/v1/:splat  200
