@@ -136,9 +136,9 @@ if (live) {
   const prints = list.filter((f) => f.startsWith('print-files/'));
   const mockups = list.filter((f) => f.startsWith('mockups/'));
   ok(mockups.length === gp.pages && prints.length === 1, `ZIP has ${mockups.length} mockups and ${prints.length} print file (empty placements skipped)`);
-  const pf = pngSize(execFileSync('unzip', ['-p', zip, prints[0]]));
+  const pf = pngSize(execFileSync('unzip', ['-p', zip, prints[0]], { maxBuffer: 1 << 28 }));
   ok(pf.w === Math.round(front.width * 10) && pf.h === Math.round(front.height * 10), `print file is the placement at 10× (${pf.w}×${pf.h})`);
-  const mk = pngSize(execFileSync('unzip', ['-p', zip, mockups[0]]));
+  const mk = pngSize(execFileSync('unzip', ['-p', zip, mockups[0]], { maxBuffer: 1 << 28 }));
   ok(mk.w === 2000 && mk.h === 2000, 'mockups export at 2000 px');
 
   /* 6. Persistence */
