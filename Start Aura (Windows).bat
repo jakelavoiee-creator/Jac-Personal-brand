@@ -10,13 +10,5 @@ if errorlevel 1 (
   pause
   exit /b 1
 )
-if not exist node_modules (
-  echo First start: installing Aura - takes a few minutes, only once...
-  call npm install
-  if errorlevel 1 ( echo Install failed. & pause & exit /b 1 )
-)
-echo.
-echo Starting Aura Studio... it opens in your browser at http://localhost:5173
-echo Leave this window open while you work. Close it to stop Aura.
-start "" cmd /c "timeout /t 6 >nul & start http://localhost:5173"
-call npm run dev -- --port 5173
+node scripts\start.mjs
+if errorlevel 1 pause

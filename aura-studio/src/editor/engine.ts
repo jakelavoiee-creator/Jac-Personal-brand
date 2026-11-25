@@ -13,6 +13,7 @@ import {
   Rect,
   Ellipse,
   controlsUtils,
+  config as fabricConfig,
   Shadow,
   Textbox,
   filters,
@@ -160,6 +161,8 @@ interface SnapLine {
 }
 
 const HISTORY_LIMIT = 120;
+/** cap on the editing canvas pixel ratio (see constructor) */
+const MAX_EDITOR_DPR = 1.5;
 // monochrome UI from the logo: mid silver reads on both white and black artboards
 const ACCENT = '#9a9a9a';
 const GUIDE = '#d6d6d6';
@@ -218,6 +221,10 @@ export class Engine {
 
   constructor(el: HTMLCanvasElement, host: HTMLElement) {
     this.host = host;
+    // Retina screens make every frame paint 4× the pixels. 1.5× stays sharp
+    // and roughly doubles interactive speed; exports always render at full
+    // resolution independently of this.
+    fabricConfig.configure({ devicePixelRatio: Math.min(window.devicePixelRatio || 1, MAX_EDITOR_DPR) });
     this.canvas = new StudioCanvas(el, {
       width: host.clientWidth,
       height: host.clientHeight,
@@ -523,13 +530,13 @@ export class Engine {
     const { width, height } = this.project;
     ctx.save();
     ctx.transform(v[0], v[1], v[2], v[3], v[4], v[5]);
-    ctx.shadowColor = 'rgba(0,0,0,0.45)';
-    ctx.shadowBlur = 24;
-    ctx.shadowOffsetY = 4;
+    // crisp hairline edge instead of a blurred shadow (blur is the costliest canvas op per frame)
+    ctx.fillStyle = 'rgba(255,255,255,0.12)';
+    const hair = 1 / v[0];
+    ctx.fillRect(-hair, -hair, width + hair * 2, height + hair * 2);
     const bg = this.page?.background;
     ctx.fillStyle = bg ?? '#fff';
     ctx.fillRect(0, 0, width, height);
-    ctx.shadowColor = 'transparent';
     const garment = this.garmentBackdrop();
     if (garment) {
       ctx.drawImage(garment, 0, 0, width, height);
@@ -648,11 +655,18 @@ export class Engine {
     ctx.transform(v[0], v[1], v[2], v[3], v[4], v[5]);
 
     // Dim everything outside the artboard (objects stay visible but subdued)
-    ctx.beginPath();
-    ctx.rect(-1e6, -1e6, 2e6, 2e6);
-    ctx.rect(0, 0, width, height);
-    ctx.fillStyle = 'rgba(17,17,17,0.78)';
-    ctx.fill('evenodd');
+    // four plain rects around the page (much cheaper than one huge even-odd path)
+    {
+      const inv = 1 / v[0];
+      const vx = -v[4] * inv, vy = -v[5] * inv;
+      const vw = this.canvas.width * inv, vh = this.canvas.height * inv;
+      const x0 = Math.min(vx, 0), y0 = Math.min(vy, 0), x1 = Math.max(vx + vw, width), y1 = Math.max(vy + vh, height);
+      ctx.fillStyle = 'rgba(0,0,0,0.78)';
+      ctx.fillRect(x0, y0, x1 - x0, -y0); // above
+      ctx.fillRect(x0, height, x1 - x0, y1 - height); // below
+      ctx.fillRect(x0, 0, -x0, height); // left
+      ctx.fillRect(width, 0, x1 - width, height); // right
+    }
     this.drawPlacements(ctx, z);
     // hairline page edge so dark or transparent pages stay legible against the workspace
     ctx.strokeStyle = 'rgba(255,255,255,0.12)';

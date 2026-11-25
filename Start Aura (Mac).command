@@ -9,12 +9,4 @@ if ! command -v node >/dev/null 2>&1; then
   read -n 1 -s -r -p "Press any key to close."
   exit 1
 fi
-if [ ! -d node_modules ]; then
-  echo "First start: installing Aura (takes a few minutes, only once)…"
-  npm install || { read -n 1 -s -r -p "Install failed — press any key to close."; exit 1; }
-fi
-echo ""
-echo "Starting Aura Studio… it opens in your browser at http://localhost:5173"
-echo "Leave this window open while you work. Close it to stop Aura."
-(sleep 5; open "http://localhost:5173") &
-npm run dev -- --port 5173
+node scripts/start.mjs || read -n 1 -s -r -p "Press any key to close."
