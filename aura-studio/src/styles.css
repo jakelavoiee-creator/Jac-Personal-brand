@@ -682,3 +682,11 @@ textarea.input { height: auto; padding: 8px 10px; line-height: 1.45; resize: ver
 .tryon-grid img { width: 100%; aspect-ratio: 1; object-fit: cover; display: block; background: #f2f2f2; }
 .tryon-grid small { display: block; font-size: 10.5px; padding: 5px 6px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 .mk-other { border-top: 1px solid var(--line-soft); padding-top: 4px; }
+.persp-stage { display: grid; place-items: center; overflow: auto; padding: 32px; }
+.persp-wrap { position: relative; display: inline-block; line-height: 0; }
+.persp-canvas { max-width: min(100%, calc(100vw - 420px)); max-height: calc(100vh - 220px); display: block; box-shadow: 0 18px 60px rgba(0,0,0,.5); }
+.persp-outline { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; overflow: visible; }
+.persp-outline polygon { fill: none; stroke: #8b6cff; stroke-width: 1.5; stroke-dasharray: 6 5; }
+.persp-handle { position: absolute; width: 16px; height: 16px; margin: -8px 0 0 -8px; border-radius: 50%; background: #fff; border: 2px solid #8b6cff; box-shadow: 0 2px 8px rgba(0,0,0,.5); cursor: grab; touch-action: none; }
+.persp-handle:active { cursor: grabbing; transform: scale(1.15); }
+.persp-empty { max-width: 340px; text-align: center; color: var(--text-2); font-size: 13px; line-height: 1.5; display: flex; flex-direction: column; align-items: center; gap: 10px; }

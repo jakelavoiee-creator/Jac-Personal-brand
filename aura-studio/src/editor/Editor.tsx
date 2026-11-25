@@ -47,6 +47,7 @@ import CutoutDialog from './dialogs/CutoutDialog';
 import EraseDialog from './dialogs/EraseDialog';
 import EnhanceDialog from './dialogs/EnhanceDialog';
 import GenEditDialog from './dialogs/GenEditDialog';
+import PerspectiveDialog from './dialogs/PerspectiveDialog';
 import PreviewOverlay from './dialogs/PreviewOverlay';
 import ShareDialog from './dialogs/ShareDialog';
 import ShortcutsDialog from './dialogs/ShortcutsDialog';
@@ -130,6 +131,7 @@ export default function Editor({ projectId }: { projectId: string }) {
       {engine && <EraseDialog />}
       {engine && <EnhanceDialog />}
       {engine && <GenEditDialog />}
+      {engine && <PerspectiveDialog />}
       {engine && <CompareHost />}
     </EngineCtx.Provider>
   );

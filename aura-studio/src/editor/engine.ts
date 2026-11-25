@@ -76,6 +76,8 @@ export interface EditorState {
   cropping: FabricImage | null;
   /** full-screen AI image tool (background remover, magic eraser, enhance) */
   imageTool: { kind: ImageToolKind; img: FabricImage } | null;
+  /** place-on-a-photo perspective mockup studio */
+  perspective: boolean;
   /** open left-rail panel */
   panel: string | null;
   /** typography comparison studio */
@@ -107,6 +109,7 @@ export const useEditor = create<EditorState>(() => ({
   menu: null,
   cropping: null,
   imageTool: null,
+  perspective: false,
   panel: typeof innerWidth !== 'undefined' && innerWidth < 900 ? null : 'elements',
   compare: null,
   tool: 'select',

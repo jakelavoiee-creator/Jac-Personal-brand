@@ -30,7 +30,7 @@ export default function MockupsPanel({ onPerspective }: { onPerspective?: () => 
         <h6 className="ai-h">
           <Package size={12} /> Packaging, posters, bags & your photos
         </h6>
-        <button className="ai-tool" onClick={() => (onPerspective ? onPerspective() : useEditor.setState({ perspective: true } as any))} data-testid="open-perspective">
+        <button className="ai-tool" onClick={() => (onPerspective ? onPerspective() : useEditor.setState({ perspective: true }))} data-testid="open-perspective">
           <Package size={16} />
           <span>
             <b>Place on a photo</b>
