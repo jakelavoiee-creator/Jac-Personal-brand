@@ -156,8 +156,13 @@ ok(crop.w === crop.h && crop.w === 400, `crop applies 1:1 using source pixels ($
 ok(Math.abs(crop.cx - cBefore.x) < 1, 'crop keeps the image centred in place');
 
 // Image adjustments are non-destructive filters
-await ev(() => window.__aura.setImageAdjust(window.__aura.active(), { brightness: 0.2, contrast: 0.1, saturation: -1, blur: 0 }));
-ok((await ev(() => window.__aura.active().filters.length)) === 3, 'image adjustments apply as filters');
+await ev(() => {
+  const e = window.__aura, img = e.active();
+  const st = e.photoState(img);
+  e.setPhoto(img, { ...st, adjust: { ...st.adjust, exposure: 0.2, contrast: 0.1, saturation: -1 }, blur: 0.1 });
+});
+const adj = await ev(() => { const e = window.__aura, img = e.active(), st = e.photoState(img); return { types: img.filters.map((f) => f.type), exposure: st.adjust.exposure, saturation: st.adjust.saturation, blur: st.blur }; });
+ok(adj.types.join(',') === 'AuraAdjust,Blur' && adj.exposure === 0.2 && adj.saturation === -1 && adj.blur === 0.1, `image adjustments apply as non-destructive filters (${adj.types.join(', ')})`);
 
 // Preview overlay
 await page.click('button:has-text("Preview")');

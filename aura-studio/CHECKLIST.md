@@ -150,7 +150,7 @@ zero runtime errors.
 - ✅ Design assistant (Claude, claude-opus-5-5): sees the page as layers + a rendered snapshot + the active brand kit; replies with direction and concrete edits (text, fonts, colours, sizes, positions, background, new text) that apply as one undoable step; per-edit opt-out; refusal fallbacks on
 - ✅ Clear errors for invalid keys, quota/rate limits and policy declines; every paid surface says what is sent where
 
-### Verified by tests/e2e-stage4.mjs — real on-device models + mocked provider APIs; Stage 1–3 suites (105) still green
+### Verified by tests/e2e-stage4.mjs (42 checks) — real on-device models + mocked provider APIs; Stage 1–3 suites (105) still green — 147 checks in total
 
 ## Stage 4 — partial / awaiting external setup
 - 🟡 OpenAI and Anthropic calls are verified against mocked API responses (request shape, mask semantics, keys, error handling). This build environment cannot reach those APIs, so no live generation was run here — add your keys in Settings to use them.
