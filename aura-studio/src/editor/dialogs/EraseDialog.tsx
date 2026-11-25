@@ -68,7 +68,7 @@ export default function EraseDialog() {
       }
     })();
     isCached(LAMA.url).then(setCached);
-  }, [img]); // eslint-disable-line react-hooks/exhaustive-deps
+  }, [img]);  
 
   const current = () => work.current[work.current.length - 1];
 
@@ -166,7 +166,7 @@ export default function EraseDialog() {
     };
     window.addEventListener('keydown', k, true);
     return () => window.removeEventListener('keydown', k, true);
-  }); // eslint-disable-line react-hooks/exhaustive-deps
+  });  
 
   const apply = async () => {
     const m = meta.current;

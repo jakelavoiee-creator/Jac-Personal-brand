@@ -3,6 +3,7 @@ import { resolveAssetSources } from './assets';
 import { ensureFontsForObjects, setFontLoadedHook } from './fonts';
 import { installEffects } from './fx';
 import './photoFilter'; // registers the AuraAdjust filter for loading saved designs
+import './fxlab'; // registers the AuraFX filter (FX Lab)
 import type { PageData, Project } from './types';
 
 /** Extra properties persisted with every object. */

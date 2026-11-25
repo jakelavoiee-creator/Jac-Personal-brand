@@ -43,7 +43,7 @@ function useFontCSS(families: string[]) {
     import('../lib/fontCatalog').then(({ findFont }) => {
       import('../lib/fonts').then(({ ensureFont }) => families.forEach((f) => findFont(f) && ensureFont(f, findFont(f)!.weights[0])));
     });
-  }, [families.join('|')]); // eslint-disable-line react-hooks/exhaustive-deps
+  }, [families.join('|')]);  
 }
 
 export default function BrandsView() {

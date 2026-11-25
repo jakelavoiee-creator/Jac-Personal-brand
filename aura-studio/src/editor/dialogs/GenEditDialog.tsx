@@ -37,7 +37,7 @@ const parseSize = (s: string) => s.split('x').map(Number) as [number, number];
 function windowFor(b: Box, W: number, H: number): { box: Box; size: string } {
   const pad = Math.max(b.w, b.h) * 0.6;
   let x0 = Math.max(0, b.x - pad), y0 = Math.max(0, b.y - pad);
-  let x1 = Math.min(W, b.x + b.w + pad), y1 = Math.min(H, b.y + b.h + pad);
+  const x1 = Math.min(W, b.x + b.w + pad), y1 = Math.min(H, b.y + b.h + pad);
   const size = sizeFor(x1 - x0, y1 - y0);
   const [sw, sh] = parseSize(size);
   const ar = sw / sh;
@@ -109,7 +109,7 @@ export default function GenEditDialog() {
       setPainted(false);
       setSize({ w, h });
     })().catch((e) => setError(e?.message ?? String(e)));
-  }, [img]); // eslint-disable-line react-hooks/exhaustive-deps
+  }, [img]);  
 
   const current = () => work.current[work.current.length - 1];
 

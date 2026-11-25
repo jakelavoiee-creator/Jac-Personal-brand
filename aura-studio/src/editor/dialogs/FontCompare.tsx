@@ -44,7 +44,7 @@ export default function FontCompare() {
     const k = (e: KeyboardEvent) => e.key === 'Escape' && close();
     window.addEventListener('keydown', k);
     return () => window.removeEventListener('keydown', k);
-  }, []); // eslint-disable-line react-hooks/exhaustive-deps
+  }, []);  
 
   const families = useMemo(() => {
     let pool: string[];

@@ -20,7 +20,7 @@ export function NumberField(props: {
   const focused = useRef(false);
   useEffect(() => {
     if (!focused.current) setText(fmt(value));
-  }, [value]); // eslint-disable-line react-hooks/exhaustive-deps
+  }, [value]);  
 
   const clampV = (v: number) => Math.min(max, Math.max(min, v));
   const commit = () => {
@@ -148,7 +148,7 @@ export function Modal(props: { title: string; onClose: () => void; children: Rea
     const k = (e: KeyboardEvent) => e.key === 'Escape' && props.onClose();
     window.addEventListener('keydown', k);
     return () => window.removeEventListener('keydown', k);
-  }, [props.onClose]); // eslint-disable-line react-hooks/exhaustive-deps
+  }, [props.onClose]);  
   return (
     <div className="modal-back" onMouseDown={(e) => e.target === e.currentTarget && props.onClose()}>
       <div
@@ -215,7 +215,7 @@ export function PopMenu(props: { x: number; y: number; items: MenuItem[]; onClos
       window.removeEventListener('mousedown', close);
       window.removeEventListener('keydown', esc);
     };
-  }, [props.x, props.y]); // eslint-disable-line react-hooks/exhaustive-deps
+  }, [props.x, props.y]);  
   return (
     <div className="menu" ref={ref} style={{ left: pos.x, top: pos.y }} onContextMenu={(e) => e.preventDefault()}>
       {props.items.map((it, i) =>

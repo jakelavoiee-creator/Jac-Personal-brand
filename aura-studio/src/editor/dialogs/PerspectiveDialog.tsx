@@ -54,7 +54,7 @@ export default function PerspectiveDialog() {
     listAssets().then((a) => setPhotos(a.filter((x) => /^image\/(png|jpe?g|webp)$/.test(x.type))));
     const p = engine.project;
     engine.pageCanvas(engine.pageIndex, Math.min(1, 2400 / Math.max(p.width, p.height))).then(setArt);
-  }, [open]); // eslint-disable-line react-hooks/exhaustive-deps
+  }, [open]);  
 
   const choose = async (a: Asset) => {
     const img = await loadImg(assetURL(a));
@@ -97,7 +97,7 @@ export default function PerspectiveDialog() {
       }
     });
     return () => cancelAnimationFrame(id);
-  }, [photo, art, quad, blend, lighting, opacity]); // eslint-disable-line react-hooks/exhaustive-deps
+  }, [photo, art, quad, blend, lighting, opacity]);  
 
   useEffect(() => {
     const onResize = () => photo && canvasRef.current && setView({ k: canvasRef.current.getBoundingClientRect().width / photo.img.naturalWidth });

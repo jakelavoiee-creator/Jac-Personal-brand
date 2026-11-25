@@ -27,7 +27,7 @@ export default function PreviewOverlay({ onClose }: { onClose: () => void }) {
       alive = false;
       made.forEach((u) => URL.revokeObjectURL(u));
     };
-  }, []); // eslint-disable-line react-hooks/exhaustive-deps
+  }, []);  
 
   useEffect(() => {
     const k = (e: KeyboardEvent) => {

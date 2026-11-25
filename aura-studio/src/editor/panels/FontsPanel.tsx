@@ -99,7 +99,7 @@ export default function FontsPanel() {
     }
     if (ql) l = l.filter((f) => f.family.toLowerCase().includes(ql) || f.tags.some((t) => t.toLowerCase() === ql));
     return l;
-  }, [tab, q, cat, favs]); // eslint-disable-line react-hooks/exhaustive-deps
+  }, [tab, q, cat, favs]);  
 
   useEffect(() => setLimit(PAGE), [tab, q, cat]);
 

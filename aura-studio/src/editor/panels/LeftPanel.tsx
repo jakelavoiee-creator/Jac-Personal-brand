@@ -433,7 +433,7 @@ function LayersPanel() {
       }
     }
     return map;
-  }, [objVersion]); // eslint-disable-line react-hooks/exhaustive-deps
+  }, [objVersion]);  
 
   const onClick = (o: FabricObject, i: number, e: React.MouseEvent) => {
     if (!o.visible) return;

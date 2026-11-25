@@ -48,7 +48,7 @@ export default function EnhanceDialog() {
     })();
     defaultEnhanceModel().then(setModel);
     segDeviceLabel().then(setDevice);
-  }, [img]); // eslint-disable-line react-hooks/exhaustive-deps
+  }, [img]);  
 
   useEffect(() => {
     isModelCached(ENHANCE_MODELS[model].id).then(setCached);

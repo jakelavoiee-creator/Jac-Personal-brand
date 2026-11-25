@@ -690,3 +690,14 @@ textarea.input { height: auto; padding: 8px 10px; line-height: 1.45; resize: ver
 .persp-handle { position: absolute; width: 16px; height: 16px; margin: -8px 0 0 -8px; border-radius: 50%; background: #fff; border: 2px solid #8b6cff; box-shadow: 0 2px 8px rgba(0,0,0,.5); cursor: grab; touch-action: none; }
 .persp-handle:active { cursor: grabbing; transform: scale(1.15); }
 .persp-empty { max-width: 340px; text-align: center; color: var(--text-2); font-size: 13px; line-height: 1.5; display: flex; flex-direction: column; align-items: center; gap: 10px; }
+
+/* ---------- FX Lab ---------- */
+.fx-looks { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 5px; }
+.fx-looks button { padding: 0; border: 1px solid var(--line); border-radius: var(--r-1); background: var(--bg-2); color: var(--text-2); cursor: pointer; overflow: hidden; display: flex; flex-direction: column; }
+.fx-looks button:hover { border-color: #8b6cff; color: var(--text); }
+.fx-looks img, .fx-looks span { width: 100%; aspect-ratio: 1; object-fit: cover; display: block; background: #2a2a2a; }
+.fx-looks small { font-size: 9.5px; padding: 3px 2px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.fx-item { border: 1px solid var(--line); border-radius: var(--r-2); padding: 8px; margin-bottom: 6px; background: var(--bg-2); display: flex; flex-direction: column; gap: 4px; }
+.fx-item-head { display: flex; align-items: center; gap: 2px; }
+.fx-item-head b { flex: 1; font-size: 12px; font-weight: 600; }
+.fxlab .prop-row { grid-template-columns: 70px minmax(0, 1fr); }

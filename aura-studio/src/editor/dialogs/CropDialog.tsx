@@ -79,7 +79,7 @@ export default function CropDialog() {
       else x2 = Math.max(x1 + 8, Math.min(N.w, x2 + dx));
       if (top) y1 = Math.min(y2 - 8, Math.max(0, y1 + dy));
       else y2 = Math.max(y1 + 8, Math.min(N.h, y2 + dy));
-      let w = x2 - x1;
+      const w = x2 - x1;
       let h = y2 - y1;
       if (rr) {
         h = w / rr;

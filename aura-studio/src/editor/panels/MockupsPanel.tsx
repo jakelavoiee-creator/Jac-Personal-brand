@@ -72,7 +72,7 @@ function GarmentMockups() {
       setShots(next);
     }, 450);
     return () => window.clearTimeout(timer.current);
-  }, [objVersion, g.colorId, g.realism, pageIndex, project.pages.length]); // eslint-disable-line react-hooks/exhaustive-deps
+  }, [objVersion, g.colorId, g.realism, pageIndex, project.pages.length]);  
 
   const mockupBlob = async (i: number, piece: string, size = 2000) => {
     const art = await engine.pageCanvas(i, size / project.width);
@@ -213,7 +213,7 @@ function TryOn() {
     return () => {
       dead = true;
     };
-  }, [cat, piece, color, placement, scale, dy, objVersion, pageIndex]); // eslint-disable-line react-hooks/exhaustive-deps
+  }, [cat, piece, color, placement, scale, dy, objVersion, pageIndex]);  
 
   const results = useMemo(() => {
     const w = q.toLowerCase().split(/\s+/).filter(Boolean);

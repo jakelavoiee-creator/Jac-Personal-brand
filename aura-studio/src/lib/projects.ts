@@ -51,7 +51,14 @@ export async function duplicateProject(id: string) {
     createdAt: now,
     updatedAt: now,
   };
-  copy.pages = copy.pages.map((pg) => ({ ...pg, id: uid('pg_') }));
+  const ids = new Map<string, string>();
+  copy.pages = copy.pages.map((pg) => {
+    const id = uid('pg_');
+    ids.set(pg.id, id);
+    return { ...pg, id };
+  });
+  // garment projects map pages to garment pieces by id
+  if (copy.garment) copy.garment.pages = Object.fromEntries(Object.entries(copy.garment.pages).map(([old, piece]) => [ids.get(old) ?? old, piece]));
   await putProject(copy);
   return copy;
 }

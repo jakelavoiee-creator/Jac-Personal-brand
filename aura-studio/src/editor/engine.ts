@@ -44,6 +44,7 @@ import { warpPath, type Warp } from '../lib/warp';
 import type { BoolOp } from '../lib/vector';
 import type { AssistantAction } from '../lib/ai/assistant';
 import { renderPiece } from '../lib/garment';
+import { AuraFX, type FxOpts } from '../lib/fxlab';
 
 interface PenPt {
   x: number;
@@ -1997,13 +1998,88 @@ export class Engine {
   }
 
   setPhoto(img: FabricImage, st: PhotoState, live = false) {
-    img.filters = photoFilters(st);
+    img.filters = [...photoFilters(st), ...((img.filters ?? []) as any[]).filter((f) => f?.type === 'AuraFX')];
     img.applyFilters();
     (img as any).__fxCache = undefined;
     this.canvas.requestRenderAll();
     this.bump();
     if (live) this.commitSoon();
     else this.commit();
+  }
+
+  /* ---------------- FX Lab ---------------- */
+
+  fxStackOf(img: FabricImage): FxOpts[] {
+    return ((img.filters ?? []) as any[]).filter((f) => f?.type === 'AuraFX').map((f) => ({ effect: f.effect, amount: f.amount, p1: f.p1, p2: f.p2, c1: f.c1, c2: f.c2, seed: f.seed }));
+  }
+
+  /** Replace the FX Lab stack (photo adjustments stay first). */
+  setFxStack(img: FabricImage, stack: FxOpts[], live = false) {
+    const photo = ((img.filters ?? []) as any[]).filter((f) => f && f.type !== 'AuraFX');
+    img.filters = [...photo, ...stack.map((o) => new AuraFX(o))] as any;
+    img.applyFilters();
+    (img as any).__fxCache = undefined;
+    img.dirty = true;
+    this.canvas.requestRenderAll();
+    this.bump();
+    if (live) this.commitSoon();
+    else this.commit();
+  }
+
+  /**
+   * Turn any layer (text, shape, group…) into an image so FX Lab and the
+   * brushes can work on it. The original is kept, hidden, right below.
+   */
+  async rasterize(o = this.active()) {
+    if (!o || o instanceof FabricImage) return o as FabricImage | undefined;
+    const box = o.getBoundingRect();
+    const mult = Math.min(4, Math.max(1, 2400 / Math.max(box.width, box.height)));
+    const el = o.toCanvasElement({ multiplier: mult, enableRetinaScaling: false } as any);
+    const blob: Blob = await new Promise((r, j) => el.toBlob((b) => (b ? r(b) : j(new Error('Could not render this layer.'))), 'image/png'));
+    const { importFile } = await import('../lib/assets');
+    const name = `${(o as any).name || 'Layer'} (image)`;
+    const asset = await importFile(new File([blob], `${name}.png`, { type: 'image/png' }));
+    const img = await FabricImage.fromURL(assetURL(asset));
+    (img as any).assetId = asset.id;
+    (img as any).id = uid('o_');
+    (img as any).name = name;
+    img.set({ scaleX: 1 / mult, scaleY: 1 / mult, originX: 'center', originY: 'center' });
+    img.setPositionByOrigin(new Point(box.left + box.width / 2, box.top + box.height / 2), 'center', 'center');
+    const idx = this.canvas.getObjects().indexOf(o);
+    o.set({ visible: false });
+    (o as any).name = `${(o as any).name || 'Layer'} (original)`;
+    this.canvas.discardActiveObject();
+    this.canvas.insertAt(idx + 1, img);
+    img.setCoords();
+    this.canvas.setActiveObject(img);
+    this.canvas.requestRenderAll();
+    this.commit();
+    this.bump();
+    return img;
+  }
+
+  /** Photoshop's "stamp visible": the whole page merged into one new image layer on top. */
+  async stampVisible() {
+    this.syncPage();
+    const { renderPageCanvas } = await import('../lib/render');
+    const scale = Math.min(1, 4096 / Math.max(this.project.width, this.project.height));
+    const c = await renderPageCanvas(this.project, { ...this.page, background: this.page.background }, scale);
+    const blob: Blob = await new Promise((r, j) => c.toBlob((b) => (b ? r(b) : j(new Error('Could not render the page.'))), 'image/png'));
+    const { importFile } = await import('../lib/assets');
+    const asset = await importFile(new File([blob], 'Merged.png', { type: 'image/png' }));
+    const img = await FabricImage.fromURL(assetURL(asset));
+    (img as any).assetId = asset.id;
+    (img as any).id = uid('o_');
+    (img as any).name = 'Merged (stamp)';
+    img.set({ scaleX: 1 / scale, scaleY: 1 / scale, originX: 'center', originY: 'center' });
+    img.setPositionByOrigin(new Point(this.project.width / 2, this.project.height / 2), 'center', 'center');
+    this.canvas.add(img);
+    img.setCoords();
+    this.canvas.setActiveObject(img);
+    this.canvas.requestRenderAll();
+    this.commit();
+    this.bump();
+    return img;
   }
 
   /** Temporarily show the unedited image (before/after compare). */
@@ -2104,6 +2180,9 @@ export class Engine {
     this.syncPage();
     const src = this.project.pages[i];
     const copy: PageData = { ...structuredClone(src), id: uid('pg_') };
+    // a duplicated garment page is another version of the same piece
+    const g = this.project.garment;
+    if (g?.pages[src.id]) g.pages[copy.id] = g.pages[src.id];
     this.project.pages.splice(i + 1, 0, copy);
     set((s) => ({ project: { ...this.project }, thumbs: src.thumb ? { ...s.thumbs, [copy.id]: src.thumb } : s.thumbs }));
     await this.showPage(i + 1);

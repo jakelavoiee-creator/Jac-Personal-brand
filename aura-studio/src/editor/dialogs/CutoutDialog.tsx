@@ -92,7 +92,7 @@ export default function CutoutDialog() {
     return () => {
       dead = true;
     };
-  }, [img]); // eslint-disable-line react-hooks/exhaustive-deps
+  }, [img]);  
 
   useEffect(() => {
     segDownloadSize(model).then(setDl);
@@ -200,7 +200,7 @@ export default function CutoutDialog() {
     };
     window.addEventListener('keydown', k, true);
     return () => window.removeEventListener('keydown', k, true);
-  }); // eslint-disable-line react-hooks/exhaustive-deps
+  });  
 
   /* ---------- brush ---------- */
   const onStroke = (phase: 'start' | 'move' | 'end', p: StrokePoint) => {

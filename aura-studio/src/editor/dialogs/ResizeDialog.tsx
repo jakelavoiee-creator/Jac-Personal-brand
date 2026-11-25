@@ -23,6 +23,15 @@ export default function ResizeDialog({ onClose }: { onClose: () => void }) {
   const [busy, setBusy] = useState<string | null>(null);
   const [made, setMade] = useState<Project[]>([]);
 
+  if (project.garment)
+    return (
+      <Modal title="Resize design" onClose={onClose} footer={<button className="btn primary" onClick={onClose}>OK</button>}>
+        <p className="muted" style={{ marginTop: 0 }}>
+          Garment designs keep Tapstitch’s exact print-area geometry, so they can’t be resized. Scale or move the artwork inside the dashed print areas instead — or export the print files and resize those.
+        </p>
+      </Modal>
+    );
+
   const toggle = (p: { name: string; width: number; height: number }) =>
     setSizes((cur) => (cur.some((x) => x.name === p.name) ? cur.filter((x) => x.name !== p.name) : asCopy ? [...cur, p] : [p]));
   const custom = { name: `Custom ${cw}×${ch}`, width: cw, height: ch };

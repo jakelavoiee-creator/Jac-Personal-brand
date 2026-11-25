@@ -42,7 +42,9 @@ import {
   Scissors,
   Wand2,
   Sparkles,
+  Layers,
 } from 'lucide-react';
+import FxLabSection from './FxLab';
 import { ActiveSelection, FabricImage, Group, Path, Polygon, Polyline, Rect, Shadow, IText, type FabricObject } from 'fabric';
 import { toast } from '../store/app';
 import { useEngine } from './Editor';
@@ -100,6 +102,9 @@ function PageProps({ onDialog }: { onDialog: (d: any) => void }) {
         )}
         <button className="btn block" onClick={() => onDialog('resize')}>
           <Scaling size={14} /> Resize design
+        </button>
+        <button className="btn block" style={{ marginTop: 6 }} onClick={() => engine.stampVisible()} title="Merge everything visible into one new image layer (Photoshop: Stamp visible) — then use FX Lab on the whole artwork" data-testid="stamp-visible">
+          <Layers size={14} /> Merge visible to new layer
         </button>
       </div>
       <div className="props-section">
@@ -237,6 +242,7 @@ function ObjectProps({ o }: { o: FabricObject }) {
       )}
       {!multi && !(o instanceof IText) && !(o instanceof FabricImage) && !(o instanceof Group) && <ShapeProps o={o} />}
       {!multi && o instanceof FabricImage && <ImageProps img={o} />}
+      {!multi && !(o as any).placeholder && <FxLabSection o={o} />}
       {!multi && !(o instanceof IText) && !(o instanceof FabricImage) && (o instanceof Group || o.type === 'path') && <ColorsProps o={o} />}
       <VectorProps o={o} objs={objs} multi={multi} />
       <Appearance o={o} />
@@ -447,7 +453,7 @@ function TextProps({ t, multi }: { t: IText; multi: boolean }) {
       )}
       {!multi && (
         <p className="faint" style={{ fontSize: 11.5, margin: '6px 0 0' }}>
-          Double-click the text on canvas to edit it. Curved text & effects: Stage 2.
+          Double-click the text on canvas to edit it. Curves and arcs: Transform. Glows, outlines and 3D: Effects.
         </p>
       )}
     </div>
@@ -557,7 +563,7 @@ function ImageProps({ img }: { img: FabricImage }) {
       /* cross-origin or unloaded image */
     }
     return out;
-  }, [orig]); // eslint-disable-line react-hooks/exhaustive-deps
+  }, [orig]);  
   const slider = ([k, label, min, max]: [keyof Adjust, string, number, number]) => (
     <div key={k} className="prop-row">
       <span>{label}</span>

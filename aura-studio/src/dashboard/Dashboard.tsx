@@ -150,7 +150,7 @@ export default function Dashboard({ route }: { route: Route }) {
       window.removeEventListener('dragover', over);
       window.removeEventListener('drop', drop);
     };
-  }); // eslint-disable-line react-hooks/exhaustive-deps
+  });  
 
   const live = projects.filter((p) => !p.trashedAt);
   const q = query.trim().toLowerCase();
