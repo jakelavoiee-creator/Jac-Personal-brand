@@ -61,7 +61,7 @@ await page.route('https://api.openai.com/**', async (route) => {
   const text = body.toString('latin1');
   const size = isEdit ? /name="size"\r\n\r\n([^\r]+)/.exec(text)?.[1] : JSON.parse(body.toString()).size;
   const n = isEdit ? +(/name="n"\r\n\r\n(\d+)/.exec(text)?.[1] ?? 1) : JSON.parse(body.toString()).n;
-  sent.openai.push({ url: req.url(), auth: req.headers()['authorization'], size, n, text: isEdit ? text.slice(0, 4000) : body.toString(), hasMask: /name="mask"/.test(text), images: (text.match(/name="image(\[\])?"/g) || []).length });
+  sent.openai.push({ url: req.url(), auth: (await req.allHeaders())['authorization'], size, n, text: isEdit ? text.slice(0, 4000) : body.toString(), hasMask: /name="mask"/.test(text), images: (text.match(/name="image(\[\])?"/g) || []).length });
   const [w, h] = (size || '1024x1024').split('x').map(Number);
   const png = await page.evaluate(
     async ([w, h, c]) => {
@@ -84,7 +84,7 @@ await page.route('https://api.anthropic.com/**', async (route) => {
   const req = route.request();
   if (req.method() === 'OPTIONS') return route.fulfill({ status: 204, headers: { 'access-control-allow-origin': '*', 'access-control-allow-headers': '*', 'access-control-allow-methods': '*' } });
   const body = JSON.parse(req.postData() || '{}');
-  sent.anthropic.push({ headers: req.headers(), body });
+  sent.anthropic.push({ headers: await req.allHeaders(), body });
   const text = body.output_config?.format ? JSON.stringify(assistantReply) : 'A sunlit ceramic cup on pale travertine, soft morning window light, minimal composition, warm neutral palette.';
   await route.fulfill({ status: 200, contentType: 'application/json', headers: { 'access-control-allow-origin': '*' }, body: JSON.stringify({ id: 'msg_test', type: 'message', role: 'assistant', model: body.model, content: [{ type: 'text', text }], stop_reason: 'end_turn', stop_sequence: null, usage: { input_tokens: 10, output_tokens: 10 } }) });
 });
