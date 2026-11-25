@@ -701,3 +701,15 @@ textarea.input { height: auto; padding: 8px 10px; line-height: 1.45; resize: ver
 .fx-item-head { display: flex; align-items: center; gap: 2px; }
 .fx-item-head b { flex: 1; font-size: 12px; font-weight: 600; }
 .fxlab .prop-row { grid-template-columns: 70px minmax(0, 1fr); }
+
+/* ---------- Brush panel ---------- */
+.brush-panel { display: flex; flex-direction: column; gap: 10px; }
+.brush-panel .field { margin-bottom: 0; }
+.brush-panel .prop-row { display: grid; grid-template-columns: 70px minmax(0, 1fr); align-items: center; gap: 8px; font-size: 12px; color: var(--text-2); }
+.brush-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 6px; }
+.brush-grid button { display: flex; flex-direction: column; align-items: center; gap: 2px; padding: 6px 2px 5px; border: 1px solid var(--line); border-radius: var(--r-2); background: var(--bg-2); color: var(--text-2); cursor: pointer; }
+.brush-grid button:hover { border-color: #4a4a4a; color: var(--text); }
+.brush-grid button.on { border-color: #8b6cff; background: rgba(124,92,255,.12); color: var(--text); }
+.brush-grid small { font-size: 10.5px; }
+.swatch-row .sw.on { outline: 2px solid var(--text); outline-offset: 2px; }
+.swatch-row .sw.rainbow { background: conic-gradient(#ff2bd6, #ffe66d, #00ffa3, #3cf2ff, #7c5cff, #ff2bd6); }

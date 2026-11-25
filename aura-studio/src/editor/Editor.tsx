@@ -547,6 +547,11 @@ function Shortcuts({ onDialog }: { onDialog: (d: any) => void }) {
       if (st.tool === 'pen' && k === 'enter') return e.preventDefault(), engine.finishPen(false);
       if (st.tool === 'pen' && k === 'escape') return engine.finishPen(false, true);
       if (st.tool === 'pencil' && k === 'escape') return engine.setTool('select');
+      if (st.tool === 'brush') {
+        if (k === 'escape') return engine.setTool('select');
+        if (k === '[') return engine.setBrushStyle({ size: Math.max(1, Math.round(st.brushStyle.size / 1.2)) });
+        if (k === ']') return engine.setBrushStyle({ size: Math.min(1200, Math.round(st.brushStyle.size * 1.2)) });
+      }
       if (st.nodeEditing && k === 'escape') return engine.exitNodeEdit();
       if (!mod && k === 'p') return engine.setTool('pen');
       if (!mod && k === 'b') return engine.setTool('pencil');

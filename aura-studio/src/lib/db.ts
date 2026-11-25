@@ -81,9 +81,9 @@ export async function deleteProject(id: string) {
 }
 
 /* ---------- assets ---------- */
-export async function listAssets(): Promise<Asset[]> {
+export async function listAssets(includeInternal = false): Promise<Asset[]> {
   const all = await (await db()).getAll('assets');
-  return all.sort((a, b) => b.createdAt - a.createdAt);
+  return all.filter((a) => includeInternal || !a.internal).sort((a, b) => b.createdAt - a.createdAt);
 }
 export async function getAsset(id: string) {
   return (await db()).get('assets', id);

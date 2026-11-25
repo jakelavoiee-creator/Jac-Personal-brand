@@ -58,6 +58,8 @@ export interface Asset {
   favorite: boolean;
   createdAt: number;
   folderId?: string | null;
+  /** internal working file (e.g. paint-layer pixels) — hidden from asset lists */
+  internal?: boolean;
   /** attribution for stock media (licence, author, source page) */
   credit?: { title?: string; author?: string; license: string; licenseUrl?: string; source: string; sourceUrl: string };
 }

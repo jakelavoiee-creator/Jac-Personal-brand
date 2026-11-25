@@ -26,6 +26,7 @@ import {
   PenTool,
   Palette,
   Pencil,
+  Paintbrush,
 } from 'lucide-react';
 import { ActiveSelection, FabricImage, Group, IText, type FabricObject } from 'fabric';
 import { useEngine } from '../Editor';
@@ -36,6 +37,7 @@ import TemplatesPanel from './TemplatesPanel';
 import PhotosPanel from './PhotosPanel';
 import AIPanel from './AIPanel';
 import MockupsPanel from './MockupsPanel';
+import BrushPanel from './BrushPanel';
 import { isDark, useEditor } from '../engine';
 import { SHAPES, shapePath } from '../shapes';
 import { ensureFont } from '../../lib/fonts';
@@ -61,6 +63,7 @@ type PanelId =
   | 'backgrounds'
   | 'textures'
   | 'ai'
+  | 'brush'
   | 'mockups'
   | 'layers'
   | 'brand';
@@ -77,6 +80,7 @@ const RAIL: { id: PanelId; label: string; icon: any; soon?: string }[] = [
   { id: 'uploads', label: 'Uploads', icon: Upload },
   { id: 'backgrounds', label: 'Backgr.', icon: PaintBucket },
   { id: 'textures', label: 'Textures', icon: Grip },
+  { id: 'brush', label: 'Brush', icon: Paintbrush },
   { id: 'ai', label: 'AI Tools', icon: Wand2 },
   { id: 'mockups', label: 'Mockups', icon: Shirt },
   { id: 'layers', label: 'Layers', icon: LayersIcon },
@@ -123,6 +127,7 @@ export default function LeftPanel() {
               {open === 'photos' && <PhotosPanel />}
               {open === 'ai' && <AIPanel />}
               {open === 'mockups' && <MockupsPanel />}
+              {open === 'brush' && <BrushPanel />}
               {open === 'graphics' && <GraphicsPanel />}
               {open === 'illustrations' && <GraphicsPanel illustrations />}
               {SOON[open] && <SoonPanel id={open} stage={RAIL.find((r) => r.id === open)!.soon!} />}

@@ -45,6 +45,7 @@ import type { BoolOp } from '../lib/vector';
 import type { AssistantAction } from '../lib/ai/assistant';
 import { renderPiece } from '../lib/garment';
 import { AuraFX, type FxOpts } from '../lib/fxlab';
+import { BRUSH_DEFAULT, BrushSession, type BrushStyle } from './brush';
 
 interface PenPt {
   x: number;
@@ -84,7 +85,8 @@ export interface EditorState {
   /** typography comparison studio */
   compare: { families?: string[]; title?: string } | null;
   /** active drawing tool */
-  tool: 'select' | 'pen' | 'pencil';
+  tool: 'select' | 'pen' | 'pencil' | 'brush';
+  brushStyle: BrushStyle;
   penStyle: { stroke: string; width: number; fill: string };
   /** object currently in point-editing mode */
   nodeEditing: boolean;
@@ -114,6 +116,7 @@ export const useEditor = create<EditorState>(() => ({
   panel: typeof innerWidth !== 'undefined' && innerWidth < 900 ? null : 'elements',
   compare: null,
   tool: 'select',
+  brushStyle: { ...BRUSH_DEFAULT },
   penStyle: { stroke: '#111111', width: 6, fill: '#c9c9c9' },
   nodeEditing: false,
   busy: null,
@@ -187,6 +190,9 @@ export class Engine {
   private history = new Map<string, History>();
   private restoring = false;
   private clipboard: any[] = [];
+  /** active brush painting session (brush tool) */
+  brush: BrushSession | null = null;
+  private painting = false;
   /** rendered Tapstitch garment behind the artwork (garment projects) */
   private backdrop: { key: string; canvas: HTMLCanvasElement | null } | null = null;
   private pasteCount = 0;
@@ -686,6 +692,42 @@ export class Engine {
     }
     ctx.stroke();
 
+    // Brush cursor (+ its symmetric copies)
+    if (this.brush?.cursor) {
+      const st = get().brushStyle;
+      const r = st.size / 2;
+      const cx = this.project.width / 2, cy = this.project.height / 2;
+      const p0 = this.brush.cursor;
+      const pts: { x: number; y: number }[] = [p0];
+      if (st.symmetry === 'x' || st.symmetry === 'quad') pts.push({ x: 2 * cx - p0.x, y: p0.y });
+      if (st.symmetry === 'y' || st.symmetry === 'quad') pts.push({ x: p0.x, y: 2 * cy - p0.y });
+      if (st.symmetry === 'quad') pts.push({ x: 2 * cx - p0.x, y: 2 * cy - p0.y });
+      if (st.symmetry === 'radial') {
+        const n = Math.max(2, Math.round(st.radial));
+        for (let k = 1; k < n; k++) {
+          const a = (k * 2 * Math.PI) / n, dx = p0.x - cx, dy = p0.y - cy;
+          pts.push({ x: cx + dx * Math.cos(a) - dy * Math.sin(a), y: cy + dx * Math.sin(a) + dy * Math.cos(a) });
+        }
+      }
+      ctx.save();
+      ctx.lineWidth = 1.2 / z;
+      pts.forEach((q, i) => {
+        ctx.strokeStyle = i ? 'rgba(139,108,255,.55)' : '#ffffff';
+        ctx.beginPath();
+        ctx.arc(q.x, q.y, r, 0, Math.PI * 2);
+        ctx.stroke();
+      });
+      if (st.symmetry !== 'none') {
+        ctx.setLineDash([6 / z, 6 / z]);
+        ctx.strokeStyle = 'rgba(139,108,255,.6)';
+        ctx.beginPath();
+        if (st.symmetry === 'x' || st.symmetry === 'quad' || st.symmetry === 'radial') (ctx.moveTo(cx, 0), ctx.lineTo(cx, this.project.height));
+        if (st.symmetry === 'y' || st.symmetry === 'quad' || st.symmetry === 'radial') (ctx.moveTo(0, cy), ctx.lineTo(this.project.width, cy));
+        ctx.stroke();
+      }
+      ctx.restore();
+    }
+
     // Pen tool preview
     if (this.pen && this.pen.pts.length) {
       const pts = this.pen.pts;
@@ -802,6 +844,11 @@ export class Engine {
         this.penDown(opt.scenePoint);
         return;
       }
+      if (this.brush && e.button === 0 && !this.spaceDown) {
+        this.painting = true;
+        this.brush.down(opt.scenePoint, penPressure(e));
+        return;
+      }
       if (e.button === 2) {
         const t = opt.target;
         if (t && !c.getActiveObjects().includes(t)) c.setActiveObject(t);
@@ -829,6 +876,14 @@ export class Engine {
       const e = opt.e as MouseEvent;
       if (this.pen && !this.panning) {
         this.penMove(opt.scenePoint);
+        if (!this.spaceDown) return;
+      }
+      if (this.brush && !this.panning) {
+        if (this.painting) this.brush.move(opt.scenePoint, penPressure(e));
+        else {
+          this.brush.cursor = opt.scenePoint;
+          c.requestRenderAll();
+        }
         if (!this.spaceDown) return;
       }
       if (this.panning) {
@@ -887,6 +942,11 @@ export class Engine {
     });
     c.on('mouse:up', (opt) => {
       if (this.pen) this.pen.drag = false;
+      if (this.brush && this.painting) {
+        this.painting = false;
+        this.brush.up();
+        return;
+      }
       if (this.panning) {
         this.panning = null;
         c.selection = true;
@@ -1583,10 +1643,12 @@ export class Engine {
 
   /* ---------------- drawing tools ---------------- */
 
-  setTool(tool: 'select' | 'pen' | 'pencil') {
+  setTool(tool: 'select' | 'pen' | 'pencil' | 'brush') {
     if (this.pen) this.finishPen(false);
     this.exitNodeEdit();
     const c = this.canvas;
+    this.brush = tool === 'brush' ? (this.brush ?? new BrushSession(this, () => get().brushStyle)) : null;
+    if (tool === 'brush') c.discardActiveObject();
     c.isDrawingMode = tool === 'pencil';
     if (tool === 'pencil') {
       const { stroke, width } = get().penStyle;
@@ -1601,11 +1663,25 @@ export class Engine {
       this.pen = { pts: [], drag: false, cursor: null };
     }
     c.selection = tool === 'select';
-    c.skipTargetFind = tool === 'pen';
-    c.defaultCursor = tool === 'pen' ? 'crosshair' : 'default';
+    c.skipTargetFind = tool === 'pen' || tool === 'brush';
+    c.defaultCursor = tool === 'pen' ? 'crosshair' : tool === 'brush' ? 'none' : 'default';
     c.setCursor(c.defaultCursor);
     c.requestRenderAll();
     set({ tool });
+  }
+
+  setBrushStyle(patch: Partial<BrushStyle>) {
+    set({ brushStyle: { ...get().brushStyle, ...patch } });
+    this.canvas.requestRenderAll();
+  }
+
+  /** Start a fresh paint layer on top (brush tool). */
+  newPaintLayer() {
+    if (!this.brush) this.setTool('brush');
+    this.brush!.newLayer();
+    this.canvas.requestRenderAll();
+    this.commit();
+    this.bump();
   }
 
   setPenStyle(patch: Partial<EditorState['penStyle']>) {
@@ -1676,6 +1752,7 @@ export class Engine {
 
   private setToolSelect() {
     this.pen = null;
+    this.brush = null;
     const c = this.canvas;
     c.isDrawingMode = false;
     c.selection = true;
@@ -2496,6 +2573,11 @@ export class Engine {
     this.bump();
     return o;
   }
+}
+
+/** Pen-tablet pressure (mice report a constant, so ignore them). */
+function penPressure(e: any) {
+  return e?.pointerType === 'pen' && e.pressure > 0 ? 0.2 + e.pressure * 0.8 : 1;
 }
 
 /** Fabric filter list for a photo state: adjust → sharpen → blur. */

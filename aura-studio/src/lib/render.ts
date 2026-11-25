@@ -7,7 +7,7 @@ import './fxlab'; // registers the AuraFX filter (FX Lab)
 import type { PageData, Project } from './types';
 
 /** Extra properties persisted with every object. */
-export const CUSTOM_PROPS = ['id', 'name', 'locked', 'assetId', 'shapeKind', 'fx', 'warp', 'placeholder', 'maskKind', 'originalAssetId'];
+export const CUSTOM_PROPS = ['id', 'name', 'locked', 'assetId', 'shapeKind', 'fx', 'warp', 'placeholder', 'maskKind', 'originalAssetId', 'paintLayer'];
 FabricObject.customProperties = CUSTOM_PROPS;
 installEffects();
 setFontLoadedHook((family) => cache.clearFontCache(family));
