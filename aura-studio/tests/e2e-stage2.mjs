@@ -63,7 +63,8 @@ await ev(
 await page.goto(BASE);
 await page.waitForSelector('.card:has-text("Legacy Verso Design")', { timeout: 10000 }).catch(() => {});
 ok((await page.locator('.card:has-text("Legacy Verso Design")').count()) === 1, 'designs from the pre-rename database migrate automatically');
-ok((await page.textContent('.brand-name')).includes('AURA'), 'app is branded Aura Studio');
+await page.waitForFunction(() => document.querySelector('.app-logo')?.complete, null, { timeout: 10000 }).catch(() => {});
+ok(await page.evaluate(() => { const i = document.querySelector('.app-logo'); return !!i && i.alt === 'aurastudio' && i.naturalWidth > 1000; }), 'app shows the aurastudio logo');
 
 /* 2. Effects */
 await page.click('button.format:has-text("Instagram Post")');
