@@ -7,6 +7,8 @@ const KEYS = [
   { id: 'stability', label: 'Stability AI API key', hint: 'Generation, inpainting, outpainting (paid inference)' },
   { id: 'anthropic', label: 'Anthropic API key', hint: 'Design assistant (paid inference)' },
   { id: 'fastapi', label: 'Self-hosted processing URL', hint: 'Your own FastAPI/GPU server (hosting required)' },
+  { id: 'openverseId', label: 'Openverse client ID', hint: 'Free — enables Openverse photo search (register at api.openverse.org)' },
+  { id: 'openverseSecret', label: 'Openverse client secret', hint: 'Free — paired with the client ID above' },
 ];
 
 const CAPS: [string, string, 'local' | 'soon' | 'paid', string][] = [
@@ -14,11 +16,13 @@ const CAPS: [string, string, 'local' | 'soon' | 'paid', string][] = [
   ['Projects, autosave, assets (IndexedDB)', 'Free · runs locally', 'local', 'Available'],
   ['PNG / JPG / WEBP / transparent export', 'Free · runs locally', 'local', 'Available'],
   ['Google Fonts library', 'Free · fonts download from Google', 'local', 'Curated set now · full library Stage 2'],
-  ['SVG / PDF export', 'Free · runs locally', 'local', 'Stage 3'],
+  ['SVG / PDF export (vector, bleed, crop marks)', 'Free · runs locally', 'local', 'Available'],
+  ['Templates, brand kits, smart resize', 'Free · runs locally', 'local', 'Available'],
+  ['Stock photos (Wikimedia Commons, Openverse)', 'Free · Openverse needs a free API key', 'soon', 'Available'],
   ['Background removal (ONNX in browser)', 'Free · local model download (~40–170 MB, once)', 'local', 'Stage 4'],
   ['AI image generation / generative fill', 'Requires a paid provider key or your own GPU server', 'paid', 'Stage 4'],
   ['AI design assistant', 'Requires an LLM provider key', 'paid', 'Stage 4'],
-  ['Cloud sync & share links', 'Free tier via optional Supabase project', 'soon', 'Stage 3'],
+  ['Cloud sync & share links', 'Needs your own Supabase project (free tier)', 'soon', 'Awaiting setup'],
 ];
 
 const store = {
@@ -85,10 +89,10 @@ export default function SettingsView() {
       <section className="section">
         <div className="section-head">
           <h2>External API keys</h2>
-          <span className="tag soon">Used from Stage 4</span>
+          <span className="tag soon">AI keys used from Stage 4</span>
         </div>
         <p className="muted" style={{ marginTop: 0 }}>
-          Keys are stored only in this browser (localStorage) and are sent only to the provider they belong to. No AI feature is active in Stage 1, so nothing is called yet.
+          Keys are stored only in this browser (localStorage) and are sent only to the provider they belong to. AI keys are used from Stage 4.
         </p>
         <div style={{ display: 'grid', gap: 2, maxWidth: 620 }}>
           {KEYS.map((k) => (

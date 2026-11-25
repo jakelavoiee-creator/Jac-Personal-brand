@@ -33,6 +33,7 @@ import FontsPanel from './FontsPanel';
 import GraphicsPanel from './GraphicsPanel';
 import BrandPanel from './BrandPanel';
 import TemplatesPanel from './TemplatesPanel';
+import PhotosPanel from './PhotosPanel';
 import { isDark, useEditor } from '../engine';
 import { SHAPES, shapePath } from '../shapes';
 import { ensureFont } from '../../lib/fonts';
@@ -70,7 +71,7 @@ const RAIL: { id: PanelId; label: string; icon: any; soon?: string }[] = [
   { id: 'fonts', label: 'Fonts', icon: CaseSensitive },
   { id: 'graphics', label: 'Graphics', icon: Sparkles },
   { id: 'illustrations', label: 'Illustr.', icon: Flower2 },
-  { id: 'photos', label: 'Photos', icon: Camera, soon: 'Stage 3' },
+  { id: 'photos', label: 'Photos', icon: Camera },
   { id: 'uploads', label: 'Uploads', icon: Upload },
   { id: 'backgrounds', label: 'Backgr.', icon: PaintBucket },
   { id: 'textures', label: 'Textures', icon: Grip },
@@ -80,7 +81,6 @@ const RAIL: { id: PanelId; label: string; icon: any; soon?: string }[] = [
 ];
 
 const SOON: Record<string, { title: string; body: string; items: string[] }> = {
-  photos: { title: 'Stock photos', body: 'A free stock photo search (openly licensed sources) arrives in Stage 3. Upload your own photos today.', items: ['Search by keyword', 'License info per photo'] },
   ai: { title: 'AI tools', body: 'Stage 4. Background removal will run locally in the browser (free); generation & generative fill will use provider keys from Settings. Nothing here is simulated.', items: ['Background remover (local ONNX)', 'Magic eraser', 'Generative fill & expand', 'Text-to-image'] },
   mockups: { title: 'Mockup studio', body: 'Stage 5: garment templates (front/back), packaging and lifestyle mockups.', items: ['T-shirts, hoodies, caps', 'Packaging & posters', 'Your own product photos'] },
 };
@@ -120,6 +120,7 @@ export default function LeftPanel() {
               {open === 'textures' && <TexturesPanel />}
               {open === 'brand' && <BrandPanel />}
               {open === 'templates' && <TemplatesPanel />}
+              {open === 'photos' && <PhotosPanel />}
               {open === 'graphics' && <GraphicsPanel />}
               {open === 'illustrations' && <GraphicsPanel illustrations />}
               {SOON[open] && <SoonPanel id={open} stage={RAIL.find((r) => r.id === open)!.soon!} />}
@@ -312,7 +313,7 @@ function UploadsPanel() {
           upload(Array.from(e.dataTransfer.files));
         }}
       >
-        Drop PNG, JPG, WEBP, GIF or SVG
+        Drop PNG, JPG, WEBP, GIF, SVG or PDF
       </div>
       {assets.length > 4 && (
         <div className="search" style={{ margin: '8px 0' }}>

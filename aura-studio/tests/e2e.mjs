@@ -175,8 +175,9 @@ ok((await engine(() => window.__aura.objects().filter((o) => o.type === 'image')
 
 // 15. Resize to story, content scaled, not stretched
 await page.click('button:has-text("Resize")');
+await page.click('.modal .seg button:has-text("Resize this design")');
 await page.click('.modal button.tab:has-text("Instagram Story")');
-await page.click('.modal button:has-text("Resize all")');
+await page.click('.modal .modal-foot button:has-text("Resize this design")');
 await page.waitForFunction(() => window.__aura.project.height === 1920);
 const ratios = await engine(() => window.__aura.objects().map((o) => +(o.scaleX / o.scaleY).toFixed(3)));
 ok(ratios.every((r, i, a) => r === a[i]), 'resize keeps element proportions');

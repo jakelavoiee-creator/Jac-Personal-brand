@@ -1,14 +1,15 @@
 {
   "name": "aura-studio",
   "version": "0.1.0",
-  "description": "Aura Studio — professional design platform (Stage 2: typography, effects, vectors, graphics)",
+  "description": "Aura Studio — professional design platform (Stage 3: templates, brand kits, smart resize, SVG/PDF)",
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",
     "preview": "vite preview --port 4173",
     "typecheck": "tsc",
-    "test": "node tests/e2e.mjs && node tests/e2e-tools.mjs && node tests/e2e-stage2.mjs",
-    "fonts:build": "node scripts/build-font-catalog.mjs"
+    "test": "node tests/e2e.mjs && node tests/e2e-tools.mjs && node tests/e2e-stage2.mjs && node tests/e2e-stage3.mjs",
+    "fonts:build": "node scripts/build-font-catalog.mjs",
+    "templates:thumbs": "node scripts/build-template-thumbs.mjs"
   },
   "dependencies": {
     "fabric": "^7.4.0",

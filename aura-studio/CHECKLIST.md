@@ -2,7 +2,7 @@
 
 Legend: ✅ done & tested · 🟡 partial · ⏳ planned · 🔌 needs external dependency
 
-_Last updated: Stage 2 complete (app renamed Verso → Aura Studio; existing data migrates automatically)._
+_Last updated: Stage 3 complete._
 
 ## Stage 1 — Core design platform ✅
 
@@ -92,13 +92,39 @@ zero runtime errors.
 - 🟡 Fontshare italics not wired (uprights only); WOFF2 uploads can't be converted to outlines (TTF/OTF can)
 - 🟡 Free fonts from marketplaces (e.g. Creative Fabrica) can't be bundled — download with your account and use Upload font
 
-## Stage 3 — Ecosystem
-- ⏳ Editable template library + save-as-template
-- ⏳ Brand kits (logos, palettes HEX/RGB, type systems)
-- ⏳ Element-aware smart resize
-- ⏳ SVG & print-ready PDF export (effects rasterised or converted), PDF import (pdf.js)
-- ⏳ Stock photos (openly licensed source)
-- 🔌 Optional Supabase cloud sync & share links (free tier; account optional)
+## Stage 3 — Canva-inspired ecosystem ✅
+
+### Templates
+- ✅ 34 original, fully editable templates in 12 categories (streetwear graphics, apparel branding, vintage typography, luxury branding, editorial posters, album covers, music artwork, social media, product ads, minimalist branding, retro compositions, business materials) — live text, warped text, effects, vector graphics, photo frames
+- ✅ Template gallery (category tabs, search), "Start from a template" on Home, Templates panel in the editor (adds pages, smart-resized to the current design), open-as-new-design
+- ✅ Photo frames: select a frame and click any image to fill it (cover-crop, re-croppable)
+- ✅ Save any design as a reusable template (Share menu or design card menu) → "My templates"
+
+### Brand kits
+- ✅ Multiple brands: logos, palette with roles (primary/secondary/accent/neutral), HEX + RGB editing, heading/subheading/body type system (weights, tracking, caps), brand assets, guidelines
+- ✅ Editor Brand panel: brand swatches (fill selection or page), add heading/subheading/body in brand fonts, insert logos and assets
+- ✅ Apply brand to a design: fonts by text hierarchy, colours mapped by prominence onto the palette
+
+### Resize, export, import
+- ✅ Element-aware smart resize (backgrounds re-cover, bands stretch, edge pieces stay pinned, content re-fits as a group); create resized copies in many formats at once — original untouched
+- ✅ SVG export: outlined text (exact) or live text with linked web fonts; images embedded; effects/shadows/blend modes embedded as high-res images
+- ✅ PDF export: vector or high-res image, 150/300/600 DPI, multi-page, 3 mm bleed, crop marks, correct physical page size
+- ✅ PDF import (pdf.js 6, scripting disabled): one image asset per page
+- ✅ Multi-page documents and social resizing presets (from Stage 1) carried forward
+
+### Assets & discovery
+- ✅ Asset folders, move to folder, duplicate, recently uploaded, favourites, vectors, stock-photo filter
+- ✅ Free stock photos: Wikimedia Commons (no key) and Openverse (free API key), commercial-use licences only, attribution stored and copyable
+- ✅ Discover: themed template kits and 8 curated font pairings that start a design
+- ✅ DB schema v2 (templates, brand kits) — upgrades existing data in place
+
+### Verified by tests/e2e-stage3.mjs (28 checks); Stage 1–2 suites (77) still green
+
+## Stage 3 — partial / awaiting external setup
+- 🔌 Cloud sync & share links — needs your own Supabase project (URL + anon key); not connected yet. Designs stay local; use project files to move between devices.
+- 🔌 Openverse search needs a free Openverse API key (Settings). Wikimedia Commons works without a key.
+- 🟡 Stock search was verified against recorded API responses; live calls from the build container were rate-limited/key-gated.
+- 🟡 PDF export is RGB (no CMYK conversion in the browser).
 
 ## Stage 4 — Image editing & AI
 - ⏳ Full adjustments (exposure, temperature, tint, highlights/shadows, whites/blacks, clarity, vignette, grain), filter presets with intensity, masks

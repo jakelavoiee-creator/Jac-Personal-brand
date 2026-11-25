@@ -1,4 +1,7 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import { getAsset } from '../lib/db';
+import { creditLine } from '../lib/stock';
+import type { Asset } from '../lib/types';
 import {
   AlignCenterHorizontal,
   AlignCenterVertical,
@@ -547,6 +550,7 @@ function ImageProps({ img }: { img: FabricImage }) {
           <RotateCcw size={13} /> Reset adjustments
         </button>
       )}
+      <PhotoCredit assetId={(img as any).assetId} />
       <p className="faint" style={{ fontSize: 11.5, margin: '8px 0 0' }}>
         Source {natural.w}×{natural.h}. Full photo studio (exposure, curves, filters, masks) and AI tools: Stage 4.
       </p>
@@ -724,6 +728,42 @@ function ColorsProps({ o }: { o: FabricObject }) {
           <ColorField value={c} onChange={(v, live) => engine.replaceColor(o, c, v.toLowerCase(), live)} />
         </div>
       ))}
+    </div>
+  );
+}
+
+/** Attribution for stock photos (required for CC BY / BY-SA). */
+function PhotoCredit({ assetId }: { assetId?: string }) {
+  const [credit, setCredit] = useState<Asset['credit'] | null>(null);
+  useEffect(() => {
+    let alive = true;
+    if (assetId) getAsset(assetId).then((a) => alive && setCredit(a?.credit ?? null));
+    else setCredit(null);
+    return () => {
+      alive = false;
+    };
+  }, [assetId]);
+  if (!credit) return null;
+  return (
+    <div className="credit-box">
+      <b>Photo credit</b>
+      <span>
+        {credit.author} · {credit.license} · {credit.source}
+      </span>
+      <div className="row" style={{ gap: 6, marginTop: 6 }}>
+        <button
+          className="btn sm"
+          onClick={async () => {
+            await navigator.clipboard.writeText(creditLine(credit)).catch(() => {});
+            toast('Credit copied', 'success');
+          }}
+        >
+          Copy credit
+        </button>
+        <a className="btn ghost sm" href={credit.sourceUrl} target="_blank" rel="noreferrer noopener">
+          Source
+        </a>
+      </div>
     </div>
   );
 }

@@ -47,13 +47,14 @@ import { Modal, PopMenu, type MenuItem } from '../ui/controls';
 import SettingsView from './Settings';
 import BrandsView from './Brands';
 import TemplatesView from './Templates';
+import DiscoverView from './Discover';
 import { TEMPLATES, templateThumb, projectFromTemplate } from '../templates';
 
 const NAV: { id: Route['name']; label: string; icon: any; stage?: string }[] = [
   { id: 'home', label: 'Home', icon: HomeIcon },
   { id: 'projects', label: 'Projects', icon: Shapes },
   { id: 'templates', label: 'Templates', icon: LayoutTemplate },
-  { id: 'discover', label: 'Discover', icon: Compass, stage: 'S3' },
+  { id: 'discover', label: 'Discover', icon: Compass },
   { id: 'ai', label: 'AI Studio', icon: Bot, stage: 'S4' },
   { id: 'brands', label: 'Brand Kits', icon: Palette },
   { id: 'assets', label: 'Assets', icon: ImageIcon },
@@ -189,6 +190,9 @@ export default function Dashboard({ route }: { route: Route }) {
       break;
     case 'templates':
       body = <TemplatesView query={q} />;
+      break;
+    case 'discover':
+      body = <DiscoverView />;
       break;
     default:
       body = <Roadmap kind={route.name} />;
@@ -813,26 +817,6 @@ function AssetsView({ query, onUpload }: { query: string; onUpload: () => void }
 }
 
 const ROADMAP: Record<string, { title: string; stage: string; intro: string; items: [string, string][] }> = {
-  templates: {
-    title: 'Templates',
-    stage: 'Stage 3',
-    intro: 'Fully editable, layered compositions — never flattened images. Save any design as your own template.',
-    items: [
-      ['Streetwear & apparel', 'Chest prints, back pieces, neck labels'],
-      ['Vintage typography', 'Badges, emblems, retro lockups'],
-      ['Editorial & album art', 'Posters, covers, music artwork'],
-      ['Social & ads', 'Carousels, stories, product promos'],
-    ],
-  },
-  discover: {
-    title: 'Discover',
-    stage: 'Stage 3',
-    intro: 'Browse curated typography, graphics and template collections.',
-    items: [
-      ['Collections', 'Curated sets by style'],
-      ['Font pairings', 'Tested headline/body combinations'],
-    ],
-  },
   ai: {
     title: 'AI Studio',
     stage: 'Stage 4',
@@ -842,16 +826,6 @@ const ROADMAP: Record<string, { title: string; stage: string; intro: string; ite
       ['Magic eraser & generative fill', 'Inpainting via configured provider'],
       ['Text-to-image', 'Provider API key required (paid inference)'],
       ['Design assistant', 'Font pairing, palettes, layout critique via configured LLM'],
-    ],
-  },
-  brands: {
-    title: 'Brand Kits',
-    stage: 'Stage 3',
-    intro: 'Multiple brands with logos, palettes (HEX/RGB), typography and guidelines, applied to any design in one click.',
-    items: [
-      ['Logos & assets', 'Per-brand libraries'],
-      ['Colour systems', 'Primary, secondary and full palettes'],
-      ['Type systems', 'Heading / body / accent fonts'],
     ],
   },
 };
