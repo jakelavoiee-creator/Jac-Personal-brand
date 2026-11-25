@@ -34,6 +34,7 @@ import GraphicsPanel from './GraphicsPanel';
 import BrandPanel from './BrandPanel';
 import TemplatesPanel from './TemplatesPanel';
 import PhotosPanel from './PhotosPanel';
+import AIPanel from './AIPanel';
 import { isDark, useEditor } from '../engine';
 import { SHAPES, shapePath } from '../shapes';
 import { ensureFont } from '../../lib/fonts';
@@ -75,13 +76,12 @@ const RAIL: { id: PanelId; label: string; icon: any; soon?: string }[] = [
   { id: 'uploads', label: 'Uploads', icon: Upload },
   { id: 'backgrounds', label: 'Backgr.', icon: PaintBucket },
   { id: 'textures', label: 'Textures', icon: Grip },
-  { id: 'ai', label: 'AI Tools', icon: Wand2, soon: 'Stage 4' },
+  { id: 'ai', label: 'AI Tools', icon: Wand2 },
   { id: 'mockups', label: 'Mockups', icon: Shirt, soon: 'Stage 5' },
   { id: 'layers', label: 'Layers', icon: LayersIcon },
 ];
 
 const SOON: Record<string, { title: string; body: string; items: string[] }> = {
-  ai: { title: 'AI tools', body: 'Stage 4. Background removal will run locally in the browser (free); generation & generative fill will use provider keys from Settings. Nothing here is simulated.', items: ['Background remover (local ONNX)', 'Magic eraser', 'Generative fill & expand', 'Text-to-image'] },
   mockups: { title: 'Mockup studio', body: 'Stage 5: garment templates (front/back), packaging and lifestyle mockups.', items: ['T-shirts, hoodies, caps', 'Packaging & posters', 'Your own product photos'] },
 };
 
@@ -121,6 +121,7 @@ export default function LeftPanel() {
               {open === 'brand' && <BrandPanel />}
               {open === 'templates' && <TemplatesPanel />}
               {open === 'photos' && <PhotosPanel />}
+              {open === 'ai' && <AIPanel />}
               {open === 'graphics' && <GraphicsPanel />}
               {open === 'illustrations' && <GraphicsPanel illustrations />}
               {SOON[open] && <SoonPanel id={open} stage={RAIL.find((r) => r.id === open)!.soon!} />}

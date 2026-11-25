@@ -1,10 +1,11 @@
 # Aura Studio
 
 A professional, browser-based creative studio — Canva's simplicity, Kittl's typographic
-freedom, Photoshop/Illustrator precision, and (from Stage 4) real AI tools — in one workspace.
+freedom, Photoshop/Illustrator precision, and real AI tools — in one workspace.
 
 **North star:** quiet, precise, editorial. The canvas is the hero; the chrome recedes.
-Free-first: everything in Stage 1 runs locally in the browser with no account.
+Free-first: the editor and the on-device AI tools run locally in the browser with no account.
+Paid AI (generation, generative fill, the design assistant) only runs with keys you add.
 
 ## Run it
 
@@ -19,11 +20,12 @@ Production build + end-to-end tests (Chromium via Playwright):
 ```bash
 npm run build
 npx vite preview --port 4173 &
-npm test                      # all four suites (105 checks)
+npm test                      # all five suites
 #   tests/e2e.mjs         core workflow: create → edit → export → reload
 #   tests/e2e-tools.mjs   tools: text editing, crop, guides, SVG, layers, pages, trash
 #   tests/e2e-stage2.mjs  effects, textures, transforms, fonts, vectors, graphics, migration
 #   tests/e2e-stage3.mjs  templates, brand kits, smart resize, SVG/PDF export, PDF import, photos
+#   tests/e2e-stage4.mjs  photo studio, on-device AI (real models), provider AI + assistant (mocked APIs)
 ```
 
 The tests drive the real UI and verify exported files at the byte level (PNG/JPEG headers,
@@ -47,6 +49,9 @@ dimensions, alpha channel, ZIP structure).
 | Vector export | jsPDF 4 + svg2pdf.js (MIT) | SVG and print-ready PDF (vector or high-res, 3 mm bleed, crop marks). Effects, shadows and blend modes are embedded as images at print DPI; text is outlined from the real font files. |
 | PDF import | pdf.js 6 (Apache-2.0) | Renders each page to an image asset; scripting disabled. |
 | Stock photos | Wikimedia Commons · Openverse | Commercial-use licences only, attribution stored with each photo. Openverse needs a free API key (Settings). |
+| Photo filters | Custom fabric filter `AuraAdjust` (`src/lib/photoFilter.ts`) | One WebGL pass for all adjustments + presets, identical CPU fallback, serialised with the design. |
+| On-device AI | transformers.js 4 + ONNX Runtime Web (Apache-2.0/MIT) | Background removal (ORMBG Apache-2.0 · BiRefNet-lite 512 MIT · MODNet Apache-2.0), inpainting (LaMa Apache-2.0), super-resolution (Swin2SR Apache-2.0). Weights download from Hugging Face on first use and are cached by the browser; the ONNX Runtime wasm is served by Aura itself (`public/ort`, copied at build). WebGPU fp16 where supported, otherwise multi-threaded WebAssembly (needs the COOP/COEP headers in `public/_headers`). |
+| Provider AI | OpenAI Images API · Anthropic SDK (Claude) | Called from the browser with the user's own keys (stored locally). Generative edits paste back only the masked pixels at full resolution. The assistant returns structured edits (zod schema) that the engine applies as one undoable step. |
 
 The editor and Fabric.js are code-split: the dashboard loads ~66 KB gzipped, the editor chunk
 loads when a design is opened, and paper.js / opentype.js only load when a vector tool needs them.

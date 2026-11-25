@@ -126,11 +126,39 @@ zero runtime errors.
 - 🟡 Stock search was verified against recorded API responses; live calls from the build container were rate-limited/key-gated.
 - 🟡 PDF export is RGB (no CMYK conversion in the browser).
 
-## Stage 4 — Image editing & AI
-- ⏳ Full adjustments (exposure, temperature, tint, highlights/shadows, whites/blacks, clarity, vignette, grain), filter presets with intensity, masks
-- ⏳ Background removal — local ONNX Runtime Web model (RMBG/BiRefNet class), lazy-loaded, with erase/restore brushes & feathering — **free, on-device**
-- 🔌 Text-to-image, generative fill, expand, object replace, magic edit — requires provider API key (paid inference) or self-hosted GPU
-- 🔌 AI design assistant — requires LLM provider key
+## Stage 4 — Image editing & AI ✅
+
+### Photo studio (free, local)
+- ✅ Adjustments: exposure, temperature, tint, highlights, shadows, whites, blacks, contrast, saturation, vibrance, clarity, vignette, grain, sharpness, blur — one custom WebGL filter with an identical CPU fallback
+- ✅ 10 filter presets with live previews and intensity; hold-to-compare Before; reset; everything non-destructive and saved with the design
+- ✅ Image masks: oval, rounded, arch, star, heart, hexagon, diamond
+
+### On-device AI (free — models download once, then run offline; nothing is uploaded)
+- ✅ Background remover — three commercially licensed models: ORMBG (Apache-2.0, default), BiRefNet-lite 512 (MIT, finest hair), MODNet (Apache-2.0, portraits). WebGPU (fp16) when available, otherwise multi-threaded WebAssembly; automatic CPU fallback if a GPU can't run a model
+- ✅ Refine: erase/restore brushes with size + hardness, shift edge, smooth, feather, colour decontamination (removes background colour halos), mask overlay / white / black / transparent previews, zoom (fit, 1:1, ⌘-wheel), pan (Space / hand), 20-step undo/redo, before/after
+- ✅ Background options as separate editable layers: transparent, colour, blurred original, any photo
+- ✅ Non-destructive: cutouts are new PNG assets; the layer remembers its original → "Refine cutout" restarts from the original pixels + current mask, "Restore original" puts it back
+- ✅ Magic eraser — LaMa inpainting (Apache-2.0, 208 MB once) with per-region 512² context windows and grain matching; "Quick fill" (instant, no download) for blemishes; erase on release, multi-step undo, keeps transparency
+- ✅ Enhance 2× — Swin2SR super-resolution (Apache-2.0): Fast (8 MB) / Best detail (54 MB); tiled with feathered seams, ETA + cancel; same size on the page, twice the pixels
+- ✅ Cross-origin isolation (COOP + COEP credentialless) enables multi-threaded WebAssembly — measured 2.5× faster
+
+### Provider AI (paid — the user's own keys, billed by the provider)
+- ✅ Text-to-image (OpenAI): 11 style presets, aspect, quality, 1–4 images, "avoid" list, transparent background, up to 4 reference images (image-to-image / variations), prompt enhancement via Claude; results saved to Uploads with prompt + model
+- ✅ Generative fill / object replace / remove: brush selection, or one-click AI selection of background or subject (on-device segmentation) for background scenes; only the selected pixels are pasted back, feathered, at full resolution
+- ✅ Expand (outpaint) to 1:1 / 4:5 / 9:16 / 16:9 / 3:2 or free margin; original pixels kept untouched in place
+- ✅ AI Studio page: generator, AI image history ("Design with it"), free vs paid tool map, key status
+- ✅ Design assistant (Claude, claude-opus-5-5): sees the page as layers + a rendered snapshot + the active brand kit; replies with direction and concrete edits (text, fonts, colours, sizes, positions, background, new text) that apply as one undoable step; per-edit opt-out; refusal fallbacks on
+- ✅ Clear errors for invalid keys, quota/rate limits and policy declines; every paid surface says what is sent where
+
+### Verified by tests/e2e-stage4.mjs — real on-device models + mocked provider APIs; Stage 1–3 suites (105) still green
+
+## Stage 4 — partial / awaiting external setup
+- 🟡 OpenAI and Anthropic calls are verified against mocked API responses (request shape, mask semantics, keys, error handling). This build environment cannot reach those APIs, so no live generation was run here — add your keys in Settings to use them.
+- 🟡 OpenAI image model defaults to `gpt-image-1` (editable in Settings) — set a newer model id there if your account has one.
+- 🟡 WebGPU path for the on-device models was exercised on a software GPU only; real GPUs use fp16 weights when they support `shader-f16`, otherwise the verified CPU path.
+- 🟡 BiRefNet's 1024² exports exceed the browser's WebAssembly memory, so High detail uses the 512² BiRefNet-lite export.
+- 🟡 Production hosting must send `Cross-Origin-Opener-Policy: same-origin` and `Cross-Origin-Embedder-Policy: credentialless` (provided in `public/_headers` for Netlify / Cloudflare Pages). Without them everything still works, but the on-device models run single-threaded (slower).
+- 🟡 API keys are stored in this browser's localStorage and sent directly from the browser to the provider — use keys with spending limits.
 
 ## Stage 5 — Apparel & mockups
 - ⏳ Garment templates (front/back/sleeves/labels), placement guides, realistic mockups, packaging, lifestyle scenes

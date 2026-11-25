@@ -40,6 +40,8 @@ import {
   Scaling,
   Columns3,
   Scissors,
+  Wand2,
+  Sparkles,
 } from 'lucide-react';
 import { ActiveSelection, FabricImage, Group, Path, Polygon, Polyline, Rect, Shadow, IText, type FabricObject } from 'fabric';
 import { toast } from '../store/app';
@@ -574,12 +576,20 @@ function ImageProps({ img }: { img: FabricImage }) {
         <button className="btn sm ai" style={{ flex: 1 }} onClick={() => engine.openImageTool('cutout', img)} disabled={(img as any).locked} data-testid="remove-bg">
           <Scissors size={13} /> {(img as any).originalAssetId ? 'Refine cutout' : 'Remove background'}
         </button>
-        {(img as any).originalAssetId && (
-          <button className="btn sm" onClick={() => engine.restoreOriginalImage(img)} title="Put the original pixels back">
-            Restore original
-          </button>
-        )}
+        <button className="btn sm ai" style={{ flex: 1 }} onClick={() => engine.openImageTool('erase', img)} disabled={(img as any).locked} data-testid="magic-erase">
+          <Wand2 size={13} /> Magic eraser
+        </button>
       </div>
+      <div className="row" style={{ marginBottom: 8 }}>
+        <button className="btn sm ai" style={{ flex: 1 }} onClick={() => engine.openImageTool('enhance', img)} disabled={(img as any).locked} data-testid="enhance">
+          <Sparkles size={13} /> Enhance 2×
+        </button>
+      </div>
+      {(img as any).originalAssetId && (
+        <button className="btn sm block" style={{ marginBottom: 8 }} onClick={() => engine.restoreOriginalImage(img)} title="Put the original pixels back (undo AI edits)">
+          <RotateCcw size={13} /> Restore original
+        </button>
+      )}
       <div className="row" style={{ marginBottom: 10 }}>
         <button className="btn sm" style={{ flex: 1 }} onClick={() => engine.openCrop()} disabled={(img as any).locked}>
           <Crop size={13} /> Crop

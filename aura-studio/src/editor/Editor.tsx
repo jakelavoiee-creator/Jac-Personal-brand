@@ -44,6 +44,9 @@ import ExportDialog from './dialogs/ExportDialog';
 import ResizeDialog from './dialogs/ResizeDialog';
 import CropDialog from './dialogs/CropDialog';
 import CutoutDialog from './dialogs/CutoutDialog';
+import EraseDialog from './dialogs/EraseDialog';
+import EnhanceDialog from './dialogs/EnhanceDialog';
+import GenEditDialog from './dialogs/GenEditDialog';
 import PreviewOverlay from './dialogs/PreviewOverlay';
 import ShareDialog from './dialogs/ShareDialog';
 import ShortcutsDialog from './dialogs/ShortcutsDialog';
@@ -124,6 +127,9 @@ export default function Editor({ projectId }: { projectId: string }) {
       {engine && dialog === 'shortcuts' && <ShortcutsDialog onClose={() => setDialog(null)} />}
       {engine && <CropDialog />}
       {engine && <CutoutDialog />}
+      {engine && <EraseDialog />}
+      {engine && <EnhanceDialog />}
+      {engine && <GenEditDialog />}
       {engine && <CompareHost />}
     </EngineCtx.Provider>
   );

@@ -7,13 +7,14 @@
     "build": "tsc && vite build",
     "preview": "vite preview --port 4173",
     "typecheck": "tsc",
-    "test": "node tests/e2e.mjs && node tests/e2e-tools.mjs && node tests/e2e-stage2.mjs && node tests/e2e-stage3.mjs",
+    "test": "node tests/e2e.mjs && node tests/e2e-tools.mjs && node tests/e2e-stage2.mjs && node tests/e2e-stage3.mjs && node tests/e2e-stage4.mjs",
     "fonts:build": "node scripts/build-font-catalog.mjs",
     "templates:thumbs": "node scripts/build-template-thumbs.mjs",
     "predev": "node scripts/copy-ort.mjs",
     "prebuild": "node scripts/copy-ort.mjs"
   },
   "dependencies": {
+    "@anthropic-ai/sdk": "^1.14.0",
     "@huggingface/transformers": "^4.3.2",
     "fabric": "^7.4.0",
     "idb": "^8.0.4",
@@ -25,6 +26,7 @@
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "svg2pdf.js": "^2.9.0",
+    "zod": "^4.6.7",
     "zustand": "^5.1.0"
   },
   "devDependencies": {

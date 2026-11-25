@@ -2,11 +2,10 @@ import { useEffect, useState } from 'react';
 import { toast } from '../store/app';
 
 const KEYS = [
-  { id: 'openai', label: 'OpenAI API key', hint: 'Image generation / editing (paid inference)' },
-  { id: 'replicate', label: 'Replicate API token', hint: 'Hosted open models: SDXL, FLUX, inpainting (paid inference)' },
-  { id: 'stability', label: 'Stability AI API key', hint: 'Generation, inpainting, outpainting (paid inference)' },
-  { id: 'anthropic', label: 'Anthropic API key', hint: 'Design assistant (paid inference)' },
-  { id: 'fastapi', label: 'Self-hosted processing URL', hint: 'Your own FastAPI/GPU server (hosting required)' },
+  { id: 'openai', label: 'OpenAI API key', hint: 'Paid — text-to-image, generative fill, expand (billed by OpenAI)' },
+  { id: 'openaiModel', label: 'OpenAI image model', hint: 'Optional — default gpt-image-1', plain: true },
+  { id: 'anthropic', label: 'Anthropic API key', hint: 'Paid — design assistant and prompt enhancement (billed by Anthropic)' },
+  { id: 'anthropicModel', label: 'Claude model', hint: 'Optional — default claude-opus-5-5', plain: true },
   { id: 'openverseId', label: 'Openverse client ID', hint: 'Free — enables Openverse photo search (register at api.openverse.org)' },
   { id: 'openverseSecret', label: 'Openverse client secret', hint: 'Free — paired with the client ID above' },
 ];
@@ -19,9 +18,13 @@ const CAPS: [string, string, 'local' | 'soon' | 'paid', string][] = [
   ['SVG / PDF export (vector, bleed, crop marks)', 'Free · runs locally', 'local', 'Available'],
   ['Templates, brand kits, smart resize', 'Free · runs locally', 'local', 'Available'],
   ['Stock photos (Wikimedia Commons, Openverse)', 'Free · Openverse needs a free API key', 'soon', 'Available'],
-  ['Background removal (ONNX in browser)', 'Free · local model download (~40–170 MB, once)', 'local', 'Stage 4'],
-  ['AI image generation / generative fill', 'Requires a paid provider key or your own GPU server', 'paid', 'Stage 4'],
-  ['AI design assistant', 'Requires an LLM provider key', 'paid', 'Stage 4'],
+  ['Photo adjustments, filters, masks', 'Free · runs locally', 'local', 'Available'],
+  ['Background removal (ORMBG / BiRefNet / MODNet)', 'Free · on-device · 7–192 MB model download, once', 'local', 'Available'],
+  ['Magic eraser (LaMa) & quick fill', 'Free · on-device · 208 MB model download, once (quick fill: none)', 'local', 'Available'],
+  ['Enhance 2× (Swin2SR)', 'Free · on-device · 8–54 MB model download, once', 'local', 'Available'],
+  ['Text-to-image, references, variations', 'Paid · your OpenAI key, billed per image', 'paid', 'Available · verified with mocked API responses'],
+  ['Generative fill, background scenes, expand', 'Paid · your OpenAI key, billed per image', 'paid', 'Available · verified with mocked API responses'],
+  ['AI design assistant (Claude)', 'Paid · your Anthropic key, billed per message', 'paid', 'Available · verified with mocked API responses'],
   ['Cloud sync & share links', 'Needs your own Supabase project (free tier)', 'soon', 'Awaiting setup'],
 ];
 
@@ -89,10 +92,10 @@ export default function SettingsView() {
       <section className="section">
         <div className="section-head">
           <h2>External API keys</h2>
-          <span className="tag soon">AI keys used from Stage 4</span>
+
         </div>
         <p className="muted" style={{ marginTop: 0 }}>
-          Keys are stored only in this browser (localStorage) and are sent only to the provider they belong to. AI keys are used from Stage 4.
+          Keys are stored only in this browser (localStorage) and are sent only to the provider they belong to. Anyone with access to this browser profile can read them — use keys with spending limits.
         </p>
         <div style={{ display: 'grid', gap: 2, maxWidth: 620 }}>
           {KEYS.map((k) => (
@@ -102,9 +105,9 @@ export default function SettingsView() {
               </span>
               <input
                 className="input"
-                type={k.id === 'fastapi' ? 'url' : 'password'}
+                type={(k as any).plain ? 'text' : 'password'}
                 value={vals[k.id]}
-                placeholder={k.id === 'fastapi' ? 'https://…' : 'Not set'}
+                placeholder={(k as any).plain ? 'Default' : 'Not set'}
                 onChange={(e) => setVals({ ...vals, [k.id]: e.target.value })}
                 autoComplete="off"
               />

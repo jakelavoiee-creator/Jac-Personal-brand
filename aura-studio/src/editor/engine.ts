@@ -42,6 +42,7 @@ export interface PhotoState {
 }
 import { warpPath, type Warp } from '../lib/warp';
 import type { BoolOp } from '../lib/vector';
+import type { AssistantAction } from '../lib/ai/assistant';
 
 interface PenPt {
   x: number;
@@ -86,7 +87,7 @@ export interface EditorState {
   busy: string | null;
 }
 
-export type ImageToolKind = 'cutout' | 'erase' | 'enhance';
+export type ImageToolKind = 'cutout' | 'erase' | 'enhance' | 'genfill' | 'expand';
 
 export const useEditor = create<EditorState>(() => ({
   project: null,
@@ -2090,6 +2091,103 @@ export class Engine {
     if (o instanceof FabricImage) set({ cropping: o });
   }
 
+  /* ---------------- design assistant ---------------- */
+
+  /** Compact, model-friendly description of the current page. */
+  describePage() {
+    const sel = new Set(this.canvas.getActiveObjects());
+    const r = (n: number) => Math.round(n);
+    const layers = this.canvas.getObjects().map((o: any) => {
+      const c = o.getCenterPoint();
+      const isText = o instanceof IText || o instanceof Textbox;
+      return {
+        id: o.id,
+        type: isText ? 'text' : o.placeholder ? 'photo-frame' : o instanceof FabricImage ? 'image' : o.type,
+        name: o.name,
+        ...(isText ? { text: o.text, fontFamily: o.fontFamily, fontWeight: o.fontWeight, fontSize: r(o.fontSize * (o.scaleY ?? 1)), charSpacing: o.charSpacing, lineHeight: o.lineHeight, textAlign: o.textAlign } : {}),
+        ...(typeof o.fill === 'string' && o.fill ? { fill: o.fill } : {}),
+        x: r(c.x),
+        y: r(c.y),
+        w: r(o.getScaledWidth()),
+        h: r(o.getScaledHeight()),
+        ...(o.angle ? { angle: r(o.angle) } : {}),
+        ...(o.opacity !== 1 ? { opacity: o.opacity } : {}),
+        ...(o.locked ? { locked: true } : {}),
+        ...(sel.has(o) ? { selected: true } : {}),
+      };
+    });
+    return { width: this.project.width, height: this.project.height, background: this.page.background, layers };
+  }
+
+  /** Rendered image of the current page for visual critique. */
+  async pageImage(max = 1024) {
+    this.syncPage();
+    return renderThumb(this.project, this.page, max);
+  }
+
+  /** Apply assistant edits as one undoable step. Returns how many were applied. */
+  async applyAssistantActions(actions: AssistantAction[]) {
+    let n = 0;
+    const byId = (id: string | null) => (id ? this.canvas.getObjects().find((o: any) => o.id === id) : undefined);
+    for (const a of actions) {
+      const o: any = byId(a.id);
+      if (a.type !== 'set_background' && a.type !== 'add_text' && (!o || o.locked)) continue;
+      if (a.type === 'set_background') {
+        if (a.color) this.page.background = a.color;
+      } else if (a.type === 'delete') {
+        this.canvas.remove(o);
+      } else if (a.type === 'set_text') {
+        if (a.text == null || !('text' in o)) continue;
+        o.set({ text: a.text });
+        o.initDimensions?.();
+      } else if (a.type === 'set_style') {
+        const p: any = {};
+        if (a.fontFamily) {
+          await ensureFont(a.fontFamily, a.fontWeight ?? o.fontWeight ?? 400);
+          p.fontFamily = a.fontFamily;
+        }
+        if (a.fontWeight != null) p.fontWeight = a.fontWeight;
+        if (a.fontSize != null) {
+          p.fontSize = a.fontSize / (o.scaleY ?? 1);
+        }
+        if (a.fill) p.fill = a.fill;
+        if (a.charSpacing != null) p.charSpacing = a.charSpacing;
+        if (a.lineHeight != null) p.lineHeight = a.lineHeight;
+        if (a.textAlign) p.textAlign = a.textAlign;
+        if (a.opacity != null) p.opacity = clamp(a.opacity, 0, 1);
+        const c = o.getCenterPoint();
+        o.set(p);
+        o.initDimensions?.();
+        if (o instanceof Textbox && (p.fontFamily || p.fontSize || p.charSpacing != null)) this.refitSingleLine(o);
+        o.setPositionByOrigin(c, 'center', 'center');
+        (o as any).__fxCache = undefined;
+      } else if (a.type === 'move') {
+        if (a.width != null && o instanceof Textbox) {
+          o.set({ width: a.width / (o.scaleX ?? 1) });
+          o.initDimensions();
+        }
+        const c = o.getCenterPoint();
+        o.setPositionByOrigin(new Point(a.x ?? c.x, a.y ?? c.y), 'center', 'center');
+      } else if (a.type === 'add_text') {
+        if (!a.text) continue;
+        const family = a.fontFamily || 'Inter';
+        await ensureFont(family, a.fontWeight ?? 400);
+        const t = new Textbox(a.text, { fontFamily: family, fontWeight: a.fontWeight ?? 400, fontSize: a.fontSize ?? 48, fill: a.fill ?? '#111111', textAlign: a.textAlign ?? 'center', width: a.width ?? this.project.width * 0.8, lineHeight: a.lineHeight ?? 1.1, charSpacing: a.charSpacing ?? 0 } as any);
+        (t as any).id = uid('o_');
+        (t as any).name = 'Text';
+        t.setPositionByOrigin(new Point(a.x ?? this.project.width / 2, a.y ?? this.project.height / 2), 'center', 'center');
+        this.canvas.add(t);
+      }
+      o?.setCoords?.();
+      if (o) o.dirty = true;
+      n++;
+    }
+    this.canvas.requestRenderAll();
+    this.commit();
+    this.bump();
+    return n;
+  }
+
   /* ---------------- AI image tools ---------------- */
 
   openImageTool(kind: ImageToolKind, img = this.active()) {
@@ -2121,34 +2219,58 @@ export class Engine {
   }
 
   /**
-   * Point an image layer at different pixels of the same size (a cutout or an
-   * edit). Crop, filters, mask and transform are kept.
+   * Point an image layer at different pixels of the same picture (a cutout,
+   * an edit, an upscale or the original). Crop, filters, mask and on-canvas
+   * size are kept, whatever the new resolution.
    */
   async swapImageAsset(img: FabricImage, asset: Asset, originalAssetId?: string | null) {
-    const keep = { cropX: img.cropX, cropY: img.cropY, width: img.width, height: img.height };
-    const sameSize = asset.width === img.getOriginalSize().width && asset.height === img.getOriginalSize().height;
-    await img.setSrc(assetURL(asset));
-    if (sameSize) img.set(keep);
-    (img as any).assetId = asset.id;
+    const factor = asset.width / img.getOriginalSize().width;
+    await this.swapImageScaled(img, asset, factor);
     if (originalAssetId !== undefined) (img as any).originalAssetId = originalAssetId ?? undefined;
-    if (img.filters?.length) img.applyFilters();
-    img.dirty = true;
-    img.setCoords();
-    this.canvas.requestRenderAll();
     this.commit();
-    this.bump();
   }
 
   /** Swap to a higher-resolution version of the same picture, keeping its crop and on-canvas size. */
   async swapImageUpscaled(img: FabricImage, asset: Asset, factor: number) {
-    const keep = { cropX: (img.cropX ?? 0) * factor, cropY: (img.cropY ?? 0) * factor, width: img.width * factor, height: img.height * factor, scaleX: (img.scaleX ?? 1) / factor, scaleY: (img.scaleY ?? 1) / factor };
+    await this.swapImageScaled(img, asset, factor);
+    this.commit();
+  }
+
+  private async swapImageScaled(img: FabricImage, asset: Asset, factor: number) {
+    const same = Math.abs(factor - 1) < 1e-3;
+    const keep = same
+      ? { cropX: img.cropX, cropY: img.cropY, width: img.width, height: img.height }
+      : { cropX: (img.cropX ?? 0) * factor, cropY: (img.cropY ?? 0) * factor, width: img.width * factor, height: img.height * factor, scaleX: (img.scaleX ?? 1) / factor, scaleY: (img.scaleY ?? 1) / factor };
     const center = img.getCenterPoint();
     await img.setSrc(assetURL(asset));
     img.set(keep);
-    if (img.clipPath) img.clipPath.set({ scaleX: (img.clipPath.scaleX ?? 1) * factor, scaleY: (img.clipPath.scaleY ?? 1) * factor });
+    if (!same && img.clipPath) img.clipPath.set({ scaleX: (img.clipPath.scaleX ?? 1) * factor, scaleY: (img.clipPath.scaleY ?? 1) * factor });
     (img as any).assetId = asset.id;
     if (img.filters?.length) img.applyFilters();
     img.setPositionByOrigin(center, 'center', 'center');
+    img.dirty = true;
+    img.setCoords();
+    this.canvas.requestRenderAll();
+    this.bump();
+  }
+
+  /**
+   * Replace the visible (cropped) region of an image with new pixels at the
+   * same density — generative edits and expansions. `off` is where the old
+   * visible region sits inside the new pixels; it stays put on the page.
+   */
+  async swapImageReframed(img: FabricImage, asset: Asset, off: { x: number; y: number }) {
+    const oldW = img.width, oldH = img.height;
+    const center = img.getCenterPoint();
+    await img.setSrc(assetURL(asset));
+    img.set({ cropX: 0, cropY: 0, width: asset.width, height: asset.height });
+    const dx = (asset.width / 2 - (off.x + oldW / 2)) * (img.scaleX ?? 1) * (img.flipX ? -1 : 1);
+    const dy = (asset.height / 2 - (off.y + oldH / 2)) * (img.scaleY ?? 1) * (img.flipY ? -1 : 1);
+    const r = util.rotateVector(new Point(dx, dy), util.degreesToRadians(img.angle ?? 0));
+    (img as any).assetId = asset.id;
+    (img as any).originalAssetId = undefined; // a reframed picture has no same-geometry original
+    if (img.filters?.length) img.applyFilters();
+    img.setPositionByOrigin(new Point(center.x + r.x, center.y + r.y), 'center', 'center');
     img.dirty = true;
     img.setCoords();
     this.canvas.requestRenderAll();

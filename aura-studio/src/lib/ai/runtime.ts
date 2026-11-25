@@ -5,11 +5,18 @@
  */
 let envP: Promise<any> | null = null;
 
+/** All cores when the page is cross-origin isolated (multi-threaded wasm), else 1. */
+export function wasmThreads() {
+  return self.crossOriginIsolated ? Math.max(1, Math.min(8, navigator.hardwareConcurrency || 4)) : 1;
+}
+
 export async function transformers() {
   envP ??= import('@huggingface/transformers').then((t) => {
     t.env.allowLocalModels = false;
     t.env.useBrowserCache = true;
-    (t.env.backends.onnx as any).wasm.wasmPaths = '/ort/';
+    const wasm = (t.env.backends.onnx as any).wasm;
+    wasm.wasmPaths = '/ort/';
+    wasm.numThreads = wasmThreads();
     return t;
   });
   return envP;
@@ -60,4 +67,11 @@ export async function isModelCached(modelId: string) {
   } catch {
     return false;
   }
+}
+
+/** Where on-device models will run, for UI labels. */
+export async function segDeviceLabel() {
+  const g = await gpuInfo();
+  if (g.webgpu && g.f16) return 'runs on your GPU';
+  return self.crossOriginIsolated ? `runs on ${wasmThreads()} CPU threads` : 'runs on CPU';
 }

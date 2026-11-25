@@ -25,6 +25,7 @@ import {
   X,
 } from 'lucide-react';
 import { navigate, toast, type Route } from '../store/app';
+import AIStudioView from './AIStudio';
 import { CATEGORIES, FORMATS, type Format } from '../lib/formats';
 import {
   deleteAsset,
@@ -55,7 +56,7 @@ const NAV: { id: Route['name']; label: string; icon: any; stage?: string }[] = [
   { id: 'projects', label: 'Projects', icon: Shapes },
   { id: 'templates', label: 'Templates', icon: LayoutTemplate },
   { id: 'discover', label: 'Discover', icon: Compass },
-  { id: 'ai', label: 'AI Studio', icon: Bot, stage: 'S4' },
+  { id: 'ai', label: 'AI Studio', icon: Bot },
   { id: 'brands', label: 'Brand Kits', icon: Palette },
   { id: 'assets', label: 'Assets', icon: ImageIcon },
   { id: 'favorites', label: 'Favorites', icon: Star },
@@ -193,6 +194,9 @@ export default function Dashboard({ route }: { route: Route }) {
       break;
     case 'discover':
       body = <DiscoverView />;
+      break;
+    case 'ai':
+      body = <AIStudioView />;
       break;
     default:
       body = <Roadmap kind={route.name} />;
@@ -817,17 +821,6 @@ function AssetsView({ query, onUpload }: { query: string; onUpload: () => void }
 }
 
 const ROADMAP: Record<string, { title: string; stage: string; intro: string; items: [string, string][] }> = {
-  ai: {
-    title: 'AI Studio',
-    stage: 'Stage 4',
-    intro: 'Real models only — no simulated output. Local models run in your browser; generation uses your own API keys (Settings).',
-    items: [
-      ['Background remover', 'Local ONNX segmentation (RMBG / BiRefNet class) — free, on-device'],
-      ['Magic eraser & generative fill', 'Inpainting via configured provider'],
-      ['Text-to-image', 'Provider API key required (paid inference)'],
-      ['Design assistant', 'Font pairing, palettes, layout critique via configured LLM'],
-    ],
-  },
 };
 
 function Roadmap({ kind }: { kind: string }) {
